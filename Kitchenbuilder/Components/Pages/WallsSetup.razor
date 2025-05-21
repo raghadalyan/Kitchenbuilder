@@ -1,0 +1,40 @@
+@page "/walls-setup"
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "width")]
+    public int FloorWidth { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "length")]
+    public int FloorLength { get; set; }
+
+    private int WallCount { get; set; }
+    private bool Error = false;
+
+    private void Continue()
+    {
+        if (WallCount < 1 || WallCount > 4)
+        {
+            Error = true;
+            return;
+        }
+
+        NavigationManager.NavigateTo($"/walls?count={WallCount}&width={FloorWidth}&length={FloorLength}");
+    }
+}
+
+<div class="form-container">
+    <h3>How many walls?</h3>
+
+    <label>Wall Count (1–4):</label>
+    <input type="number" @bind="WallCount" min="1" max="4" />
+
+    @if (Error)
+    {
+        <p style="color:red;">Please enter a number between 1 and 4.</p>
+    }
+
+    <button @onclick="Continue">Continue</button>
+</div>

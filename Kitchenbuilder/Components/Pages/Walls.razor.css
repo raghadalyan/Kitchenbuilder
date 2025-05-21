@@ -1,0 +1,39 @@
+.station-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.station {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .station.active {
+        background-color: teal;
+        color: white;
+        font-weight: bold;
+    }
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 250px;
+}
+
+.nav-buttons button {
+    margin-right: 10px;
+}
+.window-form {
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f4f4f4;
+}

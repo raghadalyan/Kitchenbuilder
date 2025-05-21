@@ -1,0 +1,182 @@
+﻿@page "/walls"
+@using System.Text.Json
+@using System.IO
+@using Kitchenbuilder.Models
+@inject NavigationManager NavManager
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "count")]
+    public int Count { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "width")]
+    public int FloorWidth { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "length")]
+    public int FloorLength { get; set; }
+
+    private int CurrentStep = 1;
+
+    private List<WallInfo> WallData = new();
+
+    protected override void OnInitialized()
+    {
+        for (int i = 0; i < Count; i++)
+            WallData.Add(new WallInfo());
+    }
+
+    private void Next()
+    {
+        if (CurrentStep < Count)
+            CurrentStep++;
+    }
+
+    private void Back()
+    {
+        if (CurrentStep > 1)
+            CurrentStep--;
+    }
+
+    private void UpdateWidth(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int value))
+            WallData[CurrentStep - 1].Width = value;
+    }
+
+    private void UpdateHeight(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int value))
+            WallData[CurrentStep - 1].Height = value;
+    }
+
+    private void GenerateWindowInputs()
+    {
+        var wall = WallData[CurrentStep - 1];
+        wall.Windows = new List<WindowInfo>();
+        for (int i = 0; i < wall.WindowCount; i++)
+        {
+            wall.Windows.Add(new WindowInfo());
+        }
+    }
+    private string SaveMessage = "";
+
+    private async Task SaveKitchenInputAsync()
+    {
+        try
+        {
+            var input = new KitchenInput
+                {
+                    FloorWidth = FloorWidth,
+                    FloorLength = FloorLength,
+                    Walls = WallData.Select(w => new Wall
+                    {
+                        Width = w.Width,
+                        Height = w.Height,
+                        HasWindows = w.HasWindows,
+                        Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                        {
+                            Width = win.Width,
+                            Height = win.Height,
+                            DistanceX = win.DistanceX,
+                            DistanceY = win.DistanceY
+                        }).ToList() : null
+                    }).ToList()
+                };
+
+            string folder = @"C:\Users\chouse\Desktop\UNI\fourth year\SEMINAR\Kitchenbuilder\Kitchenbuilder\JSON";
+            Directory.CreateDirectory(folder); // Ensure folder exists
+            string path = Path.Combine(folder, "input.json");
+
+            string json = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
+            await File.WriteAllTextAsync(path, json);
+
+            SaveMessage = "✅ Kitchen input saved to JSON folder.";
+        }
+        catch (Exception ex)
+        {
+            SaveMessage = $"❌ Error: {ex.Message}";
+        }
+    }
+
+
+    public class WallInfo
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public bool HasWindows { get; set; }
+        public int WindowCount { get; set; }
+        public List<WindowInfo> Windows { get; set; } = new();
+    }
+
+    public class WindowInfo
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int DistanceX { get; set; }
+        public int DistanceY { get; set; }
+    }
+}
+
+<div class="station-bar">
+    @for (int i = 1; i <= Count; i++)
+    {
+        <span class="station @(i == CurrentStep ? "active" : "")">@i</span>
+    }
+</div>
+
+<div class="form-container">
+    <h4>Wall @CurrentStep</h4>
+
+    <label>Width (cm):</label>
+    <input type="number"
+           value="@WallData[CurrentStep - 1].Width"
+           @oninput="UpdateWidth" min="1" />
+
+    <label>Height (cm):</label>
+    <input type="number"
+           value="@WallData[CurrentStep - 1].Height"
+           @oninput="UpdateHeight" min="1" />
+
+    <label>
+        <input type="checkbox" @bind="WallData[CurrentStep - 1].HasWindows" />
+        Does this wall have windows?
+    </label>
+
+    @if (WallData[CurrentStep - 1].HasWindows)
+    {
+        <label>How many windows?</label>
+        <input type="number" min="1" @bind="WallData[CurrentStep - 1].WindowCount" />
+        <button @onclick="GenerateWindowInputs">Save</button>
+    }
+
+    @if (WallData[CurrentStep - 1].Windows?.Count > 0)
+    {
+        <h5>Window Details</h5>
+        @for (int i = 0; i < WallData[CurrentStep - 1].Windows.Count; i++)
+        {
+            var win = WallData[CurrentStep - 1].Windows[i];
+            <div class="window-form">
+                <h6>Window @(i + 1)</h6>
+                <label>Width (cm):</label>
+                <input type="number" min="1" @bind="win.Width" />
+                <label>Height (cm):</label>
+                <input type="number" min="1" @bind="win.Height" />
+                <label>Distance X from left (cm):</label>
+                <input type="number" min="0" @bind="win.DistanceX" />
+                <label>Distance Y from bottom (cm):</label>
+                <input type="number" min="0" @bind="win.DistanceY" />
+            </div>
+        }
+    }
+
+    <div class="nav-buttons">
+        <button @onclick="Back" disabled="@(CurrentStep == 1)">Back</button>
+        <button @onclick="Next" disabled="@(CurrentStep == Count)">Next</button>
+    </div>
+
+    <button @onclick="SaveKitchenInputAsync">📥 Save Kitchen Input</button>
+    <p>@SaveMessage</p>
+
+</div>
