@@ -58,6 +58,33 @@
     </ItemGroup>
 
     <ItemGroup>
+      <COMReference Include="SwConst">
+        <WrapperTool>tlbimp</WrapperTool>
+        <VersionMinor>0</VersionMinor>
+        <VersionMajor>31</VersionMajor>
+        <Guid>4687f359-55d0-4cd3-b6cf-2eb42c11f989</Guid>
+        <Lcid>0</Lcid>
+        <Isolated>false</Isolated>
+        <EmbedInteropTypes>true</EmbedInteropTypes>
+      </COMReference>
+      <COMReference Include="SwCommands">
+        <WrapperTool>tlbimp</WrapperTool>
+        <VersionMinor>0</VersionMinor>
+        <VersionMajor>31</VersionMajor>
+        <Guid>0ac1de9f-3fbc-4c25-868d-7d4e9139cce0</Guid>
+        <Lcid>0</Lcid>
+        <Isolated>false</Isolated>
+        <EmbedInteropTypes>true</EmbedInteropTypes>
+      </COMReference>
+      <COMReference Include="{83a33d31-27c5-11ce-bfd4-00400513bb57}">
+        <WrapperTool>tlbimp</WrapperTool>
+        <VersionMinor>0</VersionMinor>
+        <VersionMajor>1</VersionMajor>
+        <Guid>83a33d31-27c5-11ce-bfd4-00400513bb57</Guid>
+      </COMReference>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
@@ -66,6 +93,18 @@
 
     <ItemGroup>
       <Folder Include="JSON\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="SolidWorks.Interop.sldworks">
+        <HintPath>..\..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
+      </Reference>
+      <Reference Include="SolidWorks.Interop.swconst">
+        <HintPath>..\..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
+      </Reference>
+      <Reference Include="SolidWorks.Interop.swpublished">
+        <HintPath>..\..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swpublished.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

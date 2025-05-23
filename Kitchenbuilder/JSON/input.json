@@ -1,50 +1,18 @@
 {
-  "FloorWidth": 200,
-  "FloorLength": 300,
+  "FloorWidth": 100,
+  "FloorLength": 100,
   "Walls": [
     {
-      "Width": 1,
-      "Height": 1,
-      "HasWindows": true,
-      "Windows": [
-        {
-          "Width": 0,
-          "Height": 0,
-          "DistanceX": 0,
-          "DistanceY": 0
-        },
-        {
-          "Width": 0,
-          "Height": 0,
-          "DistanceX": 0,
-          "DistanceY": 0
-        }
-      ]
+      "Width": 200,
+      "Height": 300,
+      "HasWindows": false,
+      "Windows": null
     },
     {
-      "Width": 2,
-      "Height": 2,
-      "HasWindows": true,
-      "Windows": [
-        {
-          "Width": 21,
-          "Height": 21,
-          "DistanceX": 21,
-          "DistanceY": 21
-        },
-        {
-          "Width": 22,
-          "Height": 22,
-          "DistanceX": 22,
-          "DistanceY": 22
-        },
-        {
-          "Width": 23,
-          "Height": 23,
-          "DistanceX": 23,
-          "DistanceY": 23
-        }
-      ]
+      "Width": 200,
+      "Height": 300,
+      "HasWindows": false,
+      "Windows": null
     }
   ]
 }

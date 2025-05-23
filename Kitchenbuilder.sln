@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchenbuilder", "Kitchenbuilder\Kitchenbuilder.csproj", "{3B0A02D6-4018-474D-8F03-46FC31DFAE6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "KitchenAutomationTool\ConsoleApp1\ConsoleApp1.csproj", "{B708C6C7-6F58-4A31-A5C1-65C9D83E9663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenAutomationTool", "KitchenAutomationTool\KitchenAutomationTool\KitchenAutomationTool.csproj", "{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +21,14 @@ Global
 		{3B0A02D6-4018-474D-8F03-46FC31DFAE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B0A02D6-4018-474D-8F03-46FC31DFAE6B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B0A02D6-4018-474D-8F03-46FC31DFAE6B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B708C6C7-6F58-4A31-A5C1-65C9D83E9663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B708C6C7-6F58-4A31-A5C1-65C9D83E9663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B708C6C7-6F58-4A31-A5C1-65C9D83E9663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B708C6C7-6F58-4A31-A5C1-65C9D83E9663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
