@@ -1,7 +1,7 @@
 ﻿@page "/walls"
 @using System.Text.Json
 @using System.IO
-@using Kitchenbuilder.Models
+@using Kitchenbuilder.Core.Models;
 @inject NavigationManager NavManager
 
 @code {
@@ -66,7 +66,7 @@
     {
         try
         {
-            var input = new KitchenInput
+            var input = new Kitchen
                 {
                     FloorWidth = FloorWidth,
                     FloorLength = FloorLength,
@@ -85,7 +85,7 @@
                     }).ToList()
                 };
 
-            string folder = @"C:\Users\chouse\Desktop\UNI\fourth year\SEMINAR\Kitchenbuilder\Kitchenbuilder\JSON";
+            string folder = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON";
             Directory.CreateDirectory(folder); // Ensure folder exists
             string path = Path.Combine(folder, "input.json");
 
@@ -93,6 +93,8 @@
             await File.WriteAllTextAsync(path, json);
 
             SaveMessage = "✅ Kitchen input saved to JSON folder.";
+            Kitchenbuilder.Core.KitchenGenerator.GenerateKitchen(path);
+
 
         }
         catch (Exception ex)

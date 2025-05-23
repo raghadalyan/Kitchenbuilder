@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "KitchenAutom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenAutomationTool", "KitchenAutomationTool\KitchenAutomationTool\KitchenAutomationTool.csproj", "{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchenbuilder.Core", "Kitchenbuilder.Core\Kitchenbuilder.Core.csproj", "{BFCB3354-6F23-460A-9300-CA8F73FB09E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +31,15 @@ Global
 		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D09A399-14A2-4FE4-9D53-3DB822A88C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFCB3354-6F23-460A-9300-CA8F73FB09E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCB3354-6F23-460A-9300-CA8F73FB09E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCB3354-6F23-460A-9300-CA8F73FB09E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCB3354-6F23-460A-9300-CA8F73FB09E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {794701F9-6DA6-44BA-93BE-12C17E6251F7}
 	EndGlobalSection
 EndGlobal

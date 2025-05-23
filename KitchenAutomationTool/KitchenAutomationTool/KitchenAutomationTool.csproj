@@ -11,6 +11,9 @@
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
     </Reference>
+    <Reference Include="SolidWorks.Interop.swcommands">
+      <HintPath>..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swcommands.dll</HintPath>
+    </Reference>
     <Reference Include="SolidWorks.Interop.swconst">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
     </Reference>
