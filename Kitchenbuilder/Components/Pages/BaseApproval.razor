@@ -1,0 +1,139 @@
+﻿@page "/base-approval"
+@using System.Text.Json
+@using System.Net.Http.Headers
+@using System.Text.RegularExpressions
+@using Kitchenbuilder.Core.Models
+
+<h3>האם את מרוצה מהבסיס שנוצר?</h3>
+
+<div>
+    <button @onclick="ApproveBase">כן</button>
+    <button @onclick="RejectBase">לא</button>
+</div>
+
+@if (showChat)
+{
+    <div style="margin-top: 20px;">
+        <h4>שוחחי עם העוזר כדי להסביר מה הבעיה:</h4>
+        <textarea @bind="userMessage" rows="4" cols="50" placeholder="כתבי כאן את הבעיה..."></textarea>
+        <br />
+        <button @onclick="SendToAI">שלחי</button>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(aiResponse))
+{
+    <p><strong>תשובת העוזר:</strong> @aiResponse</p>
+}
+
+@code {
+    private bool showChat = false;
+    private string userMessage = "";
+    private string aiResponse = "";
+    private string jsonPath = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
+
+    private void ApproveBase()
+    {
+        // לא עושה כלום כרגע
+    }
+
+    private void RejectBase()
+    {
+        showChat = true;
+    }
+
+    private async Task SendToAI()
+    {
+        try
+        {
+            var apiKey = "API"; // ← שימי את המפתח שלך פה
+            var kitchen = JsonSerializer.Deserialize<Kitchen>(File.ReadAllText(jsonPath));
+
+            var systemPrompt = $@"
+You are a kitchen design assistant helping users modify their SolidWorks-generated kitchen base.
+
+The kitchen base is L-shaped and spans two perpendicular walls:
+- Wall1 is the vertical leg
+- Wall2 is the horizontal leg
+
+Current kitchen wall measurements:
+- Wall1.Width = {kitchen.Walls[0].Width} cm
+- Wall2.Width = {kitchen.Walls[1].Width} cm
+
+The model has two parameters:
+- D1@Sketch1 represents the length of the base from the Wall2 side (horizontal leg)
+- D2@Sketch1 represents the length of the base from the Wall1 side (vertical leg)
+
+Rules:
+- D1 must be less than or equal to Wall2.Width
+- D2 must be less than or equal to Wall1.Width
+
+If the user says:
+- 'the base is too long on the right' → D1 is probably too big
+- 'the base sticks out to the left' → D2 is probably too big
+
+Your task:
+1. Understand what the user is asking.
+2. Validate whether the requested D1 or D2 are valid based on the wall dimensions.
+3. If not valid, explain what’s wrong.
+4. Suggest new valid values if possible.
+
+⚠️ Important:
+If you confirm or suggest a new value, always write it clearly like this:
+- D1 = 130
+- D2 = 145
+Only use that format for suggested values.
+";
+
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var request = new
+            {
+                model = "gpt-3.5-turbo",
+                messages = new[]
+                {
+                    new { role = "system", content = systemPrompt },
+                    new { role = "user", content = userMessage }
+                }
+            };
+
+            var response = await httpClient.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                aiResponse = $"שגיאה: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}";
+                return;
+            }
+
+            var resultJson = await response.Content.ReadAsStringAsync();
+            var result = JsonDocument.Parse(resultJson);
+            aiResponse = result.RootElement
+                .GetProperty("choices")[0]
+                .GetProperty("message")
+                .GetProperty("content")
+                .GetString();
+
+            // ניתוח תשובת ה-AI לשליפת D1 / D2
+            if (TryExtractValue(aiResponse, "D1", out double d1))
+                kitchen.Base.Width2 = d1;
+
+            if (TryExtractValue(aiResponse, "D2", out double d2))
+                kitchen.Base.Width1 = d2;
+
+            File.WriteAllText(jsonPath, JsonSerializer.Serialize(kitchen, new JsonSerializerOptions { WriteIndented = true }));
+            Kitchenbuilder.Core.KitchenGenerator.GenerateKitchen(jsonPath);
+        }
+        catch (Exception ex)
+        {
+            aiResponse = $"אירעה שגיאה: {ex.Message}";
+        }
+    }
+
+    private bool TryExtractValue(string text, string key, out double value)
+    {
+        value = 0;
+        var match = Regex.Match(text, @$"{key}\s*=\s*(\d+)", RegexOptions.IgnoreCase);
+        return match.Success && double.TryParse(match.Groups[1].Value, out value);
+    }
+}
