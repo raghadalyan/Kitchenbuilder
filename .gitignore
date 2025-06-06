@@ -8,3 +8,4 @@ obj/
 *.db
 *.log
 *.tmp
+.env
