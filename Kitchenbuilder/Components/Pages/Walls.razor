@@ -18,8 +18,8 @@
     public int FloorLength { get; set; }
 
     private int CurrentStep = 1;
-
     private List<WallInfo> WallData = new();
+    private string SaveMessage = "";
 
     protected override void OnInitialized()
     {
@@ -60,42 +60,75 @@
             wall.Windows.Add(new WindowInfo());
         }
     }
-    private string SaveMessage = "";
+
+    private void GenerateDoorInputs()
+    {
+        var wall = WallData[CurrentStep - 1];
+        wall.Doors = new List<DoorInfo>();
+        for (int i = 0; i < wall.DoorCount; i++)
+        {
+            wall.Doors.Add(new DoorInfo());
+        }
+    }
 
     private async Task SaveKitchenInputAsync()
     {
         try
         {
             var input = new Kitchen
+            {
+                Floor = new Floor
                 {
-                    FloorWidth = FloorWidth,
-                    FloorLength = FloorLength,
-                    Walls = WallData.Select(w => new Wall
+                    Width = FloorWidth,
+                    Length = FloorLength
+                },
+                Walls = WallData.Select(w => new Wall
+                {
+                    Width = w.Width,
+                    Height = w.Height,
+                    HasWindows = w.HasWindows,
+                    Windows = w.HasWindows ? w.Windows.Select(win => new Window
                     {
-                        Width = w.Width,
-                        Height = w.Height,
-                        HasWindows = w.HasWindows,
-                        Windows = w.HasWindows ? w.Windows.Select(win => new Window
-                        {
-                            Width = win.Width,
-                            Height = win.Height,
-                            DistanceX = win.DistanceX,
-                            DistanceY = win.DistanceY
-                        }).ToList() : null
-                    }).ToList()
-                };
+                        Width = win.Width,
+                        Height = win.Height,
+                        DistanceX = win.DistanceX,
+                        DistanceY = win.DistanceY
+                    }).ToList() : null,
+                    HasDoors = w.HasDoors,
+                    Doors = w.HasDoors ? w.Doors.Select(d => new Door
+                    {
+                        Width = d.Width,
+                        Height = d.Height,
+                        DistanceX = d.DistanceX
+                    }).ToList() : null
+                }).ToList()
+            };
 
             string folder = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON";
-            Directory.CreateDirectory(folder); // Ensure folder exists
-            string path = Path.Combine(folder, "input.json");
+            Directory.CreateDirectory(folder);
 
-            string json = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(path, json);
+            // Save input.json
+            string inputPath = Path.Combine(folder, "input.json");
+            string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
+            await File.WriteAllTextAsync(inputPath, inputJson);
 
-            SaveMessage = "✅ Kitchen input saved to JSON folder.";
-            Kitchenbuilder.Core.KitchenGenerator.GenerateKitchen(path);
+            // קריאה ל-GenerateKitchen שמחזירה את האובייקט Base
+            var generatedBase = Kitchenbuilder.Core.BaseCreator.CreateBase(input);
 
+            // Save Output.json with the Base data
+            var baseOutput = new
+            {
+                Width1 = generatedBase.Width1,
+                Width2 = generatedBase.Width2,
+                FileName = generatedBase.FileName
+            };
 
+            string outputPath = Path.Combine(folder, "output.json");
+            string outputJson = JsonSerializer.Serialize(baseOutput, new JsonSerializerOptions { WriteIndented = true });
+            await File.WriteAllTextAsync(outputPath, outputJson);
+
+            SaveMessage = "✅ Kitchen input saved, and base output generated!";
+            NavManager.NavigateTo("/base-approval");
         }
         catch (Exception ex)
         {
@@ -111,6 +144,9 @@
         public bool HasWindows { get; set; }
         public int WindowCount { get; set; }
         public List<WindowInfo> Windows { get; set; } = new();
+        public bool HasDoors { get; set; }
+        public int DoorCount { get; set; }
+        public List<DoorInfo> Doors { get; set; } = new();
     }
 
     public class WindowInfo
@@ -119,6 +155,13 @@
         public int Height { get; set; }
         public int DistanceX { get; set; }
         public int DistanceY { get; set; }
+    }
+
+    public class DoorInfo
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int DistanceX { get; set; }
     }
 }
 
@@ -151,26 +194,54 @@
     {
         <label>How many windows?</label>
         <input type="number" min="1" @bind="WallData[CurrentStep - 1].WindowCount" />
-        <button @onclick="GenerateWindowInputs">Save</button>
+        <button @onclick="GenerateWindowInputs">Save Windows</button>
+
+        @if (WallData[CurrentStep - 1].Windows.Count > 0)
+        {
+            <h5>Window Details</h5>
+            @foreach (var (win, i) in WallData[CurrentStep - 1].Windows.Select((w, i) => (w, i)))
+            {
+                <div class="window-form">
+                    <h6>Window @(i + 1)</h6>
+                    <label>Width (cm):</label>
+                    <input type="number" min="1" @bind="win.Width" />
+                    <label>Height (cm):</label>
+                    <input type="number" min="1" @bind="win.Height" />
+                    <label>Distance X from left (cm):</label>
+                    <input type="number" min="0" @bind="win.DistanceX" />
+                    <label>Distance Y from bottom (cm):</label>
+                    <input type="number" min="0" @bind="win.DistanceY" />
+                </div>
+            }
+        }
     }
 
-    @if (WallData[CurrentStep - 1].Windows?.Count > 0)
+    <label>
+        <input type="checkbox" @bind="WallData[CurrentStep - 1].HasDoors" />
+        Does this wall have doors?
+    </label>
+
+    @if (WallData[CurrentStep - 1].HasDoors)
     {
-        <h5>Window Details</h5>
-        @for (int i = 0; i < WallData[CurrentStep - 1].Windows.Count; i++)
+        <label>How many doors?</label>
+        <input type="number" min="1" @bind="WallData[CurrentStep - 1].DoorCount" />
+        <button @onclick="GenerateDoorInputs">Save Doors</button>
+
+        @if (WallData[CurrentStep - 1].Doors.Count > 0)
         {
-            var win = WallData[CurrentStep - 1].Windows[i];
-            <div class="window-form">
-                <h6>Window @(i + 1)</h6>
-                <label>Width (cm):</label>
-                <input type="number" min="1" @bind="win.Width" />
-                <label>Height (cm):</label>
-                <input type="number" min="1" @bind="win.Height" />
-                <label>Distance X from left (cm):</label>
-                <input type="number" min="0" @bind="win.DistanceX" />
-                <label>Distance Y from bottom (cm):</label>
-                <input type="number" min="0" @bind="win.DistanceY" />
-            </div>
+            <h5>Door Details</h5>
+            @foreach (var (door, i) in WallData[CurrentStep - 1].Doors.Select((d, i) => (d, i)))
+            {
+                <div class="door-form">
+                    <h6>Door @(i + 1)</h6>
+                    <label>Width (cm):</label>
+                    <input type="number" min="1" @bind="door.Width" />
+                    <label>Height (cm):</label>
+                    <input type="number" min="1" @bind="door.Height" />
+                    <label>Distance X from left (cm):</label>
+                    <input type="number" min="0" @bind="door.DistanceX" />
+                </div>
+            }
         }
     }
 
@@ -181,5 +252,4 @@
 
     <button @onclick="SaveKitchenInputAsync">📥 Save Kitchen Input</button>
     <p>@SaveMessage</p>
-
 </div>

@@ -52,8 +52,8 @@ namespace Kitchenbuilder.Core
             Console.WriteLine($"[Before Edit] D2 (Wall1) = {dimD2.SystemValue * 1000.0} mm");
 
             // Apply new values
-            dimD1.SystemValue = width2 / 1000.0;
-            dimD2.SystemValue = width1 / 1000.0;
+            dimD1.SystemValue = width2 / 100.0;
+            dimD2.SystemValue = width1 / 100.0;
 
             Console.WriteLine($"[After Edit] D1 = {width2} mm, D2 = {width1} mm");
 

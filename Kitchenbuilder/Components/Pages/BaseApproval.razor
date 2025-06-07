@@ -3,6 +3,8 @@
 @using System.Net.Http.Headers
 @using System.Text.RegularExpressions
 @using Kitchenbuilder.Core.Models
+@using DotNetEnv
+@inject NavigationManager NavManager
 
 <h3>האם את מרוצה מהבסיס שנוצר?</h3>
 
@@ -32,9 +34,17 @@
     private string aiResponse = "";
     private string jsonPath = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
 
+    protected override void OnInitialized()
+    {
+        // Load the .env file
+        DotNetEnv.Env.Load();
+
+        Kitchenbuilder.Core.SolidWorksWindowHelper.ArrangeBothWindows();
+    }
+
     private void ApproveBase()
     {
-        // לא עושה כלום כרגע
+        // Placeholder: Add logic if needed.
     }
 
     private void RejectBase()
@@ -46,7 +56,13 @@
     {
         try
         {
-            var apiKey = "API"; // ← שימי את המפתח שלך פה
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                aiResponse = "⚠️ OpenAI API key not configured!";
+                return;
+            }
+
             var kitchen = JsonSerializer.Deserialize<Kitchen>(File.ReadAllText(jsonPath));
 
             var systemPrompt = $@"
@@ -85,7 +101,7 @@ If you confirm or suggest a new value, always write it clearly like this:
 Only use that format for suggested values.
 ";
 
-            var httpClient = new HttpClient();
+            using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
             var request = new
@@ -102,7 +118,7 @@ Only use that format for suggested values.
 
             if (!response.IsSuccessStatusCode)
             {
-                aiResponse = $"שגיאה: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}";
+                aiResponse = $"❌ שגיאה: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}";
                 return;
             }
 
@@ -114,7 +130,7 @@ Only use that format for suggested values.
                 .GetProperty("content")
                 .GetString();
 
-            // ניתוח תשובת ה-AI לשליפת D1 / D2
+            // Extract D1 and D2 values if provided in the AI response
             if (TryExtractValue(aiResponse, "D1", out double d1))
                 kitchen.Base.Width2 = d1;
 
@@ -126,7 +142,7 @@ Only use that format for suggested values.
         }
         catch (Exception ex)
         {
-            aiResponse = $"אירעה שגיאה: {ex.Message}";
+            aiResponse = $"❌ אירעה שגיאה: {ex.Message}";
         }
     }
 

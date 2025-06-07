@@ -1,23 +1,29 @@
 {
-  "FloorWidth": 333,
-  "FloorLength": 333,
+  "Floor": {
+    "Width": 0,
+    "Length": 0
+  },
   "Walls": [
     {
-      "Width": 333,
-      "Height": 333,
+      "Width": 350,
+      "Height": 0,
       "HasWindows": false,
-      "Windows": null
+      "Windows": null,
+      "HasDoors": false,
+      "Doors": null
     },
     {
-      "Width": 333,
-      "Height": 333,
+      "Width": 350,
+      "Height": 0,
       "HasWindows": false,
-      "Windows": null
+      "Windows": null,
+      "HasDoors": false,
+      "Doors": null
     }
   ],
   "Base": {
-    "Width1": 333,
-    "Width2": 333,
+    "Width1": 350,
+    "Width2": 350,
     "FileName": "Left_L_Base_Edited.SLDPRT"
   }
 }
