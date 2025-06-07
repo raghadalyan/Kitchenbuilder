@@ -5,7 +5,7 @@
   },
   "Walls": [
     {
-      "Width": 350,
+      "Width": 0,
       "Height": 0,
       "HasWindows": false,
       "Windows": null,
@@ -13,7 +13,7 @@
       "Doors": null
     },
     {
-      "Width": 350,
+      "Width": 0,
       "Height": 0,
       "HasWindows": false,
       "Windows": null,
@@ -21,9 +21,5 @@
       "Doors": null
     }
   ],
-  "Base": {
-    "Width1": 350,
-    "Width2": 350,
-    "FileName": "Left_L_Base_Edited.SLDPRT"
-  }
+  "Base": null
 }
