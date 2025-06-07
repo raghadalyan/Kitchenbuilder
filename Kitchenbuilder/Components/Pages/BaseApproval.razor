@@ -1,9 +1,10 @@
 ﻿@page "/base-approval"
-@using System.Text.Json
 @using System.Net.Http.Headers
+@using System.Text.Json
 @using System.Text.RegularExpressions
-@using Kitchenbuilder.Core.Models
 @using DotNetEnv
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.Services
 @inject NavigationManager NavManager
 
 <h3>האם את מרוצה מהבסיס שנוצר?</h3>
@@ -138,7 +139,7 @@ Only use that format for suggested values.
                 kitchen.Base.Width1 = d2;
 
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(kitchen, new JsonSerializerOptions { WriteIndented = true }));
-            Kitchenbuilder.Core.KitchenGenerator.GenerateKitchen(jsonPath);
+            KitchenGenerator.GenerateKitchen(jsonPath);
         }
         catch (Exception ex)
         {

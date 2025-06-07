@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Kitchenbuilder.Core.Models;
 
-namespace Kitchenbuilder.Core
+namespace Kitchenbuilder.Core.Services
 {
     public static class KitchenGenerator
     {

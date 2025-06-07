@@ -4,7 +4,7 @@ using SolidWorks.Interop.swconst;
 using System;
 using System.IO;
 
-namespace Kitchenbuilder.Core
+namespace Kitchenbuilder.Core.Services
 {
     public static class BaseCreator
     {

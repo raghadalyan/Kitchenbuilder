@@ -1,7 +1,8 @@
 ﻿@page "/walls"
-@using System.Text.Json
 @using System.IO
+@using System.Text.Json
 @using Kitchenbuilder.Core.Models;
+@using Kitchenbuilder.Core.Services
 @inject NavigationManager NavManager
 
 @code {
@@ -113,7 +114,7 @@
             await File.WriteAllTextAsync(inputPath, inputJson);
 
             // קריאה ל-GenerateKitchen שמחזירה את האובייקט Base
-            var generatedBase = Kitchenbuilder.Core.BaseCreator.CreateBase(input);
+            var generatedBase = BaseCreator.CreateBase(input);
 
             // Save Output.json with the Base data
             var baseOutput = new
