@@ -77,58 +77,51 @@
         try
         {
             var input = new Kitchen
-            {
-                Floor = new Floor
                 {
-                    Width = FloorWidth,
-                    Length = FloorLength
-                },
-                Walls = WallData.Select(w => new Wall
-                {
-                    Width = w.Width,
-                    Height = w.Height,
-                    HasWindows = w.HasWindows,
-                    Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                    Floor = new Floor
                     {
-                        Width = win.Width,
-                        Height = win.Height,
-                        DistanceX = win.DistanceX,
-                        DistanceY = win.DistanceY
-                    }).ToList() : null,
-                    HasDoors = w.HasDoors,
-                    Doors = w.HasDoors ? w.Doors.Select(d => new Door
+                        Width = FloorWidth,
+                        Length = FloorLength
+                    },
+                    Walls = WallData.Select(w => new Wall
                     {
-                        Width = d.Width,
-                        Height = d.Height,
-                        DistanceX = d.DistanceX
-                    }).ToList() : null
-                }).ToList()
-            };
+                        Width = w.Width,
+                        Height = w.Height,
+                        HasWindows = w.HasWindows,
+                        Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                        {
+                            Width = win.Width,
+                            Height = win.Height,
+                            DistanceX = win.DistanceX,
+                            DistanceY = win.DistanceY
+                        }).ToList() : null,
+                        HasDoors = w.HasDoors,
+                        Doors = w.HasDoors ? w.Doors.Select(d => new Door
+                        {
+                            Width = d.Width,
+                            Height = d.Height,
+                            DistanceX = d.DistanceX
+                        }).ToList() : null
+                    }).ToList()
+                };
 
-            string folder = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON";
-            Directory.CreateDirectory(folder);
-
-            // Save input.json
-            string inputPath = Path.Combine(folder, "input.json");
-            string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(inputPath, inputJson);
-
-            // קריאה ל-GenerateKitchen שמחזירה את האובייקט Base
+            // צור Base ושמור בזיכרון
             var generatedBase = BaseCreator.CreateBase(input);
+            input.Base = generatedBase;
 
-            // Save Output.json with the Base data
-            var baseOutput = new
-            {
-                Width1 = generatedBase.Width1,
-                Width2 = generatedBase.Width2,
-                FileName = generatedBase.FileName
-            };
+            // שמירה בזיכרון (באמצעות Service)
+            // KitchenState.CurrentKitchen = input; // אם יש Service
 
-            string outputPath = Path.Combine(folder, "output.json");
-            string outputJson = JsonSerializer.Serialize(baseOutput, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(outputPath, outputJson);
+                string folder = Path.Combine(
+                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+                 "Kitchenbuilder", "Kitchenbuilder", "JSON");
+                Directory.CreateDirectory(folder);
 
-            SaveMessage = "✅ Kitchen input saved, and base output generated!";
+                string inputPath = Path.Combine(folder, "input.json");
+                string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
+                await File.WriteAllTextAsync(inputPath, inputJson);
+
+            SaveMessage = "✅ Kitchen input saved, including base data!";
             NavManager.NavigateTo("/base-approval");
         }
         catch (Exception ex)
