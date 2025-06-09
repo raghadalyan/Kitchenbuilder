@@ -10,10 +10,16 @@
       "HasWindows": true,
       "Windows": [
         {
-          "Width": 60,
+          "Width": 70,
           "Height": 0,
-          "DistanceX": 400,
+          "DistanceX": 300,
           "DistanceY": 60
+        },
+        {
+          "Width": 70,
+          "Height": 0,
+          "DistanceX": 300,
+          "DistanceY": 150
         }
       ],
       "HasDoors": true,
@@ -21,12 +27,12 @@
         {
           "Width": 70,
           "Height": 0,
-          "DistanceX": 520
+          "DistanceX": 10
         },
         {
           "Width": 70,
           "Height": 0,
-          "DistanceX": 10
+          "DistanceX": 520
         }
       ]
     },

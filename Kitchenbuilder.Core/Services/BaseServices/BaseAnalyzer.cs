@@ -95,7 +95,20 @@ namespace Kitchenbuilder.Core
                 {
                     if (door.DistanceX < 60)
                     {
-                        int prevWallIndex = (currentIndex - 1 + kitchen.Walls.Count) % kitchen.Walls.Count;
+                        int prevWallIndex = currentIndex - 1;
+
+                        if (prevWallIndex < 0)
+                        {
+                            // Only wrap around if there are exactly 4 walls
+                            if (kitchen.Walls.Count == 4)
+                            {
+                                prevWallIndex = kitchen.Walls.Count - 1;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
 
                         Wall prevWall = kitchen.Walls[prevWallIndex];
                         double prevWallEmptyEnd = prevWall.Width - door.DistanceX - door.Width;
@@ -115,6 +128,7 @@ namespace Kitchenbuilder.Core
                     }
                 }
             }
+
         }
 
         private static Dictionary<int, List<(double, double)>> AnalyzeInternalWallEmptySpaces(Kitchen kitchen)
