@@ -8,7 +8,7 @@ namespace Kitchenbuilder.Core.Services
 {
     public static class BaseCreator
     {
-        public static Base CreateBase(Kitchen kitchen)
+        public static Kitchenbuilder.Core.Models.Base CreateBase(Kitchen kitchen)
         {
             try
             {
@@ -43,11 +43,15 @@ namespace Kitchenbuilder.Core.Services
                 // Step 3: Edit dimensions
                 EditFloorMeasures(swModel, floorWidth, floorLength);
 
-                // Step 4: Leave SolidWorks open
+                // Step 4: Analyze empty spaces using BaseAnalyzer
+                var emptySpaces = BaseAnalyzer.AnalyzeEmptySpaces(kitchen);
+                WriteDebugLog("[CreateBase] BaseAnalyzer completed. Empty space details saved.");
+
+                // Step 5: Leave SolidWorks open
                 WriteDebugLog($"[CreateBase] File updated and left open for user review.");
 
-                // Step 5: Return Base object
-                return new Base
+                // Step 6: Return Base object
+                return new Kitchenbuilder.Core.Models.Base
                 {
                     Width1 = floorWidth,
                     Width2 = floorLength,
@@ -119,7 +123,7 @@ namespace Kitchenbuilder.Core.Services
             }
             catch
             {
-                // In case writing to the file fails, just skip logging to avoid crashing.
+                // In case writing to the file fails, just skip logging.
             }
         }
     }

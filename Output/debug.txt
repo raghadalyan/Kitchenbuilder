@@ -1,9 +1,7 @@
-[6/9/2025 12:08:15 AM] [CreateBase] Floor Width: 650 cm, Floor Length: 650 cm
-[6/9/2025 12:08:15 AM] [CreateBase] Copying file from: C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\base\base with fridge.SLDPRT
-[6/9/2025 12:08:26 AM] [CreateBase] Opening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_with_fridge_edited.SLDPRT
-[6/9/2025 12:08:38 AM] [EditFloorMeasures] Before Edit - width@master_wall1 = 6000 mm
-[6/9/2025 12:08:38 AM] [EditFloorMeasures] Before Edit - length@master_wall2 = 5500 mm
-[6/9/2025 12:08:38 AM] [EditFloorMeasures] Updated width@master_wall1 to 650 cm
-[6/9/2025 12:08:38 AM] [EditFloorMeasures] Updated length@master_wall2 to 650 cm
-[6/9/2025 12:08:40 AM] [EditFloorMeasures] Changes saved successfully.
-[6/9/2025 12:08:40 AM] [CreateBase] File updated and left open for user review.
+Empty Spaces Analysis:
+Wall 2: from 80 cm to 600 cm
+Wall 1: from 80 cm to 600 cm
+Wall 3: from 80 cm to 600 cm
+Wall 4: from 80 cm to 600 cm
+[6/9/2025 9:41:10 PM] [CreateBase] BaseAnalyzer completed. Empty space details saved.
+[6/9/2025 9:41:10 PM] [CreateBase] File updated and left open for user review.
