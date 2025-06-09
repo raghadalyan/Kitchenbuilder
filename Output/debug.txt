@@ -1,7 +1,7 @@
 Empty Spaces Analysis:
-Wall 2: from 80 cm to 600 cm
-Wall 1: from 80 cm to 600 cm
-Wall 3: from 80 cm to 600 cm
-Wall 4: from 80 cm to 600 cm
-[6/9/2025 9:41:10 PM] [CreateBase] BaseAnalyzer completed. Empty space details saved.
-[6/9/2025 9:41:10 PM] [CreateBase] File updated and left open for user review.
+Wall 2: from 80 cm to 520 cm
+Wall 4: from 80 cm to 520 cm
+Wall 1: from 80 cm to 520 cm
+Wall 3: from 80 cm to 520 cm
+[6/9/2025 10:26:33 PM] [CreateBase] BaseAnalyzer completed. Empty space details saved.
+[6/9/2025 10:26:33 PM] [CreateBase] File updated and left open for user review.
