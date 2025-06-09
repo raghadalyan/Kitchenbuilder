@@ -1,14 +1,33 @@
 Empty Spaces Analysis (based on doors at ends):
 Wall 2: from 80 cm to 600 cm
+Wall 4: from 0 cm to 520 cm
 Wall 1: from 0 cm to 600 cm
+Wall 3: from 0 cm to 490 cm
 
 Internal Wall Empty Spaces (doors + windows):
 Wall 1:
   From 0 cm to 10 cm
-  From 80 cm to 300 cm
-  From 370 cm to 520 cm
+  From 80 cm to 520 cm
   From 590 cm to 600 cm
 Wall 2:
   From 0 cm to 600 cm
-[6/9/2025 11:04:35 PM] [CreateBase] BaseAnalyzer completed. Empty space details saved.
-[6/9/2025 11:04:35 PM] [CreateBase] File updated and left open for user review.
+Wall 3:
+  From 0 cm to 600 cm
+Wall 4:
+  From 0 cm to 20 cm
+  From 110 cm to 600 cm
+
+Merged Empty Spaces (final result):
+Wall 1:
+  From 0 cm to 10 cm
+  From 80 cm to 520 cm
+  From 590 cm to 600 cm
+Wall 2:
+  From 80 cm to 600 cm
+Wall 3:
+  From 0 cm to 490 cm
+Wall 4:
+  From 0 cm to 20 cm
+  From 110 cm to 520 cm
+[6/9/2025 11:31:24 PM] [CreateBase] BaseAnalyzer completed. Empty space details saved.
+[6/9/2025 11:31:24 PM] [CreateBase] File updated and left open for user review.

@@ -7,21 +7,8 @@
     {
       "Width": 600,
       "Height": 600,
-      "HasWindows": true,
-      "Windows": [
-        {
-          "Width": 70,
-          "Height": 0,
-          "DistanceX": 300,
-          "DistanceY": 60
-        },
-        {
-          "Width": 70,
-          "Height": 0,
-          "DistanceX": 300,
-          "DistanceY": 150
-        }
-      ],
+      "HasWindows": false,
+      "Windows": null,
       "HasDoors": true,
       "Doors": [
         {
@@ -43,6 +30,28 @@
       "Windows": null,
       "HasDoors": false,
       "Doors": null
+    },
+    {
+      "Width": 600,
+      "Height": 600,
+      "HasWindows": false,
+      "Windows": null,
+      "HasDoors": false,
+      "Doors": null
+    },
+    {
+      "Width": 600,
+      "Height": 600,
+      "HasWindows": false,
+      "Windows": null,
+      "HasDoors": true,
+      "Doors": [
+        {
+          "Width": 90,
+          "Height": 0,
+          "DistanceX": 20
+        }
+      ]
     }
   ],
   "Base": {

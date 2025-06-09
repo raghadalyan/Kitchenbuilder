@@ -19,7 +19,7 @@ namespace Kitchenbuilder.Core
                 double emptyStart = 0; // default start
                 double emptyEnd = currentWall.Width; // default end
 
-                // Update empty spaces based on doors
+                // Update empty spaces based on doors at ends
                 UpdateEmptySpacesForDoors(kitchen, i, currentWall, emptySpaces);
 
                 // Save current wall space (if not already in dictionary)
@@ -31,6 +31,9 @@ namespace Kitchenbuilder.Core
 
             // Analyze internal empty spaces (doors + windows)
             var wallInternalEmptySpaces = AnalyzeInternalWallEmptySpaces(kitchen);
+
+            // Merge both dictionaries
+            var mergedEmptySpaces = MergeEmptySpaces(emptySpaces, wallInternalEmptySpaces, kitchen);
 
             // Write to debug.txt
             string debugFilePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug.txt";
@@ -45,6 +48,17 @@ namespace Kitchenbuilder.Core
                 writer.WriteLine();
                 writer.WriteLine("Internal Wall Empty Spaces (doors + windows):");
                 foreach (var kvp in wallInternalEmptySpaces)
+                {
+                    writer.WriteLine($"Wall {kvp.Key + 1}:");
+                    foreach (var space in kvp.Value)
+                    {
+                        writer.WriteLine($"  From {space.Item1} cm to {space.Item2} cm");
+                    }
+                }
+
+                writer.WriteLine();
+                writer.WriteLine("Merged Empty Spaces (final result):");
+                foreach (var kvp in mergedEmptySpaces)
                 {
                     writer.WriteLine($"Wall {kvp.Key + 1}:");
                     foreach (var space in kvp.Value)
@@ -67,7 +81,20 @@ namespace Kitchenbuilder.Core
                     double spaceAfterDoor = currentWall.Width - door.DistanceX - door.Width;
                     if (spaceAfterDoor < 60)
                     {
-                        int nextWallIndex = (currentIndex + 1) % kitchen.Walls.Count;
+                        int nextWallIndex = currentIndex + 1;
+
+                        if (nextWallIndex >= kitchen.Walls.Count)
+                        {
+                            // Only wrap around if there are exactly 4 walls
+                            if (kitchen.Walls.Count == 4)
+                            {
+                                nextWallIndex = 0;
+                            }
+                            else
+                            {
+                                continue; // skip, no wrap-around
+                            }
+                        }
 
                         Wall nextWall = kitchen.Walls[nextWallIndex];
                         double nextWallEmptyStart = currentWall.Width - door.DistanceX;
@@ -87,6 +114,7 @@ namespace Kitchenbuilder.Core
                     }
                 }
             }
+
 
             // Doors at the start
             if (currentWall.HasDoors && currentWall.Doors != null)
@@ -128,7 +156,6 @@ namespace Kitchenbuilder.Core
                     }
                 }
             }
-
         }
 
         private static Dictionary<int, List<(double, double)>> AnalyzeInternalWallEmptySpaces(Kitchen kitchen)
@@ -187,6 +214,48 @@ namespace Kitchenbuilder.Core
             }
 
             return wallEmptySpaces;
+        }
+
+        private static Dictionary<int, List<(double, double)>> MergeEmptySpaces(
+            Dictionary<int, (double, double)> endDoorSpaces,
+            Dictionary<int, List<(double, double)>> internalSpaces,
+            Kitchen kitchen)
+        {
+            var mergedSpaces = new Dictionary<int, List<(double, double)>>();
+
+            for (int i = 0; i < kitchen.Walls.Count; i++)
+            {
+                var mergedList = new List<(double, double)>();
+
+                // Get global door-based space
+                var (doorStart, doorEnd) = endDoorSpaces.ContainsKey(i)
+                    ? endDoorSpaces[i]
+                    : (0, kitchen.Walls[i].Width);
+
+                // Get internal wall spaces
+                if (internalSpaces.ContainsKey(i))
+                {
+                    foreach (var space in internalSpaces[i])
+                    {
+                        double mergedStart = Math.Max(space.Item1, doorStart);
+                        double mergedEnd = Math.Min(space.Item2, doorEnd);
+
+                        if (mergedStart < mergedEnd)
+                        {
+                            mergedList.Add((mergedStart, mergedEnd));
+                        }
+                    }
+                }
+                else
+                {
+                    // No internal blocks — use the door-based space directly
+                    mergedList.Add((doorStart, doorEnd));
+                }
+
+                mergedSpaces[i] = mergedList;
+            }
+
+            return mergedSpaces;
         }
     }
 }
