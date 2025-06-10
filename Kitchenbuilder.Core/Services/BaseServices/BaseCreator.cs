@@ -18,30 +18,30 @@ namespace Kitchenbuilder.Core.Services
                 double floorWidth = kitchen.Floor.Width;
                 double floorLength = kitchen.Floor.Length;
 
-                WriteDebugLog($"[CreateBase] Floor Width: {floorWidth} cm, Floor Length: {floorLength} cm");
+                //WriteDebugLog($"[CreateBase] Floor Width: {floorWidth} cm, Floor Length: {floorLength} cm");
 
-                // Step 1: Copy the SLDPRT file
-                string userDownloads = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads");
-                string sourcePath = Path.Combine(userDownloads, "Kitchenbuilder", "KitchenParts", "base", "base with fridge.SLDPRT");
-                string destFolder = Path.Combine(userDownloads, "Kitchenbuilder", "Output");
-                Directory.CreateDirectory(destFolder);
-                string destPath = Path.Combine(destFolder, "base_with_fridge_edited.SLDPRT");
+                //// Step 1: Copy the SLDPRT file
+                //string userDownloads = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads");
+                //string sourcePath = Path.Combine(userDownloads, "Kitchenbuilder", "KitchenParts", "base", "base with fridge.SLDPRT");
+                //string destFolder = Path.Combine(userDownloads, "Kitchenbuilder", "Output");
+                //Directory.CreateDirectory(destFolder);
+                //string destPath = Path.Combine(destFolder, "base_with_fridge_edited.SLDPRT");
 
-                WriteDebugLog($"[CreateBase] Copying file from: {sourcePath}");
-                File.Copy(sourcePath, destPath, true);
+                //WriteDebugLog($"[CreateBase] Copying file from: {sourcePath}");
+                //File.Copy(sourcePath, destPath, true);
 
-                // Step 2: Open the file in SolidWorks
-                SldWorks swApp = new SldWorks();
-                WriteDebugLog($"[CreateBase] Opening file in SolidWorks: {destPath}");
-                ModelDoc2 swModel = (ModelDoc2)swApp.OpenDoc(destPath, (int)swDocumentTypes_e.swDocPART);
+                //// Step 2: Open the file in SolidWorks
+                //SldWorks swApp = new SldWorks();
+                //WriteDebugLog($"[CreateBase] Opening file in SolidWorks: {destPath}");
+                //ModelDoc2 swModel = (ModelDoc2)swApp.OpenDoc(destPath, (int)swDocumentTypes_e.swDocPART);
 
-                if (swModel == null)
-                    throw new InvalidOperationException($"Failed to open SolidWorks file: {destPath}");
-                swModel.Visible = true;  // Makes the model visible
-                swApp.ActivateDoc2(swModel.GetTitle(), false, 0);
+                //if (swModel == null)
+                //    throw new InvalidOperationException($"Failed to open SolidWorks file: {destPath}");
+                //swModel.Visible = true;  // Makes the model visible
+                //swApp.ActivateDoc2(swModel.GetTitle(), false, 0);
 
-                // Step 3: Edit dimensions
-                EditFloorMeasures(swModel, floorWidth, floorLength);
+                //// Step 3: Edit dimensions
+                //EditFloorMeasures(swModel, floorWidth, floorLength);
 
                 // Step 4: Analyze empty spaces using BaseAnalyzer
                 var mergedEmptySpaces = BaseAnalyzer.AnalyzeEmptySpaces(kitchen);

@@ -11,11 +11,18 @@ namespace Kitchenbuilder.Core
         private const string OutputFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output";
         private const string OutputFile = "Evaluate Base.txt";
 
-        public static Dictionary<int, (string appliance, double start, double end)> Evaluate(
+        public static (
+            Dictionary<int, (string appliance, double start, double end)> layout,
+            Dictionary<int, (double start, double end)> suggestedBases,
+            Dictionary<int, string> suggestedDescriptions)
+            Evaluate(
             Kitchen kitchen,
             Dictionary<int, List<(double start, double end)>> emptySpaces)
         {
-            var result = new Dictionary<int, (string appliance, double start, double end)>();
+            var layout = new Dictionary<int, (string appliance, double start, double end)>();
+            var suggestedBases = new Dictionary<int, (double start, double end)>();
+            var suggestedDescriptions = new Dictionary<int, string>();
+
             const double sinkWidth = 60;
             const double cooktopWidth = 60;
             const double fridgeWidth = 85;
@@ -39,11 +46,17 @@ namespace Kitchenbuilder.Core
                 if (segLength >= requiredWidthStraight)
                 {
                     double pos = CalculateFridgePositionConsideringWindow(kitchen, seg.start, seg.end, fridgeWidth);
-                    result.Add(0, ("Sink", pos, pos + sinkWidth));
+                    layout.Add(0, ("Sink", pos, pos + sinkWidth));
                     pos += sinkWidth + workspace;
-                    result.Add(1, ("Cooktop", pos, pos + cooktopWidth));
+                    layout.Add(1, ("Cooktop", pos, pos + cooktopWidth));
                     pos += cooktopWidth + workspace;
-                    result.Add(2, ("Fridge", pos, pos + fridgeWidth));
+                    layout.Add(2, ("Fridge", pos, pos + fridgeWidth));
+
+                    suggestedBases.Clear();
+                    suggestedBases[1] = (seg.start, seg.end);
+
+                    suggestedDescriptions[1] = $"Wall 1: {seg.start}-{seg.end} cm (evaluating fridge placement: right)";
+
                     straightLineSuggested = true;
                     break;
                 }
@@ -58,52 +71,69 @@ namespace Kitchenbuilder.Core
                     double fridgePos = CalculateFridgePositionConsideringWindow(kitchen, seg0.start, seg0.end, fridgeWidth);
                     lShapeCornerPosition = DecideCornerPosition(kitchen, seg0.start, seg0.end);
 
-                    // Option 1: Fridge + Cooktop on wall 0, Sink on exposed base
                     if (seg0Length >= fridgeWidth + cooktopWidth + workspace)
                     {
-                        result.Add(10, ("Fridge (L-shape)", fridgePos, fridgePos + fridgeWidth));
+                        layout.Add(10, ("Fridge (L-shape)", fridgePos, fridgePos + fridgeWidth));
                         double p0 = fridgePos + fridgeWidth + workspace;
-                        result.Add(11, ("Cooktop (L-shape)", p0, p0 + cooktopWidth));
-                        result.Add(12, ("Sink (L-shape - Exposed Base)", 0, sinkWidth));
+                        layout.Add(11, ("Cooktop (L-shape)", p0, p0 + cooktopWidth));
+                        layout.Add(12, ("Sink (L-shape - Exposed Base)", 0, sinkWidth));
+
+                        suggestedBases.Clear();
+                        suggestedBases[1] = (seg0.start, seg0.end);
+                        suggestedBases[lShapeCornerPosition] = (0, kitchen.Floor.Length);
+
+                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: right)\n" +
+                                                   $"Wall {lShapeCornerPosition}: 0-{kitchen.Floor.Length} cm";
+
                         lShapeSuggested = true;
                         break;
                     }
-                    // Option 2: Fridge + Sink on wall 0, Cooktop on exposed base
                     if (seg0Length >= fridgeWidth + sinkWidth + workspace)
                     {
-                        result.Add(10, ("Fridge (L-shape)", fridgePos, fridgePos + fridgeWidth));
+                        layout.Add(10, ("Fridge (L-shape)", fridgePos, fridgePos + fridgeWidth));
                         double p0 = fridgePos + fridgeWidth + workspace;
-                        result.Add(11, ("Sink (L-shape)", p0, p0 + sinkWidth));
-                        result.Add(12, ("Cooktop (L-shape - Exposed Base)", 0, cooktopWidth));
+                        layout.Add(11, ("Sink (L-shape)", p0, p0 + sinkWidth));
+                        layout.Add(12, ("Cooktop (L-shape - Exposed Base)", 0, cooktopWidth));
+
+                        suggestedBases.Clear();
+                        suggestedBases[1] = (seg0.start, seg0.end);
+                        suggestedBases[lShapeCornerPosition] = (0, kitchen.Floor.Length);
+
+                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: right)\n" +
+                                                   $"Wall {lShapeCornerPosition}: 0-{kitchen.Floor.Length} cm";
+
                         lShapeSuggested = true;
                         break;
                     }
                 }
             }
 
-            // 3️⃣ Write results to file
-            WriteResultToFile(result, straightLineSuggested, lShapeSuggested, lShapeCornerPosition);
+            WriteResultToFile(layout, straightLineSuggested, lShapeSuggested, lShapeCornerPosition, suggestedBases, suggestedDescriptions, kitchen);
 
-            return result;
+            ImplementOneWallInSld.CopyAndOpenFiles(suggestedDescriptions);
+
+
+            return (layout, suggestedBases, suggestedDescriptions);
         }
 
         private static double CalculateFridgePositionConsideringWindow(Kitchen kitchen, double segmentStart, double segmentEnd, double fridgeWidth)
         {
-            if (kitchen.Walls[0].HasWindows && kitchen.Walls[0].Windows != null)
+            if (kitchen.Walls[0].HasWindows && kitchen.Walls[0].Windows?.Any() == true)
             {
-                foreach (var window in kitchen.Walls[0].Windows)
+                var windows = kitchen.Walls[0].Windows
+                    .Where(w => w.DistanceY > 90)
+                    .OrderBy(w => w.DistanceX)
+                    .ToList();
+
+                foreach (var window in windows)
                 {
-                    if (window.DistanceY > 90)
-                    {
-                        double availableRight = segmentEnd - window.DistanceX - window.Width;
-                        double availableLeft = window.DistanceX;
+                    double availableRight = segmentEnd - window.DistanceX - window.Width;
+                    double availableLeft = window.DistanceX;
 
-                        if (availableRight >= fridgeWidth)
-                            return window.DistanceX + window.Width + 5; // 5 cm buffer from window
-
-                        if (availableLeft >= fridgeWidth)
-                            return segmentStart + 5; // 5 cm buffer from start
-                    }
+                    if (availableRight >= fridgeWidth)
+                        return window.DistanceX + window.Width + 5;
+                    if (availableLeft >= fridgeWidth)
+                        return segmentStart + 5;
                 }
             }
             return segmentStart;
@@ -111,14 +141,14 @@ namespace Kitchenbuilder.Core
 
         private static int DecideCornerPosition(Kitchen kitchen, double segmentStart, double segmentEnd)
         {
-            if (kitchen.Walls[0].HasWindows && kitchen.Walls[0].Windows != null)
+            if (kitchen.Walls[0].HasWindows && kitchen.Walls[0].Windows?.Any() == true)
             {
                 var windows = kitchen.Walls[0].Windows
                     .Where(w => w.DistanceY > 90)
                     .OrderBy(w => w.DistanceX)
                     .ToList();
 
-                if (windows.Any())
+                if (windows.Count > 0)
                 {
                     var firstWindow = windows.First();
                     var lastWindow = windows.Last();
@@ -127,21 +157,22 @@ namespace Kitchenbuilder.Core
                     double availableRight = segmentEnd - lastWindow.DistanceX - lastWindow.Width;
 
                     if (availableRight > availableLeft)
-                        return 2; // Right corner
+                        return 2;
                     else if (availableLeft > availableRight)
-                        return 4; // Left corner
-                    else
-                        return 2; // Default to right if equal
+                        return 4;
                 }
             }
-            return 2; // Default corner
+            return 2;
         }
 
         private static void WriteResultToFile(
             Dictionary<int, (string appliance, double start, double end)> layout,
             bool straightLineSuggested,
             bool lShapeSuggested,
-            int lShapeCornerPosition)
+            int lShapeCornerPosition,
+            Dictionary<int, (double start, double end)> suggestedBases,
+            Dictionary<int, string> suggestedDescriptions,
+            Kitchen kitchen)
         {
             Directory.CreateDirectory(OutputFolder);
             string fullPath = Path.Combine(OutputFolder, OutputFile);
@@ -155,14 +186,10 @@ namespace Kitchenbuilder.Core
                 if (straightLineSuggested)
                 {
                     writer.WriteLine("▶️ Straight-line kitchen layout:");
-                    var straightLine = layout
-                        .Where(kvp => kvp.Key >= 0 && kvp.Key <= 2)
-                        .OrderBy(kvp => kvp.Key);
-
-                    foreach (var kvp in straightLine)
+                    foreach (var kvp in layout.Where(x => x.Key >= 0 && x.Key <= 2).OrderBy(x => x.Key))
                     {
                         var (appliance, start, end) = kvp.Value;
-                        writer.WriteLine($"  • {appliance.PadRight(20)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
+                        writer.WriteLine($"  • {appliance.PadRight(25)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
                     }
                     writer.WriteLine();
                 }
@@ -171,16 +198,25 @@ namespace Kitchenbuilder.Core
                 {
                     writer.WriteLine("▶️ L-shape kitchen layout:");
                     writer.WriteLine($"  • Suggested corner position: {lShapeCornerPosition}");
-                    var lShape = layout
-                        .Where(kvp => kvp.Key >= 10)
-                        .OrderBy(kvp => kvp.Key);
-
-                    foreach (var kvp in lShape)
+                    foreach (var kvp in layout.Where(x => x.Key >= 10).OrderBy(x => x.Key))
                     {
                         var (appliance, start, end) = kvp.Value;
-                        writer.WriteLine($"  • {appliance.PadRight(20)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
+                        writer.WriteLine($"  • {appliance.PadRight(25)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
                     }
                     writer.WriteLine();
+                }
+
+                writer.WriteLine("📝 Suggested Layout Descriptions:");
+                foreach (var kvp in suggestedDescriptions.OrderBy(x => x.Key))
+                {
+                    writer.WriteLine($"  Option {kvp.Key}: {kvp.Value}");
+                }
+
+                writer.WriteLine();
+                writer.WriteLine("Suggested Bases for SolidWorks:");
+                foreach (var kvp in suggestedBases.OrderBy(x => x.Key))
+                {
+                    writer.WriteLine($"  • Wall {kvp.Key}: Start: {kvp.Value.start} cm   End: {kvp.Value.end} cm");
                 }
 
                 if (!straightLineSuggested && !lShapeSuggested)
@@ -188,8 +224,6 @@ namespace Kitchenbuilder.Core
                     writer.WriteLine("⚠️ No valid layout could be suggested. Please consider a custom design.");
                 }
             }
-
-            Console.WriteLine($"Output written to: {fullPath}");
         }
     }
 }

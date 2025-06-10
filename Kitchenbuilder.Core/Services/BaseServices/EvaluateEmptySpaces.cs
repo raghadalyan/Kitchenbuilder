@@ -22,7 +22,7 @@ namespace Kitchenbuilder.Core
                 Dictionary<int, List<(double start, double end, bool hasDoor, bool hasWindow, bool foo, bool bar)>> filteredEmptySpaces,
                 Kitchen kitchen)
         {
-            // ממירים פנימית לפורמט ש־HandleOneWall מצפה לו:
+            // Convert to the simpler format expected by HandleOneWall:
             var simpleEmptySpaces = filteredEmptySpaces
                 .ToDictionary(
                     kvp => kvp.Key,
@@ -36,14 +36,16 @@ namespace Kitchenbuilder.Core
             int wallCount = kitchen.Walls.Count;
             if (wallCount == 1)
             {
-                // קריאה ל־HandleOneWall עם המקטעים הכחולים בלבד
-                var suggestion = HandleOneWall.Evaluate(kitchen, simpleEmptySpaces);
-                layoutSuggestions.Add(suggestion);
+                // Deconstruct all three returned values
+                var (layout, suggestedBases, suggestedDescriptions) = HandleOneWall.Evaluate(kitchen, simpleEmptySpaces);
+                layoutSuggestions.Add(layout);
+
+
             }
             else
             {
-                Console.WriteLine("הטיפול בקירות מרובים יתבצע בהמשך.");
-                // TODO: לוגיקה ל־2 קירות ו־U-Base
+                Console.WriteLine("Handling for multiple walls will be implemented later.");
+                // TODO: Implement logic for 2 walls and U-base
             }
 
             return layoutSuggestions;
