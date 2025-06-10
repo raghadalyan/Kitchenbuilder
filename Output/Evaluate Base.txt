@@ -1,0 +1,14 @@
+﻿=== Kitchen Base Evaluation ===
+Date: 2025-06-10 20:05
+
+▶️ Straight-line kitchen layout:
+  • Sink                 Start:      5 cm   End:     65 cm
+  • Cooktop              Start:    125 cm   End:    185 cm
+  • Fridge               Start:    245 cm   End:    330 cm
+
+▶️ L-shape kitchen layout:
+  • Suggested corner position: 4
+  • Fridge (L-shape)     Start:      5 cm   End:     90 cm
+  • Cooktop (L-shape)    Start:    150 cm   End:    210 cm
+  • Sink (L-shape - Exposed Base) Start:      0 cm   End:     60 cm
+

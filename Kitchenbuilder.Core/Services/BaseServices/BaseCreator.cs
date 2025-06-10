@@ -44,13 +44,21 @@ namespace Kitchenbuilder.Core.Services
                 EditFloorMeasures(swModel, floorWidth, floorLength);
 
                 // Step 4: Analyze empty spaces using BaseAnalyzer
-                var emptySpaces = BaseAnalyzer.AnalyzeEmptySpaces(kitchen);
+                var mergedEmptySpaces = BaseAnalyzer.AnalyzeEmptySpaces(kitchen);
                 WriteDebugLog("[CreateBase] BaseAnalyzer completed. Empty space details saved.");
 
-                // Step 5: Leave SolidWorks open
+                // Step 5: Filter the empty spaces
+                var filteredEmptySpaces = FilterEmptySpaces.FilterSpaces(mergedEmptySpaces);
+                WriteDebugLog("[CreateBase] FilterEmptySpaces completed. Filtered space details saved.");
+
+                // Step 6: Evaluate layout suggestions
+                var kitchenLayoutSuggestions = EvaluateEmptySpaces.Evaluate(filteredEmptySpaces, kitchen);
+                WriteDebugLog("[CreateBase] EvaluateEmptySpaces completed. Layout suggestions saved.");
+
+                // Step 7: Leave SolidWorks open
                 WriteDebugLog($"[CreateBase] File updated and left open for user review.");
 
-                // Step 6: Return Base object
+                // Step 8: Return Base object
                 return new Kitchenbuilder.Core.Models.Base
                 {
                     Width1 = floorWidth,

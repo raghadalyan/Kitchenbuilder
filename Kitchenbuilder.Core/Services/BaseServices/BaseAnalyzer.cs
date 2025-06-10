@@ -3,12 +3,36 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Kitchenbuilder.Core.Models;
+/*
+ * Summary:
+ * 
+ * The BaseAnalyzer class analyzes the available empty spaces along kitchen walls
+ * for placing kitchen base units or other structures. The process involves:
+ * 
+ * 1️⃣ Analyzing doors at the ends of walls:
+ *    - If a door is near the end of a wall and leaves less than 60 cm, it can block part of the next wall (if appropriate).
+ *    - If a door is near the start of a wall and leaves less than 60 cm, it can block part of the previous wall (if appropriate).
+ * 
+ * 2️⃣ Analyzing internal wall spaces:
+ *    - Identifies windows (with DistanceY < 90 cm) and doors inside the wall.
+ *    - Calculates internal empty spaces by subtracting blocked intervals.
+ * 
+ * 3️⃣ Merging both analyses:
+ *    - Combines the door-based analysis with the internal analysis to create a final set of empty spaces.
+ * 
+ * 4️⃣ Outputs:
+ *    - The final result is a dictionary mapping each wall index to a list of (start, end) empty space segments.
+ *    - A debug.txt file logs all steps for easier review.
+ * 
+ * Return Value:
+ *    - Dictionary<int, List<(double, double)>> — maps each wall to its merged empty spaces.
+ */
 
 namespace Kitchenbuilder.Core
 {
     public static class BaseAnalyzer
     {
-        public static Dictionary<int, (double, double)> AnalyzeEmptySpaces(Kitchen kitchen)
+        public static Dictionary<int, List<(double, double)>> AnalyzeEmptySpaces(Kitchen kitchen)
         {
             Dictionary<int, (double, double)> emptySpaces = new Dictionary<int, (double, double)>();
 
@@ -68,7 +92,7 @@ namespace Kitchenbuilder.Core
                 }
             }
 
-            return emptySpaces;
+            return mergedEmptySpaces;
         }
 
         private static void UpdateEmptySpacesForDoors(Kitchen kitchen, int currentIndex, Wall currentWall, Dictionary<int, (double, double)> emptySpaces)
