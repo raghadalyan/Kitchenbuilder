@@ -7,8 +7,15 @@
     {
       "Width": 300,
       "Height": 0,
-      "HasWindows": false,
-      "Windows": null,
+      "HasWindows": true,
+      "Windows": [
+        {
+          "Width": 50,
+          "Height": 0,
+          "DistanceX": 10,
+          "DistanceY": 150
+        }
+      ],
       "HasDoors": false,
       "Doors": null
     }

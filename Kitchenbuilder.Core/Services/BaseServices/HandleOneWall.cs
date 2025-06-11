@@ -153,13 +153,13 @@ namespace Kitchenbuilder.Core
                     var firstWindow = windows.First();
                     var lastWindow = windows.Last();
 
-                    double availableLeft = firstWindow.DistanceX;
-                    double availableRight = segmentEnd - lastWindow.DistanceX - lastWindow.Width;
+                    double middle = (segmentStart + segmentEnd) / 2;
 
-                    if (availableRight > availableLeft)
-                        return 2;
-                    else if (availableLeft > availableRight)
+                    // אם החלון ממוקם בצד שמאל -> wall 4, אחרת wall 2
+                    if (lastWindow.DistanceX + lastWindow.Width / 2 < middle)
                         return 4;
+                    else
+                        return 2;
                 }
             }
             return 2;
@@ -225,5 +225,6 @@ namespace Kitchenbuilder.Core
                 }
             }
         }
+
     }
 }

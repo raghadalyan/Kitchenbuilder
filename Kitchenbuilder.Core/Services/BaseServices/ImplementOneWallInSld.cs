@@ -44,6 +44,19 @@ namespace Kitchenbuilder.Core
                     File.Copy(SourceFilePath, destinationFilePath, overwrite: true);
                     LogMessage($"✅ File {destinationFileName} copied successfully.");
 
+                    // Determine walls to keep
+                    List<int> wallsToKeep = ExtractWallsFromDescription(description);
+
+                    // Determine walls to delete
+                    var wallsToDelete = Enumerable.Range(1, 4).Except(wallsToKeep).ToList();
+
+                    // Delete unwanted walls
+                    foreach (var wall in wallsToDelete)
+                    {
+                        DeleteWall.DeleteWallByNumber(destinationFilePath, wall);
+                    }
+
+                    // Save screenshots
                     int errors = 0, warnings = 0;
                     ModelDoc2 swModel = swApp.OpenDoc6(
                         destinationFilePath,
@@ -55,9 +68,6 @@ namespace Kitchenbuilder.Core
 
                     if (swModel != null)
                     {
-                        List<int> wallsToKeep = ExtractWallsFromDescription(description);
-                        DeleteFeaturesForWalls(swModel, wallsToKeep);
-
                         string optionFolder = Path.Combine(WwwRootOutputFolder, $"Option{optionNumber}");
                         Directory.CreateDirectory(optionFolder);
 
@@ -99,131 +109,6 @@ namespace Kitchenbuilder.Core
                 .ToList();
         }
 
-        private static void DeleteFeaturesForWalls(ModelDoc2 swModel, List<int> wallsToKeep)
-        {
-            var wallFeatures = new Dictionary<int, string[]>
-{
-    { 2, new[] { "Left_base2", "fridge_base2", "Right_base2", "Fridge2", "master_wall2" } },
-    { 3, new[] { "Left_base3", "fridge_base3", "Right_base3", "Fridge3", "master_wall3" } },
-    { 4, new[] { "Left_base4", "fridge_base4", "Right_base4", "Fridge4", "master_wall4" } }
-};
-
-
-
-            // Determine which walls to delete
-            var wallsToDelete = Enumerable.Range(1, 4).Except(wallsToKeep).OrderBy(w => w).ToList();
-
-            LogMessage($"🗑️ Walls to delete: {string.Join(", ", wallsToDelete)}");
-
-            var deletedFeatures = new HashSet<string>();
-
-            foreach (var wall in wallsToDelete)
-            {
-                if (wallFeatures.TryGetValue(wall, out var features))
-                {
-                    foreach (var featureName in features)
-                    {
-                        string wallNumber = Regex.Match(featureName, @"\d+").Value;
-
-                        // Delete Body-Move/CopyX before fridge features
-                        if (featureName.Contains("fridge") || featureName.Contains("Fridge"))
-                        {
-                            string moveCopyName = $"Body-Move/Copy{wallNumber}";
-                            DeleteFeature(swModel, moveCopyName, deletedFeatures);
-                        }
-
-                        DeleteFeature(swModel, $"Extrude_{featureName}", deletedFeatures);
-                        DeleteFeature(swModel, featureName, deletedFeatures);
-
-                        if (featureName.StartsWith("Left_base") || featureName.StartsWith("fridge_base") || featureName.StartsWith("Right_base"))
-                        {
-                            DeleteSketch(swModel, featureName, deletedFeatures);
-                        }
-                    }
-                }
-            }
-
-            // Save the model after deletions
-            int saveErrors = 0, saveWarnings = 0;
-            swModel.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref saveErrors, ref saveWarnings);
-
-            if (saveErrors == 0)
-            {
-                LogMessage("✅ Model saved successfully after deleting walls.");
-            }
-            else
-            {
-                LogMessage($"❌ Error saving model after deleting walls. (ErrorCode: {saveErrors})");
-            }
-        }
-
-        private static void DeleteFeature(ModelDoc2 swModel, string featureName, HashSet<string> deletedFeatures)
-        {
-            if (deletedFeatures.Contains(featureName)) return;
-
-            Feature feature = FindFeatureByName(swModel, featureName);
-            if (feature != null)
-            {
-                if (feature.Select2(false, -1))
-                {
-                    if (swModel.Extension.DeleteSelection2((int)swDeleteSelectionOptions_e.swDelete_Absorbed))
-                    {
-                        LogMessage($"🗑️ Deleted feature: {featureName}");
-                        deletedFeatures.Add(featureName);
-                    }
-                    else
-                    {
-                        LogMessage($"⚠️ Failed to delete feature: {featureName}");
-                    }
-                }
-                else
-                {
-                    LogMessage($"⚠️ Failed to select feature: {featureName}");
-                }
-            }
-            else
-            {
-                LogMessage($"⚠️ Feature not found: {featureName}");
-            }
-        }
-
-        private static void DeleteSketch(ModelDoc2 swModel, string sketchName, HashSet<string> deletedFeatures)
-        {
-            if (deletedFeatures.Contains(sketchName)) return;
-
-            bool selected = swModel.Extension.SelectByID2(sketchName, "SKETCH", 0, 0, 0, false, 0, null, 0);
-            if (selected)
-            {
-                if (swModel.Extension.DeleteSelection2((int)swDeleteSelectionOptions_e.swDelete_Absorbed))
-                {
-                    LogMessage($"🗑️ Deleted sketch: {sketchName}");
-                    deletedFeatures.Add(sketchName);
-                }
-                else
-                {
-                    LogMessage($"⚠️ Failed to delete sketch: {sketchName}");
-                }
-            }
-            else
-            {
-                LogMessage($"⚠️ Sketch not found: {sketchName}");
-            }
-        }
-
-        private static Feature FindFeatureByName(ModelDoc2 swModel, string featureName)
-        {
-            Feature feature = (Feature)swModel.FirstFeature();
-            while (feature != null)
-            {
-                if (feature.Name == featureName)
-                    return feature;
-                feature = (Feature)feature.GetNextFeature();
-            }
-            return null;
-        }
-
-
-
         private static void SaveImage(IModelDocExtension swModelDocExt, string folder, string imageName)
         {
             string imagePath = Path.Combine(folder, $"{imageName}.png");
@@ -244,7 +129,6 @@ namespace Kitchenbuilder.Core
                 LogMessage($"❌ Error saving image: {imagePath} (ErrorCode: {saveErrors}, Warnings: {saveWarnings})");
             }
         }
-
 
         private static void LogMessage(string message)
         {
