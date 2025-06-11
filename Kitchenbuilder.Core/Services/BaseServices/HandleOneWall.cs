@@ -45,7 +45,7 @@ namespace Kitchenbuilder.Core
                 double segLength = seg.end - seg.start;
                 if (segLength >= requiredWidthStraight)
                 {
-                    double pos = CalculateFridgePositionConsideringWindow(kitchen, seg.start, seg.end, fridgeWidth);
+                    var (pos, side) = CalculateFridgePositionConsideringWindow(kitchen, seg.start, seg.end, fridgeWidth);
                     layout.Add(0, ("Sink", pos, pos + sinkWidth));
                     pos += sinkWidth + workspace;
                     layout.Add(1, ("Cooktop", pos, pos + cooktopWidth));
@@ -55,7 +55,7 @@ namespace Kitchenbuilder.Core
                     suggestedBases.Clear();
                     suggestedBases[1] = (seg.start, seg.end);
 
-                    suggestedDescriptions[1] = $"Wall 1: {seg.start}-{seg.end} cm (evaluating fridge placement: right)";
+                    suggestedDescriptions[1] = $"Wall 1: {seg.start}-{seg.end} cm (evaluating fridge placement: {side})";
 
                     straightLineSuggested = true;
                     break;
@@ -68,7 +68,7 @@ namespace Kitchenbuilder.Core
                 double seg0Length = seg0.end - seg0.start;
                 if (seg0Length >= minRequiredWall0Length && kitchen.Floor.Length >= exposedBaseMinLength)
                 {
-                    double fridgePos = CalculateFridgePositionConsideringWindow(kitchen, seg0.start, seg0.end, fridgeWidth);
+                    var (fridgePos, side) = CalculateFridgePositionConsideringWindow(kitchen, seg0.start, seg0.end, fridgeWidth);
                     lShapeCornerPosition = DecideCornerPosition(kitchen, seg0.start, seg0.end);
 
                     if (seg0Length >= fridgeWidth + cooktopWidth + workspace)
@@ -80,10 +80,15 @@ namespace Kitchenbuilder.Core
 
                         suggestedBases.Clear();
                         suggestedBases[1] = (seg0.start, seg0.end);
-                        suggestedBases[lShapeCornerPosition] = (0, kitchen.Floor.Length);
+                        double cornerBaseLength = 180;
+                        if (kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150)
+                        {
+                            cornerBaseLength = kitchen.Floor.Length;
+                        }
+                        suggestedBases[lShapeCornerPosition] = (0, cornerBaseLength);
 
-                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: right)\n" +
-                                                   $"Wall {lShapeCornerPosition}: 0-{kitchen.Floor.Length} cm";
+                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: {side})\n" +
+                           $"Wall {lShapeCornerPosition}: 0-{cornerBaseLength} cm";
 
                         lShapeSuggested = true;
                         break;
@@ -95,12 +100,19 @@ namespace Kitchenbuilder.Core
                         layout.Add(11, ("Sink (L-shape)", p0, p0 + sinkWidth));
                         layout.Add(12, ("Cooktop (L-shape - Exposed Base)", 0, cooktopWidth));
 
+
                         suggestedBases.Clear();
                         suggestedBases[1] = (seg0.start, seg0.end);
-                        suggestedBases[lShapeCornerPosition] = (0, kitchen.Floor.Length);
+                        double cornerBaseLength = 180;
+                        if (kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150)
+                        {
+                            cornerBaseLength = kitchen.Floor.Length;
+                        }
+                        suggestedBases[lShapeCornerPosition] = (0, cornerBaseLength);
 
-                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: right)\n" +
-                                                   $"Wall {lShapeCornerPosition}: 0-{kitchen.Floor.Length} cm";
+                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: {side})\n" +
+                             $"Wall {lShapeCornerPosition}: 0-{cornerBaseLength} cm";
+
 
                         lShapeSuggested = true;
                         break;
@@ -116,7 +128,7 @@ namespace Kitchenbuilder.Core
             return (layout, suggestedBases, suggestedDescriptions);
         }
 
-        private static double CalculateFridgePositionConsideringWindow(Kitchen kitchen, double segmentStart, double segmentEnd, double fridgeWidth)
+        private static (double fridgeX, string side) CalculateFridgePositionConsideringWindow(Kitchen kitchen, double segmentStart, double segmentEnd, double fridgeWidth)
         {
             if (kitchen.Walls[0].HasWindows && kitchen.Walls[0].Windows?.Any() == true)
             {
@@ -125,18 +137,27 @@ namespace Kitchenbuilder.Core
                     .OrderBy(w => w.DistanceX)
                     .ToList();
 
-                foreach (var window in windows)
+                if (windows.Count > 0)
                 {
-                    double availableRight = segmentEnd - window.DistanceX - window.Width;
-                    double availableLeft = window.DistanceX;
+                    double firstWinX = windows.First().DistanceX;
+                    double lastWinX = windows.Last().DistanceX + windows.Last().Width;
+                    double rightClear = segmentEnd - lastWinX;
 
-                    if (availableRight >= fridgeWidth)
-                        return window.DistanceX + window.Width + 5;
-                    if (availableLeft >= fridgeWidth)
-                        return segmentStart + 5;
+                    if (firstWinX > rightClear)
+                    {
+                        // Place fridge on the left
+                        return (segmentStart + 5, "left");
+                    }
+                    else
+                    {
+                        // Place fridge on the right
+                        return (segmentEnd - fridgeWidth - 5, "right");
+                    }
                 }
             }
-            return segmentStart;
+
+            // No valid window → default to left
+            return (segmentStart + 5, "left");
         }
 
         private static int DecideCornerPosition(Kitchen kitchen, double segmentStart, double segmentEnd)
