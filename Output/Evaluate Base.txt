@@ -1,5 +1,10 @@
 ﻿=== Kitchen Base Evaluation ===
-Date: 2025-06-12 01:34
+Date: 2025-06-12 02:24
+
+▶️ Straight-line kitchen layout:
+  • Sink                      Start:      5 cm   End:     65 cm
+  • Cooktop                   Start:    125 cm   End:    185 cm
+  • Fridge                    Start:    245 cm   End:    330 cm
 
 ▶️ L-shape kitchen layout:
   • Suggested corner position: 2
@@ -8,9 +13,10 @@ Date: 2025-06-12 01:34
   • Sink (L-shape - Exposed Base) Start:      0 cm   End:     60 cm
 
 📝 Suggested Layout Descriptions:
-  Option 2: Wall 1: 0-300 cm, corner 2 (evaluating fridge placement: left)
+  Option 1: Wall 1: 0-400 cm (evaluating fridge placement: left)
+  Option 2: Wall 1: 0-400 cm, corner 2 (evaluating fridge placement: left)
 Wall 2: 0-180 cm
 
 Suggested Bases for SolidWorks:
-  • Wall 1: Start: 0 cm   End: 300 cm
+  • Wall 1: Start: 0 cm   End: 400 cm
   • Wall 2: Start: 0 cm   End: 180 cm

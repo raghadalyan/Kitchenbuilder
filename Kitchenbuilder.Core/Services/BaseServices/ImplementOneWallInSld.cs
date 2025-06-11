@@ -55,7 +55,7 @@ namespace Kitchenbuilder.Core
                     {
                         DeleteWall.DeleteWallByNumber(destinationFilePath, wall);
                     }
-                    EditBaseDim.EditDimensions(destinationFilePath, new Dictionary<int, string> { { optionNumber, description } });
+                    EditBaseDimOneWall.EditDimensions(destinationFilePath, new Dictionary<int, string> { { optionNumber, description } });
 
 
                     // Save screenshots

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Kitchenbuilder.Core
 {
-    public static class EditBaseDim
+    public static class EditBaseDimOneWall
     {
         private const string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\edit base debug.txt";
 
@@ -51,7 +51,6 @@ namespace Kitchenbuilder.Core
 
             File.AppendAllText(DebugPath, $"📌 Number of unique walls to handle: {wallData.Count}\n");
 
-            // === Start SolidWorks
             var swApp = Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application")) as SldWorks;
             if (swApp == null)
             {
@@ -86,6 +85,8 @@ namespace Kitchenbuilder.Core
                 File.AppendAllText(DebugPath, "⚠️ Wall 1 not found, so no fridge dimensions were updated.\n");
             }
 
+            HandleExposedBase(swModel, description);
+
             swModel.EditRebuild3();
             swModel.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref errors, ref warnings);
             swApp.CloseDoc(filePath);
@@ -96,7 +97,6 @@ namespace Kitchenbuilder.Core
         private static void DeleteUnwantedFeaturesAndSketches(ModelDoc2 swModel)
         {
             var ext = swModel.Extension;
-
             string[] featuresToDelete = { "Extrude_Left_base1", "Extrude_Right_base1" };
             foreach (var featName in featuresToDelete)
             {
@@ -126,12 +126,63 @@ namespace Kitchenbuilder.Core
             }
         }
 
+        private static void HandleExposedBase(ModelDoc2 swModel, string description)
+        {
+            var wallMatches = Regex.Matches(description, @"Wall\s+(\d):\s*(\d+)-(\d+)");
+            foreach (Match match in wallMatches)
+            {
+                int wallNum = int.Parse(match.Groups[1].Value);
+                double start = double.Parse(match.Groups[2].Value);
+                double end = double.Parse(match.Groups[3].Value);
+                double length = end - start;
+
+                if (wallNum == 2 || wallNum == 4)
+                {
+                    DeleteFeature(swModel, $"Body-Move/Copy{wallNum}");
+                    DeleteFeature(swModel, $"Fridge{wallNum}");
+                    DeleteFeature(swModel, $"Extrude_fridge_base{wallNum}");
+                    DeleteSketch(swModel, $"fridge_base{wallNum}");
+                    DeleteFeature(swModel, $"Extrude_Right_base{wallNum}");
+                    DeleteSketch(swModel, $"Right_base{wallNum}");
+
+                    // ✅ Edit the Left_baseX dimension using new EditBaseSize helper
+                    EditBaseSize.Edit(swModel, wallNumber: wallNum, dimensionBaseName: "length@Left_base", newLength: length-60);
+                }
+            }
+        }
+
+        private static void DeleteFeature(ModelDoc2 model, string name)
+        {
+            var ext = model.Extension;
+            if (ext.SelectByID2(name, "BODYFEATURE", 0, 0, 0, false, 0, null, 0))
+            {
+                model.EditDelete();
+                File.AppendAllText(DebugPath, $"🗑️ Deleted feature: {name}\n");
+            }
+            else
+            {
+                File.AppendAllText(DebugPath, $"⚠️ Could not find feature: {name}\n");
+            }
+        }
+
+        private static void DeleteSketch(ModelDoc2 model, string name)
+        {
+            var ext = model.Extension;
+            if (ext.SelectByID2(name, "SKETCH", 0, 0, 0, false, 0, null, 0))
+            {
+                model.EditDelete();
+                File.AppendAllText(DebugPath, $"🗑️ Deleted sketch: {name}\n");
+            }
+            else
+            {
+                File.AppendAllText(DebugPath, $"⚠️ Could not find sketch: {name}\n");
+            }
+        }
+
         private static string DetectFridgeSide(string description)
         {
-            if (description.Contains("fridge placement: right"))
-                return "right";
-            if (description.Contains("fridge placement: left"))
-                return "left";
+            if (description.Contains("fridge placement: right")) return "right";
+            if (description.Contains("fridge placement: left")) return "left";
             return "unknown";
         }
 
@@ -141,7 +192,6 @@ namespace Kitchenbuilder.Core
             double end = wall1Info.end;
             double wallWidth = end - start;
 
-            // ✅ Edit width@master_wall1
             var wallWidthDim = swModel.Parameter("width@master_wall1") as Dimension;
             if (wallWidthDim != null)
             {
@@ -153,7 +203,6 @@ namespace Kitchenbuilder.Core
                 File.AppendAllText(DebugPath, "❌ Could not find dimension: width@master_wall1\n");
             }
 
-            // ✅ Edit DistanceX@fridge_base1
             var dimX = swModel.Parameter("DistanceX@fridge_base1") as Dimension;
             if (dimX != null)
             {
@@ -165,12 +214,10 @@ namespace Kitchenbuilder.Core
                 File.AppendAllText(DebugPath, "❌ Could not find dimension: DistanceX@fridge_base1\n");
             }
 
-            // ✅ Prepare base lengths
             double adjustedLength = end - 85;
             double leftBase = fridgeSide == "right" ? adjustedLength : 2;
             double rightBase = fridgeSide == "left" ? adjustedLength : 2;
 
-            // ✅ Call the external function
             EditFridgeRelatedDimensions.Edit(swModel, wallNumber: 1, leftBaseLength: leftBase, rightBaseLength: rightBase);
         }
     }
