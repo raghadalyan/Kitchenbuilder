@@ -1,4 +1,4 @@
-Run started at 6/12/2025 2:24:09 AM
+Run started at 6/12/2025 5:04:29 PM
 ✅ File base_with_fridge_option_1.SLDPRT copied successfully.
 🔍 Starting to delete Wall 2 in file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\base_with_fridge_option_1.SLDPRT
 🗑️ Deleted feature: Extrude_Left_base2
@@ -46,6 +46,20 @@ Run started at 6/12/2025 2:24:09 AM
 ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Front.png
 ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Right.png
 ✅ File base_with_fridge_option_2.SLDPRT copied successfully.
+🔍 Starting to delete Wall 2 in file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\base_with_fridge_option_2.SLDPRT
+🗑️ Deleted feature: Extrude_Left_base2
+⚠️ Sketch not found: Left_base2
+🗑️ Deleted feature: Body-Move/Copy2
+🗑️ Deleted feature: Extrude_fridge_base2
+⚠️ Sketch not found: fridge_base2
+🗑️ Deleted feature: Extrude_Right_base2
+⚠️ Sketch not found: Right_base2
+⚠️ Feature not found: Extrude_Fridge2
+⚠️ Sketch not found: Fridge2
+🗑️ Deleted inserted part: Fridge2
+⚠️ Feature not found: Extrude_master_wall2
+🗑️ Deleted sketch: master_wall2
+✅ Model saved successfully after deleting Wall 2.
 🔍 Starting to delete Wall 3 in file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\base_with_fridge_option_2.SLDPRT
 🗑️ Deleted feature: Extrude_Left_base3
 ⚠️ Sketch not found: Left_base3
@@ -60,22 +74,8 @@ Run started at 6/12/2025 2:24:09 AM
 ⚠️ Feature not found: Extrude_master_wall3
 🗑️ Deleted sketch: master_wall3
 ✅ Model saved successfully after deleting Wall 3.
-🔍 Starting to delete Wall 4 in file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\base_with_fridge_option_2.SLDPRT
-🗑️ Deleted feature: Extrude_Left_base4
-⚠️ Sketch not found: Left_base4
-🗑️ Deleted feature: Body-Move/Copy4
-🗑️ Deleted feature: Extrude_fridge_base4
-⚠️ Sketch not found: fridge_base4
-🗑️ Deleted feature: Extrude_Right_base4
-⚠️ Sketch not found: Right_base4
-⚠️ Feature not found: Extrude_Fridge4
-⚠️ Sketch not found: Fridge4
-🗑️ Deleted inserted part: Fridge4
-⚠️ Feature not found: Extrude_master_wall4
-🗑️ Deleted sketch: master_wall4
-✅ Model saved successfully after deleting Wall 4.
 ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Top.png
 ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Front.png
 ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Right.png
-[6/12/2025 2:26:19 AM] [CreateBase] EvaluateEmptySpaces completed. Layout suggestions saved.
-[6/12/2025 2:26:19 AM] [CreateBase] File updated and left open for user review.
+[6/12/2025 5:05:42 PM] [CreateBase] EvaluateEmptySpaces completed. Layout suggestions saved.
+[6/12/2025 5:05:42 PM] [CreateBase] File updated and left open for user review.

@@ -3,6 +3,7 @@
 @using System.Text.Json
 @using Kitchenbuilder.Core.Models
 @using Kitchenbuilder.Core.Services
+@using Kitchenbuilder.Core.WallBuilders
 
 @inject NavigationManager NavManager
 
@@ -77,6 +78,7 @@
     {
         try
         {
+            // 1. Build the Kitchen object from user input
             var input = new Kitchen
                 {
                     Floor = new Floor
@@ -106,7 +108,29 @@
                     }).ToList()
                 };
 
-            // צור Base ושמור בזיכרון
+            // 2. Decide which wall builder to run based on wall count
+            int wallCount = input.Walls?.Count ?? 0;
+
+            switch (wallCount)
+            {
+                case 1:
+                    OneWallBuilder.Run(input);
+                    break;
+                case 2:
+                    TwoWallBuilder.Run(input);
+                    break;
+                case 3:
+                    ThreeWallBuilder.Run(input);
+                    break;
+                case 4:
+                    FourWallBuilder.Run(input);
+                    break;
+                default:
+                    SaveMessage = "❌ Invalid number of walls (must be between 1 and 4).";
+                    return;
+            }
+
+
             var generatedBase = BaseCreator.CreateBase(input);
             input.Base = generatedBase;
 
@@ -122,6 +146,7 @@
                 await File.WriteAllTextAsync(inputPath, inputJson);
 
             SaveMessage = "✅ Kitchen input saved, including base data!";
+            // 3. Navigate to the base approval page after walls are created
             NavManager.NavigateTo("/base-approval");
         }
         catch (Exception ex)
