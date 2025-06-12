@@ -1,11 +1,13 @@
 ﻿@page "/base-approval"
+
+@using System.IO
 @using System.Net.Http.Headers
 @using System.Text.Json
+@using System.Text.Json.Serialization
 @using System.Text.RegularExpressions
-@using DotNetEnv
+
 @using Kitchenbuilder.Core.Models
 @using Kitchenbuilder.Core.Services
-@inject NavigationManager NavManager
 
 <h3>האם את מרוצה מהבסיס שנוצר?</h3>
 
@@ -29,18 +31,88 @@
     <p><strong>תשובת העוזר:</strong> @aiResponse</p>
 }
 
+<div class="page-container">
+    @if (optionNames.Count > 0)
+    {
+        <div class="@LayoutClass">
+            @foreach (var optionName in optionNames)
+            {
+                var currentIndex = currentImageIndex[optionName];
+                var fileName = Path.GetFileName(optionImages[optionName][currentIndex]);
+                <div class="image-container">
+                    <img src="@($"/Output/{optionName}/{fileName}")"
+                         alt="@optionName"
+                         @onclick="@(() => CycleImage(optionName))" />
+                </div>
+            }
+            <div class="solidworks-placeholder">
+                <h4>מערכת SolidWorks כאן (תצוגה ופעולות נוספות)</h4>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="layout-default">
+            <div class="solidworks-placeholder">
+                <h4>מערכת SolidWorks כאן (תצוגה ופעולות נוספות)</h4>
+            </div>
+        </div>
+    }
+</div>
+
 @code {
     private bool showChat = false;
     private string userMessage = "";
     private string aiResponse = "";
+    private List<string> optionNames = new();
+    private Dictionary<string, string[]> optionImages = new();
+    private Dictionary<string, int> currentImageIndex = new();
+    private string LayoutClass = "layout-default";
     private string jsonPath = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
 
     protected override void OnInitialized()
     {
-        // Load the .env file
-        DotNetEnv.Env.Load();
+        var outputDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output");
+        if (Directory.Exists(outputDir))
+        {
+            var optionDirs = Directory.GetDirectories(outputDir);
+            foreach (var optionDir in optionDirs.OrderBy(x => x))
+            {
+                var optionName = Path.GetFileName(optionDir);
+                var images = Directory.GetFiles(optionDir, "*.png");
+                if (images.Length > 0)
+                {
+                    optionNames.Add(optionName);
+                    optionImages[optionName] = images.OrderBy(f => f).ToArray();
+                    currentImageIndex[optionName] = 0;
+                }
+            }
+        }
 
-        Kitchenbuilder.Core.SolidWorksWindowHelper.ArrangeBothWindows();
+        // Determine layout
+        switch (optionNames.Count)
+        {
+            case 1:
+                LayoutClass = "layout-one";
+                break;
+            case 2:
+                LayoutClass = "layout-two";
+                break;
+            case 3:
+                LayoutClass = "layout-three";
+                break;
+            default:
+                LayoutClass = "layout-default";
+                break;
+        }
+    }
+
+    private void CycleImage(string optionName)
+    {
+        if (!optionImages.ContainsKey(optionName)) return;
+
+        var count = optionImages[optionName].Length;
+        currentImageIndex[optionName] = (currentImageIndex[optionName] + 1) % count;
     }
 
     private void ApproveBase()
@@ -57,7 +129,7 @@
     {
         try
         {
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            var apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
                 aiResponse = "⚠️ OpenAI API key not configured!";
@@ -131,7 +203,6 @@ Only use that format for suggested values.
                 .GetProperty("content")
                 .GetString();
 
-            // Extract D1 and D2 values if provided in the AI response
             if (TryExtractValue(aiResponse, "D1", out double d1))
                 kitchen.Base.Width2 = d1;
 

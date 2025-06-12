@@ -1,8 +1,10 @@
 ﻿@page "/walls"
 @using System.IO
 @using System.Text.Json
-@using Kitchenbuilder.Core.Models;
+@using Kitchenbuilder.Core.Models
 @using Kitchenbuilder.Core.Services
+@using Kitchenbuilder.Core.WallBuilders
+
 @inject NavigationManager NavManager
 
 @code {
@@ -76,59 +78,75 @@
     {
         try
         {
+            // 1. Build the Kitchen object from user input
             var input = new Kitchen
+                {
+                    Floor = new Floor
+                    {
+                        Width = FloorWidth,
+                        Length = FloorLength
+                    },
+                    Walls = WallData.Select(w => new Wall
+                    {
+                        Width = w.Width,
+                        Height = w.Height,
+                        HasWindows = w.HasWindows,
+                        Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                        {
+                            Width = win.Width,
+                            Height = win.Height,
+                            DistanceX = win.DistanceX,
+                            DistanceY = win.DistanceY
+                        }).ToList() : null,
+                        HasDoors = w.HasDoors,
+                        Doors = w.HasDoors ? w.Doors.Select(d => new Door
+                        {
+                            Width = d.Width,
+                            Height = d.Height,
+                            DistanceX = d.DistanceX
+                        }).ToList() : null
+                    }).ToList()
+                };
+
+            // 2. Decide which wall builder to run based on wall count
+            int wallCount = input.Walls?.Count ?? 0;
+
+            switch (wallCount)
             {
-                Floor = new Floor
-                {
-                    Width = FloorWidth,
-                    Length = FloorLength
-                },
-                Walls = WallData.Select(w => new Wall
-                {
-                    Width = w.Width,
-                    Height = w.Height,
-                    HasWindows = w.HasWindows,
-                    Windows = w.HasWindows ? w.Windows.Select(win => new Window
-                    {
-                        Width = win.Width,
-                        Height = win.Height,
-                        DistanceX = win.DistanceX,
-                        DistanceY = win.DistanceY
-                    }).ToList() : null,
-                    HasDoors = w.HasDoors,
-                    Doors = w.HasDoors ? w.Doors.Select(d => new Door
-                    {
-                        Width = d.Width,
-                        Height = d.Height,
-                        DistanceX = d.DistanceX
-                    }).ToList() : null
-                }).ToList()
-            };
+                case 1:
+                    OneWallBuilder.Run(input);
+                    break;
+                case 2:
+                    TwoWallBuilder.Run(input);
+                    break;
+                case 3:
+                    ThreeWallBuilder.Run(input);
+                    break;
+                case 4:
+                    FourWallBuilder.Run(input);
+                    break;
+                default:
+                    SaveMessage = "❌ Invalid number of walls (must be between 1 and 4).";
+                    return;
+            }
 
-            string folder = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON";
-            Directory.CreateDirectory(folder);
 
-            // Save input.json
-            string inputPath = Path.Combine(folder, "input.json");
-            string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(inputPath, inputJson);
-
-            // קריאה ל-GenerateKitchen שמחזירה את האובייקט Base
             var generatedBase = BaseCreator.CreateBase(input);
+            input.Base = generatedBase;
 
-            // Save Output.json with the Base data
-            var baseOutput = new
-            {
-                Width1 = generatedBase.Width1,
-                Width2 = generatedBase.Width2,
-                FileName = generatedBase.FileName
-            };
 
-            string outputPath = Path.Combine(folder, "output.json");
-            string outputJson = JsonSerializer.Serialize(baseOutput, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(outputPath, outputJson);
 
-            SaveMessage = "✅ Kitchen input saved, and base output generated!";
+                string folder = Path.Combine(
+                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+                 "Kitchenbuilder", "Kitchenbuilder", "JSON");
+                Directory.CreateDirectory(folder);
+
+                string inputPath = Path.Combine(folder, "input.json");
+                string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
+                await File.WriteAllTextAsync(inputPath, inputJson);
+
+            SaveMessage = "✅ Kitchen input saved, including base data!";
+            // 3. Navigate to the base approval page after walls are created
             NavManager.NavigateTo("/base-approval");
         }
         catch (Exception ex)
