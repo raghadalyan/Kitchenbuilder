@@ -27,7 +27,7 @@ namespace Kitchenbuilder.Core
             string outputPath,
             bool exposed,
             bool corner,
-            int fridgeWall,
+            int fridgeWall, 
             double fridgeStart,
             double fridgeEnd)
         {
@@ -36,19 +36,128 @@ namespace Kitchenbuilder.Core
                 return windows.Any(w => Math.Max(from, w.DistanceX) < Math.Min(to, w.DistanceX + w.Width));
             }
 
-            if (!exposed && corner)
+            if (!exposed)
             {
-                return HandleCornerPlacement(
-                    kitchen, wall1Index, wall2Index,
-                    spacesWall1, spacesWall2,
-                    fridgeWall, fridgeStart, fridgeEnd,
-                    outputPath, HasWindow);
+                if (corner)
+                {
+                    return HandleCornerPlacement(
+                        kitchen, wall1Index, wall2Index,
+                        spacesWall1, spacesWall2,
+                        fridgeWall, fridgeStart, fridgeEnd,
+                        outputPath, HasWindow);
+                }
+                else
+                {
+                    return HandleNonCornerPlacement(
+                        kitchen, wall1Index, wall2Index,
+                        spacesWall1, spacesWall2,
+                        fridgeWall, fridgeStart, fridgeEnd,
+                        outputPath, HasWindow);
+                }
             }
+
 
             Log("❌ No valid L-Shape configuration found.");
             return false;
         }
 
+
+
+        /// <summary>
+        /// Handles validation of non-corner L-shape placement:
+        /// 
+        /// ✅ Steps:
+        /// 1. Rejects placement if fridge area overlaps a window.
+        /// 2. Identifies the exact space where the fridge is placed.
+        /// 3. Rejects if that space is smaller than 85 cm.
+        /// 4. If space is 85–205 cm:
+        ///    - Accepts only if:
+        ///        a. Another space (≥120cm)(120=60+60workspace) exists in the same wall, AND
+        ///        b. A space (≥120cm) (120=60+60workspace)exists in the other wall
+        ///    - OR accepts if:
+        ///        c. A space (≥240cm)(60+60+120workspace) exists in the other wall.
+        /// 5. If space is ≥205 (85 fridge+120(60+60workspace)) cm:
+        ///    - Accepts if the other wall has a space ≥120 cm.
+        /// 
+        /// Returns true and writes result if valid; otherwise returns false.
+        /// </summary>
+
+        private static bool HandleNonCornerPlacement(
+    Kitchen kitchen,
+    int wall1Index,
+    int wall2Index,
+    List<(double start, double end)> spacesWall1,
+    List<(double start, double end)> spacesWall2,
+    int fridgeWall,
+    double fridgeStart,
+    double fridgeEnd,
+    string outputPath,
+    Func<double, double, List<Window>, bool> HasWindow)
+        {
+            var wall1 = kitchen.Walls[wall1Index];
+            var wall2 = kitchen.Walls[wall2Index];
+            var windows1 = wall1.Windows ?? new List<Window>();
+            var windows2 = wall2.Windows ?? new List<Window>();
+
+            var (spacesCurrentWall, spacesOtherWall, windowsCurrent, windowsOther) =
+                fridgeWall == wall1Index + 1
+                    ? (spacesWall1, spacesWall2, windows1, windows2)
+                    : (spacesWall2, spacesWall1, windows2, windows1);
+
+            // ❌ Block if window overlaps
+            if (HasWindow(fridgeStart, fridgeEnd, windowsCurrent))
+            {
+                Log("🚫 Fridge area overlaps a window — aborting placement.");
+                return false;
+            }
+
+            // 🧱 Identify the empty space that contains the fridge
+            var matchingSpace = spacesCurrentWall.FirstOrDefault(s =>
+                fridgeStart >= s.start && fridgeEnd <= s.end);
+
+            double currentLength = matchingSpace.end - matchingSpace.start;
+            if (currentLength < 85)
+            {
+                Log($"🚫 Fridge space too small: {currentLength}cm");
+                return false;
+            }
+
+            Log($"📏 Current fridge space: {currentLength}cm");
+
+            // Logic split by size
+            if (currentLength >= 85 && currentLength < 205)
+            {
+                bool hasAnother120InSameWall = spacesCurrentWall.Any(s => s != matchingSpace && (s.end - s.start) >= 120);
+                bool has120InOtherWall = spacesOtherWall.Any(s => (s.end - s.start) >= 120);
+
+                if (hasAnother120InSameWall && has120InOtherWall)
+                {
+                    Log("✅ Valid: small fridge space with two medium zones (120+) on both walls.");
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                }
+
+                if (spacesOtherWall.Any(s => (s.end - s.start) >= 240))
+                {
+                    Log("✅ Valid: small fridge space + one large (240+) on other wall.");
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                }
+
+                return false;
+            }
+
+            if (currentLength >= 205)
+            {
+                if (spacesOtherWall.Any(s => (s.end - s.start) >= 120))
+                {
+                    Log("✅ Valid: long fridge space (205+) and large space (120+) on other wall.");
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                }
+
+                return false;
+            }
+
+            return false;
+        }
 
         private static bool HandleCornerPlacement(
     Kitchen kitchen,

@@ -112,10 +112,96 @@ namespace Kitchenbuilder.Core
 
                         LogDebug("❌ No valid corner placement found");
                     }
+                    //--------------------------------------------------------------------------------------
+                    if (!corner)
+                    {
+                        LogDebug("🔍 No corner found – trying L-shape using largest empty space");
+
+                        // Combine all spaces with wall index
+                        var allSpaces = new List<(int wall, double start, double end)>();
+                        allSpaces.AddRange(spacesWall1.Select(s => (wall: 1, start: s.start, end: s.end)));
+                        allSpaces.AddRange(spacesWall2.Select(s => (wall: 2, start: s.start, end: s.end)));
+
+                        // Sort by descending length
+                        var sortedSpaces = allSpaces
+                            .Where(s => (s.end - s.start) >= 85)
+                            .OrderByDescending(s => s.end - s.start)
+                            .ToList();
+
+                        foreach (var space in sortedSpaces)
+                        {
+                            double spaceLength = space.end - space.start;
+
+                            // Try end first if space is in Wall 2
+                            if (space.wall == 2)
+                            {
+                                // Option A: Place fridge at end of the space
+                                double fridgeEnd = space.end;
+                                double fridgeStart = fridgeEnd - 85;
+                                LogDebug($"🚪 Trying Wall 2 (end of space) from {fridgeStart} to {fridgeEnd}");
+
+                                if (LShapeChecker.EvaluateLShape(
+                                    kitchen, 0, 1, spacesWall1, spacesWall2, 0, -1, outputPath,
+                                    false, false, space.wall, fridgeStart, fridgeEnd))
+                                {
+                                    LogDebug("✅ Success: Fridge placed at end of Wall 2 space");
+                                    return true;
+                                }
+
+                                // Option B: Try start of the space
+                                fridgeStart = space.start;
+                                fridgeEnd = fridgeStart + 85;
+                                LogDebug($"🚪 Trying Wall 2 (start of space) from {fridgeStart} to {fridgeEnd}");
+
+                                if (LShapeChecker.EvaluateLShape(
+                                    kitchen, 0, 1, spacesWall1, spacesWall2, 0, -1, outputPath,
+                                    false, false, space.wall, fridgeStart, fridgeEnd))
+                                {
+                                    LogDebug("✅ Success: Fridge placed at start of Wall 2 space");
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                // Wall 1 logic – start first
+                                double fridgeStart = space.start;
+                                double fridgeEnd = fridgeStart + 85;
+                                LogDebug($"🚪 Trying Wall 1 (start of space) from {fridgeStart} to {fridgeEnd}");
+
+                                if (LShapeChecker.EvaluateLShape(
+                                    kitchen, 0, 1, spacesWall1, spacesWall2, 0, -1, outputPath,
+                                    false, false, space.wall, fridgeStart, fridgeEnd))
+                                {
+                                    LogDebug("✅ Success: Fridge placed at start of Wall 1 space");
+                                    return true;
+                                }
+
+                                // Try end of space second
+                                fridgeEnd = space.end;
+                                fridgeStart = fridgeEnd - 85;
+                                LogDebug($"🚪 Trying Wall 1 (end of space) from {fridgeStart} to {fridgeEnd}");
+
+                                if (LShapeChecker.EvaluateLShape(
+                                    kitchen, 0, 1, spacesWall1, spacesWall2, 0, -1, outputPath,
+                                    false, false, space.wall, fridgeStart, fridgeEnd))
+                                {
+                                    LogDebug("✅ Success: Fridge placed at end of Wall 1 space");
+                                    return true;
+                                }
+                            }
+                        }
+
+                        LogDebug("❌ No valid L-shape placement found (non-corner)");
+                    }
+
+
+
 
 
                 }
             }
+
+
 
             // 2. Fallback – check wall with largest space
             double max1 = simpleEmptySpaces.ContainsKey(0) ? simpleEmptySpaces[0].Max(s => s.end - s.start) : 0;
