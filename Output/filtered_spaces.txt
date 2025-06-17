@@ -1,6 +1,6 @@
 Filtered Empty Spaces:
 Wall 1:
-  From 0 cm to 400 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True
+  From 0 cm to 250 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True
+  From 300 cm to 400 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True
 Wall 2:
-  From 0 cm to 100 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True
-  From 150 cm to 400 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True
+  From 0 cm to 400 cm | Cabinet: True | Sink: True | Cooktop: True | Fridge: True

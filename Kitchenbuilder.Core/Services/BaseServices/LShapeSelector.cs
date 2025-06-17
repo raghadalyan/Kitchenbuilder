@@ -112,6 +112,8 @@ namespace Kitchenbuilder.Core
 
                         LogDebug("❌ No valid corner placement found");
                     }
+
+
                 }
             }
 

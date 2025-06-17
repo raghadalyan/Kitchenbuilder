@@ -17,8 +17,8 @@ namespace Kitchenbuilder.Core
 
             string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleTwoWalls.txt";
             string message = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - LineShapeSelector result: {(success ? "✅ Success" : "❌ Failed")}";
+            
             //Check L shape Option 
-            // L Shape (LShapeSelector defines the path internally)
             bool lShapeSuccess = LShapeSelector.TryFindWallsForLShape(kitchen, simpleEmptySpaces);
             File.AppendAllText(outputPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - LShapeSelector result: {(lShapeSuccess ? "✅ Success" : "❌ Failed")}{Environment.NewLine}");
 
