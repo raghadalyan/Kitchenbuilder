@@ -42,10 +42,14 @@ namespace Kitchenbuilder.Core
 
 
             }
+            else if (wallCount == 2)
+            {
+                var (layout, suggestedBases, suggestedDescriptions) = HandleTwoWalls.Evaluate(kitchen, simpleEmptySpaces);
+                layoutSuggestions.Add(layout);
+            }
             else
             {
                 Console.WriteLine("Handling for multiple walls will be implemented later.");
-                // TODO: Implement logic for 2 walls and U-base
             }
 
             return layoutSuggestions;

@@ -1,35 +1,43 @@
 {
   "Floor": {
-    "Width": 500,
-    "Length": 300
+    "Width": 400,
+    "Length": 400
   },
   "Walls": [
     {
-      "Width": 500,
-      "Height": 400,
+      "Width": 400,
+      "Height": 0,
       "HasWindows": true,
       "Windows": [
         {
-          "Width": 80,
-          "Height": 50,
-          "DistanceX": 20,
-          "DistanceY": 150
+          "Width": 50,
+          "Height": 0,
+          "DistanceX": 10,
+          "DistanceY": 100
         }
       ],
+      "HasDoors": false,
+      "Doors": null
+    },
+    {
+      "Width": 400,
+      "Height": 0,
+      "HasWindows": false,
+      "Windows": null,
       "HasDoors": true,
       "Doors": [
         {
-          "Width": 80,
-          "Height": 100,
-          "DistanceX": 410,
+          "Width": 50,
+          "Height": 0,
+          "DistanceX": 100,
           "DistanceY": 0
         }
       ]
     }
   ],
   "Base": {
-    "Width1": 500,
-    "Width2": 300,
+    "Width1": 400,
+    "Width2": 400,
     "FileName": "base_with_fridge_edited.SLDPRT"
   }
 }

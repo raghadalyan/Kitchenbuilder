@@ -1,8 +1,0 @@
-2025-06-12 17:04:29 - ✅ File base_with_fridge_option_1.SLDPRT copied successfully.
-2025-06-12 17:05:10 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Top.png
-2025-06-12 17:05:11 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Front.png
-2025-06-12 17:05:12 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Right.png
-2025-06-12 17:05:13 - ✅ File base_with_fridge_option_2.SLDPRT copied successfully.
-2025-06-12 17:05:39 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Top.png
-2025-06-12 17:05:40 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Front.png
-2025-06-12 17:05:41 - ✅ Image saved: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Right.png
