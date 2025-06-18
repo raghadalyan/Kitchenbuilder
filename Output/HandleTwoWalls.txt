@@ -31,3 +31,43 @@
 2025-06-18 17:40:31 - LShapeSelector result: ✅ Success
 2025-06-18 17:40:31 - UShapeSelector result: ✅ Success
 2025-06-18 17:40:31 - LineShapeSelector result: ✅ Success
+[01:21:07] 🔍 Corner detected between Wall 1 and Wall 2
+[01:21:07] 🚪 Option 1: Trying fridge in Wall 1 from 0 to 85
+[01:21:07] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
+[01:21:07] 🧊 Fridge in last space of wall 1, size=400, afterFridge=315
+[01:21:07] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
+[01:21:07] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json
+[01:21:07] ✅ Success: Fridge placed in Wall 1 (Option 1)
+2025-06-19 01:21:07 - LShapeSelector result: ✅ Success
+2025-06-19 01:21:07 - UShapeSelector result: ✅ Success
+2025-06-19 01:21:07 - LineShapeSelector result: ✅ Success
+[01:25:27] 🔍 Corner detected between Wall 1 and Wall 2
+[01:25:27] 🚪 Option 1: Trying fridge in Wall 1 from 0 to 85
+[01:25:27] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
+[01:25:27] 🧊 Fridge in last space of wall 1, size=400, afterFridge=315
+[01:25:27] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
+[01:25:27] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json
+[01:25:27] ✅ Success: Fridge placed in Wall 1 (Option 1)
+2025-06-19 01:25:27 - LShapeSelector result: ✅ Success
+2025-06-19 01:25:27 - UShapeSelector result: ✅ Success
+2025-06-19 01:25:27 - LineShapeSelector result: ✅ Success
+[01:26:49] 🔍 Corner detected between Wall 1 and Wall 2
+[01:26:49] 🚪 Option 1: Trying fridge in Wall 1 from 0 to 85
+[01:26:49] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
+[01:26:49] 🧊 Fridge in last space of wall 1, size=300, afterFridge=215
+[01:26:49] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
+[01:26:49] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json
+[01:26:49] ✅ Success: Fridge placed in Wall 1 (Option 1)
+2025-06-19 01:26:49 - LShapeSelector result: ✅ Success
+2025-06-19 01:26:49 - UShapeSelector result: ✅ Success
+2025-06-19 01:26:49 - LineShapeSelector result: ✅ Success
+[01:29:59] 🔍 Corner detected between Wall 1 and Wall 2
+[01:29:59] 🚪 Option 1: Trying fridge in Wall 1 from 0 to 85
+[01:29:59] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
+[01:29:59] 🧊 Fridge in last space of wall 1, size=300, afterFridge=215
+[01:29:59] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
+[01:29:59] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json
+[01:29:59] ✅ Success: Fridge placed in Wall 1 (Option 1)
+2025-06-19 01:29:59 - LShapeSelector result: ✅ Success
+2025-06-19 01:30:00 - UShapeSelector result: ✅ Success
+2025-06-19 01:29:59 - LineShapeSelector result: ✅ Success

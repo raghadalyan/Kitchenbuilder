@@ -17,3 +17,15 @@
 [17:40:31] 🔍 Corner detected between Wall 1 and Wall 2
 [17:40:31] 🚪 Option 1: Trying fridge in Wall 1 from 400 to 485
 [17:40:31] ✅ Success: Fridge placed in Wall 1 (Option 1)
+[01:21:07] 🧱 U-shape attempt with exposed base on Wall 4
+[01:21:07] 🚪 Option 2: Trying fridge in Wall 2 from 215 to 300
+[01:21:07] ✅ Success: Fridge placed in Wall 2 (Option 2)
+[01:25:27] 🧱 U-shape attempt with exposed base on Wall 4
+[01:25:27] 🚪 Option 2: Trying fridge in Wall 2 from 415 to 500
+[01:25:27] ✅ Success: Fridge placed in Wall 2 (Option 2)
+[01:26:49] 🧱 U-shape attempt with exposed base on Wall 4
+[01:26:49] 🚪 Option 2: Trying fridge in Wall 2 from 315 to 400
+[01:26:49] ✅ Success: Fridge placed in Wall 2 (Option 2)
+[01:29:59] 🧱 U-shape attempt with exposed base on Wall 4
+[01:29:59] 🚪 Option 2: Trying fridge in Wall 2 from 255 to 340
+[01:30:00] ✅ Success: Fridge placed in Wall 2 (Option 2)

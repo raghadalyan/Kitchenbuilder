@@ -49,18 +49,38 @@ namespace Kitchenbuilder.Core
             return false;
         }
 
+
+
+
+
+        /// <summary>
+        /// Evaluates whether a valid U-shape kitchen layout is possible when there is an exposed base (Wall 3 or Wall 4)
+        /// and a valid corner exists between two main walls. This function checks if a fridge can be placed at the
+        /// end (Wall 3 case) or beginning (Wall 4 case) of the appropriate wall with required spacing and without
+        /// window obstruction.
+        /// 
+        /// Logic:
+        /// - Determines if exposed wall is Wall 3 or Wall 4, and checks minimum dimensions (150cm width or length).
+        /// - For Wall 3: checks that at least 60cm exists **after** the fridge and floor width is sufficient.
+        /// - For Wall 4: checks that at least 60cm exists **before** the fridge and floor length is sufficient.
+        /// - Also checks fallback option: placing fridge in the second-to-last space.
+        /// - If valid, writes the result to a JSON file, including a computed ExposedWallSpace:
+        ///     - Wall 3: (0, min(180, floor width))
+        ///     - Wall 4: (floor length, min(floor length, floor length - 85))
+        /// </summary>
+
         private static bool HandleExposedBaseWithCorner(
-           Kitchen kitchen,
-           int wall1Index,
-           int wall2Index,
-           List<(double start, double end)> spacesWall1,
-           List<(double start, double end)> spacesWall2,
-           double exposedWallLength,
-           int exposedWallNumber,
-           int fridgeWall,
-           double fridgeStart,
-           double fridgeEnd,
-           string outputPath)
+            Kitchen kitchen,
+            int wall1Index,
+            int wall2Index,
+            List<(double start, double end)> spacesWall1,
+            List<(double start, double end)> spacesWall2,
+            double exposedWallLength,
+            int exposedWallNumber,
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd,
+            string outputPath)
         {
             int wallX = Math.Min(wall1Index, wall2Index);
             int wallY = Math.Max(wall1Index, wall2Index);
@@ -73,15 +93,6 @@ namespace Kitchenbuilder.Core
 
             double floorWidth = kitchen.Floor.Width;
             double floorLength = kitchen.Floor.Length;
-
-            Log("*************** HandleExposedBaseWithCorner PARAMETERS ***************");
-            Log($"wall1Index: {wall1Index}, wall2Index: {wall2Index}");
-            Log($"spacesWall1: [{string.Join(", ", spacesWall1.Select(s => $"({s.start}, {s.end})"))}]");
-            Log($"spacesWall2: [{string.Join(", ", spacesWall2.Select(s => $"({s.start}, {s.end})"))}]");
-            Log($"exposedWallLength: {exposedWallLength}, exposedWallNumber: {exposedWallNumber}");
-            Log($"fridgeWall: {fridgeWall}, fridgeStart: {fridgeStart}, fridgeEnd: {fridgeEnd}");
-            Log($"floorWidth: {floorWidth}, floorLength: {floorLength}");
-            Log("**********************************************************************");
 
             bool isExposedWall3 = exposedWallNumber == 3 && floorWidth > 150 && floorLength >= 240;
             bool isExposedWall4 = exposedWallNumber == 4 && floorLength > 150 && floorWidth >= 240;
@@ -106,8 +117,30 @@ namespace Kitchenbuilder.Core
                     !HasWindow(fridgeStart, fridgeEnd, relevantWindows))
                 {
                     Log("✅ Valid U-Shape: Fridge in last space of relevant wall");
+
+                    // Calculate exposed wall space
+                    (double start, double end) exposedWallSpace;
+                    if (exposedWallNumber == 3)
+                    {
+                        if (floorWidth < 150)
+                        {
+                            Log("❌ Floor width too small for U-Shape with exposed Wall 3");
+                            return false;
+                        }
+                        exposedWallSpace = (0, floorWidth < 180 ? floorWidth : 180);
+                    }
+                    else // exposedWallNumber == 4
+                    {
+                        if (floorLength < 150)
+                        {
+                            Log("❌ Floor length too small for U-Shape with exposed Wall 4");
+                            return false;
+                        }
+                        exposedWallSpace = (floorLength < 180 ? floorLength : floorLength - 85, floorLength);
+                    }
+
                     return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                        fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, (0, exposedWallLength));
+                        fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
                 }
 
                 if (relevantSpaces.Count >= 2)
@@ -120,8 +153,30 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, relevantWindows))
                     {
                         Log("✅ Valid U-Shape: Fridge in before-last space of relevant wall");
+
+                        // Calculate exposed wall space
+                        (double start, double end) exposedWallSpace;
+                        if (exposedWallNumber == 3)
+                        {
+                            if (floorWidth < 150)
+                            {
+                                Log("❌ Floor width too small for U-Shape with exposed Wall 3");
+                                return false;
+                            }
+                            exposedWallSpace = (0, floorWidth < 180 ? floorWidth : 180);
+                        }
+                        else // exposedWallNumber == 4
+                        {
+                            if (floorLength < 150)
+                            {
+                                Log("❌ Floor length too small for U-Shape with exposed Wall 4");
+                                return false;
+                            }
+                            exposedWallSpace = (floorLength < 180 ? floorLength : floorLength - 85, floorLength);
+                        }
+
                         return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                            fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, (0, exposedWallLength));
+                            fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
                     }
                 }
             }
