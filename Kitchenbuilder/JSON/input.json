@@ -6,25 +6,26 @@
   "Walls": [
     {
       "Width": 500,
-      "Height": 400,
-      "HasWindows": true,
-      "Windows": [
-        {
-          "Width": 80,
-          "Height": 50,
-          "DistanceX": 20,
-          "DistanceY": 150
-        }
-      ],
+      "Height": 0,
+      "HasWindows": false,
+      "Windows": null,
       "HasDoors": true,
       "Doors": [
         {
-          "Width": 80,
-          "Height": 100,
-          "DistanceX": 410,
+          "Width": 50,
+          "Height": 0,
+          "DistanceX": 350,
           "DistanceY": 0
         }
       ]
+    },
+    {
+      "Width": 300,
+      "Height": 0,
+      "HasWindows": false,
+      "Windows": null,
+      "HasDoors": false,
+      "Doors": null
     }
   ],
   "Base": {

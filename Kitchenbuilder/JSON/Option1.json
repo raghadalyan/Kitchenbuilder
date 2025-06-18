@@ -1,0 +1,15 @@
+{
+  "Title": "Line Shape",
+  "Wall": 1,
+  "MainEmptySpace": {
+    "Start": 0,
+    "End": 350
+  },
+  "SecondaryEmptySpaces": [
+    {
+      "Start": 400,
+      "End": 500
+    }
+  ],
+  "FridgePlacement": "Fridge Left (0-85)"
+}
