@@ -159,6 +159,41 @@ namespace Kitchenbuilder.Core
             return false;
         }
 
+
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Validates and handles corner fridge placement between two connected walls (L-shape).
+        /// 
+        /// Conditions for a valid corner:
+        /// - The last space of wallX ends exactly at wall width.
+        /// - The first space of wallY starts exactly at 0.
+        ///
+        /// Evaluates fridge placement in 4 main cases:
+        ///
+        /// 1. Last space of wallX:
+        ///    - Valid if space is 145–235 cm, there is at least 60 cm left after the fridge,
+        ///      and wallY has at least one space ≥250 cm (to allow for sink/cooktop).
+        ///    - Or if space >235 cm, wallY has space >150 cm, and ≥150 cm remain after fridge.
+        ///
+        /// 2. Before-last space of wallX:
+        ///    - Valid if length >175 cm and wallY has space >150 cm,
+        ///      or if both wallX and wallY have spaces >150 cm.
+        ///
+        /// 3. First space of wallY:
+        ///    - Valid if space is 145–235 cm, there is at least 60 cm before the fridge,
+        ///      and wallX has at least one space ≥250 cm (to allow for sink/cooktop).
+        ///    - Or if space >235 cm, wallX has space >150 cm, and ≥150 cm remain before fridge.
+        ///
+        /// 4. Second space of wallY:
+        ///    - Valid if length >175 cm and wallX has space >150 cm,
+        ///      or if both walls have spaces >150 cm.
+        ///
+        /// All cases ensure the fridge location is not blocked by windows.
+        /// If a valid configuration is found, writes success metadata to the output file and returns true.
+        /// </summary>
+
+
         private static bool HandleCornerPlacement(
     Kitchen kitchen,
     int wall1Index,
@@ -209,7 +244,7 @@ namespace Kitchenbuilder.Core
 
                     // Case 1: Fridge in usable space (145–235) with at least 60cm left and no big space in wallY
                     if (spaceLen <= 235 &&
-                        !spacesY.Any(s => (s.end - s.start) > 250) &&
+                        spacesY.Any(s => (s.end - s.start) >= 250) &&
                         afterFridge > 60 &&
                         !HasWindow(fridgeStart, fridgeEnd, windowsX))
                     {
@@ -266,9 +301,9 @@ namespace Kitchenbuilder.Core
 
                     double beforeFridge = fridgeStart - spacesY[0].start;
                     Log($"🧊 Fridge in first space of wall {wallY + 1}, size={spaceLen}, beforeFridge={beforeFridge}");
-
+                    //case 3 
                     if (spaceLen >= 145 && spaceLen <= 235 &&
-                        !spacesX.Any(s => (s.end - s.start) > 250) &&
+                        spacesX.Any(s => (s.end - s.start) >= 250) &&
                         beforeFridge > 60 &&
                         !HasWindow(fridgeStart, fridgeEnd, windowsY))
                     {

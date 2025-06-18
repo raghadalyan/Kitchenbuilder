@@ -21,6 +21,9 @@ namespace Kitchenbuilder.Core
             //Check L shape Option 
             bool lShapeSuccess = LShapeSelector.TryFindWallsForLShape(kitchen, simpleEmptySpaces);
             File.AppendAllText(outputPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - LShapeSelector result: {(lShapeSuccess ? "✅ Success" : "❌ Failed")}{Environment.NewLine}");
+            // ✅ Check U-shape Option
+            bool uShapeSuccess = UShapeSelector.TryFindWallsForUShape(kitchen, simpleEmptySpaces);
+            File.AppendAllText(outputPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - UShapeSelector result: {(uShapeSuccess ? "✅ Success" : "❌ Failed")}{Environment.NewLine}");
 
             File.AppendAllText(outputPath, message + Environment.NewLine);
 

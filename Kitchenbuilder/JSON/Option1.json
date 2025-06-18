@@ -5,6 +5,11 @@
     "Start": 0,
     "End": 350
   },
-  "SecondaryEmptySpaces": [],
+  "SecondaryEmptySpaces": [
+    {
+      "Start": 400,
+      "End": 500
+    }
+  ],
   "FridgePlacement": "Fridge Left (0-85)"
 }
