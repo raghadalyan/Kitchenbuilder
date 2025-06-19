@@ -8,14 +8,13 @@ namespace Kitchenbuilder.Core
 {
     public static class HandleOneWall
     {
-        private const string OutputFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output";
-        private const string OutputFile = "Evaluate Base.txt";
+
 
         public static (
             Dictionary<int, (string appliance, double start, double end)> layout,
             Dictionary<int, (double start, double end)> suggestedBases,
             Dictionary<int, string> suggestedDescriptions)
-            Evaluate(
+        Evaluate(
             Kitchen kitchen,
             Dictionary<int, List<(double start, double end)>> emptySpaces)
         {
@@ -37,9 +36,11 @@ namespace Kitchenbuilder.Core
 
             bool straightLineSuggested = false;
             bool lShapeSuggested = false;
-            int lShapeCornerPosition = 2; // Default
+            int lShapeCornerPosition = 2;
 
-            // 1️⃣ Straight-line layout
+            string jsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\";
+            Directory.CreateDirectory(jsonFolder);
+
             foreach (var seg in wall0Segments)
             {
                 double segLength = seg.end - seg.start;
@@ -55,14 +56,25 @@ namespace Kitchenbuilder.Core
                     suggestedBases.Clear();
                     suggestedBases[1] = (seg.start, seg.end);
 
-                    suggestedDescriptions[1] = $"Wall 1: {seg.start}-{seg.end} cm (evaluating fridge placement: {side})";
+                    // Write JSON for Line Shape
+                    var lineShapeJson = new
+                    {
+                        Title = "Line Shape",
+                        Wall1 = 1,
+                        SpacesWall1 = new[] { new { Start = seg.start, End = seg.end } },
+                        FridgeWall = 1,
+                        Fridge = new { Start = pos, End = pos + fridgeWidth },
+                        Corner = false,
+                        Exposed = false
+                    };
+                    File.WriteAllText(Path.Combine(jsonFolder, "Option1.json"),
+                        System.Text.Json.JsonSerializer.Serialize(lineShapeJson, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
                     straightLineSuggested = true;
                     break;
                 }
             }
 
-            // 2️⃣ L-shape layout
             foreach (var seg0 in wall0Segments)
             {
                 double seg0Length = seg0.end - seg0.start;
@@ -80,19 +92,29 @@ namespace Kitchenbuilder.Core
 
                         suggestedBases.Clear();
                         suggestedBases[1] = (seg0.start, seg0.end);
-                        double cornerBaseLength = 180;
-                        if (kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150)
-                        {
-                            cornerBaseLength = kitchen.Floor.Length;
-                        }
+                        double cornerBaseLength = kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150 ? kitchen.Floor.Length : 180;
                         suggestedBases[lShapeCornerPosition] = (0, cornerBaseLength);
 
-                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: {side})\n" +
-                           $"Wall {lShapeCornerPosition}: 0-{cornerBaseLength} cm";
+                        // Write JSON for LShape
+                        var lShapeJson = new
+                        {
+                            Title = "LShape",
+                            Wall1 = 1,
+                            SpacesWall1 = new[] { new { Start = seg0.start, End = seg0.end } },
+                            FridgeWall = 1,
+                            Fridge = new { Start = fridgePos, End = fridgePos + fridgeWidth },
+                            Corner = true,
+                            Exposed = true,
+                            NumOfExposedWall = lShapeCornerPosition,
+                            ExposedWallSpace = new { Start = 0, End = cornerBaseLength }
+                        };
+                        File.WriteAllText(Path.Combine(jsonFolder, "Option2.json"),
+                            System.Text.Json.JsonSerializer.Serialize(lShapeJson, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
                         lShapeSuggested = true;
                         break;
                     }
+
                     if (seg0Length >= fridgeWidth + sinkWidth + workspace)
                     {
                         layout.Add(10, ("Fridge (L-shape)", fridgePos, fridgePos + fridgeWidth));
@@ -100,19 +122,25 @@ namespace Kitchenbuilder.Core
                         layout.Add(11, ("Sink (L-shape)", p0, p0 + sinkWidth));
                         layout.Add(12, ("Cooktop (L-shape - Exposed Base)", 0, cooktopWidth));
 
-
                         suggestedBases.Clear();
                         suggestedBases[1] = (seg0.start, seg0.end);
-                        double cornerBaseLength = 180;
-                        if (kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150)
-                        {
-                            cornerBaseLength = kitchen.Floor.Length;
-                        }
+                        double cornerBaseLength = kitchen.Floor.Length < 180 && kitchen.Floor.Length > 150 ? kitchen.Floor.Length : 180;
                         suggestedBases[lShapeCornerPosition] = (0, cornerBaseLength);
 
-                        suggestedDescriptions[2] = $"Wall 1: {seg0.start}-{seg0.end} cm, corner {lShapeCornerPosition} (evaluating fridge placement: {side})\n" +
-                             $"Wall {lShapeCornerPosition}: 0-{cornerBaseLength} cm";
-
+                        var lShapeJson = new
+                        {
+                            Title = "LShape",
+                            Wall1 = 1,
+                            SpacesWall1 = new[] { new { Start = seg0.start, End = seg0.end } },
+                            FridgeWall = 1,
+                            Fridge = new { Start = fridgePos, End = fridgePos + fridgeWidth },
+                            Corner = true,
+                            Exposed = true,
+                            NumOfExposedWall = lShapeCornerPosition,
+                            ExposedWallSpace = new { Start = 0, End = cornerBaseLength }
+                        };
+                        File.WriteAllText(Path.Combine(jsonFolder, "Option2.json"),
+                            System.Text.Json.JsonSerializer.Serialize(lShapeJson, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
                         lShapeSuggested = true;
                         break;
@@ -120,13 +148,9 @@ namespace Kitchenbuilder.Core
                 }
             }
 
-            WriteResultToFile(layout, straightLineSuggested, lShapeSuggested, lShapeCornerPosition, suggestedBases, suggestedDescriptions, kitchen);
-
-            ImplementOneWallInSld.CopyAndOpenFiles(suggestedDescriptions);
-
-
             return (layout, suggestedBases, suggestedDescriptions);
         }
+
 
         private static (double fridgeX, string side) CalculateFridgePositionConsideringWindow(Kitchen kitchen, double segmentStart, double segmentEnd, double fridgeWidth)
         {
@@ -186,66 +210,7 @@ namespace Kitchenbuilder.Core
             return 2;
         }
 
-        private static void WriteResultToFile(
-            Dictionary<int, (string appliance, double start, double end)> layout,
-            bool straightLineSuggested,
-            bool lShapeSuggested,
-            int lShapeCornerPosition,
-            Dictionary<int, (double start, double end)> suggestedBases,
-            Dictionary<int, string> suggestedDescriptions,
-            Kitchen kitchen)
-        {
-            Directory.CreateDirectory(OutputFolder);
-            string fullPath = Path.Combine(OutputFolder, OutputFile);
 
-            using (var writer = new StreamWriter(fullPath, false, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine("=== Kitchen Base Evaluation ===");
-                writer.WriteLine($"Date: {DateTime.Now:yyyy-MM-dd HH:mm}");
-                writer.WriteLine();
-
-                if (straightLineSuggested)
-                {
-                    writer.WriteLine("▶️ Straight-line kitchen layout:");
-                    foreach (var kvp in layout.Where(x => x.Key >= 0 && x.Key <= 2).OrderBy(x => x.Key))
-                    {
-                        var (appliance, start, end) = kvp.Value;
-                        writer.WriteLine($"  • {appliance.PadRight(25)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
-                    }
-                    writer.WriteLine();
-                }
-
-                if (lShapeSuggested)
-                {
-                    writer.WriteLine("▶️ L-shape kitchen layout:");
-                    writer.WriteLine($"  • Suggested corner position: {lShapeCornerPosition}");
-                    foreach (var kvp in layout.Where(x => x.Key >= 10).OrderBy(x => x.Key))
-                    {
-                        var (appliance, start, end) = kvp.Value;
-                        writer.WriteLine($"  • {appliance.PadRight(25)} Start: {start,6:0.##} cm   End: {end,6:0.##} cm");
-                    }
-                    writer.WriteLine();
-                }
-
-                writer.WriteLine("📝 Suggested Layout Descriptions:");
-                foreach (var kvp in suggestedDescriptions.OrderBy(x => x.Key))
-                {
-                    writer.WriteLine($"  Option {kvp.Key}: {kvp.Value}");
-                }
-
-                writer.WriteLine();
-                writer.WriteLine("Suggested Bases for SolidWorks:");
-                foreach (var kvp in suggestedBases.OrderBy(x => x.Key))
-                {
-                    writer.WriteLine($"  • Wall {kvp.Key}: Start: {kvp.Value.start} cm   End: {kvp.Value.end} cm");
-                }
-
-                if (!straightLineSuggested && !lShapeSuggested)
-                {
-                    writer.WriteLine("⚠️ No valid layout could be suggested. Please consider a custom design.");
-                }
-            }
-        }
 
     }
 }

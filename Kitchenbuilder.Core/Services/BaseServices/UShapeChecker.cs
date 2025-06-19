@@ -121,7 +121,8 @@ namespace Kitchenbuilder.Core
             }
 
             // === Case: Exposed Wall 4 ===
-            if (exposedWallNumber == 4 && floorLength > 150 && floorWidth >= 240)
+            if (exposedWallNumber == 4 && floorLength > 150 && floorWidth >= 2400)
+
             {
                 var exposedWallSpace = floorLength <= 180 ? (0, floorLength) : (floorLength - 180, floorLength);
 
