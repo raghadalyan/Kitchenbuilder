@@ -1,8 +1,0 @@
-[23:57:40] ❌ Fridge placement overlaps with a window
-[23:57:40] ✅ Wall 3: Fridge is in previous space 0 of Wall 1 with length 250 ≥ 85
-[23:57:40] 📤 Result written to Option3.json
-[23:59:28] ✅ Wall 4: Fridge is in first space of Wall 2 and has enough space before (≥ 60 cm)
-[23:59:28] 📤 Result written to Option3.json
-[00:01:08] ❌ Fridge placement overlaps with a window
-[00:01:08] ✅ Wall 4: Fridge is in next space 1 of Wall 2 with length 200 ≥ 85
-[00:01:08] 📤 Result written to Option3.json

@@ -47,9 +47,138 @@ namespace Kitchenbuilder.Core
                     exposedWallNumber);
             }
 
-            Log("❌ Unsupported case (not exposed or not corner)");
+            if (exposed && !corner)
+            {
+                return HandleExposedBaseWithoutCorner(
+                    kitchen,
+                    wall1Index,
+                    wall2Index,
+                    spacesWall1,
+                    spacesWall2,
+                    fridgeWall,
+                    fridgeStart,
+                    fridgeEnd,
+                    outputPath,
+                    exposedWallLength,
+                    exposedWallNumber);
+            }
+
+            Log("❌ Unsupported case (not exposed or missing condition)");
             return false;
         }
+        private static bool HandleExposedBaseWithoutCorner(
+            Kitchen kitchen,
+            int wall1Index,
+            int wall2Index,
+            List<(double start, double end)> spacesWall1,
+            List<(double start, double end)> spacesWall2,
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd,
+            string outputPath,
+            double exposedWallLength,
+            int exposedWallNumber)
+        {
+            var floorWidth = kitchen.Floor.Width;
+            var floorLength = kitchen.Floor.Length;
+
+            var windowsW1 = kitchen.Walls[wall1Index].Windows ?? new List<Window>();
+            var windowsW2 = kitchen.Walls[wall2Index].Windows ?? new List<Window>();
+            var allWindows = fridgeWall == wall1Index ? windowsW1 : windowsW2;
+
+            if (HasWindow(fridgeStart, fridgeEnd, allWindows))
+            {
+                Log("❌ Fridge placement overlaps with a window");
+                return false;
+            }
+
+            double fridgeLength = fridgeEnd - fridgeStart;
+            if (fridgeLength < 85)
+            {
+                Log($"❌ Fridge space too small: {fridgeLength} < 85 cm");
+                return false;
+            }
+
+            // === Case: Exposed Wall 3 ===
+            if (exposedWallNumber == 3 && floorWidth > 150 && floorLength >= 240)
+            {
+                var exposedWallSpace = floorWidth <= 180 ? (0, floorWidth) : (0, 180);
+
+                Log($"✅ [Wall 3] Exposure valid. Fridge: {fridgeStart} → {fridgeEnd}");
+
+                return WriteSuccess(outputPath,
+                    wall1Index,
+                    wall2Index,
+                    spacesWall1,
+                    spacesWall2,
+                    fridgeWall,
+                    fridgeStart,
+                    fridgeEnd,
+                    exposed: true,
+                    corner: false,
+                    numOfExposedWall: exposedWallNumber,
+                    exposedWallSpace);
+            }
+
+            // === Case: Exposed Wall 4 ===
+            if (exposedWallNumber == 4 && floorLength > 150 && floorWidth >= 240)
+            {
+                var exposedWallSpace = floorLength <= 180 ? (0, floorLength) : (floorLength - 180, floorLength);
+
+                Log($"✅ [Wall 4] Exposure valid. Fridge: {fridgeStart} → {fridgeEnd}");
+
+                return WriteSuccess(outputPath,
+                    wall1Index,
+                    wall2Index,
+                    spacesWall1,
+                    spacesWall2,
+                    fridgeWall,
+                    fridgeStart,
+                    fridgeEnd,
+                    exposed: true,
+                    corner: false,
+                    numOfExposedWall: exposedWallNumber,
+                    exposedWallSpace);
+            }
+
+            Log("❌ Exposure conditions invalid for Wall 3 or 4");
+            return false;
+        }
+
+
+        // ======================================================================
+        // ✅ HandleExposedBaseWithCorner Summary (Supports Wall 3 and Wall 4)
+        // ----------------------------------------------------------------------
+        // This function checks if a fridge can be validly placed in a U-shape layout
+        // when there is a corner between Wall 1 and Wall 2 and one base wall is exposed.
+        //
+        // It handles two main cases:
+        // ----------------------------------------------------------------------
+        // ▶️ Wall 3 Exposed (Horizontal base, fridge on Wall 1):
+        // - Exposure is valid if: floorWidth > 150 and floorLength ≥ 240
+        // - exposedWallSpace is:
+        //     • (0, 180) normally
+        //     • (0, floorWidth) if floorWidth is between 150–180
+        // - If fridge is in the last space of Wall 1:
+        //     • It must have ≥ 60 cm space after it
+        // - If fridge is in a previous space:
+        //     • The space must be ≥ 85 cm long
+        //
+        // ▶️ Wall 4 Exposed (Vertical base, fridge on Wall 2):
+        // - Exposure is valid if: floorLength > 150 and floorWidth ≥ 240
+        // - exposedWallSpace is:
+        //     • (floorLength - 180, floorLength) normally
+        //     • (0, floorLength) if floorLength is between 150–180
+        // - If fridge is in the first space of Wall 2:
+        //     • It must have ≥ 60 cm space before it
+        // - If fridge is in a next space:
+        //     • The space must be ≥ 85 cm long
+        //
+        // In both cases:
+        // - Placement is rejected if any window overlaps the fridge
+        // - If any placement is valid, WriteSuccess is called and returns true
+        // - If all checks fail, returns false
+        // ======================================================================
 
         private static bool HandleExposedBaseWithCorner(
             Kitchen kitchen,
