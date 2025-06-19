@@ -9,16 +9,14 @@ namespace Kitchenbuilder.Core
     public static class UShapeSelector
     {
         private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Ushapeselector.txt";
+        private static readonly string OutputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3.json";
 
-        private static void LogDebug(string message)
-        {
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
-        }
+        private static void Log(string msg) => File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
 
         public static bool TryFindWallsForUShape(Kitchen kitchen, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
-            var floorWidth = kitchen.Floor.Width;
-            var floorLength = kitchen.Floor.Length;
+            double floorWidth = kitchen.Floor.Width;
+            double floorLength = kitchen.Floor.Length;
 
             if (!simpleEmptySpaces.ContainsKey(0) || !simpleEmptySpaces.ContainsKey(1))
                 return false;
@@ -34,10 +32,8 @@ namespace Kitchenbuilder.Core
             if (spacesWall1.Count == 0 || spacesWall2.Count == 0)
                 return false;
 
-            var lastSpaceW1 = spacesWall1[^1];
-            var firstSpaceW2 = spacesWall2[0];
-
-            string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3.json";
+            var lastSpaceW1 = spacesWall1.Last();
+            var firstSpaceW2 = spacesWall2.First();
 
             bool corner =
                 Math.Abs(lastSpaceW1.end - wall1.Width) < 1 &&
@@ -45,160 +41,142 @@ namespace Kitchenbuilder.Core
                 (lastSpaceW1.end - lastSpaceW1.start) > 60 &&
                 (firstSpaceW2.end - firstSpaceW2.start) > 60;
 
+            if (!corner)
+            {
+                Log("❌ No corner found.");
+                return false;
+            }
+
+            Log("🔍 Corner found between Wall 1 and Wall 2");
+
+            // ================================================
+            // 📐 U-Shape Logic when Exposed Wall is Wall 3
+            // ================================================
             if (floorWidth >= floorLength)
             {
-                // Wall 3 Exposed
-                if (corner)
+                Log("📐 Exposed wall is Wall 3. Trying fridge in last space of Wall 1.");
+
+                double fridgeStart = lastSpaceW1.start;
+                double fridgeEnd = fridgeStart + 85;
+
+                if (UShapeChecker.EvaluateUShape(
+                        kitchen,
+                        wall1Index,
+                        wall2Index,
+                        spacesWall1,
+                        spacesWall2,
+                        floorWidth,
+                        3,
+                        OutputPath,
+                        exposed: true,
+                        corner: true,
+                        fridgeWall: wall1Index,
+                        fridgeStart: fridgeStart,
+                        fridgeEnd: fridgeEnd))
                 {
-                    LogDebug("🔍 Corner detected between Wall 1 and Wall 2");
+                    Log("✅ Fridge placed in last space of Wall 1");
+                    return true;
+                }
 
-                    double fridgeStart1 = lastSpaceW1.start;
-                    double fridgeEnd1 = fridgeStart1 + 85;
-                    LogDebug($"🚪 Option 1: Trying fridge in Wall 1 from {fridgeStart1} to {fridgeEnd1}");
-
-                    if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                        outputPath, true, true, 1, fridgeStart1, fridgeEnd1))
-                        return true;
-
-                    if (spacesWall1.Count >= 2)
+                // Try earlier spaces in Wall 1
+                for (int i = spacesWall1.Count - 2; i >= 0; i--)
+                {
+                    var space = spacesWall1[i];
+                    if ((space.end - space.start) >= 85)
                     {
-                        var prevSpace = spacesWall1[^2];
-                        if ((prevSpace.end - prevSpace.start) >= 85)
-                        {
-                            double fridgeStart = prevSpace.start;
-                            double fridgeEnd = fridgeStart + 85;
-                            LogDebug($"🚪 Option 3: Trying previous space in Wall 1 from {fridgeStart} to {fridgeEnd}");
+                        fridgeStart = space.start;
+                        fridgeEnd = fridgeStart + 85;
 
-                            if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                                outputPath, true, false, 1, fridgeStart, fridgeEnd))
-                                return true;
+                        Log($"🔁 Trying previous space {i} in Wall 1 from {fridgeStart} to {fridgeEnd}");
+
+                        if (UShapeChecker.EvaluateUShape(
+                                kitchen,
+                                wall1Index,
+                                wall2Index,
+                                spacesWall1,
+                                spacesWall2,
+                                floorWidth,
+                                3,
+                                OutputPath,
+                                exposed: true,
+                                corner: true,
+                                fridgeWall: wall1Index,
+                                fridgeStart: fridgeStart,
+                                fridgeEnd: fridgeEnd))
+                        {
+                            Log($"✅ Fridge placed in previous space {i} of Wall 1");
+                            return true;
                         }
                     }
                 }
-                else
-                {
-                    var largest = spacesWall1.OrderByDescending(s => s.end - s.start).FirstOrDefault(s => s.end - s.start >= 85);
-                    if (largest != default)
-                    {
-                        double fridgeStart = largest.start;
-                        double fridgeEnd = fridgeStart + 85;
-                        LogDebug($"🚪 Trying start of largest Wall 1 space from {fridgeStart} to {fridgeEnd}");
 
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                            outputPath, true, false, 1, fridgeStart, fridgeEnd))
-                            return true;
-
-                        fridgeEnd = largest.end;
-                        fridgeStart = fridgeEnd - 85;
-                        LogDebug($"🚪 Trying end of largest Wall 1 space from {fridgeStart} to {fridgeEnd}");
-
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                            outputPath, true, false, 1, fridgeStart, fridgeEnd))
-                            return true;
-
-                        foreach (var space in spacesWall1.OrderByDescending(s => s.end - s.start))
-                        {
-                            if ((space.end - space.start) < 85) continue;
-                            fridgeStart = space.start;
-                            fridgeEnd = fridgeStart + 85;
-                            LogDebug($"🚪 Fallback: Trying Wall 1 space from {fridgeStart} to {fridgeEnd}");
-
-                            if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                                outputPath, true, false, 1, fridgeStart, fridgeEnd))
-                                return true;
-                        }
-                    }
-
-                    var firstW2 = spacesWall2.FirstOrDefault();
-                    if ((firstW2.end - firstW2.start) >= 85)
-                    {
-                        double fridgeStart = firstW2.start;
-                        double fridgeEnd = fridgeStart + 85;
-                        LogDebug($"🚪 Fallback: Trying Wall 2 with Wall 3 exposed from {fridgeStart} to {fridgeEnd}");
-
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorWidth, 3,
-                            outputPath, true, false, 2, fridgeStart, fridgeEnd))
-                            return true;
-                    }
-                }
+                Log("❌ Could not place fridge in any space of Wall 1");
             }
+
+            // ================================================
+            // 📐 U-Shape Logic when Exposed Wall is Wall 4
+            // ================================================
             else
             {
-                // Wall 4 Exposed
-                if (corner)
+                Log("📐 Exposed wall is Wall 4. Trying fridge in first space of Wall 2.");
+
+                double fridgeEnd = firstSpaceW2.end;
+                double fridgeStart = fridgeEnd - 85;
+
+                if (UShapeChecker.EvaluateUShape(
+                        kitchen,
+                        wall1Index,
+                        wall2Index,
+                        spacesWall1,
+                        spacesWall2,
+                        floorLength,
+                        4,
+                        OutputPath,
+                        exposed: true,
+                        corner: true,
+                        fridgeWall: wall2Index,
+                        fridgeStart: fridgeStart,
+                        fridgeEnd: fridgeEnd))
                 {
-                    double fridgeEnd2 = firstSpaceW2.end;
-                    double fridgeStart2 = fridgeEnd2 - 85;
-                    LogDebug($"🚪 Option 2: Trying fridge in Wall 2 from {fridgeStart2} to {fridgeEnd2}");
+                    Log("✅ Fridge placed in first space of Wall 2");
+                    return true;
+                }
 
-                    if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                        outputPath, true, true, 2, fridgeStart2, fridgeEnd2))
-                        return true;
-
-                    if (spacesWall2.Count >= 2)
+                // Try next spaces in Wall 2
+                for (int i = 1; i < spacesWall2.Count; i++)
+                {
+                    var space = spacesWall2[i];
+                    if ((space.end - space.start) >= 85)
                     {
-                        var secondSpace = spacesWall2[1];
-                        if ((secondSpace.end - secondSpace.start) >= 85)
-                        {
-                            double fridgeEnd = secondSpace.end;
-                            double fridgeStart = fridgeEnd - 85;
-                            LogDebug($"🚪 Option 4: Trying second space in Wall 2 from {fridgeStart} to {fridgeEnd}");
+                        fridgeEnd = space.end;
+                        fridgeStart = fridgeEnd - 85;
 
-                            if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                                outputPath, true, false, 2, fridgeStart, fridgeEnd))
-                                return true;
+                        Log($"🔁 Trying next space {i} in Wall 2 from {fridgeStart} to {fridgeEnd}");
+
+                        if (UShapeChecker.EvaluateUShape(
+                                kitchen,
+                                wall1Index,
+                                wall2Index,
+                                spacesWall1,
+                                spacesWall2,
+                                floorLength,
+                                4,
+                                OutputPath,
+                                exposed: true,
+                                corner: true,
+                                fridgeWall: wall2Index,
+                                fridgeStart: fridgeStart,
+                                fridgeEnd: fridgeEnd))
+                        {
+                            Log($"✅ Fridge placed in next space {i} of Wall 2");
+                            return true;
                         }
                     }
                 }
-                else
-                {
-                    var largest = spacesWall2.OrderByDescending(s => s.end - s.start).FirstOrDefault(s => s.end - s.start >= 85);
-                    if (largest != default)
-                    {
-                        double fridgeEnd = largest.end;
-                        double fridgeStart = fridgeEnd - 85;
-                        LogDebug($"🚪 Trying end of largest Wall 2 space from {fridgeStart} to {fridgeEnd}");
 
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                            outputPath, true, false, 2, fridgeStart, fridgeEnd))
-                            return true;
-
-                        fridgeStart = largest.start;
-                        fridgeEnd = fridgeStart + 85;
-                        LogDebug($"🚪 Trying start of largest Wall 2 space from {fridgeStart} to {fridgeEnd}");
-
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                            outputPath, true, false, 2, fridgeStart, fridgeEnd))
-                            return true;
-
-                        foreach (var space in spacesWall2.OrderByDescending(s => s.end - s.start))
-                        {
-                            if ((space.end - space.start) < 85) continue;
-                            fridgeEnd = space.end;
-                            fridgeStart = fridgeEnd - 85;
-                            LogDebug($"🚪 Fallback: Trying Wall 2 space from {fridgeStart} to {fridgeEnd}");
-
-                            if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                                outputPath, true, false, 2, fridgeStart, fridgeEnd))
-                                return true;
-                        }
-                    }
-
-                    var firstW1 = spacesWall1.FirstOrDefault();
-                    if ((firstW1.end - firstW1.start) >= 85)
-                    {
-                        double fridgeEnd = firstW1.end;
-                        double fridgeStart = fridgeEnd - 85;
-                        LogDebug($"🚪 Fallback: Trying Wall 1 with Wall 4 exposed from {fridgeStart} to {fridgeEnd}");
-
-                        if (UShapeChecker.EvaluateUShape(kitchen, wall1Index, wall2Index, spacesWall1, spacesWall2, floorLength, 4,
-                            outputPath, true, false, 1, fridgeStart, fridgeEnd))
-                            return true;
-                    }
-                }
+                Log("❌ Could not place fridge in any space of Wall 2");
             }
 
-            LogDebug("❌ No valid U-shape placement found");
             return false;
         }
     }
