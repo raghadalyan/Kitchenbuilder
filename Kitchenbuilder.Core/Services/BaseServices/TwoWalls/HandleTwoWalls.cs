@@ -26,7 +26,11 @@ namespace Kitchenbuilder.Core
             File.AppendAllText(outputPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - UShapeSelector result: {(uShapeSuccess ? "✅ Success" : "❌ Failed")}{Environment.NewLine}");
 
             File.AppendAllText(outputPath, message + Environment.NewLine);
-
+            // If any of them succeeded → apply to SolidWorks
+            if (success || lShapeSuccess || uShapeSuccess)
+            {
+                ImplementInSld.ApplyBaseDimensions(kitchen);
+            }
             return (new Dictionary<int, (string appliance, double start, double end)>(),
                     new Dictionary<int, double>(),
                     new Dictionary<int, string>());

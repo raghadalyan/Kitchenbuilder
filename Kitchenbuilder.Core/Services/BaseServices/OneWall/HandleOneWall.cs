@@ -36,6 +36,7 @@ namespace Kitchenbuilder.Core
                 Console.WriteLine("❌ No suitable line shape found.");
             }
 
+
             // Try L-Shape One Wall
             bool lShapeHandled = LShapeSelectorOneWall.TryFindWallsForLShape(
                 kitchen,
@@ -49,6 +50,13 @@ namespace Kitchenbuilder.Core
             else
             {
                 Console.WriteLine("❌ No suitable L-shape (one-wall) found.");
+            }
+
+
+            // 🔁 Call SolidWorks implementation if any layout was successfully handled
+            if (handled || lShapeHandled)
+            {
+                ImplementInSld.ApplyBaseDimensions(kitchen);
             }
 
 

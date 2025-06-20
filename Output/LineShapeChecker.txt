@@ -1,9 +1,0 @@
-[19:14:22] ❌ Window found in fridge range 150-235
-[19:14:22] ❌ Window found in fridge range 415-500
-[19:14:22] ✅ Secondary space found (150-500) with length 350 cm
-[19:18:01] ❌ Window found in fridge range 150-235
-[19:18:01] ❌ Window found in fridge range 415-500
-[19:18:01] ✅ Secondary space found (150-500) with length 350 cm
-[19:19:42] ❌ Window found in fridge range 0-85
-[19:19:42] ❌ Window found in fridge range 265-350
-[19:19:42] ✅ Secondary space found (0-350) with length 350 cm
