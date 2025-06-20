@@ -4,59 +4,63 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-/*
- * LineShapeChecker.cs
- * --------------------
- * This file handles the detailed evaluation logic for placing a straight-line kitchen layout
- * (fridge + sink + cooktop) on a specific wall. It checks for available space and window
- * interference and attempts to place the fridge in different valid positions.
- *
- * If a valid layout is found, it saves the result (including main and secondary empty spaces)
- * to the given JSON path.
- */
 
 namespace Kitchenbuilder.Core
 {
     public static class LineShapeChecker
     {
-        const double sinkWidth = 60;
-        const double cooktopWidth = 60;
-        const double fridgeWidth = 85;
-        const double workspace = 60;
-
-        public static bool EvaluateWall(Kitchen kitchen, int wallIndex, List<(double start, double end)> emptySpaces, string outputPath)
+        public static bool EvaluateWall(
+            Kitchen kitchen,
+            int wallIndex,
+            List<(double start, double end)> spacesWall,
+            double floorLength,
+            string outputPath,
+            bool exposed,
+            bool corner,
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd)
         {
+            const double totalRequiredLength = 325;
+            const double secondarySpaceThreshold = 240;
+
             var windows = kitchen.Walls[wallIndex].Windows ?? new List<Window>();
 
-            foreach (var (start, end) in emptySpaces.OrderByDescending(e => e.end - e.start))
+            // 1. Check if there's a window in the fridge placement range
+            if (HasWindowInRange(windows, fridgeStart, fridgeEnd))
             {
-                double length = end - start;
-                if (length < sinkWidth + workspace + cooktopWidth + workspace + fridgeWidth)
-                    continue;
-
-                // Try placing fridge on the left
-                if (!HasWindowInRange(windows, start, start + fridgeWidth))
-                {
-                    SaveResult(outputPath, "Line Shape", wallIndex, start, end, $"Fridge Left ({start}-{start + fridgeWidth})", emptySpaces);
-                    return true;
-                }
-
-                // Try placing fridge on the right
-                if (!HasWindowInRange(windows, end - fridgeWidth, end))
-                {
-                    SaveResult(outputPath, "Line Shape", wallIndex, start, end, $"Fridge Right ({end - fridgeWidth}-{end})", emptySpaces);
-                    return true;
-                }
-
-                // Try placing fridge in a separate space on the same wall
-                var other = emptySpaces.FirstOrDefault(s => s != (start, end) && s.end - s.start >= fridgeWidth);
-                if (other != default && !HasWindowInRange(windows, other.start, other.start + fridgeWidth))
-                {
-                    SaveResult(outputPath, "Line Shape", wallIndex, start, end, $"Fridge Other ({other.start}-{other.start + fridgeWidth})", emptySpaces);
-                    return true;
-                }
+                LogDebug($"❌ Window found in fridge range {fridgeStart}-{fridgeEnd}");
+                return false;
             }
 
+            // 2. Find the space the fridge is in
+            var mainSpace = spacesWall.FirstOrDefault(s => s.start <= fridgeStart && s.end >= fridgeEnd);
+            if (mainSpace == default)
+            {
+                LogDebug("❌ Fridge does not lie within any empty segment.");
+                return false;
+            }
+
+            double mainSpaceLength = mainSpace.end - mainSpace.start;
+
+            // 3. Check if main space is enough (>= 325)
+            if (mainSpaceLength >= totalRequiredLength)
+            {
+                SaveOption1Json(spacesWall, fridgeStart, fridgeEnd, wallIndex);
+                LogDebug($"✅ Main space ({mainSpace.start}-{mainSpace.end}) is sufficient ({mainSpaceLength} cm)");
+                return true;
+            }
+
+            // 4. Otherwise check if there's another space >= 240
+            var secondary = spacesWall.FirstOrDefault(s => s != mainSpace && (s.end - s.start) >= secondarySpaceThreshold);
+            if (secondary != default)
+            {
+                SaveOption1Json(spacesWall, fridgeStart, fridgeEnd, wallIndex);
+                LogDebug($"✅ Secondary space found ({secondary.start}-{secondary.end}) with length {(secondary.end - secondary.start)} cm");
+                return true;
+            }
+
+            LogDebug("❌ No valid main or secondary space found for line shape.");
             return false;
         }
 
@@ -67,25 +71,30 @@ namespace Kitchenbuilder.Core
                 (w.DistanceX + w.Width >= from && w.DistanceX + w.Width <= to));
         }
 
-        private static void SaveResult(string path, string title, int wall, double start, double end, string placement, List<(double start, double end)> allSpaces)
+        private static void SaveOption1Json(List<(double start, double end)> wallSpaces, double fridgeStart, double fridgeEnd, int wallIndex)
         {
-            var mainSpace = new { Start = start, End = end };
-            var secondarySpaces = allSpaces
-                .Where(s => !(s.start == start && s.end == end) && (s.end - s.start >= 60))
-                .Select(s => new { Start = s.start, End = s.end })
-                .ToList();
-
             var option = new
             {
-                Title = title,
-                Wall = wall + 1,
-                MainEmptySpace = mainSpace,
-                SecondaryEmptySpaces = secondarySpaces,
-                FridgePlacement = placement
+                Title = "Line Shape",
+                Wall1 = wallIndex + 1,
+                SpacesWall1 = wallSpaces.Select(s => new { Start = s.start, End = s.end }).ToList(),
+                FridgeWall = wallIndex + 1,
+                Fridge = new { Start = fridgeStart, End = fridgeEnd },
+                Corner = false,
+                Exposed = false
             };
 
+            string folder = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON";
+            Directory.CreateDirectory(folder);
+            string path = Path.Combine(folder, "Option1.json");
             string json = JsonSerializer.Serialize(option, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(path, json);
+        }
+
+        private static void LogDebug(string message)
+        {
+            string path = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\LineShapeChecker.txt";
+            File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
     }
 }
