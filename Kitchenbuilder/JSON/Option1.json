@@ -1,15 +1,17 @@
 {
   "Title": "Line Shape",
-  "Wall": 1,
-  "MainEmptySpace": {
-    "Start": 0,
-    "End": 350
-  },
-  "SecondaryEmptySpaces": [
+  "Wall1": 2,
+  "SpacesWall1": [
     {
-      "Start": 400,
-      "End": 500
+      "Start": 0,
+      "End": 400
     }
   ],
-  "FridgePlacement": "Fridge Left (0-85)"
+  "FridgeWall": 2,
+  "Fridge": {
+    "Start": 0,
+    "End": 85
+  },
+  "Corner": false,
+  "Exposed": false
 }

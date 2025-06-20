@@ -1,19 +1,6 @@
-[17:36:45] 🧱 U-shape attempt with exposed base on Wall 4
-[17:36:45] 🚪 Option 2: Trying fridge in Wall 2 from 415 to 500
-[17:36:45] ✅ Success: Fridge placed in Wall 2 (Option 2)
-[17:38:31] 🧱 U-shape attempt with exposed base on Wall 3
-[17:38:31] lastSpaceW1.end = 500, wall1.Width = 500
-[17:38:31] firstSpaceW2.start = 0
-[17:38:31] lastSpaceW1 length = 500
-[17:38:31] firstSpaceW2 length = 400
-[17:38:31] 🔍 Corner detected between Wall 1 and Wall 2
-[17:38:31] 🚪 Option 1: Trying fridge in Wall 1 from 0 to 85
-[17:38:31] ✅ Success: Fridge placed in Wall 1 (Option 1)
-[17:40:31] 🧱 U-shape attempt with exposed base on Wall 3
-[17:40:31] lastSpaceW1.end = 500, wall1.Width = 500
-[17:40:31] firstSpaceW2.start = 0
-[17:40:31] lastSpaceW1 length = 100
-[17:40:31] firstSpaceW2 length = 300
-[17:40:31] 🔍 Corner detected between Wall 1 and Wall 2
-[17:40:31] 🚪 Option 1: Trying fridge in Wall 1 from 400 to 485
-[17:40:31] ✅ Success: Fridge placed in Wall 1 (Option 1)
+[04:06:41] 📐 Exposed wall is Wall 3. Trying fridge in last space of Wall 1.
+[04:06:41] ✅ Fridge placed in last space of Wall 1
+[04:07:32] 📐 Exposed wall is Wall 3. Trying fridge in last space of Wall 1.
+[04:07:32] ❌ Could not place fridge in any space of Wall 1
+[04:11:24] 📐 Exposed wall is Wall 3. Trying fridge in last space of Wall 1.
+[04:11:24] ❌ Could not place fridge in any space of Wall 1

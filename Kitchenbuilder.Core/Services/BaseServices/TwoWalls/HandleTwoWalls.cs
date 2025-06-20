@@ -13,7 +13,7 @@ namespace Kitchenbuilder.Core
             Evaluate(Kitchen kitchen, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
             //Check LineShape Option 
-            bool success = LineShapeSelector.TryFindWallForLineShape(kitchen, simpleEmptySpaces);
+            bool success = LineShapeSelectorTwoWalls.TryFindWallForLineShape(kitchen, simpleEmptySpaces);
 
             string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleTwoWalls.txt";
             string message = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - LineShapeSelector result: {(success ? "✅ Success" : "❌ Failed")}";

@@ -10,8 +10,7 @@ namespace Kitchenbuilder.Core.Services
             var kitchen = JsonSerializer.Deserialize<Kitchen>(File.ReadAllText(jsonPath));
             GenerateWallsAndFloor(kitchen);
 
-            // Step 4: Create the base
-            kitchen.Base = BaseCreator.CreateBase(kitchen);
+
 
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(kitchen, new JsonSerializerOptions { WriteIndented = true }));
 
