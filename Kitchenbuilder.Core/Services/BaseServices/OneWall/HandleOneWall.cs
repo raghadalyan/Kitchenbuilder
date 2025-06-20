@@ -36,6 +36,20 @@ namespace Kitchenbuilder.Core
                 Console.WriteLine("❌ No suitable line shape found.");
             }
 
+            // Try L-Shape One Wall
+            bool lShapeHandled = LShapeSelectorOneWall.TryFindWallsForLShape(
+                kitchen,
+                emptySpaces
+            );
+
+            if (lShapeHandled)
+            {
+                Console.WriteLine("✅ L-shape (one-wall) handled and saved.");
+            }
+            else
+            {
+                Console.WriteLine("❌ No suitable L-shape (one-wall) found.");
+            }
 
 
 

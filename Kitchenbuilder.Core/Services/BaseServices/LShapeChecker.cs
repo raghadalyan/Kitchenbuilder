@@ -9,7 +9,7 @@ namespace Kitchenbuilder.Core
 {
     public static class LShapeChecker
     {
-        private static readonly string DebugLogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleTwoWalls.txt";
+        private static readonly string DebugLogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\LShapeSelectorOneWall.txt";
 
         private static void Log(string message)
         {
@@ -33,8 +33,23 @@ namespace Kitchenbuilder.Core
         {
             bool HasWindow(double from, double to, List<Window> windows)
             {
-                return windows.Any(w => Math.Max(from, w.DistanceX) < Math.Min(to, w.DistanceX + w.Width));
+                foreach (var w in windows)
+                {
+                    double winStart = w.DistanceX;
+                    double winEnd = w.DistanceX + w.Width;
+
+                    bool overlaps = Math.Max(from, winStart) < Math.Min(to, winEnd);
+
+                    Log($"🔍 Checking overlap: Fridge {from}-{to} vs Window {winStart}-{winEnd} => {(overlaps ? "YES" : "NO")}");
+
+                    if (overlaps)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
+
 
             if (!exposed)
             {
@@ -55,10 +70,145 @@ namespace Kitchenbuilder.Core
                         outputPath, HasWindow);
                 }
             }
+            else
 
 
-            Log("❌ No valid L-Shape configuration found.");
+            {
+                return HandleExposedWall(
+                    kitchen,
+                    wall1Index,
+                    spacesWall1,
+                    exposedWallIndex,
+                    fridgeWall,
+                    fridgeStart,
+                    fridgeEnd,
+                    outputPath,
+                    HasWindow,
+                        floorLength // ✅ Add this argument
+
+                );
+
+            }
+
+        }
+
+        private static bool HandleExposedWall(
+            Kitchen kitchen,
+            int wallIndex,
+            List<(double start, double end)> spacesWall,
+            int exposedWallIndex,
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd,
+            string outputPath,
+            Func<double, double, List<Window>, bool> HasWindow,
+            double floorLength)
+        {
+            var wall = kitchen.Walls[wallIndex];
+            var windows = wall.Windows ?? new List<Window>();
+
+            // 1. Check window overlap
+            if (HasWindow(fridgeStart, fridgeEnd, windows))
+            {
+                Log($"🚫 Fridge area {fridgeStart}-{fridgeEnd} overlaps with a window.");
+                return false;
+            }
+
+            // 2. Find the largest empty space
+            var largest = spacesWall.OrderByDescending(s => s.end - s.start).FirstOrDefault();
+            if (largest == default)
+            {
+                Log("🚫 No spaces in Wall 1.");
+                return false;
+            }
+
+            double largestLength = largest.end - largest.start;
+
+            // 3. Check if fridge is in the largest space
+            bool fridgeInLargest = fridgeStart >= largest.start && fridgeEnd <= largest.end;
+            if (fridgeInLargest)
+            {
+                double afterFridge = largest.end - fridgeEnd;
+                double beforeFridge = fridgeStart - largest.start;
+
+                if (exposedWallIndex == 2 && afterFridge < 180)
+                {
+                    Log($"🚫 Not enough space after fridge for exposed Wall 2 (need 180cm, got {afterFridge}).");
+                    return false;
+                }
+
+                if (exposedWallIndex == 4 && beforeFridge < 180)
+                {
+                    Log($"🚫 Not enough space before fridge for exposed Wall 4 (need 180cm, got {beforeFridge}).");
+                    return false;
+                }
+
+                if (exposedWallIndex != 2 && exposedWallIndex != 4)
+                {
+                    Log($"🚫 Unsupported exposed wall index: {exposedWallIndex}");
+                    return false;
+                }
+
+                return WriteExposedJson(spacesWall, wallIndex, fridgeWall, fridgeStart, fridgeEnd, exposedWallIndex, floorLength, outputPath);
+            }
+
+            Log("🔁 Fridge is not in the largest space. Handling fallback...");
+
+            // 4. Fallback: fridge is NOT in largest, but largest is valid for forming L
+            if (largestLength >= 180)
+            {
+                bool fridgeBefore = fridgeEnd <= largest.start;
+                bool fridgeAfter = fridgeStart >= largest.end;
+
+                if ((fridgeBefore && exposedWallIndex == 2) || (fridgeAfter && exposedWallIndex == 4))
+                {
+                    Log("✅ Valid fallback: fridge outside largest, and exposed wall position matches.");
+                    return WriteExposedJson(spacesWall, wallIndex, fridgeWall, fridgeStart, fridgeEnd, exposedWallIndex, floorLength, outputPath);
+                }
+
+                Log("❌ Fallback failed: fridge is not aligned correctly with the largest space.");
+            }
+            else
+            {
+                Log($"🚫 Largest space too small for fallback logic (only {largestLength}cm).");
+            }
+
             return false;
+        }
+
+        private static bool WriteExposedJson(
+            List<(double start, double end)> spacesWall,
+            int wallIndex,
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd,
+            int exposedWallIndex,
+            double floorLength,
+            string outputPath)
+        {
+            double exposedLength = Math.Min(180, Math.Max(150, floorLength));
+            var exposedWallSpace = exposedWallIndex == 2
+                ? new { Start = 0.0, End = exposedLength }
+                : new { Start = floorLength - exposedLength, End = floorLength };
+
+            var wall1Spaces = spacesWall.Select(s => new { Start = s.start, End = s.end }).ToList();
+
+            var json = new
+            {
+                Title = "LShape",
+                Wall1 = wallIndex + 1,
+                SpacesWall1 = wall1Spaces,
+                FridgeWall = fridgeWall,
+                Fridge = new { Start = fridgeStart, End = fridgeEnd },
+                Corner = false,
+                Exposed = true,
+                NumOfExposedWall = exposedWallIndex,
+                ExposedWallSpace = exposedWallSpace
+            };
+
+            File.WriteAllText(outputPath, JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true }));
+            Log("💾 Saved valid layout to JSON.");
+            return true;
         }
 
 
@@ -155,6 +305,7 @@ namespace Kitchenbuilder.Core
 
                 return false;
             }
+
 
             return false;
         }
