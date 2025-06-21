@@ -1,0 +1,33 @@
+{
+  "Floor": {
+    "Width": {
+      "Name": "width@master_wall1",
+      "Size": 500
+    },
+    "Length": {
+      "Name": "length@Floor",
+      "Size": 500
+    }
+  },
+  "Shown": {
+    "Wall2": {
+      "SpacesWall1": [
+        {
+          "Start": 0,
+          "End": 500,
+          "Name": ""
+        }
+      ],
+      "Fridge": {
+        "Start": 0,
+        "End": 85
+      },
+      "Exposed": false
+    }
+  },
+  "Deleted": {
+    "Wall1": {},
+    "Wall3": {},
+    "Wall4": {}
+  }
+}

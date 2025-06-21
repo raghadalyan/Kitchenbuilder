@@ -47,6 +47,9 @@ namespace Kitchenbuilder.Core
 
                     File.WriteAllText(outputPath, JsonSerializer.Serialize(outputJson, new JsonSerializerOptions { WriteIndented = true }));
                     Log($"✅ Saved floor data to {outputFileName}");
+
+                    // ➕ Call Identify_Hidden_Walls here
+                    Identify_Hidden_Walls.Process(file, outputPath);
                 }
                 catch (Exception ex)
                 {

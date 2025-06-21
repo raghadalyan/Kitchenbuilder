@@ -25,7 +25,7 @@ namespace Kitchenbuilder.Core
                 // Extract readable base name (e.g., Option1 from Option1SLD.json)
                 string baseName = Path.GetFileNameWithoutExtension(jsonPath).Replace("SLD", "");
                 string copiedPath = Path.Combine(TempFolder, $"temp_{baseName}.SLDPRT");
-
+                
                 File.Copy(SourcePartPath, copiedPath, overwrite: true);
                 File.AppendAllText(LogPath, $"📁 Copied part to {copiedPath}\n");
 
@@ -41,7 +41,10 @@ namespace Kitchenbuilder.Core
 
                 File.AppendAllText(LogPath, "✅ Part opened successfully in SolidWorks.\n");
 
+                //Create the floor 
                 CreateFloor_Base.Create(kitchen, model, jsonPath);
+                
+
 
                 string modelTitle = model.GetTitle();
                 swApp.CloseDoc(modelTitle);

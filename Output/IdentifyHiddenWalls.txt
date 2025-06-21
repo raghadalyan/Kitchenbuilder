@@ -1,0 +1,9 @@
+
+🔍 Processing: Option1.json
+✅ Updated Option1SLD.json with shown and deleted walls.
+
+🔍 Processing: Option2.json
+✅ Updated Option2SLD.json with shown and deleted walls.
+
+🔍 Processing: Option3.json
+✅ Updated Option3SLD.json with shown and deleted walls.
