@@ -12,7 +12,7 @@ namespace Kitchenbuilder.Core
         private static readonly string JsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\";
         private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ConvertBaseToNames.txt";
 
-        public static void Convert(Kitchen kitchen)
+        public static void Convert(Kitchen kitchen, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
             var files = Directory.GetFiles(JsonFolder, "Option*.json");
 
@@ -47,9 +47,11 @@ namespace Kitchenbuilder.Core
 
                     File.WriteAllText(outputPath, JsonSerializer.Serialize(outputJson, new JsonSerializerOptions { WriteIndented = true }));
                     Log($"✅ Saved floor data to {outputFileName}");
+                    //HandleUsableWalls 
+                    HandleUsableWalls.Process(file, outputPath);
 
                     // ➕ Call Identify_Hidden_Walls here
-                    Identify_Hidden_Walls.Process(file, outputPath);
+                    //Identify_Hidden_Walls.Process(file, outputPath, simpleEmptySpaces);
                 }
                 catch (Exception ex)
                 {

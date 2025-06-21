@@ -1,15 +1,9 @@
-[20:43:47] ************** CreateFloor_Base **************
-[20:43:47] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option1SLD.json
-[20:43:47] 📏 Editing Width: width@master_wall1 = 500 mm
-[20:43:47] 📏 Editing Length: length@Floor = 500 mm
-[20:43:48] ✅ Floor dimensions applied successfully.
-[20:43:51] ************** CreateFloor_Base **************
-[20:43:51] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
-[20:43:51] 📏 Editing Width: width@master_wall1 = 500 mm
-[20:43:51] 📏 Editing Length: length@Floor = 500 mm
-[20:43:53] ✅ Floor dimensions applied successfully.
-[20:43:55] ************** CreateFloor_Base **************
-[20:43:55] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
-[20:43:55] 📏 Editing Width: width@master_wall1 = 500 mm
-[20:43:55] 📏 Editing Length: length@Floor = 500 mm
-[20:43:56] ✅ Floor dimensions applied successfully.
+[00:26:47] ************** CreateFloor_Base **************
+[00:26:47] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option1SLD.json
+[00:26:47] ❌ Floor section not found in JSON.
+[00:26:51] ************** CreateFloor_Base **************
+[00:26:51] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[00:26:51] ❌ Floor section not found in JSON.
+[00:26:55] ************** CreateFloor_Base **************
+[00:26:55] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+[00:26:55] ❌ Floor section not found in JSON.

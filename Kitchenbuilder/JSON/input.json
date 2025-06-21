@@ -12,9 +12,9 @@
       "HasDoors": true,
       "Doors": [
         {
-          "Width": 50,
+          "Width": 100,
           "Height": 0,
-          "DistanceX": 100,
+          "DistanceX": 200,
           "DistanceY": 0
         }
       ]

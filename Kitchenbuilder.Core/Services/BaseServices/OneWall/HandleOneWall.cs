@@ -56,7 +56,7 @@ namespace Kitchenbuilder.Core
             // 🔁 Call SolidWorks implementation if any layout was successfully handled
             if (handled || lShapeHandled)
             {
-                ImplementInSld.ApplyBaseDimensions(kitchen);
+                ImplementInSld.ApplyBaseDimensions(kitchen,emptySpaces);
             }
 
 

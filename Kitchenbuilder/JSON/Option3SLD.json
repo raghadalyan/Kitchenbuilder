@@ -1,56 +1,74 @@
 {
-  "Floor": {
-    "Width": {
-      "Name": "width@master_wall1",
-      "Size": 500
-    },
-    "Length": {
-      "Name": "length@Floor",
-      "Size": 500
-    }
-  },
-  "Shown": {
-    "Wall1": {
-      "SpacesWall1": [
-        {
-          "Start": 0,
-          "End": 100,
-          "Name": ""
-        },
-        {
-          "Start": 150,
-          "End": 500,
-          "Name": ""
-        }
-      ],
-      "Fridge": {
-        "Start": 150,
-        "End": 235
+  "Wall1": {
+    "SpacesWall1": [
+      {
+        "Start": 0,
+        "End": 200
       },
-      "Exposed": false
+      {
+        "Start": 300,
+        "End": 500
+      }
+    ],
+    "Bases": {
+      "Base1": {
+        "SketchName": "1_1",
+        "ExtrudeName": "Extrude_1_1",
+        "Start": 0,
+        "End": 200,
+        "Visible": true
+      },
+      "Base2": {
+        "SketchName": "fridge_base1",
+        "ExtrudeName": "Extrude_fridge_base1",
+        "Start": 300,
+        "End": 500,
+        "Visible": true
+      },
+      "Base3": {
+        "SketchName": "1_2",
+        "ExtrudeName": "Extrude_1_2",
+        "Start": null,
+        "End": null,
+        "Visible": false
+      }
     },
-    "Wall2": {
-      "SpacesWall2": [
-        {
-          "Start": 0,
-          "End": 500,
-          "Name": ""
-        }
-      ],
-      "Exposed": false
+    "Fridge": {
+      "Start": 300,
+      "End": 385
     },
-    "Wall3": {
-      "SpacesWall3": [
-        {
-          "Start": 0,
-          "End": 180,
-          "Name": ""
-        }
-      ],
-      "Exposed": true
-    }
+    "Exposed": false
   },
-  "Deleted": {
-    "Wall4": {}
+  "Wall2": {
+    "SpacesWall2": [
+      {
+        "Start": 0,
+        "End": 500
+      }
+    ],
+    "Bases": {
+      "Base1": {
+        "SketchName": "2_1",
+        "ExtrudeName": "Extrude_2_1",
+        "Start": 0,
+        "End": 500,
+        "Visible": true
+      },
+      "Base2": {
+        "SketchName": "fridge_base2",
+        "ExtrudeName": "Extrude_fridge_base2",
+        "Start": null,
+        "End": null,
+        "Visible": false
+      },
+      "Base3": {
+        "SketchName": "2_2",
+        "ExtrudeName": "Extrude_2_2",
+        "Start": null,
+        "End": null,
+        "Visible": false
+      }
+    },
+    "Exposed": false
   }
 }

@@ -29,7 +29,7 @@ namespace Kitchenbuilder.Core
             // If any of them succeeded → apply to SolidWorks
             if (success || lShapeSuccess || uShapeSuccess)
             {
-                ImplementInSld.ApplyBaseDimensions(kitchen);
+                ImplementInSld.ApplyBaseDimensions(kitchen, simpleEmptySpaces);
             }
             return (new Dictionary<int, (string appliance, double start, double end)>(),
                     new Dictionary<int, double>(),

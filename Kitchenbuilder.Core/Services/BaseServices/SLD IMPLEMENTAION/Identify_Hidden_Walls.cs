@@ -10,7 +10,7 @@ namespace Kitchenbuilder.Core
     {
         private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\IdentifyHiddenWalls.txt";
 
-        public static void Process(string originalJsonPath, string sldJsonPath)
+        public static void Process(string originalJsonPath, string sldJsonPath, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
             try
             {

@@ -9,13 +9,13 @@ namespace Kitchenbuilder.Core
         private static readonly string JsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\";
         private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ImplementInSld.txt";
 
-        public static void ApplyBaseDimensions(Kitchen kitchen)
+        public static void ApplyBaseDimensions(Kitchen kitchen, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
             // Start new log
             File.WriteAllText(LogPath, $"🔧 Starting implementation: {DateTime.Now}\n");
 
             // Convert the base measurements
-            ConvertBaseToNames.Convert(kitchen);
+            ConvertBaseToNames.Convert(kitchen, simpleEmptySpaces);
 
             var optionFiles = Directory.GetFiles(JsonFolder, "Option*SLD.json");
 
