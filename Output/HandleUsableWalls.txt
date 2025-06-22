@@ -1,6 +1,4 @@
-[21:07:47] 🔍 Handling usable walls for: Option1.json
-[21:07:47] ✅ Output written to: Option1SLD.json
-[21:07:47] 🔍 Handling usable walls for: Option2.json
-[21:07:47] ✅ Output written to: Option2SLD.json
-[21:07:47] 🔍 Handling usable walls for: Option3.json
-[21:07:47] ✅ Output written to: Option3SLD.json
+[23:53:26] 🔍 Handling usable walls for: Option1.json
+[23:53:26] ✅ Output written to: Option1SLD.json
+[23:53:26] 🔍 Handling usable walls for: Option2.json
+[23:53:26] ✅ Output written to: Option2SLD.json

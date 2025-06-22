@@ -283,13 +283,13 @@ namespace Kitchenbuilder.Core
                 if (hasAnother120InSameWall && has120InOtherWall)
                 {
                     Log("✅ Valid: small fridge space with two medium zones (120+) on both walls.");
-                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)>(), false);
                 }
 
                 if (spacesOtherWall.Any(s => (s.end - s.start) >= 240))
                 {
                     Log("✅ Valid: small fridge space + one large (240+) on other wall.");
-                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)>(), false);
                 }
 
                 return false;
@@ -300,7 +300,7 @@ namespace Kitchenbuilder.Core
                 if (spacesOtherWall.Any(s => (s.end - s.start) >= 120))
                 {
                     Log("✅ Valid: long fridge space (205+) and large space (120+) on other wall.");
-                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, false, false);
+                    return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)>(), false);
                 }
 
                 return false;
@@ -400,7 +400,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsX))
                     {
                         Log("✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop not possible)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }, false);
                     }
 
                     // Case 2: Long space (>235), enough room after fridge, and wallY has large enough space for sink/cooktop
@@ -410,7 +410,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsX))
                     {
                         Log("✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }, false);
                     }
 
                     // If conditions not met, return false
@@ -431,7 +431,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsX))
                     {
                         Log("✅ Valid L-Shape (Fridge in before-last space wallX)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }, false);
                     }
                 }
             }
@@ -459,7 +459,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsY))
                     {
                         Log("✅ Valid L-Shape (Fridge in first space wallY, sink/cooktop not possible)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> {(wall1Index + 1, wall2Index + 1)}, false);
                     }
 
                     if (spaceLen > 235 &&
@@ -468,7 +468,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsY))
                     {
                         Log("✅ Valid L-Shape (Fridge in first space wallY, sink/cooktop possible)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }, false);
                     }
                 }
 
@@ -486,7 +486,7 @@ namespace Kitchenbuilder.Core
                         !HasWindow(fridgeStart, fridgeEnd, windowsY))
                     {
                         Log("✅ Valid L-Shape (Fridge in second space wallY)");
-                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, true, false);
+                        return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2, fridgeWall, fridgeStart, fridgeEnd, new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }, false);
                     }
                 }
             }
@@ -496,11 +496,18 @@ namespace Kitchenbuilder.Core
         }
 
 
-        private static bool WriteSuccess(string outputPath, int wall1, int wall2,
+        private static bool WriteSuccess(
+            string outputPath,
+            int wall1,
+            int wall2,
             List<(double start, double end)> s1,
             List<(double start, double end)> s2,
-            int fridgeWall, double fridgeStart, double fridgeEnd,
-            bool corner, bool exposed)
+            int fridgeWall,
+            double fridgeStart,
+            double fridgeEnd,
+            List<(int, int)> corners,
+            bool exposed)
+
         {
             var wall1Spaces = s1.Select(space => new { Start = space.start, End = space.end }).ToList();
             var wall2Spaces = s2.Select(space => new { Start = space.start, End = space.end }).ToList();
@@ -514,7 +521,10 @@ namespace Kitchenbuilder.Core
                 SpacesWall2 = wall2Spaces,
                 FridgeWall = fridgeWall,
                 Fridge = new { Start = fridgeStart, End = fridgeEnd },
-                Corner = corner,
+                Corner = corners.Any()
+    ? corners.Select(c => new[] { c.Item1, c.Item2 }).ToList()
+    : null,
+
                 Exposed = exposed
             };
 

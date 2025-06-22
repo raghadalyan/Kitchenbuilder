@@ -80,7 +80,7 @@ namespace Kitchenbuilder.Core
                 SpacesWall1 = wallSpaces.Select(s => new { Start = s.start, End = s.end }).ToList(),
                 FridgeWall = wallIndex + 1,
                 Fridge = new { Start = fridgeStart, End = fridgeEnd },
-                Corner = false,
+                Corner = (int[][]?)null,
                 Exposed = false
             };
 
@@ -90,6 +90,8 @@ namespace Kitchenbuilder.Core
             string json = JsonSerializer.Serialize(option, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(path, json);
         }
+
+
 
         private static void LogDebug(string message)
         {
