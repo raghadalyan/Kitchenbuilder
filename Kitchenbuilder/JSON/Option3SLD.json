@@ -80,5 +80,38 @@
       }
     },
     "Exposed": false
+  },
+  "Wall3": {
+    "SpacesWall3": [
+      {
+        "Start": 0,
+        "End": 180,
+        "Name": ""
+      }
+    ],
+    "Bases": {
+      "Base1": {
+        "SketchName": "3_1",
+        "ExtrudeName": "Extrude_3_1",
+        "Start": 0,
+        "End": 180,
+        "Visible": true
+      },
+      "Base2": {
+        "SketchName": "fridge_base3",
+        "ExtrudeName": "Extrude_fridge_base3",
+        "Start": null,
+        "End": null,
+        "Visible": false
+      },
+      "Base3": {
+        "SketchName": "3_3",
+        "ExtrudeName": "Extrude_3_3",
+        "Start": null,
+        "End": null,
+        "Visible": false
+      }
+    },
+    "Exposed": true
   }
 }

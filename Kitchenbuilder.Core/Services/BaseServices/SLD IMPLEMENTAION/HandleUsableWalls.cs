@@ -60,41 +60,93 @@ namespace Kitchenbuilder.Core
                     }
                     else continue;
 
-                    // Handle fridge overlap
-                    JsonObject? fridgeSpace = null;
-                    int fridgeSpaceIndex = -1;
-                    if (fridgeWall == wallNum && fridge != null)
+                    // Create dynamic bases
+                    JsonObject bases = new JsonObject();
+                    int baseCounter = 1;
+
+                    for (int i = 0; i < spacesArray.Count; i++)
                     {
-                        double fStart = fridge["Start"]!.GetValue<double>();
-                        double fEnd = fridge["End"]!.GetValue<double>();
-                        for (int i = 0; i < spacesArray.Count; i++)
+                        if (spacesArray[i] is not JsonObject space)
+                            continue;
+
+                        double spaceStart = space["Start"]!.GetValue<double>();
+                        double spaceEnd = space["End"]!.GetValue<double>();
+
+                        bool isFridgeHere = fridgeWall == wallNum &&
+                                            fridge != null &&
+                                            fridge["Start"]!.GetValue<double>() >= spaceStart &&
+                                            fridge["End"]!.GetValue<double>() <= spaceEnd;
+
+                        if (isFridgeHere)
                         {
-                            if (spacesArray[i] is JsonObject sp)
+                            double fStart = fridge["Start"]!.GetValue<double>();
+                            double fEnd = fridge["End"]!.GetValue<double>();
+
+                            // Before fridge
+                            if (spaceStart < fStart)
                             {
-                                double s = sp["Start"]!.GetValue<double>();
-                                double e = sp["End"]!.GetValue<double>();
-                                if (fStart >= s && fEnd <= e)
+                                bases[$"Base{baseCounter}"] = new JsonObject
                                 {
-                                    fridgeSpace = sp;
-                                    fridgeSpaceIndex = i;
-                                    break;
-                                }
+                                    ["SketchName"] = $"{wallNum}_{baseCounter}",
+                                    ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
+                                    ["Start"] = spaceStart,
+                                    ["End"] = fStart,
+                                    ["Visible"] = true
+                                };
+                                baseCounter++;
                             }
+
+                            // Fridge base
+                            bases[$"Base{baseCounter}"] = new JsonObject
+                            {
+                                ["SketchName"] = $"fridge_base{wallNum}",
+                                ["ExtrudeName"] = $"Extrude_fridge_base{wallNum}",
+                                ["Start"] = fStart,
+                                ["End"] = fEnd,
+                                ["Visible"] = true
+                            };
+                            baseCounter++;
+
+                            // After fridge
+                            if (fEnd < spaceEnd)
+                            {
+                                bases[$"Base{baseCounter}"] = new JsonObject
+                                {
+                                    ["SketchName"] = $"{wallNum}_{baseCounter}",
+                                    ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
+                                    ["Start"] = fEnd,
+                                    ["End"] = spaceEnd,
+                                    ["Visible"] = true
+                                };
+                                baseCounter++;
+                            }
+                        }
+                        else
+                        {
+                            // Normal full space base
+                            bases[$"Base{baseCounter}"] = new JsonObject
+                            {
+                                ["SketchName"] = $"{wallNum}_{baseCounter}",
+                                ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
+                                ["Start"] = spaceStart,
+                                ["End"] = spaceEnd,
+                                ["Visible"] = true
+                            };
+                            baseCounter++;
                         }
                     }
 
-                    // Create bases
-                    JsonObject bases = new JsonObject();
-                    for (int b = 0; b < 3; b++)
+                    // Ensure we always have exactly 3 bases
+                    while (baseCounter <= 3)
                     {
-                        string sketch = (b == 1)
+                        string sketch = (baseCounter == 2)
                             ? $"fridge_base{wallNum}"
-                            : $"{wallNum}_{(b == 0 ? 1 : 2)}";
-                        string extrude = (b == 1)
+                            : $"{wallNum}_{baseCounter}";
+                        string extrude = (baseCounter == 2)
                             ? $"Extrude_fridge_base{wallNum}"
-                            : $"Extrude_{wallNum}_{(b == 0 ? 1 : 2)}";
+                            : $"Extrude_{wallNum}_{baseCounter}";
 
-                        JsonObject baseObj = new JsonObject
+                        bases[$"Base{baseCounter}"] = new JsonObject
                         {
                             ["SketchName"] = sketch,
                             ["ExtrudeName"] = extrude,
@@ -103,51 +155,7 @@ namespace Kitchenbuilder.Core
                             ["Visible"] = false
                         };
 
-                        if (b == 1 && fridgeSpace != null && fridge != null)
-                        {
-                            baseObj["Start"] = fridge["Start"]!.GetValue<double>();
-                            baseObj["End"] = fridge["End"]!.GetValue<double>();
-                            baseObj["Visible"] = true;
-                        }
-                        else if ((b == 0 || b == 2) && spacesArray.Count > b && spacesArray[b] is JsonObject space)
-                        {
-                            double s = space["Start"]!.GetValue<double>();
-                            double e = space["End"]!.GetValue<double>();
-
-                            if (fridgeSpace != null && fridge != null && b == 0)
-                            {
-                                double fEnd = fridge["End"]!.GetValue<double>();
-                                if (fEnd < e)
-                                {
-                                    baseObj["Start"] = fEnd;
-                                    baseObj["End"] = e;
-                                    baseObj["Visible"] = true;
-                                }
-                            }
-                            else
-                            {
-                                baseObj["Start"] = s;
-                                baseObj["End"] = e;
-                                baseObj["Visible"] = true;
-                            }
-                        }
-
-                        bases[$"Base{b + 1}"] = baseObj;
-                    }
-
-                    // Only add fridge_base if not already handled
-                    if (!bases.ContainsKey("Base2") && fridgeWall == wallNum && fridge != null)
-                    {
-                        JsonObject fridgeBase = new JsonObject
-                        {
-                            ["SketchName"] = $"fridge_base{wallNum}",
-                            ["ExtrudeName"] = $"Extrude_fridge_base{wallNum}",
-                            ["Start"] = fridge["Start"]!.GetValue<double>(),
-                            ["End"] = fridge["End"]!.GetValue<double>(),
-                            ["Visible"] = true
-                        };
-
-                        bases["Base2"] = fridgeBase;
+                        baseCounter++;
                     }
 
                     wallObj["Bases"] = bases;
@@ -168,7 +176,6 @@ namespace Kitchenbuilder.Core
             }
         }
 
-
         private static void Log(string msg)
         {
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
@@ -178,5 +185,10 @@ namespace Kitchenbuilder.Core
         {
             return node == null ? null : JsonNode.Parse(node.ToJsonString());
         }
+
+
+
+
+
     }
 }
