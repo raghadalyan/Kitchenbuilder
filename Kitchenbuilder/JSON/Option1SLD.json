@@ -6,29 +6,33 @@
     },
     "Length": {
       "Name": "length@Floor",
-      "Size": 500
+      "Size": 300
     }
   },
   "Wall1": {
     "SpacesWall1": [
       {
-        "Start": 0,
+        "Start": 200,
         "End": 500
+      },
+      {
+        "Start": 0,
+        "End": 150
       }
     ],
     "Bases": {
-      "Base2": {
-        "SketchName": "fridge_base1",
-        "ExtrudeName": "Extrude_fridge_base1",
-        "Start": null,
-        "End": null,
-        "Visible": false
-      },
       "Base1": {
         "SketchName": "1_1",
         "ExtrudeName": "Extrude_1_1",
         "Start": 85,
         "End": 500,
+        "Visible": true
+      },
+      "Base2": {
+        "SketchName": "fridge_base1",
+        "ExtrudeName": "Extrude_fridge_base1",
+        "Start": 0,
+        "End": 85,
         "Visible": true
       },
       "Base3": {

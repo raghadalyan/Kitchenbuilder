@@ -3,8 +3,12 @@
   "Wall1": 1,
   "SpacesWall1": [
     {
-      "Start": 0,
+      "Start": 200,
       "End": 500
+    },
+    {
+      "Start": 0,
+      "End": 150
     }
   ],
   "FridgeWall": 1,

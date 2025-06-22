@@ -20,15 +20,13 @@ namespace Kitchenbuilder.Core
                 string jsonContent = File.ReadAllText(inputPath);
                 JsonObject original = JsonNode.Parse(jsonContent).AsObject();
                 JsonObject result = File.Exists(outputPath)
-    ? JsonNode.Parse(File.ReadAllText(outputPath)).AsObject()
-    : new JsonObject();
-
+                    ? JsonNode.Parse(File.ReadAllText(outputPath)).AsObject()
+                    : new JsonObject();
 
                 int? fridgeWall = original["FridgeWall"]?.GetValue<int>();
                 var fridge = original["Fridge"]?.AsObject();
 
                 HashSet<int> usableWalls = new();
-
                 for (int i = 1; i <= 4; i++)
                 {
                     if (original.ContainsKey($"Wall{i}") || original.ContainsKey($"SpacesWall{i}") ||
@@ -42,45 +40,59 @@ namespace Kitchenbuilder.Core
                 {
                     JsonObject wallObj = new JsonObject();
 
-                    // 1. Handle spaces
+                    // Handle spaces
                     string spacesKey = $"SpacesWall{wallNum}";
                     JsonArray spacesArray;
 
                     if (original.ContainsKey(spacesKey))
                     {
-                        spacesArray = original[spacesKey].AsArray();
+                        spacesArray = original[spacesKey]!.AsArray();
                         wallObj[spacesKey] = spacesArray.DeepClone();
                     }
                     else if (original["NumOfExposedWall"]?.GetValue<int>() == wallNum && original.ContainsKey("ExposedWallSpace"))
                     {
-                        // Exposed wall case
                         JsonArray tempArr = new JsonArray();
                         var exposedSpace = original["ExposedWallSpace"]!.DeepClone().AsObject();
                         exposedSpace["Name"] = "";
                         tempArr.Add(exposedSpace);
-
                         wallObj[spacesKey] = tempArr;
                         spacesArray = tempArr;
                     }
-                    else
+                    else continue;
+
+                    // Handle fridge overlap
+                    JsonObject? fridgeSpace = null;
+                    int fridgeSpaceIndex = -1;
+                    if (fridgeWall == wallNum && fridge != null)
                     {
-                        continue;
+                        double fStart = fridge["Start"]!.GetValue<double>();
+                        double fEnd = fridge["End"]!.GetValue<double>();
+                        for (int i = 0; i < spacesArray.Count; i++)
+                        {
+                            if (spacesArray[i] is JsonObject sp)
+                            {
+                                double s = sp["Start"]!.GetValue<double>();
+                                double e = sp["End"]!.GetValue<double>();
+                                if (fStart >= s && fEnd <= e)
+                                {
+                                    fridgeSpace = sp;
+                                    fridgeSpaceIndex = i;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
-                    // 2. Handle bases
+                    // Create bases
                     JsonObject bases = new JsonObject();
-                    bool fridgeHandled = false;
-
                     for (int b = 0; b < 3; b++)
                     {
                         string sketch = (b == 1)
-        ? $"fridge_base{wallNum}"
-        : $"{wallNum}_{(b == 0 ? 1 : 2)}";
-
+                            ? $"fridge_base{wallNum}"
+                            : $"{wallNum}_{(b == 0 ? 1 : 2)}";
                         string extrude = (b == 1)
-              ? $"Extrude_fridge_base{wallNum}"
-              : $"Extrude_{wallNum}_{(b == 0 ? 1 : 2)}";
-
+                            ? $"Extrude_fridge_base{wallNum}"
+                            : $"Extrude_{wallNum}_{(b == 0 ? 1 : 2)}";
 
                         JsonObject baseObj = new JsonObject
                         {
@@ -91,54 +103,41 @@ namespace Kitchenbuilder.Core
                             ["Visible"] = false
                         };
 
-                        if (b != 1 && spacesArray.Count > b && spacesArray[b] is JsonObject space)
+                        if (b == 1 && fridgeSpace != null && fridge != null)
                         {
-                            double start = space["Start"]!.GetValue<double>();
-                            double end = space["End"]!.GetValue<double>();
+                            baseObj["Start"] = fridge["Start"]!.GetValue<double>();
+                            baseObj["End"] = fridge["End"]!.GetValue<double>();
+                            baseObj["Visible"] = true;
+                        }
+                        else if ((b == 0 || b == 2) && spacesArray.Count > b && spacesArray[b] is JsonObject space)
+                        {
+                            double s = space["Start"]!.GetValue<double>();
+                            double e = space["End"]!.GetValue<double>();
 
-                            if (fridgeWall == wallNum && fridge != null &&
-                                fridge["Start"]!.GetValue<double>() >= start &&
-                                fridge["End"]!.GetValue<double>() <= end)
+                            if (fridgeSpace != null && fridge != null && b == 0)
                             {
-                                // Split this space
-                                double fridgeStart = fridge["Start"]!.GetValue<double>();
-                                double fridgeEnd = fridge["End"]!.GetValue<double>();
-
-                                // Base2 → fridge_base
-                                JsonObject fridgeBase = new JsonObject
+                                double fEnd = fridge["End"]!.GetValue<double>();
+                                if (fEnd < e)
                                 {
-                                    ["SketchName"] = $"fridge_base{wallNum}",
-                                    ["ExtrudeName"] = $"Extrude_fridge_base{wallNum}",
-                                    ["Start"] = fridgeStart,
-                                    ["End"] = fridgeEnd,
-                                    ["Visible"] = true
-                                };
-
-                                bases["Base2"] = fridgeBase;
-
-                                // Remaining part → this base
-                                baseObj["Start"] = fridgeEnd;
-                                baseObj["End"] = end;
-                                baseObj["Visible"] = fridgeEnd < end;
-
-                                // Adjust original space if needed
-                                fridgeHandled = true;
+                                    baseObj["Start"] = fEnd;
+                                    baseObj["End"] = e;
+                                    baseObj["Visible"] = true;
+                                }
                             }
                             else
                             {
-                                baseObj["Start"] = start;
-                                baseObj["End"] = end;
+                                baseObj["Start"] = s;
+                                baseObj["End"] = e;
                                 baseObj["Visible"] = true;
                             }
                         }
 
-                        // Save base
                         bases[$"Base{b + 1}"] = baseObj;
                     }
 
-                    if (!fridgeHandled && fridgeWall == wallNum && fridge != null)
+                    // Only add fridge_base if not already handled
+                    if (!bases.ContainsKey("Base2") && fridgeWall == wallNum && fridge != null)
                     {
-                        // Place fridge_base separately if not handled in space split
                         JsonObject fridgeBase = new JsonObject
                         {
                             ["SketchName"] = $"fridge_base{wallNum}",
@@ -153,6 +152,7 @@ namespace Kitchenbuilder.Core
 
                     wallObj["Bases"] = bases;
                     wallObj["Exposed"] = original["NumOfExposedWall"]?.GetValue<int>() == wallNum;
+
                     if (fridgeWall == wallNum && fridge != null)
                         wallObj["Fridge"] = fridge.DeepClone();
 
@@ -167,6 +167,7 @@ namespace Kitchenbuilder.Core
                 Log($"❌ Error: {ex.Message}");
             }
         }
+
 
         private static void Log(string msg)
         {
