@@ -153,27 +153,8 @@ namespace Kitchenbuilder.Core
                     result[$"Wall{wallNum}"] = wallObj;
                 }
 
-                if (original.ContainsKey("Corner") && original["Corner"] is JsonArray cornerArray)
-                {
-                    foreach (var pair in cornerArray)
-                    {
-                        if (pair is JsonArray cp && cp.Count == 2)
-                        {
-                            int wallX = Math.Min(cp[0]!.GetValue<int>(), cp[1]!.GetValue<int>());
-                            int wallY = Math.Max(cp[0]!.GetValue<int>(), cp[1]!.GetValue<int>());
+                AdjustCornerBases(original, result);
 
-                            // Only update the base of wallY (leave the space unchanged)
-                            if (result.ContainsKey($"Wall{wallY}") &&
-                                result[$"Wall{wallY}"]?["Bases"] is JsonObject basesY &&
-                                basesY.ContainsKey("Base1") &&
-                                basesY["Base1"] is JsonObject base1Y)
-                            {
-                                Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner logic)");
-                                base1Y["Start"] = 60;
-                            }
-                        }
-                    }
-                }
 
 
                 File.WriteAllText(outputPath, JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
@@ -184,6 +165,113 @@ namespace Kitchenbuilder.Core
                 Log($"❌ Error: {ex.Message}");
             }
         }
+        private static void AdjustCornerBases(JsonObject original, JsonObject result)
+        {
+            // Handle corner logic: [1,4] or others
+            if (original.TryGetPropertyValue("Corner", out JsonNode? cornerNode) && cornerNode is JsonArray cornerArray)
+            {
+                foreach (var pair in cornerArray)
+                {
+                    if (pair is JsonArray cp && cp.Count == 2)
+                    {
+                        int a = cp[0]!.GetValue<int>();
+                        int b = cp[1]!.GetValue<int>();
+
+                        int wallX, wallY;
+                        bool isCorner14 = (a == 1 && b == 4) || (a == 4 && b == 1);
+
+                        if (isCorner14)
+                        {
+                            wallX = 4;
+                            wallY = 1;
+                        }
+                        else
+                        {
+                            wallX = Math.Min(a, b);
+                            wallY = Math.Max(a, b);
+                        }
+
+                        // Adjust Base1 of wallY (second wall)
+                        if (result.TryGetPropertyValue($"Wall{wallY}", out JsonNode? wallYNode) &&
+                            wallYNode is JsonObject wallYObj &&
+                            wallYObj.TryGetPropertyValue("Bases", out JsonNode? basesNode) &&
+                            basesNode is JsonObject basesY &&
+                            basesY.TryGetPropertyValue("Base1", out JsonNode? base1Node) &&
+                            base1Node is JsonObject base1Y)
+                        {
+                            Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner {wallX},{wallY})");
+                            base1Y["Start"] = 60;
+                        }
+                    }
+                }
+            }
+
+            // Handle exposed wall logic
+            if (original.TryGetPropertyValue("NumOfExposedWall", out JsonNode? exposedNumNode) &&
+                exposedNumNode is JsonValue numVal)
+            {
+                int exposedWall = numVal.GetValue<int>();
+
+                if (exposedWall == 4)
+                {
+                    // Only update Wall1.Base1
+                    if (result.TryGetPropertyValue("Wall1", out JsonNode? wall1Node) &&
+                        wall1Node is JsonObject wall1Obj &&
+                        wall1Obj.TryGetPropertyValue("Bases", out JsonNode? wall1BasesNode) &&
+                        wall1BasesNode is JsonObject bases1 &&
+                        bases1.TryGetPropertyValue("Base1", out JsonNode? base1NodeWall1) &&
+                        base1NodeWall1 is JsonObject base1Wall1)
+                    {
+                        Log("🛠 Adjusting Base1 of Wall1 because ExposedWall == 4");
+                        base1Wall1["Start"] = 60;
+                    }
+                }
+                else
+                {
+                    // ExposedWall is 1, 2, or 3 → update matching base to first space
+                    string wallKey = $"Wall{exposedWall}";
+                    string spacesKey = $"SpacesWall{exposedWall}";
+
+                    if (result.TryGetPropertyValue(wallKey, out JsonNode? wallNode) &&
+                        wallNode is JsonObject wallObj &&
+                        wallObj.TryGetPropertyValue(spacesKey, out JsonNode? spacesNode) &&
+                        spacesNode is JsonArray spacesArray &&
+                        spacesArray.FirstOrDefault() is JsonObject firstSpace &&
+                        firstSpace.TryGetPropertyValue("Start", out JsonNode? startNode) &&
+                        firstSpace.TryGetPropertyValue("End", out JsonNode? endNode) &&
+                        wallObj.TryGetPropertyValue("Bases", out JsonNode? basesNode) &&
+                        basesNode is JsonObject bases)
+                    {
+                        double spaceStart = startNode.GetValue<double>();
+                        double spaceEnd = endNode.GetValue<double>();
+
+                        foreach (var basePair in bases)
+                        {
+                            if (basePair.Value is JsonObject baseObj &&
+                                baseObj.TryGetPropertyValue("Visible", out JsonNode? visibleNode) &&
+                                visibleNode?.GetValue<bool>() == true &&
+                                baseObj.TryGetPropertyValue("Start", out JsonNode? baseStartNode) &&
+                                baseObj.TryGetPropertyValue("End", out JsonNode? baseEndNode))
+                            {
+                                double baseStart = baseStartNode.GetValue<double>();
+                                double baseEnd = baseEndNode.GetValue<double>();
+
+                                // Match first visible base to the first space range
+                                if (Math.Abs(baseStart - spaceStart) < 1e-2 &&
+                                    Math.Abs(baseEnd - spaceEnd) < 1e-2)
+                                {
+                                    Log($"🛠 Adjusting matched Base in {wallKey} to start from 60 (exposed wall)");
+                                    baseObj["Start"] = 60;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         private static void Log(string msg)
         {

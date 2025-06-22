@@ -1,5 +1,0 @@
-[00:53:58] ❌ No valid main or secondary space found for line shape.
-[00:53:58] ❌ No valid main or secondary space found for line shape.
-[00:53:58] ❌ No valid main or secondary space found for line shape.
-[00:53:58] ❌ No valid main or secondary space found for line shape.
-[00:53:58] ✅ Secondary space found (200-500) with length 300 cm
