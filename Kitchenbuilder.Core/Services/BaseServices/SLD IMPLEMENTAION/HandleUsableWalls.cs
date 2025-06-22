@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -9,7 +8,7 @@ namespace Kitchenbuilder.Core
 {
     public static class HandleUsableWalls
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleUsableWalls.txt";
+        private static readonly string DebugPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\HandleUsableWalls.txt";
 
         public static void Process(string inputPath, string outputPath)
         {
@@ -40,7 +39,6 @@ namespace Kitchenbuilder.Core
                 {
                     JsonObject wallObj = new JsonObject();
 
-                    // Handle spaces
                     string spacesKey = $"SpacesWall{wallNum}";
                     JsonArray spacesArray;
 
@@ -60,29 +58,25 @@ namespace Kitchenbuilder.Core
                     }
                     else continue;
 
-                    // Create dynamic bases
                     JsonObject bases = new JsonObject();
                     int baseCounter = 1;
 
                     for (int i = 0; i < spacesArray.Count; i++)
                     {
-                        if (spacesArray[i] is not JsonObject space)
-                            continue;
+                        if (spacesArray[i] is not JsonObject space) continue;
 
                         double spaceStart = space["Start"]!.GetValue<double>();
                         double spaceEnd = space["End"]!.GetValue<double>();
 
-                        bool isFridgeHere = fridgeWall == wallNum &&
-                                            fridge != null &&
-                                            fridge["Start"]!.GetValue<double>() >= spaceStart &&
-                                            fridge["End"]!.GetValue<double>() <= spaceEnd;
+                        bool isFridgeHere = fridgeWall == wallNum && fridge != null &&
+                                             fridge["Start"]!.GetValue<double>() >= spaceStart &&
+                                             fridge["End"]!.GetValue<double>() <= spaceEnd;
 
                         if (isFridgeHere)
                         {
                             double fStart = fridge["Start"]!.GetValue<double>();
                             double fEnd = fridge["End"]!.GetValue<double>();
 
-                            // Before fridge
                             if (spaceStart < fStart)
                             {
                                 bases[$"Base{baseCounter}"] = new JsonObject
@@ -96,7 +90,6 @@ namespace Kitchenbuilder.Core
                                 baseCounter++;
                             }
 
-                            // Fridge base
                             bases[$"Base{baseCounter}"] = new JsonObject
                             {
                                 ["SketchName"] = $"fridge_base{wallNum}",
@@ -107,7 +100,6 @@ namespace Kitchenbuilder.Core
                             };
                             baseCounter++;
 
-                            // After fridge
                             if (fEnd < spaceEnd)
                             {
                                 bases[$"Base{baseCounter}"] = new JsonObject
@@ -123,7 +115,6 @@ namespace Kitchenbuilder.Core
                         }
                         else
                         {
-                            // Normal full space base
                             bases[$"Base{baseCounter}"] = new JsonObject
                             {
                                 ["SketchName"] = $"{wallNum}_{baseCounter}",
@@ -136,15 +127,10 @@ namespace Kitchenbuilder.Core
                         }
                     }
 
-                    // Ensure we always have exactly 3 bases
                     while (baseCounter <= 3)
                     {
-                        string sketch = (baseCounter == 2)
-                            ? $"fridge_base{wallNum}"
-                            : $"{wallNum}_{baseCounter}";
-                        string extrude = (baseCounter == 2)
-                            ? $"Extrude_fridge_base{wallNum}"
-                            : $"Extrude_{wallNum}_{baseCounter}";
+                        string sketch = (baseCounter == 2) ? $"fridge_base{wallNum}" : $"{wallNum}_{baseCounter}";
+                        string extrude = (baseCounter == 2) ? $"Extrude_fridge_base{wallNum}" : $"Extrude_{wallNum}_{baseCounter}";
 
                         bases[$"Base{baseCounter}"] = new JsonObject
                         {
@@ -167,6 +153,29 @@ namespace Kitchenbuilder.Core
                     result[$"Wall{wallNum}"] = wallObj;
                 }
 
+                if (original.ContainsKey("Corner") && original["Corner"] is JsonArray cornerArray)
+                {
+                    foreach (var pair in cornerArray)
+                    {
+                        if (pair is JsonArray cp && cp.Count == 2)
+                        {
+                            int wallX = Math.Min(cp[0]!.GetValue<int>(), cp[1]!.GetValue<int>());
+                            int wallY = Math.Max(cp[0]!.GetValue<int>(), cp[1]!.GetValue<int>());
+
+                            // Only update the base of wallY (leave the space unchanged)
+                            if (result.ContainsKey($"Wall{wallY}") &&
+                                result[$"Wall{wallY}"]?["Bases"] is JsonObject basesY &&
+                                basesY.ContainsKey("Base1") &&
+                                basesY["Base1"] is JsonObject base1Y)
+                            {
+                                Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner logic)");
+                                base1Y["Start"] = 60;
+                            }
+                        }
+                    }
+                }
+
+
                 File.WriteAllText(outputPath, JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
                 Log($"✅ Output written to: {Path.GetFileName(outputPath)}");
             }
@@ -185,10 +194,5 @@ namespace Kitchenbuilder.Core
         {
             return node == null ? null : JsonNode.Parse(node.ToJsonString());
         }
-
-
-
-
-
     }
 }

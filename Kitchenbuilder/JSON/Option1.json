@@ -4,6 +4,10 @@
   "SpacesWall1": [
     {
       "Start": 0,
+      "End": 150
+    },
+    {
+      "Start": 200,
       "End": 500
     }
   ],

@@ -92,6 +92,7 @@ namespace Kitchenbuilder.Core
         }
 
 
+        
 
         private static void LogDebug(string message)
         {

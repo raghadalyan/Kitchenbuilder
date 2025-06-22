@@ -13,6 +13,10 @@
     "SpacesWall1": [
       {
         "Start": 0,
+        "End": 150
+      },
+      {
+        "Start": 200,
         "End": 500
       }
     ],
@@ -28,15 +32,15 @@
         "SketchName": "1_2",
         "ExtrudeName": "Extrude_1_2",
         "Start": 85,
-        "End": 500,
+        "End": 150,
         "Visible": true
       },
       "Base3": {
         "SketchName": "1_3",
         "ExtrudeName": "Extrude_1_3",
-        "Start": null,
-        "End": null,
-        "Visible": false
+        "Start": 200,
+        "End": 500,
+        "Visible": true
       }
     },
     "Exposed": false,

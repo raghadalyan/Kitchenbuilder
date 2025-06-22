@@ -1,0 +1,6 @@
+[00:53:58] 🔍 Corner detected between Wall 1 and Wall 2
+[00:53:58] 🚪 Option 1: Trying fridge in Wall 1 from 200 to 285
+[00:53:58] ✅ Success: Fridge placed in Wall 1 (Option 1)
+2025-06-23 00:53:58 - LShapeSelector result: ✅ Success
+2025-06-23 00:53:58 - UShapeSelector result: ✅ Success
+2025-06-23 00:53:58 - LineShapeSelector result: ✅ Success
