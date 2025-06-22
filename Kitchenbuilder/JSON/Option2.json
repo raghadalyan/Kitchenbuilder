@@ -1,18 +1,7 @@
 {
   "Title": "LShape",
   "Wall1": 1,
-  "Wall2": 2,
   "SpacesWall1": [
-    {
-      "Start": 0,
-      "End": 200
-    },
-    {
-      "Start": 300,
-      "End": 500
-    }
-  ],
-  "SpacesWall2": [
     {
       "Start": 0,
       "End": 500
@@ -20,9 +9,14 @@
   ],
   "FridgeWall": 1,
   "Fridge": {
-    "Start": 300,
-    "End": 385
+    "Start": 0,
+    "End": 85
   },
-  "Corner": true,
-  "Exposed": false
+  "Corner": false,
+  "Exposed": true,
+  "NumOfExposedWall": 2,
+  "ExposedWallSpace": {
+    "Start": 0,
+    "End": 180
+  }
 }

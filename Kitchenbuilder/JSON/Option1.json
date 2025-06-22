@@ -1,13 +1,13 @@
 {
   "Title": "Line Shape",
-  "Wall1": 2,
+  "Wall1": 1,
   "SpacesWall1": [
     {
       "Start": 0,
       "End": 500
     }
   ],
-  "FridgeWall": 2,
+  "FridgeWall": 1,
   "Fridge": {
     "Start": 0,
     "End": 85

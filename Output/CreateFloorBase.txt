@@ -1,9 +1,0 @@
-[00:26:47] ************** CreateFloor_Base **************
-[00:26:47] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option1SLD.json
-[00:26:47] ❌ Floor section not found in JSON.
-[00:26:51] ************** CreateFloor_Base **************
-[00:26:51] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
-[00:26:51] ❌ Floor section not found in JSON.
-[00:26:55] ************** CreateFloor_Base **************
-[00:26:55] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
-[00:26:55] ❌ Floor section not found in JSON.
