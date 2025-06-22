@@ -51,7 +51,7 @@ namespace Kitchenbuilder.Core
                     HandleUsableWalls.Process(file, outputPath);
 
                     // ➕ Call Identify_Hidden_Walls here
-                    //Identify_Hidden_Walls.Process(file, outputPath, simpleEmptySpaces);
+                    Identify_Hidden_Walls.Process(file, outputPath, simpleEmptySpaces);
                 }
                 catch (Exception ex)
                 {

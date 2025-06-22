@@ -79,68 +79,29 @@ namespace Kitchenbuilder.Core
 
                             if (spaceStart < fStart)
                             {
-                                bases[$"Base{baseCounter}"] = new JsonObject
-                                {
-                                    ["SketchName"] = $"{wallNum}_{baseCounter}",
-                                    ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
-                                    ["Start"] = spaceStart,
-                                    ["End"] = fStart,
-                                    ["Visible"] = true
-                                };
+                                bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, spaceStart, fStart, true);
                                 baseCounter++;
                             }
 
-                            bases[$"Base{baseCounter}"] = new JsonObject
-                            {
-                                ["SketchName"] = $"fridge_base{wallNum}",
-                                ["ExtrudeName"] = $"Extrude_fridge_base{wallNum}",
-                                ["Start"] = fStart,
-                                ["End"] = fEnd,
-                                ["Visible"] = true
-                            };
+                            bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, -1, fStart, fEnd, true);
                             baseCounter++;
 
                             if (fEnd < spaceEnd)
                             {
-                                bases[$"Base{baseCounter}"] = new JsonObject
-                                {
-                                    ["SketchName"] = $"{wallNum}_{baseCounter}",
-                                    ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
-                                    ["Start"] = fEnd,
-                                    ["End"] = spaceEnd,
-                                    ["Visible"] = true
-                                };
+                                bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, fEnd, spaceEnd, true);
                                 baseCounter++;
                             }
                         }
                         else
                         {
-                            bases[$"Base{baseCounter}"] = new JsonObject
-                            {
-                                ["SketchName"] = $"{wallNum}_{baseCounter}",
-                                ["ExtrudeName"] = $"Extrude_{wallNum}_{baseCounter}",
-                                ["Start"] = spaceStart,
-                                ["End"] = spaceEnd,
-                                ["Visible"] = true
-                            };
+                            bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, spaceStart, spaceEnd, true);
                             baseCounter++;
                         }
                     }
 
                     while (baseCounter <= 3)
                     {
-                        string sketch = (baseCounter == 2) ? $"fridge_base{wallNum}" : $"{wallNum}_{baseCounter}";
-                        string extrude = (baseCounter == 2) ? $"Extrude_fridge_base{wallNum}" : $"Extrude_{wallNum}_{baseCounter}";
-
-                        bases[$"Base{baseCounter}"] = new JsonObject
-                        {
-                            ["SketchName"] = sketch,
-                            ["ExtrudeName"] = extrude,
-                            ["Start"] = null,
-                            ["End"] = null,
-                            ["Visible"] = false
-                        };
-
+                        bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, null, null, false);
                         baseCounter++;
                     }
 
@@ -155,8 +116,6 @@ namespace Kitchenbuilder.Core
 
                 AdjustCornerBases(original, result);
 
-
-
                 File.WriteAllText(outputPath, JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
                 Log($"✅ Output written to: {Path.GetFileName(outputPath)}");
             }
@@ -165,7 +124,62 @@ namespace Kitchenbuilder.Core
                 Log($"❌ Error: {ex.Message}");
             }
         }
-        private static void AdjustCornerBases(JsonObject original, JsonObject result)
+
+        private static JsonObject CreateSmartBase(int wallNum, int index, double? start, double? end, bool visible)
+        {
+            string sketchName = index == -1 ? $"fridge_base{wallNum}" : $"{wallNum}_{index}";
+            string extrudeName = index == -1 ? $"Extrude_fridge_base{wallNum}" : $"Extrude_{wallNum}_{index}";
+
+            JsonObject baseObj = new JsonObject
+            {
+                ["SketchName"] = sketchName,
+                ["ExtrudeName"] = extrudeName,
+                ["Start"] = start is not null ? JsonValue.Create(start) : null,
+                ["End"] = end is not null ? JsonValue.Create(end) : null,
+                ["Visible"] = visible
+            };
+
+            if (!visible)
+            {
+                baseObj["SmartDim"] = null;
+                return baseObj;
+            }
+
+            JsonArray smartDims = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["Name"] = $"DistaceX@{sketchName}",
+                    ["Size"] = start ?? 0
+                }
+            };
+
+            if (index != -1 && start.HasValue && end.HasValue)
+            {
+                smartDims.Add(new JsonObject
+                {
+                    ["Name"] = $"length@{sketchName}",
+                    ["Size"] = end.Value - start.Value
+                });
+            }
+
+            baseObj["SmartDim"] = smartDims;
+            return baseObj;
+        }
+
+        private static void Log(string msg)
+        {
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
+        }
+
+        private static JsonNode? DeepClone(this JsonNode? node)
+        {
+            return node == null ? null : JsonNode.Parse(node.ToJsonString());
+        }
+    
+
+
+            private static void AdjustCornerBases(JsonObject original, JsonObject result)
         {
             // Handle corner logic: [1,4] or others
             if (original.TryGetPropertyValue("Corner", out JsonNode? cornerNode) && cornerNode is JsonArray cornerArray)
@@ -273,14 +287,6 @@ namespace Kitchenbuilder.Core
 
 
 
-        private static void Log(string msg)
-        {
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
-        }
 
-        private static JsonNode? DeepClone(this JsonNode? node)
-        {
-            return node == null ? null : JsonNode.Parse(node.ToJsonString());
-        }
     }
 }

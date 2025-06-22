@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -8,100 +9,91 @@ namespace Kitchenbuilder.Core
 {
     public static class Identify_Hidden_Walls
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\IdentifyHiddenWalls.txt";
+        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\IdentifyHiddenWalls.txt";
 
-        public static void Process(string originalJsonPath, string sldJsonPath, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
+        public static void Process(string inputPath, string outputPath, Dictionary<int, List<(double start, double end)>> _unused)
         {
             try
             {
-                File.AppendAllText(LogPath, $"\n🔍 Processing: {Path.GetFileName(originalJsonPath)}\n");
+                Log($"🔍 Processing hidden walls for: {Path.GetFileName(inputPath)}");
 
-                var originalJson = JsonNode.Parse(File.ReadAllText(originalJsonPath)).AsObject();
-                var sldJson = JsonNode.Parse(File.ReadAllText(sldJsonPath)).AsObject();
+                string originalJson = File.ReadAllText(inputPath);
+                JsonObject original = JsonNode.Parse(originalJson)?.AsObject() ?? new JsonObject();
 
-                var shown = new JsonObject();
-                var deleted = new JsonObject();
+                string outputJson = File.ReadAllText(outputPath);
+                JsonObject result = JsonNode.Parse(outputJson)?.AsObject() ?? new JsonObject();
 
-                var usedWalls = new HashSet<int>();
+                var existingWalls = new HashSet<int>();
 
-                if (originalJson.ContainsKey("Wall1")) usedWalls.Add(originalJson["Wall1"].GetValue<int>());
-                if (originalJson.ContainsKey("Wall2")) usedWalls.Add(originalJson["Wall2"].GetValue<int>());
-                if (originalJson.TryGetPropertyValue("Exposed", out var exposedNode) &&
-                    exposedNode.GetValue<bool>() &&
-                    originalJson.TryGetPropertyValue("NumOfExposedWall", out var exposedWallNode))
+                foreach (var kvp in original)
                 {
-                    usedWalls.Add(exposedWallNode.GetValue<int>());
+                    string key = kvp.Key;
+                    if (key.StartsWith("Wall") && int.TryParse(key.Substring(4), out int wallNum))
+                        existingWalls.Add(wallNum);
                 }
 
-                for (int wallNum = 1; wallNum <= 4; wallNum++)
+                int exposedWallNum = -1;
+                if (original.TryGetPropertyValue("NumOfExposedWall", out JsonNode? exposedNode))
                 {
-                    string wallKey = $"Wall{wallNum}";
-
-                    if (usedWalls.Contains(wallNum))
+                    exposedWallNum = exposedNode?.GetValue<int>() ?? -1;
+                    if (exposedWallNum >= 1 && exposedWallNum <= 4)
                     {
-                        var wallObj = new JsonObject();
-
-                        // Check if this wall is Wall1/Wall2 in the logic
-                        int? matchField = null;
-                        if (originalJson.TryGetPropertyValue("Wall1", out var w1) && w1.GetValue<int>() == wallNum)
-                            matchField = 1;
-                        else if (originalJson.TryGetPropertyValue("Wall2", out var w2) && w2.GetValue<int>() == wallNum)
-                            matchField = 2;
-
-                        string spaceField = matchField != null ? $"SpacesWall{matchField}" : null;
-
-                        if (spaceField != null && originalJson.TryGetPropertyValue(spaceField, out var spacesNode))
-                        {
-                            var clonedArray = new JsonArray();
-                            foreach (var space in spacesNode.AsArray())
-                            {
-                                var obj = space.AsObject();
-                                obj["Name"] = "";
-                                clonedArray.Add(obj.DeepClone());
-                            }
-                            wallObj[$"SpacesWall{matchField}"] = clonedArray;
-                        }
-
-                        // If this is the exposed wall and it has ExposedWallSpace
-                        if (originalJson.TryGetPropertyValue("ExposedWallSpace", out var exposedWallSpace) &&
-                            originalJson.TryGetPropertyValue("NumOfExposedWall", out var numExposedNode) &&
-                            numExposedNode.GetValue<int>() == wallNum)
-                        {
-                            var spaceObj = exposedWallSpace.AsObject();
-                            spaceObj["Name"] = "";
-                            var arr = new JsonArray { spaceObj.DeepClone() };
-                            wallObj[$"SpacesWall{wallNum}"] = arr;
-                        }
-
-                        // Fridge
-                        if (originalJson.TryGetPropertyValue("FridgeWall", out var fw) &&
-                            fw.GetValue<int>() == wallNum)
-                        {
-                            wallObj["Fridge"] = originalJson["Fridge"].DeepClone();
-                        }
-
-                        wallObj["Exposed"] =
-                            originalJson.TryGetPropertyValue("NumOfExposedWall", out var numExp) &&
-                            numExp.GetValue<int>() == wallNum;
-
-                        shown[wallKey] = wallObj;
-                    }
-                    else
-                    {
-                        deleted[wallKey] = new JsonObject();
+                        existingWalls.Add(exposedWallNum);
+                        Log($"🔎 Exposed wall {exposedWallNum} marked as usable");
                     }
                 }
 
-                sldJson["Shown"] = shown;
-                sldJson["Deleted"] = deleted;
+                Log($"✅ Usable walls: {string.Join(", ", existingWalls.OrderBy(x => x))}");
 
-                File.WriteAllText(sldJsonPath, JsonSerializer.Serialize(sldJson, new JsonSerializerOptions { WriteIndented = true }));
-                File.AppendAllText(LogPath, $"✅ Updated {Path.GetFileName(sldJsonPath)} with shown and deleted walls.\n");
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (existingWalls.Contains(i)) continue;
+
+                    var wallKey = $"Wall{i}";
+                    var spacesKey = $"SpacesWall{i}";
+
+                    Log($"➕ Adding hidden wall {i}");
+
+                    JsonObject newWall = new JsonObject
+                    {
+                        [spacesKey] = new JsonArray(),
+                        ["Bases"] = new JsonObject
+                        {
+                            ["Base1"] = CreateHiddenBase(i, 1),
+                            ["Base2"] = CreateHiddenBase(i, 2),
+                            ["Base3"] = CreateHiddenBase(i, 3),
+                        },
+                        ["Exposed"] = false
+                    };
+
+                    result[wallKey] = newWall;
+                }
+
+                File.WriteAllText(outputPath, JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
+                Log($"✅ Output updated: {Path.GetFileName(outputPath)}");
             }
             catch (Exception ex)
             {
-                File.AppendAllText(LogPath, $"❌ Error: {ex.Message}\n");
+                Log($"❌ [Error] {ex.Message}");
             }
+        }
+
+        private static JsonObject CreateHiddenBase(int wallNum, int index)
+        {
+            return new JsonObject
+            {
+                ["SketchName"] = $"{wallNum}_{index}",
+                ["ExtrudeName"] = $"Extrude_{wallNum}_{index}",
+                ["Start"] = null,
+                ["End"] = null,
+                ["Visible"] = false,
+                ["SmartDim"] = null
+            };
+        }
+
+        private static void Log(string message)
+        {
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
     }
 }
