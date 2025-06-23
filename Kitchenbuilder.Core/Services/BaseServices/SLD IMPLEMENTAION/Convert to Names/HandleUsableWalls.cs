@@ -215,6 +215,15 @@ namespace Kitchenbuilder.Core
                         {
                             Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner {wallX},{wallY})");
                             base1Y["Start"] = 60;
+                            if (base1Y.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
+    smartDimsNode is JsonArray smartDims &&
+    smartDims.FirstOrDefault() is JsonObject dim &&
+    dim.TryGetPropertyValue("Name", out JsonNode? nameNode) &&
+    nameNode.ToString().StartsWith("DistaceX@"))
+                            {
+                                dim["Size"] = 60;
+                            }
+
                         }
                     }
                 }
@@ -276,6 +285,14 @@ namespace Kitchenbuilder.Core
                                 {
                                     Log($"🛠 Adjusting matched Base in {wallKey} to start from 60 (exposed wall)");
                                     baseObj["Start"] = 60;
+                                    if (baseObj.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
+                                        smartDimsNode is JsonArray smartDims &&
+                                        smartDims.FirstOrDefault() is JsonObject dim &&
+                                        dim.TryGetPropertyValue("Name", out JsonNode? nameNode) &&
+                                        nameNode.ToString().StartsWith("DistaceX@"))
+                                    {
+                                        dim["Size"] = 60;
+                                    }
                                     break;
                                 }
                             }
