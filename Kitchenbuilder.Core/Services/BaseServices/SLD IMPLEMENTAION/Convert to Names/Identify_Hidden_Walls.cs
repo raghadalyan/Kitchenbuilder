@@ -80,16 +80,36 @@ namespace Kitchenbuilder.Core
 
         private static JsonObject CreateHiddenBase(int wallNum, int index)
         {
+            string sketchName = "";
+            string extrudeName = "";
+
+            if (index == 1) // מקרר
+            {
+                sketchName = $"fridge_base{wallNum}";
+                extrudeName = $"Extrude_fridge_base{wallNum}";
+            }
+            else if (index == 2)
+            {
+                sketchName = $"{wallNum}_2";
+                extrudeName = $"Extrude_{wallNum}_2";
+            }
+            else if (index == 3)
+            {
+                sketchName = $"{wallNum}_1";
+                extrudeName = $"Extrude_{wallNum}_1";
+            }
+
             return new JsonObject
             {
-                ["SketchName"] = $"{wallNum}_{index}",
-                ["ExtrudeName"] = $"Extrude_{wallNum}_{index}",
+                ["SketchName"] = sketchName,
+                ["ExtrudeName"] = extrudeName,
                 ["Start"] = null,
                 ["End"] = null,
                 ["Visible"] = false,
                 ["SmartDim"] = null
             };
         }
+
 
         private static void Log(string message)
         {
