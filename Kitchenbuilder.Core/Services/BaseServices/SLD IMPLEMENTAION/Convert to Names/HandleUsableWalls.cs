@@ -149,6 +149,8 @@ namespace Kitchenbuilder.Core
                 }
 
                 AdjustCornerBases(original, result);
+                AddExposedSmartDimension(original, result); // ✅ Add this line
+
 
                 File.WriteAllText(outputPath, JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
                 Log($"✅ Output written to: {Path.GetFileName(outputPath)}");
@@ -157,6 +159,7 @@ namespace Kitchenbuilder.Core
             {
                 Log($"❌ Error: {ex.Message}");
             }
+
         }
 
 
@@ -216,6 +219,149 @@ namespace Kitchenbuilder.Core
         }
 
 
+        private static void AddExposedSmartDimension(JsonObject original, JsonObject result)
+        {
+            if (!original.TryGetPropertyValue("NumOfExposedWall", out JsonNode? node) || node is not JsonValue exposedVal)
+            {
+                Log("❌ NumOfExposedWall missing or invalid");
+                return;
+            }
+
+            int exposed = exposedVal.GetValue<int>();
+            string exposedWallKey = $"Wall{exposed}";
+            string dimName = exposed switch
+            {
+                2 => "Distance_from_2@master_wall2",
+                3 => "Distance_from_1@master_wall3",
+                4 => "Distance_from_2@master_wall4",
+                _ => null
+            };
+
+            if (dimName == null)
+            {
+                Log($"❌ Unknown exposed wall number: {exposed}");
+                return;
+            }
+
+            if (!result.TryGetPropertyValue(exposedWallKey, out JsonNode? wallNode) || wallNode is not JsonObject wallObj)
+            {
+                Log($"❌ Wall '{exposedWallKey}' not found in result JSON");
+                return;
+            }
+
+            if (!result.TryGetPropertyValue("Floor", out JsonNode? floorNode) || floorNode is not JsonObject floor)
+            {
+                Log("❌ Floor section missing or invalid in result JSON");
+                return;
+            }
+
+            bool TryGetFloorSize(string key, out double value)
+            {
+                value = 0;
+                if (!floor.TryGetPropertyValue(key, out JsonNode? node)) return false;
+                if (node is JsonObject obj && obj.TryGetPropertyValue("Size", out JsonNode? sizeNode) && sizeNode is JsonValue val)
+                {
+                    value = val.GetValue<double>();
+                    return true;
+                }
+                return false;
+            }
+
+            double? size = null;
+
+            // Wall 2 or 3
+            if (exposed == 2 || exposed == 3)
+            {
+                int prevWall = exposed - 1;
+                if (original.TryGetPropertyValue($"SpacesWall{prevWall}", out JsonNode? prevSpacesNode) &&
+                    prevSpacesNode is JsonArray prevSpaces)
+                {
+                    Log($"🔍 Checking previous wall {prevWall} for exposed wall {exposed}");
+
+                    foreach (var space in prevSpaces.OrderByDescending(s => s["End"]?.GetValue<double>() ?? 0))
+                    {
+                        if (space is JsonObject obj &&
+                            obj.TryGetPropertyValue("Start", out JsonNode? startNode) &&
+                            obj.TryGetPropertyValue("End", out JsonNode? endNode))
+                        {
+                            double start = startNode.GetValue<double>();
+                            double end = endNode.GetValue<double>();
+                            double length = end - start;
+
+                            Log($"   ➤ Space found: Start={start}, End={end}, Length={length}");
+
+                            if (length >= 60)
+                            {
+                                if (exposed == 2 && TryGetFloorSize("Width", out double floorWidth))
+                                {
+                                    size = floorWidth - end;
+                                    Log($"✅ Wall 2 exposed. Size = {floorWidth} - {end} = {size}");
+                                }
+                                else if (exposed == 3)
+                                {
+                                    size = end;
+                                    Log($"✅ Wall 3 exposed. Using space end directly: Size = {size}");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Log($"❌ SpacesWall{prevWall} not found");
+                }
+            }
+
+            // Wall 4
+            else if (exposed == 4 &&
+                     result.TryGetPropertyValue("Wall1", out JsonNode? wall1Node) &&
+                     wall1Node is JsonObject wall1Obj &&
+                     wall1Obj.TryGetPropertyValue("SpacesWall1", out JsonNode? spacesNode) &&
+                     spacesNode is JsonArray spaces &&
+                     TryGetFloorSize("Width", out double floorWidth))
+            {
+                Log("🔍 Checking Wall1 spaces for exposed wall 4");
+
+                foreach (var space in spaces.OrderBy(s => s["Start"]?.GetValue<double>() ?? 0))
+                {
+                    if (space is JsonObject obj &&
+                        obj.TryGetPropertyValue("Start", out JsonNode? startNode) &&
+                        obj.TryGetPropertyValue("End", out JsonNode? endNode))
+                    {
+                        double start = startNode.GetValue<double>();
+                        double end = endNode.GetValue<double>();
+                        double length = end - start;
+
+                        Log($"   ➤ Space found: Start={start}, End={end}, Length={length}");
+
+                        if (length >= 60)
+                        {
+                            size = floorWidth - start;
+                            Log($"✅ Wall 4 exposed. Size = {floorWidth} - {start} = {size}");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (size.HasValue)
+            {
+                wallObj["DistanceFrom"] = new JsonArray
+        {
+            new JsonObject
+            {
+                ["Name"] = dimName,
+                ["Size"] = size.Value
+            }
+        };
+                Log($"📏 Added DistanceFrom to {exposedWallKey}: '{dimName}' = {size.Value}");
+            }
+            else
+            {
+                Log($"⚠️ No suitable space found to calculate DistanceFrom for {exposedWallKey}");
+            }
+        }
 
         private static void AdjustCornerBases(JsonObject original, JsonObject result)
         {

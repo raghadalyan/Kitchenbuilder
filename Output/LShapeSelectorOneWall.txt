@@ -1,0 +1,6 @@
+[20:35:41] 🔍 Trying largest space in Wall 1: 0-500
+[20:35:41] 🔍 Checking overlap: Fridge 0-85 vs Window 0-100 => YES
+[20:35:41] 🚫 Fridge area 0-85 overlaps with a window.
+[20:35:41] 🔍 Checking overlap: Fridge 415-500 vs Window 0-100 => NO
+[20:35:41] 💾 Saved valid layout to JSON.
+[20:35:41] ✅ Fridge placed at end of largest space, exposed Wall 4.

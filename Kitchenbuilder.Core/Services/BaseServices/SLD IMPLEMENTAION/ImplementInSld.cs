@@ -27,7 +27,7 @@ namespace Kitchenbuilder.Core
                     File.AppendAllText(LogPath, $"\n🔁 Processing {fileName}\n");
 
                     // Pass the global kitchen and the specific JSON path to reader
-                    //JsonReader.ProcessJson(kitchen, file);
+                    JsonReader.ProcessJson(kitchen, file);
 
                     File.AppendAllText(LogPath, $"✅ Finished processing {fileName}\n");
                 }

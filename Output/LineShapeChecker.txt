@@ -1,0 +1,2 @@
+[20:35:41] ❌ Window found in fridge range 0-85
+[20:35:41] ✅ Main space (0-500) is sufficient (500 cm)
