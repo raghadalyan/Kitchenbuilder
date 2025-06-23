@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -58,8 +59,6 @@ namespace Kitchenbuilder.Core
                     else continue;
 
                     JsonObject bases = new JsonObject();
-                    bool fridgeAssigned = false;
-                    int regularBaseCounter = 1;
 
                     foreach (JsonNode node in spacesArray)
                     {
@@ -76,51 +75,69 @@ namespace Kitchenbuilder.Core
                             double fStart = fridge["Start"]!.GetValue<double>();
                             double fEnd = fridge["End"]!.GetValue<double>();
 
-                            // Base1: before fridge
+                            // Base1: Before fridge
                             if (spaceStart < fStart)
                             {
-                                bases["Base1"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, fStart, true);
-                                regularBaseCounter++;
+                                bases["Base1"] = CreateSmartBase(
+                                    $"{wallNum}_1",
+                                    $"Extrude_{wallNum}_1",
+                                    spaceStart,
+                                    fStart,
+                                    true);
                             }
 
-                            // Base2: fridge
-                            bases["Base2"] = CreateSmartBase(wallNum, -1, fStart, fEnd, true);
-                            fridgeAssigned = true;
+                            // Base3: Fridge
+                            bases["Base3"] = CreateSmartBase(
+                                $"fridge_base{wallNum}",
+                                $"Extrude_fridge_base{wallNum}",
+                                fStart,
+                                fEnd,
+                                true);
 
-                            // Base3: after fridge
+                            // Base2: After fridge
                             if (fEnd < spaceEnd)
                             {
-                                bases["Base3"] = CreateSmartBase(wallNum, regularBaseCounter, fEnd, spaceEnd, true);
-                                regularBaseCounter++;
+                                bases["Base2"] = CreateSmartBase(
+                                    $"{wallNum}_2",
+                                    $"Extrude_{wallNum}_2",
+                                    fEnd,
+                                    spaceEnd,
+                                    true);
                             }
                         }
                         else
                         {
+                            // No fridge in this space → fill regular Base1 and Base2
                             if (!bases.ContainsKey("Base1"))
                             {
-                                bases["Base1"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
-                                regularBaseCounter++;
+                                bases["Base1"] = CreateSmartBase(
+                                    $"{wallNum}_1",
+                                    $"Extrude_{wallNum}_1",
+                                    spaceStart,
+                                    spaceEnd,
+                                    true);
                             }
-                            else if (!bases.ContainsKey("Base2") && !fridgeAssigned)
+                            else if (!bases.ContainsKey("Base2"))
                             {
-                                bases["Base2"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
-                                regularBaseCounter++;
-                            }
-                            else if (!bases.ContainsKey("Base3"))
-                            {
-                                bases["Base3"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
-                                regularBaseCounter++;
+                                bases["Base2"] = CreateSmartBase(
+                                    $"{wallNum}_2",
+                                    $"Extrude_{wallNum}_2",
+                                    spaceStart,
+                                    spaceEnd,
+                                    true);
                             }
                         }
                     }
 
-                    // Ensure all Base1-3 exist
-                    for (int i = 1; i <= 3; i++)
-                    {
-                        string baseKey = $"Base{i}";
-                        if (!bases.ContainsKey(baseKey))
-                            bases[baseKey] = CreateSmartBase(wallNum, i, null, null, false);
-                    }
+                    // Ensure all 3 bases exist
+                    if (!bases.ContainsKey("Base1"))
+                        bases["Base1"] = CreateSmartBase($"{wallNum}_1", $"Extrude_{wallNum}_1", null, null, false);
+
+                    if (!bases.ContainsKey("Base2"))
+                        bases["Base2"] = CreateSmartBase($"{wallNum}_2", $"Extrude_{wallNum}_2", null, null, false);
+
+                    if (!bases.ContainsKey("Base3"))
+                        bases["Base3"] = CreateSmartBase($"fridge_base{wallNum}", $"Extrude_fridge_base{wallNum}", null, null, false);
 
                     wallObj["Bases"] = bases;
                     wallObj["Exposed"] = original["NumOfExposedWall"]?.GetValue<int>() == wallNum;
@@ -143,11 +160,9 @@ namespace Kitchenbuilder.Core
         }
 
 
-        private static JsonObject CreateSmartBase(int wallNum, int index, double? start, double? end, bool visible)
-        {
-            string sketchName = index == -1 ? $"fridge_base{wallNum}" : $"{wallNum}_{index}";
-            string extrudeName = index == -1 ? $"Extrude_fridge_base{wallNum}" : $"Extrude_{wallNum}_{index}";
 
+        private static JsonObject CreateSmartBase(string sketchName, string extrudeName, double? start, double? end, bool visible)
+        {
             JsonObject baseObj = new JsonObject
             {
                 ["SketchName"] = sketchName,
@@ -165,14 +180,17 @@ namespace Kitchenbuilder.Core
 
             JsonArray smartDims = new JsonArray();
 
-            // Always set DistanceX
-            smartDims.Add(new JsonObject
+            // Always add DistanceX dimension if start is defined
+            if (start.HasValue)
             {
-                ["Name"] = $"DistanceX@{sketchName}",
-                ["Size"] = start.HasValue ? JsonValue.Create(start.Value) : null
-            });
+                smartDims.Add(new JsonObject
+                {
+                    ["Name"] = $"DistanceX@{sketchName}",
+                    ["Size"] = start.Value
+                });
+            }
 
-            // Always set length if both Start and End are defined
+            // Add length dimension if both start and end are defined
             if (start.HasValue && end.HasValue)
             {
                 smartDims.Add(new JsonObject
@@ -185,6 +203,7 @@ namespace Kitchenbuilder.Core
             baseObj["SmartDim"] = smartDims;
             return baseObj;
         }
+
 
         private static void Log(string msg)
         {
@@ -370,3 +389,5 @@ namespace Kitchenbuilder.Core
 
 
 }
+
+
