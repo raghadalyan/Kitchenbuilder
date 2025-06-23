@@ -1,124 +1,198 @@
 ﻿@page "/base-approval"
-
 @using System.IO
-@using System.Net.Http.Headers
 @using System.Text.Json
-@using System.Text.Json.Serialization
-@using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavManager
 
-@using Kitchenbuilder.Core.Models
-@using Kitchenbuilder.Core.Services
+<h1 class="title">Are you satisfied with the generated base?</h1>
 
-<h3>האם את מרוצה מהבסיס שנוצר?</h3>
+@if (!string.IsNullOrEmpty(selectedOption))
+{
+    <div class="option-container">
+        <div class="option-item">
+            @if (optionImages.ContainsKey(selectedOption) && optionImages[selectedOption].Length > 0)
+            {
+                var fileName = Path.GetFileName(optionImages[selectedOption][currentImageIndex[selectedOption]]);
+                <img src="@($"/Output/{selectedOption}/{fileName}")"
+                     @onclick="() => NextImage(selectedOption)"
+                     class="option-image"
+                     alt="@selectedOption" />
+            }
 
-<div>
-    <button @onclick="ApproveBase">כן</button>
-    <button @onclick="RejectBase">לא</button>
-</div>
+            <div class="radio-group">
+                <p>You selected: <strong>@selectedOption</strong></p>
+                <button class="confirm-button" @onclick="ApproveBase">✅ Yes</button>
+                <button class="reject-button" @onclick="RejectBase">❌ No</button>
+            </div>
+        </div>
+    </div>
+}
 
 @if (showChat)
 {
-    <div style="margin-top: 20px;">
-        <h4>שוחחי עם העוזר כדי להסביר מה הבעיה:</h4>
-        <textarea @bind="userMessage" rows="4" cols="50" placeholder="כתבי כאן את הבעיה..."></textarea>
+    <div class="chat-box">
+        <h4>💬 Please explain the issue to the assistant:</h4>
+        <textarea class="chat-input" @bind="userMessage" rows="4" placeholder="Describe the issue here..."></textarea>
         <br />
-        <button @onclick="SendToAI">שלחי</button>
+        <button class="send-button" @onclick="SendToAI">Send</button>
     </div>
 }
 
 @if (!string.IsNullOrEmpty(aiResponse))
 {
-    <p><strong>תשובת העוזר:</strong> @aiResponse</p>
+    <p class="ai-response"><strong>Assistant response:</strong> @aiResponse</p>
 }
 
-<div class="page-container">
-    @if (optionNames.Count > 0)
-    {
-        <div class="@LayoutClass">
-            @foreach (var optionName in optionNames)
-            {
-                var currentIndex = currentImageIndex[optionName];
-                var fileName = Path.GetFileName(optionImages[optionName][currentIndex]);
-                <div class="image-container">
-                    <img src="@($"/Output/{optionName}/{fileName}")"
-                         alt="@optionName"
-                         @onclick="@(() => CycleImage(optionName))" />
-                </div>
-            }
-            <div class="solidworks-placeholder">
-                <h4>מערכת SolidWorks כאן (תצוגה ופעולות נוספות)</h4>
-            </div>
-        </div>
+<style>
+    .title {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #2c3e50;
     }
-    else
-    {
-        <div class="layout-default">
-            <div class="solidworks-placeholder">
-                <h4>מערכת SolidWorks כאן (תצוגה ופעולות נוספות)</h4>
-            </div>
-        </div>
+
+    .option-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 30px;
     }
-</div>
+
+    .option-item {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        width: 380px;
+        text-align: center;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    }
+
+        .option-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+
+    .option-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: opacity 0.3s;
+    }
+
+        .option-image:hover {
+            opacity: 0.88;
+        }
+
+    .radio-group {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 500;
+        color: #34495e;
+    }
+
+    .confirm-button, .reject-button {
+        margin: 10px;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+        .confirm-button:hover {
+            background-color: #28a745;
+        }
+
+        .reject-button:hover {
+            background-color: #e74c3c;
+        }
+
+    .chat-box {
+        width: 60%;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .chat-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .send-button {
+        margin-top: 10px;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .send-button:hover {
+            background-color: #0069d9;
+        }
+
+    .ai-response {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+        color: #333;
+    }
+</style>
 
 @code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "selected")]
+    public string? selectedOption { get; set; }
+
     private bool showChat = false;
     private string userMessage = "";
     private string aiResponse = "";
-    private List<string> optionNames = new();
     private Dictionary<string, string[]> optionImages = new();
     private Dictionary<string, int> currentImageIndex = new();
-    private string LayoutClass = "layout-default";
-    private string jsonPath = @"C:\Users\Asus\Desktop\Raghad\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
+    private string baseDir = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output";
 
     protected override void OnInitialized()
     {
-        var outputDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output");
-        if (Directory.Exists(outputDir))
+        if (string.IsNullOrWhiteSpace(selectedOption)) return;
+
+        var optionDir = Path.Combine(baseDir, selectedOption);
+        if (Directory.Exists(optionDir))
         {
-            var optionDirs = Directory.GetDirectories(outputDir);
-            foreach (var optionDir in optionDirs.OrderBy(x => x))
+            var images = Directory.GetFiles(optionDir, "*.png").OrderBy(f => f).ToArray();
+            if (images.Length > 0)
             {
-                var optionName = Path.GetFileName(optionDir);
-                var images = Directory.GetFiles(optionDir, "*.png");
-                if (images.Length > 0)
-                {
-                    optionNames.Add(optionName);
-                    optionImages[optionName] = images.OrderBy(f => f).ToArray();
-                    currentImageIndex[optionName] = 0;
-                }
+                optionImages[selectedOption] = images;
+                currentImageIndex[selectedOption] = 0;
             }
         }
+    }
 
-        // Determine layout
-        switch (optionNames.Count)
+    private void NextImage(string option)
+    {
+        if (optionImages.ContainsKey(option))
         {
-            case 1:
-                LayoutClass = "layout-one";
-                break;
-            case 2:
-                LayoutClass = "layout-two";
-                break;
-            case 3:
-                LayoutClass = "layout-three";
-                break;
-            default:
-                LayoutClass = "layout-default";
-                break;
+            currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
         }
     }
 
-    private void CycleImage(string optionName)
-    {
-        if (!optionImages.ContainsKey(optionName)) return;
-
-        var count = optionImages[optionName].Length;
-        currentImageIndex[optionName] = (currentImageIndex[optionName] + 1) % count;
-    }
-
-    private void ApproveBase()
-    {
-        // Placeholder: Add logic if needed.
-    }
+    private void ApproveBase() { }
 
     private void RejectBase()
     {
@@ -129,55 +203,19 @@
     {
         try
         {
-            var apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
                 aiResponse = "⚠️ OpenAI API key not configured!";
                 return;
             }
 
-            var kitchen = JsonSerializer.Deserialize<Kitchen>(File.ReadAllText(jsonPath));
-
-            var systemPrompt = $@"
-You are a kitchen design assistant helping users modify their SolidWorks-generated kitchen base.
-
-The kitchen base is L-shaped and spans two perpendicular walls:
-- Wall1 is the vertical leg
-- Wall2 is the horizontal leg
-
-Current kitchen wall measurements:
-- Wall1.Width = {kitchen.Walls[0].Width} cm
-- Wall2.Width = {kitchen.Walls[1].Width} cm
-
-The model has two parameters:
-- D1@Sketch1 represents the length of the base from the Wall2 side (horizontal leg)
-- D2@Sketch1 represents the length of the base from the Wall1 side (vertical leg)
-
-Rules:
-- D1 must be less than or equal to Wall2.Width
-- D2 must be less than or equal to Wall1.Width
-
-If the user says:
-- 'the base is too long on the right' → D1 is probably too big
-- 'the base sticks out to the left' → D2 is probably too big
-
-Your task:
-1. Understand what the user is asking.
-2. Validate whether the requested D1 or D2 are valid based on the wall dimensions.
-3. If not valid, explain what’s wrong.
-4. Suggest new valid values if possible.
-
-⚠️ Important:
-If you confirm or suggest a new value, always write it clearly like this:
-- D1 = 130
-- D2 = 145
-Only use that format for suggested values.
-";
+            var systemPrompt = "You are a helpful assistant specialized in architectural design feedback.";
 
             using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
-            var request = new
+            var requestBody = new
             {
                 model = "gpt-3.5-turbo",
                 messages = new[]
@@ -187,41 +225,25 @@ Only use that format for suggested values.
                 }
             };
 
-            var response = await httpClient.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
+            var response = await httpClient.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", requestBody);
+            var resultJson = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                aiResponse = $"❌ שגיאה: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}";
+                aiResponse = $"❌ Error: {response.StatusCode}\n{resultJson}";
                 return;
             }
 
-            var resultJson = await response.Content.ReadAsStringAsync();
             var result = JsonDocument.Parse(resultJson);
             aiResponse = result.RootElement
-                .GetProperty("choices")[0]
-                .GetProperty("message")
-                .GetProperty("content")
-                .GetString();
-
-            if (TryExtractValue(aiResponse, "D1", out double d1))
-                kitchen.Base.Width2 = d1;
-
-            if (TryExtractValue(aiResponse, "D2", out double d2))
-                kitchen.Base.Width1 = d2;
-
-            File.WriteAllText(jsonPath, JsonSerializer.Serialize(kitchen, new JsonSerializerOptions { WriteIndented = true }));
-            KitchenGenerator.GenerateKitchen(jsonPath);
+                               .GetProperty("choices")[0]
+                               .GetProperty("message")
+                               .GetProperty("content")
+                               .GetString();
         }
         catch (Exception ex)
         {
-            aiResponse = $"❌ אירעה שגיאה: {ex.Message}";
+            aiResponse = $"❌ Exception: {ex.Message}";
         }
-    }
-
-    private bool TryExtractValue(string text, string key, out double value)
-    {
-        value = 0;
-        var match = Regex.Match(text, @$"{key}\s*=\s*(\d+)", RegexOptions.IgnoreCase);
-        return match.Success && double.TryParse(match.Groups[1].Value, out value);
     }
 }

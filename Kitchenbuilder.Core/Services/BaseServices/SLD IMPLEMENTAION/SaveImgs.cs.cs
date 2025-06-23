@@ -24,10 +24,10 @@ namespace Kitchenbuilder.Core
 
                 var swModelDocExt = model.Extension;
 
-                SaveViewImage(model, swModelDocExt, "*Top", (int)swStandardViews_e.swTopView, folderPath, "Top");
-                SaveViewImage(model, swModelDocExt, "*Front", (int)swStandardViews_e.swFrontView, folderPath, "Front");
-                SaveViewImage(model, swModelDocExt, "*Right", (int)swStandardViews_e.swRightView, folderPath, "Right");
-                SaveViewImage(model, swModelDocExt, "*Isometric", (int)swStandardViews_e.swIsometricView, folderPath, "Isometric");
+                SaveViewImage(model, swModelDocExt, "*Top", (int)swStandardViews_e.swTopView, folderPath, "Top.png");
+                SaveViewImage(model, swModelDocExt, "*Front", (int)swStandardViews_e.swFrontView, folderPath, "Front.png");
+                SaveViewImage(model, swModelDocExt, "*Right", (int)swStandardViews_e.swRightView, folderPath, "Right.png");
+                SaveViewImage(model, swModelDocExt, "*Isometric", (int)swStandardViews_e.swIsometricView, folderPath, "Isometric.png");
 
                 File.AppendAllText(DebugPath, $"✅ Saved Top, Front, Right, Isometric views to: {folderPath}\n");
             }

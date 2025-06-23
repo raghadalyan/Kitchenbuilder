@@ -147,8 +147,8 @@
                 await File.WriteAllTextAsync(inputPath, inputJson);
 
             SaveMessage = "✅ Kitchen input saved, including base data!";
-            // 3. Navigate to the base approval page after walls are created
-            NavManager.NavigateTo("/base-approval");
+            NavManager.NavigateTo("/base-options");
+
         }
         catch (Exception ex)
         {
