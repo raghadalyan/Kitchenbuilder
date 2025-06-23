@@ -38,7 +38,6 @@ namespace Kitchenbuilder.Core
                 foreach (int wallNum in usableWalls)
                 {
                     JsonObject wallObj = new JsonObject();
-
                     string spacesKey = $"SpacesWall{wallNum}";
                     JsonArray spacesArray;
 
@@ -59,50 +58,68 @@ namespace Kitchenbuilder.Core
                     else continue;
 
                     JsonObject bases = new JsonObject();
-                    int baseCounter = 1;
+                    bool fridgeAssigned = false;
+                    int regularBaseCounter = 1;
 
-                    for (int i = 0; i < spacesArray.Count; i++)
+                    foreach (JsonNode node in spacesArray)
                     {
-                        if (spacesArray[i] is not JsonObject space) continue;
-
+                        if (node is not JsonObject space) continue;
                         double spaceStart = space["Start"]!.GetValue<double>();
                         double spaceEnd = space["End"]!.GetValue<double>();
 
-                        bool isFridgeHere = fridgeWall == wallNum && fridge != null &&
-                                             fridge["Start"]!.GetValue<double>() >= spaceStart &&
-                                             fridge["End"]!.GetValue<double>() <= spaceEnd;
+                        bool isFridgeInThisSpace = fridgeWall == wallNum && fridge != null &&
+                            fridge["Start"]!.GetValue<double>() >= spaceStart &&
+                            fridge["End"]!.GetValue<double>() <= spaceEnd;
 
-                        if (isFridgeHere)
+                        if (isFridgeInThisSpace)
                         {
                             double fStart = fridge["Start"]!.GetValue<double>();
                             double fEnd = fridge["End"]!.GetValue<double>();
 
+                            // Base1: before fridge
                             if (spaceStart < fStart)
                             {
-                                bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, spaceStart, fStart, true);
-                                baseCounter++;
+                                bases["Base1"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, fStart, true);
+                                regularBaseCounter++;
                             }
 
-                            bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, -1, fStart, fEnd, true);
-                            baseCounter++;
+                            // Base2: fridge
+                            bases["Base2"] = CreateSmartBase(wallNum, -1, fStart, fEnd, true);
+                            fridgeAssigned = true;
 
+                            // Base3: after fridge
                             if (fEnd < spaceEnd)
                             {
-                                bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, fEnd, spaceEnd, true);
-                                baseCounter++;
+                                bases["Base3"] = CreateSmartBase(wallNum, regularBaseCounter, fEnd, spaceEnd, true);
+                                regularBaseCounter++;
                             }
                         }
                         else
                         {
-                            bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, spaceStart, spaceEnd, true);
-                            baseCounter++;
+                            if (!bases.ContainsKey("Base1"))
+                            {
+                                bases["Base1"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
+                                regularBaseCounter++;
+                            }
+                            else if (!bases.ContainsKey("Base2") && !fridgeAssigned)
+                            {
+                                bases["Base2"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
+                                regularBaseCounter++;
+                            }
+                            else if (!bases.ContainsKey("Base3"))
+                            {
+                                bases["Base3"] = CreateSmartBase(wallNum, regularBaseCounter, spaceStart, spaceEnd, true);
+                                regularBaseCounter++;
+                            }
                         }
                     }
 
-                    while (baseCounter <= 3)
+                    // Ensure all Base1-3 exist
+                    for (int i = 1; i <= 3; i++)
                     {
-                        bases[$"Base{baseCounter}"] = CreateSmartBase(wallNum, baseCounter, null, null, false);
-                        baseCounter++;
+                        string baseKey = $"Base{i}";
+                        if (!bases.ContainsKey(baseKey))
+                            bases[baseKey] = CreateSmartBase(wallNum, i, null, null, false);
                     }
 
                     wallObj["Bases"] = bases;
@@ -125,6 +142,7 @@ namespace Kitchenbuilder.Core
             }
         }
 
+
         private static JsonObject CreateSmartBase(int wallNum, int index, double? start, double? end, bool visible)
         {
             string sketchName = index == -1 ? $"fridge_base{wallNum}" : $"{wallNum}_{index}";
@@ -145,16 +163,17 @@ namespace Kitchenbuilder.Core
                 return baseObj;
             }
 
-            JsonArray smartDims = new JsonArray
-            {
-                new JsonObject
-                {
-                    ["Name"] = $"DistaceX@{sketchName}",
-                    ["Size"] = start ?? 0
-                }
-            };
+            JsonArray smartDims = new JsonArray();
 
-            if (index != -1 && start.HasValue && end.HasValue)
+            // Always set DistanceX
+            smartDims.Add(new JsonObject
+            {
+                ["Name"] = $"DistanceX@{sketchName}",
+                ["Size"] = start ?? 0
+            });
+
+            // Always set length if both Start and End are defined
+            if (start.HasValue && end.HasValue)
             {
                 smartDims.Add(new JsonObject
                 {
@@ -176,10 +195,10 @@ namespace Kitchenbuilder.Core
         {
             return node == null ? null : JsonNode.Parse(node.ToJsonString());
         }
-    
 
 
-            private static void AdjustCornerBases(JsonObject original, JsonObject result)
+
+        private static void AdjustCornerBases(JsonObject original, JsonObject result)
         {
             // Handle corner logic: [1,4] or others
             if (original.TryGetPropertyValue("Corner", out JsonNode? cornerNode) && cornerNode is JsonArray cornerArray)
@@ -216,13 +235,29 @@ namespace Kitchenbuilder.Core
                             Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner {wallX},{wallY})");
                             base1Y["Start"] = 60;
                             if (base1Y.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
-    smartDimsNode is JsonArray smartDims &&
-    smartDims.FirstOrDefault() is JsonObject dim &&
-    dim.TryGetPropertyValue("Name", out JsonNode? nameNode) &&
-    nameNode.ToString().StartsWith("DistaceX@"))
+      smartDimsNode is JsonArray smartDims)
                             {
-                                dim["Size"] = 60;
+                                foreach (var dimObj in smartDims)
+                                {
+                                    if (dimObj is JsonObject dim &&
+                                        dim.TryGetPropertyValue("Name", out JsonNode? nameNode))
+                                    {
+                                        string dimName = nameNode.ToString();
+
+                                        if (dimName.StartsWith("DistanceX@"))
+                                        {
+                                            dim["Size"] = 60;
+                                        }
+                                        else if (dimName.StartsWith("length@") &&
+                                                 base1Y.TryGetPropertyValue("End", out JsonNode? endNode))
+                                        {
+                                            double end = endNode!.GetValue<double>();
+                                            dim["Size"] = end - 60;
+                                        }
+                                    }
+                                }
                             }
+
 
                         }
                     }
@@ -280,20 +315,32 @@ namespace Kitchenbuilder.Core
                                 double baseEnd = baseEndNode.GetValue<double>();
 
                                 // Match first visible base to the first space range
-                                if (Math.Abs(baseStart - spaceStart) < 1e-2 &&
-                                    Math.Abs(baseEnd - spaceEnd) < 1e-2)
+                                if (baseObj.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
+                                    smartDimsNode is JsonArray smartDims)
                                 {
-                                    Log($"🛠 Adjusting matched Base in {wallKey} to start from 60 (exposed wall)");
-                                    baseObj["Start"] = 60;
-                                    if (baseObj.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
-                                        smartDimsNode is JsonArray smartDims &&
-                                        smartDims.FirstOrDefault() is JsonObject dim &&
-                                        dim.TryGetPropertyValue("Name", out JsonNode? nameNode) &&
-                                        nameNode.ToString().StartsWith("DistaceX@"))
+                                    foreach (var dimObj in smartDims)
                                     {
-                                        dim["Size"] = 60;
+                                        if (dimObj is JsonObject dim &&
+                                            dim.TryGetPropertyValue("Name", out JsonNode? nameNode))
+                                        {
+                                            string dimName = nameNode.ToString();
+
+                                            if (dimName.StartsWith("DistanceX@"))
+                                            {
+                                                dim["Size"] = 60;
+                                            }
+                                            else if (dimName.StartsWith("length@"))
+                                            {
+                                                if (baseObj.TryGetPropertyValue("End", out JsonNode? localEndNode))
+                                                {
+                                                    double end = localEndNode!.GetValue<double>();
+                                                    dim["Size"] = end - 60;
+                                                }
+                                            }
+                                        }
                                     }
-                                    break;
+                                }
+                                break;
                                 }
                             }
                         }
@@ -306,4 +353,3 @@ namespace Kitchenbuilder.Core
 
 
     }
-}

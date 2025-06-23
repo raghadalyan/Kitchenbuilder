@@ -7,17 +7,17 @@
     {
       "Width": 500,
       "Height": 0,
-      "HasWindows": true,
-      "Windows": [
+      "HasWindows": false,
+      "Windows": null,
+      "HasDoors": true,
+      "Doors": [
         {
-          "Width": 500,
+          "Width": 50,
           "Height": 0,
-          "DistanceX": 0,
-          "DistanceY": 100
+          "DistanceX": 150,
+          "DistanceY": 0
         }
-      ],
-      "HasDoors": false,
-      "Doors": null
+      ]
     },
     {
       "Width": 500,
