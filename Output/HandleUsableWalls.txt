@@ -1,9 +1,5 @@
-[03:07:13] 🔍 Handling usable walls for: Option1.json
-[03:07:13] ✅ Output written to: Option1SLD.json
-[03:07:13] 🔍 Handling usable walls for: Option2.json
-[03:07:14] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
-[03:07:14] ✅ Output written to: Option2SLD.json
-[03:07:14] 🔍 Handling usable walls for: Option3.json
-[03:07:14] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
-[03:07:14] 🛠 Adjusting matched Base in Wall3 to start from 60 (exposed wall)
-[03:07:14] ✅ Output written to: Option3SLD.json
+[15:41:42] 🔍 Handling usable walls for: Option1.json
+[15:41:42] ✅ Output written to: Option1SLD.json
+[15:41:42] 🔍 Handling usable walls for: Option2.json
+[15:41:42] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
+[15:41:42] ✅ Output written to: Option2SLD.json

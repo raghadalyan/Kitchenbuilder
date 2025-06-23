@@ -1,17 +1,17 @@
 {
   "Title": "Line Shape",
-  "Wall1": 1,
-  "SpacesWall1": [
-    {
-      "Start": 0,
-      "End": 500
-    }
-  ],
-  "FridgeWall": 1,
+  "FridgeWall": 2,
   "Fridge": {
     "Start": 0,
     "End": 85
   },
   "Corner": null,
-  "Exposed": false
+  "Exposed": false,
+  "Wall2": 2,
+  "SpacesWall2": [
+    {
+      "Start": 0,
+      "End": 500
+    }
+  ]
 }

@@ -42,13 +42,15 @@ namespace Kitchenbuilder.Core
                 File.AppendAllText(LogPath, "✅ Part opened successfully in SolidWorks.\n");
 
                 //Create the floor 
-                CreateFloor_Base.Create(kitchen, model, jsonPath);
-                
+                //CreateFloor_Base.Create(kitchen, model, jsonPath);
 
 
-                string modelTitle = model.GetTitle();
-                swApp.CloseDoc(modelTitle);
-                File.AppendAllText(LogPath, $"📁 Closed document {modelTitle}\n");
+                CheckVisibleElements.ProcessVisibleBases(jsonPath, model);
+
+
+                //string modelTitle = model.GetTitle();
+                //swApp.CloseDoc(modelTitle);
+                //File.AppendAllText(LogPath, $"📁 Closed document {modelTitle}\n");
             }
             catch (Exception ex)
             {

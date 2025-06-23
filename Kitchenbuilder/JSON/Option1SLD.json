@@ -9,8 +9,8 @@
       "Size": 500
     }
   },
-  "Wall1": {
-    "SpacesWall1": [
+  "Wall2": {
+    "SpacesWall2": [
       {
         "Start": 0,
         "End": 500
@@ -18,38 +18,38 @@
     ],
     "Bases": {
       "Base1": {
-        "SketchName": "fridge_base1",
-        "ExtrudeName": "Extrude_fridge_base1",
+        "SketchName": "fridge_base2",
+        "ExtrudeName": "Extrude_fridge_base2",
         "Start": 0,
         "End": 85,
         "Visible": true,
         "SmartDim": [
           {
-            "Name": "DistaceX@fridge_base1",
+            "Name": "DistaceX@fridge_base2",
             "Size": 0
           }
         ]
       },
       "Base2": {
-        "SketchName": "1_2",
-        "ExtrudeName": "Extrude_1_2",
+        "SketchName": "2_2",
+        "ExtrudeName": "Extrude_2_2",
         "Start": 85,
         "End": 500,
         "Visible": true,
         "SmartDim": [
           {
-            "Name": "DistaceX@1_2",
+            "Name": "DistaceX@2_2",
             "Size": 85
           },
           {
-            "Name": "length@1_2",
+            "Name": "length@2_2",
             "Size": 415
           }
         ]
       },
       "Base3": {
-        "SketchName": "1_3",
-        "ExtrudeName": "Extrude_1_3",
+        "SketchName": "2_3",
+        "ExtrudeName": "Extrude_2_3",
         "Start": null,
         "End": null,
         "Visible": false,
@@ -62,28 +62,28 @@
       "End": 85
     }
   },
-  "Wall2": {
-    "SpacesWall2": [],
+  "Wall1": {
+    "SpacesWall1": [],
     "Bases": {
       "Base1": {
-        "SketchName": "2_1",
-        "ExtrudeName": "Extrude_2_1",
+        "SketchName": "1_1",
+        "ExtrudeName": "Extrude_1_1",
         "Start": null,
         "End": null,
         "Visible": false,
         "SmartDim": null
       },
       "Base2": {
-        "SketchName": "2_2",
-        "ExtrudeName": "Extrude_2_2",
+        "SketchName": "1_2",
+        "ExtrudeName": "Extrude_1_2",
         "Start": null,
         "End": null,
         "Visible": false,
         "SmartDim": null
       },
       "Base3": {
-        "SketchName": "2_3",
-        "ExtrudeName": "Extrude_2_3",
+        "SketchName": "1_3",
+        "ExtrudeName": "Extrude_1_3",
         "Start": null,
         "End": null,
         "Visible": false,
