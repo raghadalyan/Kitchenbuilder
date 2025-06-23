@@ -1,4 +1,0 @@
-[17:31:08] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
-[17:31:08] 🧊 Fridge in last space of wall 1, size=300, afterFridge=215
-[17:31:08] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
-[17:31:08] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json

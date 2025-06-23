@@ -169,7 +169,7 @@ namespace Kitchenbuilder.Core
             smartDims.Add(new JsonObject
             {
                 ["Name"] = $"DistanceX@{sketchName}",
-                ["Size"] = start ?? 0
+                ["Size"] = start.HasValue ? JsonValue.Create(start.Value) : null
             });
 
             // Always set length if both Start and End are defined
@@ -200,7 +200,7 @@ namespace Kitchenbuilder.Core
 
         private static void AdjustCornerBases(JsonObject original, JsonObject result)
         {
-            // Handle corner logic: [1,4] or others
+            // Handle corner logic
             if (original.TryGetPropertyValue("Corner", out JsonNode? cornerNode) && cornerNode is JsonArray cornerArray)
             {
                 foreach (var pair in cornerArray)
@@ -224,7 +224,6 @@ namespace Kitchenbuilder.Core
                             wallY = Math.Max(a, b);
                         }
 
-                        // Adjust Base1 of wallY (second wall)
                         if (result.TryGetPropertyValue($"Wall{wallY}", out JsonNode? wallYNode) &&
                             wallYNode is JsonObject wallYObj &&
                             wallYObj.TryGetPropertyValue("Bases", out JsonNode? basesNode) &&
@@ -234,8 +233,9 @@ namespace Kitchenbuilder.Core
                         {
                             Log($"🛠 Adjusting Base1 of Wall{wallY} to start from 60 (corner {wallX},{wallY})");
                             base1Y["Start"] = 60;
+
                             if (base1Y.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
-      smartDimsNode is JsonArray smartDims)
+                                smartDimsNode is JsonArray smartDims)
                             {
                                 foreach (var dimObj in smartDims)
                                 {
@@ -257,8 +257,6 @@ namespace Kitchenbuilder.Core
                                     }
                                 }
                             }
-
-
                         }
                     }
                 }
@@ -272,7 +270,6 @@ namespace Kitchenbuilder.Core
 
                 if (exposedWall == 4)
                 {
-                    // Only update Wall1.Base1
                     if (result.TryGetPropertyValue("Wall1", out JsonNode? wall1Node) &&
                         wall1Node is JsonObject wall1Obj &&
                         wall1Obj.TryGetPropertyValue("Bases", out JsonNode? wall1BasesNode) &&
@@ -282,6 +279,30 @@ namespace Kitchenbuilder.Core
                     {
                         Log("🛠 Adjusting Base1 of Wall1 because ExposedWall == 4");
                         base1Wall1["Start"] = 60;
+
+                        if (base1Wall1.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
+                            smartDimsNode is JsonArray smartDims)
+                        {
+                            foreach (var dimObj in smartDims)
+                            {
+                                if (dimObj is JsonObject dim &&
+                                    dim.TryGetPropertyValue("Name", out JsonNode? nameNode))
+                                {
+                                    string dimName = nameNode.ToString();
+
+                                    if (dimName.StartsWith("DistanceX@"))
+                                    {
+                                        dim["Size"] = 60;
+                                    }
+                                    else if (dimName.StartsWith("length@") &&
+                                             base1Wall1.TryGetPropertyValue("End", out JsonNode? endNode))
+                                    {
+                                        double end = endNode!.GetValue<double>();
+                                        dim["Size"] = end - 60;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 else
@@ -307,14 +328,10 @@ namespace Kitchenbuilder.Core
                         {
                             if (basePair.Value is JsonObject baseObj &&
                                 baseObj.TryGetPropertyValue("Visible", out JsonNode? visibleNode) &&
-                                visibleNode?.GetValue<bool>() == true &&
-                                baseObj.TryGetPropertyValue("Start", out JsonNode? baseStartNode) &&
-                                baseObj.TryGetPropertyValue("End", out JsonNode? baseEndNode))
+                                visibleNode?.GetValue<bool>() == true)
                             {
-                                double baseStart = baseStartNode.GetValue<double>();
-                                double baseEnd = baseEndNode.GetValue<double>();
+                                baseObj["Start"] = 60;
 
-                                // Match first visible base to the first space range
                                 if (baseObj.TryGetPropertyValue("SmartDim", out JsonNode? smartDimsNode) &&
                                     smartDimsNode is JsonArray smartDims)
                                 {
@@ -329,19 +346,17 @@ namespace Kitchenbuilder.Core
                                             {
                                                 dim["Size"] = 60;
                                             }
-                                            else if (dimName.StartsWith("length@"))
+                                            else if (dimName.StartsWith("length@") &&
+                                                     baseObj.TryGetPropertyValue("End", out JsonNode? localEndNode))
                                             {
-                                                if (baseObj.TryGetPropertyValue("End", out JsonNode? localEndNode))
-                                                {
-                                                    double end = localEndNode!.GetValue<double>();
-                                                    dim["Size"] = end - 60;
-                                                }
+                                                double end = localEndNode!.GetValue<double>();
+                                                dim["Size"] = end - 60;
                                             }
                                         }
                                     }
                                 }
-                                break;
-                                }
+
+                                break; // only update the first visible base
                             }
                         }
                     }
@@ -349,7 +364,9 @@ namespace Kitchenbuilder.Core
             }
         }
 
-
-
-
     }
+
+
+
+
+}
