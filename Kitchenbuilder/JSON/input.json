@@ -9,12 +9,20 @@
       "Height": 0,
       "HasWindows": false,
       "Windows": null,
+      "HasDoors": false,
+      "Doors": null
+    },
+    {
+      "Width": 500,
+      "Height": 0,
+      "HasWindows": false,
+      "Windows": null,
       "HasDoors": true,
       "Doors": [
         {
-          "Width": 100,
+          "Width": 80,
           "Height": 0,
-          "DistanceX": 400,
+          "DistanceX": 420,
           "DistanceY": 0
         }
       ]

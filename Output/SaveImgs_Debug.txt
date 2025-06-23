@@ -1,0 +1,15 @@
+✅ Saved view 'Top' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Top.png, errors=0, warnings=0
+✅ Saved view 'Front' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Front.png, errors=0, warnings=0
+✅ Saved view 'Right' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Right.png, errors=0, warnings=0
+✅ Saved view 'Isometric' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1\Isometric.png, errors=0, warnings=0
+✅ Saved Top, Front, Right, Isometric views to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option1
+✅ Saved view 'Top' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Top.png, errors=0, warnings=0
+✅ Saved view 'Front' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Front.png, errors=0, warnings=0
+✅ Saved view 'Right' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Right.png, errors=0, warnings=0
+✅ Saved view 'Isometric' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2\Isometric.png, errors=0, warnings=0
+✅ Saved Top, Front, Right, Isometric views to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option2
+✅ Saved view 'Top' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option3\Top.png, errors=0, warnings=0
+✅ Saved view 'Front' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option3\Front.png, errors=0, warnings=0
+✅ Saved view 'Right' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option3\Right.png, errors=0, warnings=0
+✅ Saved view 'Isometric' → C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option3\Isometric.png, errors=0, warnings=0
+✅ Saved Top, Front, Right, Isometric views to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Option3

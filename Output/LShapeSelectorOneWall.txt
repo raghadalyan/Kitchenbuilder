@@ -1,3 +1,4 @@
-[20:43:55] 🔍 Trying largest space in Wall 1: 0-400
-[20:43:55] 💾 Saved valid layout to JSON.
-[20:43:55] ✅ Fridge placed at start of largest space, exposed Wall 2.
+[23:04:54] 🧩 Checking corner condition between wall 1 and wall 2: TRUE
+[23:04:54] 🧊 Fridge in last space of wall 1, size=500, afterFridge=415
+[23:04:54] ✅ Valid L-Shape (Fridge in last space wallX, sink/cooktop possible)
+[23:04:54] 💾 Saved valid L-Shape configuration to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json

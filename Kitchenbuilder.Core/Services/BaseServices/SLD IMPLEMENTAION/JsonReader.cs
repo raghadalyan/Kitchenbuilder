@@ -49,6 +49,8 @@ namespace Kitchenbuilder.Core
 
                 ApplySmartDims.ApplyDimensions(jsonPath, model);
 
+                SaveOptionModel.Save(model, jsonPath);
+
 
                 //string modelTitle = model.GetTitle();
                 //swApp.CloseDoc(modelTitle);
