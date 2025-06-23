@@ -1,0 +1,11 @@
+[2025-06-23 20:44:03] 📐 Setting base SmartDim: DistanceX@fridge_base1 → 0 cm
+[2025-06-23 20:44:04] 📐 Setting base SmartDim: length@fridge_base1 → 85 cm
+[2025-06-23 20:44:04] 📐 Setting base SmartDim: DistanceX@1_2 → 85 cm
+[2025-06-23 20:44:04] 📐 Setting base SmartDim: length@1_2 → 315 cm
+[2025-06-23 20:44:11] 📐 Setting base SmartDim: DistanceX@fridge_base1 → 0 cm
+[2025-06-23 20:44:12] 📐 Setting base SmartDim: length@fridge_base1 → 85 cm
+[2025-06-23 20:44:12] 📐 Setting base SmartDim: DistanceX@1_2 → 85 cm
+[2025-06-23 20:44:12] 📐 Setting base SmartDim: length@1_2 → 315 cm
+[2025-06-23 20:44:13] 📏 Setting wall-level DistanceFrom: Distance_from_2@master_wall2 → 100 cm
+[2025-06-23 20:44:14] 📐 Setting base SmartDim: DistanceX@2_1 → 60 cm
+[2025-06-23 20:44:14] 📐 Setting base SmartDim: length@2_1 → 120 cm

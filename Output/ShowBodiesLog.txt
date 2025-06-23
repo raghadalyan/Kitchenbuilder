@@ -1,0 +1,15 @@
+[2025-06-23 20:44:01] 👁️ Made body visible: Extrude_fridge_base1[1]
+[2025-06-23 20:44:02] 👁️ Made body visible: Extrude_fridge_base1[2]
+[2025-06-23 20:44:02] 👁️ Made body visible: <Fridge1>-<Extrude-Thin1>
+[2025-06-23 20:44:02] 👁️ Made body visible: <Fridge1>-<Cut-Extrude2[1]>
+[2025-06-23 20:44:02] 👁️ Made body visible: <Fridge1>-<Cut-Extrude3>
+[2025-06-23 20:44:03] 👁️ Made body visible: <Fridge1>-<Cut-Extrude2[2]>
+[2025-06-23 20:44:03] 👁️ Made body visible: Extrude_1_2
+[2025-06-23 20:44:09] 👁️ Made body visible: Extrude_fridge_base1[1]
+[2025-06-23 20:44:09] 👁️ Made body visible: Extrude_fridge_base1[2]
+[2025-06-23 20:44:10] 👁️ Made body visible: <Fridge1>-<Extrude-Thin1>
+[2025-06-23 20:44:10] 👁️ Made body visible: <Fridge1>-<Cut-Extrude2[1]>
+[2025-06-23 20:44:10] 👁️ Made body visible: <Fridge1>-<Cut-Extrude3>
+[2025-06-23 20:44:11] 👁️ Made body visible: <Fridge1>-<Cut-Extrude2[2]>
+[2025-06-23 20:44:11] 👁️ Made body visible: Extrude_1_2
+[2025-06-23 20:44:11] 👁️ Made body visible: Extrude_2_1

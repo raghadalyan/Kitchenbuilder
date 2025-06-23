@@ -34,8 +34,31 @@ namespace Kitchenbuilder.Core
                 if (!json.ContainsKey(wallKey)) continue;
 
                 JsonObject wall = json[wallKey]?.AsObject();
-                if (wall == null || !wall.ContainsKey("Bases")) continue;
+                if (wall == null) continue;
 
+                // Handle DistanceFrom at wall level
+                if (wall.TryGetPropertyValue("DistanceFrom", out JsonNode? distanceArrayNode) &&
+                    distanceArrayNode is JsonArray distanceArray)
+                {
+                    foreach (JsonNode item in distanceArray)
+                    {
+                        if (item is JsonObject distDim &&
+                            distDim.TryGetPropertyValue("Name", out JsonNode? nameNode) &&
+                            distDim.TryGetPropertyValue("Size", out JsonNode? sizeNode) &&
+                            nameNode is JsonValue nameVal &&
+                            sizeNode is JsonValue sizeVal)
+                        {
+                            string dimName = nameVal.GetValue<string>();
+                            double size = sizeVal.GetValue<double>();
+
+                            Log($"📏 Setting wall-level DistanceFrom: {dimName} → {size} cm");
+                            Edit_Sketch_Dim.SetDimension(model, dimName, size);
+                        }
+                    }
+                }
+
+                // Handle SmartDim for visible bases
+                if (!wall.ContainsKey("Bases")) continue;
                 JsonObject bases = wall["Bases"]?.AsObject();
                 if (bases == null) continue;
 
@@ -58,7 +81,7 @@ namespace Kitchenbuilder.Core
 
                         if (!string.IsNullOrEmpty(dimName))
                         {
-                            Log($"📐 Setting dimension: {dimName} → {size} cm");
+                            Log($"📐 Setting base SmartDim: {dimName} → {size} cm");
                             Edit_Sketch_Dim.SetDimension(model, dimName, size);
                         }
                     }

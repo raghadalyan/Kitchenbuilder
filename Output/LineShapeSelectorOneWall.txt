@@ -1,1 +1,1 @@
-[20:35:41] ✅ Fridge at end of segment 0-500
+[20:43:55] ✅ Fridge at start of segment 0-400
