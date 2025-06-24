@@ -73,23 +73,39 @@ namespace Kitchenbuilder.Core
 
         private static void SaveOption1Json(List<(double start, double end)> wallSpaces, double fridgeStart, double fridgeEnd, int wallIndex)
         {
-            var option = new
+            string wallKey = $"Wall{wallIndex + 1}";
+            string spacesKey = $"SpacesWall{wallIndex + 1}";
+
+            var dynamicWallData = new Dictionary<string, object>
             {
-                Title = "Line Shape",
-                Wall1 = wallIndex + 1,
-                SpacesWall1 = wallSpaces.Select(s => new { Start = s.start, End = s.end }).ToList(),
-                FridgeWall = wallIndex + 1,
-                Fridge = new { Start = fridgeStart, End = fridgeEnd },
-                Corner = false,
-                Exposed = false
+                [wallKey] = wallIndex + 1,
+                [spacesKey] = wallSpaces.Select(s => new { Start = s.start, End = s.end }).ToList()
             };
 
-            string folder = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON";
+            var option = new Dictionary<string, object>
+            {
+                ["Title"] = "Line Shape",
+                ["FridgeWall"] = wallIndex + 1,
+                ["Fridge"] = new { Start = fridgeStart, End = fridgeEnd },
+                ["Corner"] = null,
+                ["Exposed"] = false
+            };
+
+            // Merge dynamic wall data into the option dictionary
+            foreach (var kvp in dynamicWallData)
+                option[kvp.Key] = kvp.Value;
+
+            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
             Directory.CreateDirectory(folder);
             string path = Path.Combine(folder, "Option1.json");
-            string json = JsonSerializer.Serialize(option, new JsonSerializerOptions { WriteIndented = true });
+
+            var json = JsonSerializer.Serialize(option, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(path, json);
         }
+
+
+
+
 
         private static void LogDebug(string message)
         {

@@ -1,0 +1,14 @@
+15:33:41 - 📁 نسخ الملف من: C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT إلى C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\2Walls_WithFloor.SLDPRT
+15:33:49 - 🔧 بدأ تعديل الأبعاد...
+15:33:49 - ✅ تم تعديل Length_Floor@Sketch2 إلى 500 mm
+15:33:49 - ✅ تم تعديل Width_Floor@Sketch2 إلى 400 mm
+15:33:49 - ✅ تم تعديل D1@Wall1 إلى 0 mm
+15:33:49 - ✅ تم تعديل D1@Wall2 إلى 0 mm
+15:33:49 - ✅ تم تعديل wallBase@Sketch3 إلى 20 mm
+15:33:49 - ✅ تم تعديل wall2Base@Sketch4 إلى 20 mm
+15:33:49 - ✅ تم تعديل Door1Display@Sketch8 إلى 80 mm
+15:33:49 - ✅ تم تعديل Door1length@Sketch8 إلى 0 mm
+15:33:49 - ✅ تم تعديل Door1BottomOffset@Sketch8 إلى 0 mm
+15:33:49 - ✅ تم تعديل Door1RightOffset@Sketch8 إلى 20 mm
+15:33:56 - 💾 حفظ النموذج وإغلاقه...
+15:33:57 - ✅ تم حفظ ملف الجدران بنجاح: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\2Walls_WithFloor.SLDPRT

@@ -37,6 +37,28 @@ namespace Kitchenbuilder.Core
             }
 
 
+            // Try L-Shape One Wall
+            bool lShapeHandled = LShapeSelectorOneWall.TryFindWallsForLShape(
+                kitchen,
+                emptySpaces
+            );
+
+            if (lShapeHandled)
+            {
+                Console.WriteLine("✅ L-shape (one-wall) handled and saved.");
+            }
+            else
+            {
+                Console.WriteLine("❌ No suitable L-shape (one-wall) found.");
+            }
+
+
+            // 🔁 Call SolidWorks implementation if any layout was successfully handled
+            if (handled || lShapeHandled)
+            {
+                ImplementInSld.ApplyBaseDimensions(kitchen,emptySpaces);
+            }
+
 
 
             return (layout, suggestedBases, suggestedDescriptions);

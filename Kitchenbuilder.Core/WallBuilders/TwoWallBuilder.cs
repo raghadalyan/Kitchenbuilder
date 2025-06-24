@@ -10,7 +10,7 @@ namespace Kitchenbuilder.Core.WallBuilders
     {
         public static void Run(Kitchen kitchen)
         {
-            string outputPath = @"C:\Users\chouse\Desktop\kitchen\aya.txt";
+            string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\aya.txt";
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
 
             using var writer = new StreamWriter(outputPath, append: true);
@@ -22,8 +22,8 @@ namespace Kitchenbuilder.Core.WallBuilders
 
             var wall1 = kitchen.Walls[0];
             var wall2 = kitchen.Walls[1];
-            double floorLength = kitchen.Floor.Length;
-            double floorWidth = kitchen.Floor.Width;
+            double floorWidth = kitchen.Floor.Length;
+            double floorLength = kitchen.Floor.Width;
             double base1 = 20;
             double base2 = 20;
 
@@ -44,7 +44,7 @@ namespace Kitchenbuilder.Core.WallBuilders
             swApp.Visible = true;
 
             string sourcePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT";
-            string destFolder = @"C:\Users\chouse\Desktop\kitchen";
+            string destFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
             Directory.CreateDirectory(destFolder);
             string destPath = Path.Combine(destFolder, "2Walls_WithFloor.SLDPRT");
 
@@ -132,6 +132,7 @@ namespace Kitchenbuilder.Core.WallBuilders
                 {
                     var win = wall2.Windows[i];
                     int sketch = 10 + i;
+                    string index = (i + 1).ToString();
 
                     SetDim($"Window1Display@Sketch{sketch}", win.Width * factor);
                     SetDim($"Window1Length@Sketch{sketch}", win.Height * factor);
@@ -146,6 +147,7 @@ namespace Kitchenbuilder.Core.WallBuilders
                 {
                     var door = wall2.Doors[i];
                     int sketch = 13 + i;
+                    string index = (i + 1).ToString();
 
                     SetDim($"Door1Display@Sketch{sketch}", door.Width * factor);
                     SetDim($"Door1length@Sketch{sketch}", door.Height * factor);
@@ -154,12 +156,47 @@ namespace Kitchenbuilder.Core.WallBuilders
                 }
             }
 
+            // ⬇️ Suppress unused features and sketches
+            void SuppressFeaturesAndSketches(string featurePrefix, string sketchPrefix, int count, int max)
+            {
+                for (int i = count; i < max; i++)
+                {
+                    string featureName = $"{featurePrefix}{i + 1}";
+                    string sketchName = $"{sketchPrefix}{i + 5}";
+
+                    Feature feature = FindFeatureByName(swModel, featureName);
+                    if (feature != null)
+                        feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                    Feature sketch = FindFeatureByName(swModel, sketchName);
+                    if (sketch != null)
+                        sketch.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+            }
+
+            SuppressFeaturesAndSketches("WindowSlot", "Sketch", wall1.Windows?.Count ?? 0, 3);
+            SuppressFeaturesAndSketches("Door", "Sketch", wall1.Doors?.Count ?? 0, 2);
+            SuppressFeaturesAndSketches("Window1_Slot", "Sketch", wall2.Windows?.Count ?? 0, 3);
+            SuppressFeaturesAndSketches("Door1_", "Sketch", wall2.Doors?.Count ?? 0, 2);
+
             Log("💾 حفظ النموذج وإغلاقه...");
             swModel.EditRebuild3();
             swModel.Save();
             swApp.CloseDoc(destPath);
 
             Log($"✅ تم حفظ ملف الجدران بنجاح: {destPath}");
+        }
+
+        private static Feature FindFeatureByName(ModelDoc2 model, string featureName)
+        {
+            Feature feature = model.FirstFeature() as Feature;
+            while (feature != null)
+            {
+                if (feature.Name == featureName)
+                    return feature;
+                feature = feature.GetNextFeature() as Feature;
+            }
+            return null;
         }
     }
 }

@@ -1,0 +1,219 @@
+﻿@page "/base-options"
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<h1 class="title">Choose your preferred base:</h1>
+
+<div class="option-container">
+    @foreach (var opt in optionNames)
+    {
+        <div class="option-item">
+            @if (optionImages.ContainsKey(opt) && optionImages[opt].Length > 0)
+            {
+                var fileName = Path.GetFileName(optionImages[opt][currentImageIndex[opt]]);
+                <img src="@($"/Output/{opt}/{fileName}")"
+                     @onclick="() => NextImage(opt)"
+                     class="option-image"
+                     alt="@opt" />
+            }
+            <div class="radio-group">
+                <input type="radio"
+                       id="@($"opt-{opt}")"
+                       name="optionSelect"
+                       value="@opt"
+                       checked="@((selectedOption == opt))"
+                       @onchange="() => OnOptionSelected(opt)" />
+                <label for="@($"opt-{opt}")">@opt</label>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!string.IsNullOrEmpty(selectedOption))
+{
+    <div class="confirmation-box">
+        <p>You selected: <strong>@selectedOption</strong></p>
+        <button class="confirm-button" @onclick="ConfirmSelection">Continue</button>
+    </div>
+}
+
+<style>
+    :root {
+        font-family: 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+    }
+
+    .title {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #2c3e50;
+        letter-spacing: 0.5px;
+    }
+
+    .option-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .option-item {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        width: 380px; /* Increased width */
+        text-align: center;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    }
+
+        .option-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+
+    .option-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: opacity 0.3s;
+    }
+
+        .option-image:hover {
+            opacity: 0.88;
+        }
+
+    .radio-group {
+        margin-top: 12px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #34495e;
+    }
+
+        .radio-group input[type="radio"] {
+            transform: scale(1.2);
+            margin-right: 8px;
+        }
+
+    .confirmation-box {
+        text-align: center;
+        margin-top: 35px;
+        font-size: 18px;
+        color: #2c3e50;
+    }
+
+    .confirm-button {
+        margin-top: 15px;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 28px;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+        .confirm-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+</style>
+
+@code {
+    private List<string> optionNames = new();
+    private string selectedOption = string.Empty;
+
+    private Dictionary<string, string[]> optionImages = new();
+    private Dictionary<string, int> currentImageIndex = new();
+
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "next")]
+    public string NextStep { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            var baseDir = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output";
+            var logPath = @"C:\Users\TTC\Desktop\Kitchenbuilder-main\Output\debug_log.txt";
+            optionNames = Directory.GetDirectories(baseDir)
+                       .Select(Path.GetFileName)
+                       .Where(name => name?.ToLower().StartsWith("option") ?? false)
+                       .OrderBy(name => name)
+                       .ToList();
+            var logBuilder = new System.Text.StringBuilder();
+            logBuilder.AppendLine("🧠 Log started: " + DateTime.Now);
+            logBuilder.AppendLine("🔎 Base directory: " + baseDir);
+
+            foreach (var option in optionNames)
+            {
+                var optionDir = Path.Combine(baseDir, option);
+                logBuilder.AppendLine($"📂 Checking option: {option}");
+
+                if (Directory.Exists(optionDir))
+                {
+                    var images = Directory.GetFiles(optionDir, "*.png").OrderBy(f => f).ToArray();
+                    if (images.Length > 0)
+                    {
+                        optionImages[option] = images;
+                        currentImageIndex[option] = 0;
+                        foreach (var img in images)
+                        {
+                            logBuilder.AppendLine("    🖼️ " + img);
+                        }
+                    }
+                    else
+                    {
+                        logBuilder.AppendLine($"⚠️ No PNG images found in {optionDir}");
+                    }
+                }
+                else
+                {
+                    logBuilder.AppendLine($"❌ Directory does not exist: {optionDir}");
+                }
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(logPath)!);
+            File.WriteAllText(logPath, logBuilder.ToString());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error during initialization: " + ex.Message);
+        }
+    }
+
+    private void OnOptionSelected(string opt)
+    {
+        selectedOption = opt;
+        StateHasChanged();
+    }
+
+    private void NextImage(string option)
+    {
+        if (optionImages.ContainsKey(option))
+        {
+            currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
+        }
+    }
+
+    private void ConfirmSelection()
+    {
+        if (!string.IsNullOrEmpty(selectedOption))
+        {
+            optionImages.Clear();
+            currentImageIndex.Clear();
+            StateHasChanged();
+
+            var targetPage = string.IsNullOrEmpty(NextStep) ? "base-approval" : NextStep;
+            Navigation.NavigateTo($"/{targetPage}?selected={selectedOption}");
+        }
+    }
+}

@@ -115,7 +115,8 @@ namespace Kitchenbuilder.Core
                     fridgeStart,
                     fridgeEnd,
                     exposed: true,
-                    corner: false,
+                   corners: new List<(int, int)>()
+,
                     numOfExposedWall: exposedWallNumber,
                     exposedWallSpace);
             }
@@ -137,7 +138,8 @@ namespace Kitchenbuilder.Core
                     fridgeStart,
                     fridgeEnd,
                     exposed: true,
-                    corner: false,
+                   corners: new List<(int, int)>()
+,
                     numOfExposedWall: exposedWallNumber,
                     exposedWallSpace);
             }
@@ -220,7 +222,8 @@ namespace Kitchenbuilder.Core
                     {
                         Log("✅ Wall 3: Fridge is in last space of Wall 1 and has enough space after (≥ 60 cm)");
                         return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                            fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
+                            fridgeWall, fridgeStart, fridgeEnd, true, corners: new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }
+, exposedWallNumber, exposedWallSpace);
                     }
                     else
                     {
@@ -239,7 +242,8 @@ namespace Kitchenbuilder.Core
                         {
                             Log($"✅ Wall 3: Fridge is in previous space {i} of Wall 1 with length {length} ≥ 85");
                             return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                                fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
+                                fridgeWall, fridgeStart, fridgeEnd, true, corners: new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }
+, exposedWallNumber, exposedWallSpace);
                         }
                         else
                         {
@@ -266,7 +270,8 @@ namespace Kitchenbuilder.Core
                     {
                         Log("✅ Wall 4: Fridge is in first space of Wall 2 and has enough space before (≥ 60 cm)");
                         return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                            fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
+                            fridgeWall, fridgeStart, fridgeEnd, true, corners: new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }
+, exposedWallNumber, exposedWallSpace);
                     }
                     else
                     {
@@ -285,7 +290,8 @@ namespace Kitchenbuilder.Core
                         {
                             Log($"✅ Wall 4: Fridge is in next space {i} of Wall 2 with length {length} ≥ 85");
                             return WriteSuccess(outputPath, wall1Index, wall2Index, spacesWall1, spacesWall2,
-                                fridgeWall, fridgeStart, fridgeEnd, true, true, exposedWallNumber, exposedWallSpace);
+                                fridgeWall, fridgeStart, fridgeEnd, true, corners: new List<(int, int)> { (wall1Index + 1, wall2Index + 1) }
+, exposedWallNumber, exposedWallSpace);
                         }
                         else
                         {
@@ -321,7 +327,7 @@ namespace Kitchenbuilder.Core
             double fridgeStart,
             double fridgeEnd,
             bool exposed,
-            bool corner,
+            List<(int, int)> corners,
             int numOfExposedWall,
             (double start, double end) exposedWallSpace)
         {
@@ -334,7 +340,10 @@ namespace Kitchenbuilder.Core
                 SpacesWall2 = spacesWall2.Select(s => new { Start = s.start, End = s.end }),
                 FridgeWall = fridgeWall + 1,
                 Fridge = new { Start = fridgeStart, End = fridgeEnd },
-                Corner = corner,
+                Corner = corners.Any()
+    ? corners.Select(c => new[] { c.Item1, c.Item2 }).ToList()
+    : null,
+
                 Exposed = exposed,
                 NumOfExposedWall = numOfExposedWall,
                 ExposedWallSpace = new { Start = exposedWallSpace.start, End = exposedWallSpace.end }
