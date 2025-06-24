@@ -11,8 +11,8 @@ namespace Kitchenbuilder.Core.WallBuilders
         public static void Run(Kitchen kitchen)
         {
             var wall = kitchen.Walls[0];
-            double floorLength = kitchen.Floor.Length;
-            double floorWidth = kitchen.Floor.Width;
+            double floorLength = kitchen.Floor.Width;
+            double floorWidth = kitchen.Floor.Length;
             double height = wall.Height;
             double baseLength = 20;
 
@@ -77,10 +77,42 @@ namespace Kitchenbuilder.Core.WallBuilders
                 }
             }
 
+            // ⬇️ تعطيل النوافذ غير المستخدمة (باستخدام WindowSlot)
+            int usedWindows = wall.Windows?.Count ?? 0;
+            for (int i = usedWindows; i < 3; i++)
+            {
+                string featureName = $"WindowSlot{i + 1}";
+                string sketchName = (i == 0) ? "Sketch5" : (i == 1) ? "Sketch7" : "Sketch8";
+
+                Feature feature = FindFeatureByName(swModel, featureName);
+                if (feature != null)
+                    feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                Feature sketch = FindFeatureByName(swModel, sketchName);
+                if (sketch != null)
+                    sketch.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+            }
+
+            // ⬇️ تعطيل الأبواب غير المستخدمة (تبقى كما هي)
+            int usedDoors = wall.Doors?.Count ?? 0;
+            for (int i = usedDoors; i < 2; i++)
+            {
+                string featureName = $"Door{i + 1}";
+                string sketchName = (i == 0) ? "Sketch9" : "Sketch10";
+
+                Feature feature = FindFeatureByName(swModel, featureName);
+                if (feature != null)
+                    feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                Feature sketch = FindFeatureByName(swModel, sketchName);
+                if (sketch != null)
+                    sketch.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+            }
+
             swModel.ForceRebuild3(true);
 
             // ⬇️ إعداد المجلد واسم الملف
-            string folder = @"C:\Users\chouse\Desktop\kitchen";
+            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
             Directory.CreateDirectory(folder);
             string outputPath = Path.Combine(folder, "Wall1_WithFloor.SLDPRT");
 
@@ -90,6 +122,19 @@ namespace Kitchenbuilder.Core.WallBuilders
                 (int)swSaveAsOptions_e.swSaveAsOptions_Copy);
 
             Console.WriteLine($"✅ File saved to: {outputPath}");
+        }
+
+        // ✅ دالة البحث عن ميزة بالاسم
+        private static Feature FindFeatureByName(ModelDoc2 model, string featureName)
+        {
+            Feature feature = model.FirstFeature() as Feature;
+            while (feature != null)
+            {
+                if (feature.Name == featureName)
+                    return feature;
+                feature = feature.GetNextFeature() as Feature;
+            }
+            return null;
         }
     }
 }

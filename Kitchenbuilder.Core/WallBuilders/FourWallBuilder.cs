@@ -15,8 +15,8 @@ namespace Kitchenbuilder.Core.WallBuilders
             var wall2 = kitchen.Walls[1];
             var wall3 = kitchen.Walls[2];
             var wall4 = kitchen.Walls[3];
-            double floorLength = kitchen.Floor.Length;
-            double floorWidth = kitchen.Floor.Width;
+            double floorLength = kitchen.Floor.Width;
+            double floorWidth = kitchen.Floor.Length;
             double base1 = 20, base2 = 20, base3 = 20, base4 = 20;
 
             SldWorks swApp = Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application")) as SldWorks;
@@ -51,48 +51,71 @@ namespace Kitchenbuilder.Core.WallBuilders
             ((Dimension)swModel.Parameter("Wall3Base@Sketch4")).SystemValue = base3 * factor;
             ((Dimension)swModel.Parameter("Wall4Base@Sketch5")).SystemValue = base4 * factor;
 
-            void SetWindows(Window[] windows, int sketchStart)
+            void SetWindows(Window[] windows, int sketchStart, string prefix)
             {
                 for (int i = 0; i < windows.Length && i < 3; i++)
                 {
                     var w = windows[i];
                     int sketch = sketchStart + i;
-                    ((Dimension)swModel.Parameter($"Window{i + 1}Display@Sketch{sketch}")).SystemValue = w.Width * factor;
-                    ((Dimension)swModel.Parameter($"Window{i + 1}Length@Sketch{sketch}")).SystemValue = w.Height * factor;
-                    ((Dimension)swModel.Parameter($"Window{i + 1}BottomOffset@Sketch{sketch}")).SystemValue = w.DistanceY * factor;
-                    ((Dimension)swModel.Parameter($"Window{i + 1}RightOffset@Sketch{sketch}")).SystemValue = w.DistanceX * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Window{i + 1}Display@Sketch{sketch}")).SystemValue = w.Width * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Window{i + 1}Length@Sketch{sketch}")).SystemValue = w.Height * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Window{i + 1}BottomOffset@Sketch{sketch}")).SystemValue = w.DistanceY * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Window{i + 1}RightOffset@Sketch{sketch}")).SystemValue = w.DistanceX * factor;
                 }
             }
 
-            void SetDoors(Door[] doors, int sketchStart)
+            void SetDoors(Door[] doors, int sketchStart, string prefix)
             {
                 for (int i = 0; i < doors.Length && i < 2; i++)
                 {
                     var d = doors[i];
                     int sketch = sketchStart + i;
-                    ((Dimension)swModel.Parameter($"Door{i + 1}Display@Sketch{sketch}")).SystemValue = d.Width * factor;
-                    ((Dimension)swModel.Parameter($"Door{i + 1}length@Sketch{sketch}")).SystemValue = d.Height * factor;
-                    ((Dimension)swModel.Parameter($"Door{i + 1}BottomOffset@Sketch{sketch}")).SystemValue = d.DistanceY * factor;
-                    ((Dimension)swModel.Parameter($"Door{i + 1}RightOffset@Sketch{sketch}")).SystemValue = d.DistanceX * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Door{i + 1}Display@Sketch{sketch}")).SystemValue = d.Width * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Door{i + 1}length@Sketch{sketch}")).SystemValue = d.Height * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Door{i + 1}BottomOffset@Sketch{sketch}")).SystemValue = d.DistanceY * factor;
+                    ((Dimension)swModel.Parameter($"{prefix}Door{i + 1}RightOffset@Sketch{sketch}")).SystemValue = d.DistanceX * factor;
                 }
             }
 
-            if (wall1.HasWindows) SetWindows(wall1.Windows.ToArray(), 6);
-            if (wall1.HasDoors) SetDoors(wall1.Doors.ToArray(), 9);
+            if (wall1.HasWindows && wall1.Windows != null) SetWindows(wall1.Windows.ToArray(), 6, "");
+            if (wall1.HasDoors && wall1.Doors != null) SetDoors(wall1.Doors.ToArray(), 9, "");
 
-            if (wall2.HasWindows) SetWindows(wall2.Windows.ToArray(), 12);
-            if (wall2.HasDoors) SetDoors(wall2.Doors.ToArray(), 15);
+            if (wall2.HasWindows && wall2.Windows != null) SetWindows(wall2.Windows.ToArray(), 12, "");
+            if (wall2.HasDoors && wall2.Doors != null) SetDoors(wall2.Doors.ToArray(), 15, "");
 
-            if (wall3.HasWindows) SetWindows(wall3.Windows.ToArray(), 17);
-            if (wall3.HasDoors) SetDoors(wall3.Doors.ToArray(), 20);
+            if (wall3.HasWindows && wall3.Windows != null) SetWindows(wall3.Windows.ToArray(), 17, "");
+            if (wall3.HasDoors && wall3.Doors != null) SetDoors(wall3.Doors.ToArray(), 20, "");
 
-            if (wall4.HasWindows) SetWindows(wall4.Windows.ToArray(), 22);
-            if (wall4.HasDoors) SetDoors(wall4.Doors.ToArray(), 25);
+            if (wall4.HasWindows && wall4.Windows != null) SetWindows(wall4.Windows.ToArray(), 22, "");
+            if (wall4.HasDoors && wall4.Doors != null) SetDoors(wall4.Doors.ToArray(), 25, "");
+
+            void SuppressUnused(string prefix, int actualWindows, int actualDoors)
+            {
+                for (int i = actualWindows; i < 3; i++)
+                {
+                    string featureName = $"{prefix}Window{i + 1}";
+                    Feature feature = FindFeatureByName(swModel, featureName);
+                    if (feature != null)
+                        feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+
+                for (int i = actualDoors; i < 2; i++)
+                {
+                    string featureName = $"{prefix}Door{i + 1}";
+                    Feature feature = FindFeatureByName(swModel, featureName);
+                    if (feature != null)
+                        feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+            }
+
+            SuppressUnused("", wall1.Windows?.Count ?? 0, wall1.Doors?.Count ?? 0);
+            SuppressUnused("", wall2.Windows?.Count ?? 0, wall2.Doors?.Count ?? 0);
+            SuppressUnused("", wall3.Windows?.Count ?? 0, wall3.Doors?.Count ?? 0);
+            SuppressUnused("", wall4.Windows?.Count ?? 0, wall4.Doors?.Count ?? 0);
 
             swModel.ForceRebuild3(true);
 
-            // ✅ إعداد مجلد ومسار الحفظ داخليًا
-            string folder = @"C:\Users\chouse\Desktop\kitchen";
+            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
             Directory.CreateDirectory(folder);
             string outputPath = Path.Combine(folder, "4Walls_WithFloor.SLDPRT");
 
@@ -101,6 +124,18 @@ namespace Kitchenbuilder.Core.WallBuilders
                 (int)swSaveAsOptions_e.swSaveAsOptions_Copy);
 
             Console.WriteLine($"✅ File saved to: {outputPath}");
+        }
+
+        private static Feature FindFeatureByName(ModelDoc2 model, string featureName)
+        {
+            Feature feature = model.FirstFeature() as Feature;
+            while (feature != null)
+            {
+                if (feature.Name == featureName)
+                    return feature;
+                feature = feature.GetNextFeature() as Feature;
+            }
+            return null;
         }
     }
 }

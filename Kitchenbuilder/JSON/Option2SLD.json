@@ -6,13 +6,13 @@
     },
     "Length": {
       "Name": "length@Floor",
-      "Size": 500
+      "Size": 400
     }
   },
   "Wall1": {
     "SpacesWall1": [
       {
-        "Start": 0,
+        "Start": 100,
         "End": 500
       }
     ],
@@ -20,13 +20,13 @@
       "Base3": {
         "SketchName": "fridge_base1",
         "ExtrudeName": "Extrude_fridge_base1",
-        "Start": 0,
-        "End": 85,
+        "Start": 100,
+        "End": 185,
         "Visible": true,
         "SmartDim": [
           {
             "Name": "DistanceX@fridge_base1",
-            "Size": 0
+            "Size": 100
           },
           {
             "Name": "length@fridge_base1",
@@ -37,17 +37,17 @@
       "Base2": {
         "SketchName": "1_2",
         "ExtrudeName": "Extrude_1_2",
-        "Start": 85,
+        "Start": 185,
         "End": 500,
         "Visible": true,
         "SmartDim": [
           {
             "Name": "DistanceX@1_2",
-            "Size": 85
+            "Size": 185
           },
           {
             "Name": "length@1_2",
-            "Size": 415
+            "Size": 315
           }
         ]
       },
@@ -62,16 +62,15 @@
     },
     "Exposed": false,
     "Fridge": {
-      "Start": 0,
-      "End": 85
+      "Start": 100,
+      "End": 185
     }
   },
   "Wall2": {
     "SpacesWall2": [
       {
         "Start": 0,
-        "End": 180,
-        "Name": ""
+        "End": 400
       }
     ],
     "Bases": {
@@ -79,7 +78,7 @@
         "SketchName": "2_1",
         "ExtrudeName": "Extrude_2_1",
         "Start": 60,
-        "End": 180,
+        "End": 400,
         "Visible": true,
         "SmartDim": [
           {
@@ -88,7 +87,7 @@
           },
           {
             "Name": "length@2_1",
-            "Size": 120
+            "Size": 340
           }
         ]
       },
@@ -109,13 +108,7 @@
         "SmartDim": null
       }
     },
-    "Exposed": true,
-    "DistanceFrom": [
-      {
-        "Name": "Distance_from_2@master_wall2",
-        "Size": 0
-      }
-    ]
+    "Exposed": false
   },
   "Wall3": {
     "SpacesWall3": [],

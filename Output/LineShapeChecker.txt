@@ -1,1 +1,1 @@
-[00:47:15] ✅ Main space (0-500) is sufficient (500 cm)
+[15:33:57] ✅ Main space (100-500) is sufficient (400 cm)
