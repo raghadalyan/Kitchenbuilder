@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,22 +12,17 @@ namespace Kitchenbuilder.Core
 {
     public static class LayoutLauncher
     {
+        public static List<string> StationSketches { get; set; } = new();
+
         [DllImport("user32.dll")]
         private static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
-        {
-            public int Left, Top, Right, Bottom;
-        }
-
-        public static void LaunchAndSplitScreen()
+        public static void LaunchAndSplitScreen(SolidWorksSessionService swSession)
         {
             string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
-            string solidWorksPath = @"C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\SLDWORKS.exe";
             string latestFile = Directory.GetFiles(folder, "temp_Option*.SLDPRT")
                                          .OrderByDescending(File.GetLastWriteTime)
                                          .FirstOrDefault();
@@ -37,32 +35,40 @@ namespace Kitchenbuilder.Core
 
             Log($"✅ Found latest SLDPRT file: {Path.GetFileName(latestFile)}");
 
-            // Launch SolidWorks
-            var swProc = Process.Start(solidWorksPath, $"\"{latestFile}\"");
-            Thread.Sleep(5000);
-
-            if (swProc != null)
+            // Start SolidWorks via API
+            var swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+            if (swApp == null)
             {
-                IntPtr swHandle = swProc.MainWindowHandle;
-                if (swHandle == IntPtr.Zero)
-                    swHandle = WaitForMainWindow(swProc);
-
-                if (swHandle != IntPtr.Zero)
-                {
-                    SetForegroundWindow(swHandle);
-                    MoveWindow(swHandle, 0, 0, 960, 1080, true); // Left half
-                    Log("✅ Moved SolidWorks to left side.");
-                }
-                else
-                {
-                    Log("❌ Failed to get SolidWorks window handle.");
-                }
+                Log("❌ Failed to launch SolidWorks via API.");
+                return;
             }
 
-            // Move current MAUI app to right side
+            swApp.Visible = true;
+
+            int errors = 0, warnings = 0;
+            var model = swApp.OpenDoc6(latestFile,
+                (int)swDocumentTypes_e.swDocPART,
+                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                "", ref errors, ref warnings);
+
+            if (model == null)
+            {
+                Log("❌ Failed to open the SLDPRT file.");
+                return;
+            }
+
+            // Register active model in the session
+            swSession.SetActiveModel(model);
+            Log("✅ Active model registered in session.");
+
+            // Move SolidWorks to left
+            IntPtr swHandle = (IntPtr)swApp.IFrameObject().GetHWnd();
+            MoveWindow(swHandle, 0, 0, 960, 1080, true);
+            Log("✅ Moved SolidWorks to left side.");
+
+            // Move MAUI to right
             Process currentProc = Process.GetCurrentProcess();
             IntPtr currentHandle = currentProc.MainWindowHandle;
-
             for (int i = 0; i < 10 && currentHandle == IntPtr.Zero; i++)
             {
                 Thread.Sleep(500);
@@ -71,8 +77,7 @@ namespace Kitchenbuilder.Core
 
             if (currentHandle != IntPtr.Zero)
             {
-                SetForegroundWindow(currentHandle);
-                MoveWindow(currentHandle, 960, 0, 960, 1080, true); // Right half
+                MoveWindow(currentHandle, 960, 0, 960, 1080, true);
                 Log("✅ Moved Kitchenbuilder to right side.");
             }
             else
@@ -81,24 +86,11 @@ namespace Kitchenbuilder.Core
             }
         }
 
-        private static IntPtr WaitForMainWindow(Process proc)
-        {
-            IntPtr handle = IntPtr.Zero;
-            for (int i = 0; i < 10; i++)
-            {
-                Thread.Sleep(1000);
-                handle = proc.MainWindowHandle;
-                if (handle != IntPtr.Zero)
-                    break;
-            }
-            return handle;
-        }
-
         private static void Log(string message)
         {
             string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\split_screen_debug.txt";
             string logLine = $"[{DateTime.Now:HH:mm:ss}] {message}";
-            File.AppendAllText(debugPath, logLine + Environment.NewLine);
+            File.AppendAllText(debugPath, logLine + System.Environment.NewLine);
         }
     }
 }

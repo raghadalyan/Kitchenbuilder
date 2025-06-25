@@ -11,14 +11,6 @@
       "Windows": null,
       "HasDoors": false,
       "Doors": null
-    },
-    {
-      "Width": 0,
-      "Height": 0,
-      "HasWindows": false,
-      "Windows": null,
-      "HasDoors": false,
-      "Doors": null
     }
   ],
   "Base": null

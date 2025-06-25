@@ -3,6 +3,8 @@
 @using System.IO
 @using System.Text.Json
 @inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using Kitchenbuilder.Core
 
 <h1 class="title">Adjust Countertop Distances</h1>
 
@@ -64,19 +66,28 @@ else
     private void GoTo(int index)
     {
         if (index >= 0 && index < baseCount)
+        {
             currentIndex = index;
+            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+        }
     }
 
     private void Previous()
     {
         if (currentIndex > 0)
+        {
             currentIndex--;
+            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+        }
     }
 
     private void Next()
     {
         if (currentIndex < baseCount - 1)
+        {
             currentIndex++;
+            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+        }
     }
 
     private void SaveDistances()

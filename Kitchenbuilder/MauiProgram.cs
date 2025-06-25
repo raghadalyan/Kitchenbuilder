@@ -16,6 +16,7 @@ namespace Kitchenbuilder
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddSingleton<SolidWorksSessionService>();
 
 
 
