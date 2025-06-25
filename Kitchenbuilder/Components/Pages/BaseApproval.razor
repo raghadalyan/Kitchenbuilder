@@ -2,6 +2,8 @@
 @using System.IO
 @using System.Text.Json
 @using Microsoft.AspNetCore.Components
+@using Kitchenbuilder.Core
+
 @inject NavigationManager NavManager
 
 <h1 class="title">Are you satisfied with the generated base?</h1>
@@ -191,8 +193,74 @@
             currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
         }
     }
+    private void ApproveBase()
+    {
+        if (!string.IsNullOrEmpty(selectedOption))
+        {
+            try
+            {
+                // Normalize the selected option
+                string normalized = selectedOption.StartsWith("option", StringComparison.OrdinalIgnoreCase)
+                    ? "Option" + selectedOption.Substring(6)
+                    : selectedOption;
 
-    private void ApproveBase() { }
+                string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{normalized}SLD.json");
+
+                Console.WriteLine($"🔍 selectedOption: {selectedOption}");
+                Console.WriteLine($"🔍 Looking for JSON at: {jsonPath}");
+
+                if (!File.Exists(jsonPath))
+                {
+                    Console.WriteLine($"❌ JSON file not found: {jsonPath}");
+                    return;
+                }
+
+                string json = File.ReadAllText(jsonPath);
+                var doc = JsonDocument.Parse(json);
+                int baseCount = 0;
+
+                foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+                {
+                    if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
+                        wallElement.TryGetProperty("Bases", out var bases))
+                    {
+                        foreach (var baseProp in bases.EnumerateObject())
+                        {
+                            var visible = baseProp.Value.GetProperty("Visible").GetBoolean();
+                            var sketchName = baseProp.Value.GetProperty("SketchName").GetString()?.ToLower();
+
+                            if (visible && (sketchName == null || !sketchName.Contains("fridge")))
+                            {
+                                baseCount++;
+                            }
+                        }
+                    }
+                }
+
+                string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
+                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                File.WriteAllText(outputPath, $"Base count: {baseCount}");
+
+                Console.WriteLine($"✅ base_count_debug.txt written with Base count: {baseCount}");
+
+                // 🧠 Add this line to launch SolidWorks and split the screen
+                LayoutLauncher.LaunchAndSplitScreen();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ ERROR in ApproveBase(): {ex.Message}");
+            }
+
+            NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
+        }
+        else
+        {
+            Console.WriteLine("❌ selectedOption is null or empty");
+        }
+    }
+
+
+
 
     private void RejectBase()
     {

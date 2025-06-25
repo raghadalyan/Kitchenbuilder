@@ -1,0 +1,94 @@
+﻿
+@page "/countertop-options"
+@using System.IO
+@using System.Text.Json
+@inject NavigationManager NavManager
+
+<h1 class="title">Adjust Countertop Distances</h1>
+
+@if (baseCount > 0)
+{
+        <div class="steps">
+        @for (int i = 0; i < baseCount; i++)
+        {
+                    <div class="step-circle @(i == currentIndex ? "active" : "")" @onclick="@(() => GoTo(i))">@((i + 1).ToString())</div>
+        }
+        </div>
+        <div class="station-container">
+            <div class="station">
+                <div class="distance-inputs">
+                    <label>Distance from Left:</label>
+                    <input type="number" @bind="baseDistances[currentIndex].Left" />
+
+                    <label>Distance from Right:</label>
+                    <input type="number" @bind="baseDistances[currentIndex].Right" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="navigation-buttons">
+            <button @onclick="Previous" disabled="@(currentIndex == 0)">⬅ Back</button>
+            <button @onclick="Next" disabled="@(currentIndex == baseCount - 1)">Next ➡</button>
+        </div>
+
+        <p class="step-indicator">Base @(currentIndex + 1) of @baseCount</p>
+
+        <button class="save-button" @onclick="SaveDistances">Save</button>
+}
+else
+{
+        <p>Loading base information...</p>
+}
+
+@code {
+    private int baseCount = 0;
+    private int currentIndex = 0;
+    private List<BaseDistance> baseDistances = new();
+
+    protected override void OnInitialized()
+    {
+        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
+        if (File.Exists(debugPath))
+        {
+            string content = File.ReadAllText(debugPath);
+            if (int.TryParse(content.Split(':').Last().Trim(), out int count))
+            {
+                baseCount = count;
+                baseDistances = Enumerable.Range(0, baseCount)
+                                          .Select(_ => new BaseDistance())
+                                          .ToList();
+            }
+        }
+    }
+    private void GoTo(int index)
+    {
+        if (index >= 0 && index < baseCount)
+            currentIndex = index;
+    }
+
+    private void Previous()
+    {
+        if (currentIndex > 0)
+            currentIndex--;
+    }
+
+    private void Next()
+    {
+        if (currentIndex < baseCount - 1)
+            currentIndex++;
+    }
+
+    private void SaveDistances()
+    {
+        var output = JsonSerializer.Serialize(baseDistances, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(Path.Combine("wwwroot", "Output", "base_distances.json"), output);
+        NavManager.NavigateTo("/summary");
+    }
+
+    private class BaseDistance
+    {
+        public double Left { get; set; }
+        public double Right { get; set; }
+    }
+}

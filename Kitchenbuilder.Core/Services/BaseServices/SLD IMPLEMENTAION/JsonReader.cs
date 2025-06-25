@@ -52,9 +52,9 @@ namespace Kitchenbuilder.Core
                 SaveOptionModel.Save(model, jsonPath);
 
 
-                //string modelTitle = model.GetTitle();
-                //swApp.CloseDoc(modelTitle);
-                //File.AppendAllText(LogPath, $"📁 Closed document {modelTitle}\n");
+                string modelTitle = model.GetTitle();
+                swApp.CloseDoc(modelTitle);
+                File.AppendAllText(LogPath, $"📁 Closed document {modelTitle}\n");
             }
             catch (Exception ex)
             {
