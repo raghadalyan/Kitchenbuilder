@@ -7,6 +7,24 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+/// <summary>
+/// LayoutLauncher handles launching and positioning SolidWorks alongside the MAUI app.
+/// 
+/// Functionality:
+/// - Opens a specific .SLDPRT file using the SolidWorks API.
+/// - Registers the active model in the shared session service (SwSession).
+/// - Splits the screen:
+///     - SolidWorks is moved to the left half of the screen (0–960).
+///     - The MAUI app window is moved to the right half of the screen (960–1920).
+/// - Logs all actions and errors to a debug file.
+/// 
+/// Usage:
+/// Call LaunchAndSplitScreen(swSession, pathToSldprt) from the UI layer, passing:
+/// - swSession: shared SolidWorks session handler
+/// - pathToSldprt: full path to the SLDPRT file to be opened
+/// 
+/// Debug logs are written to: Kitchenbuilder\Output\split_screen_debug.txt
+/// </summary>
 
 namespace Kitchenbuilder.Core
 {
@@ -20,20 +38,14 @@ namespace Kitchenbuilder.Core
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static void LaunchAndSplitScreen(SolidWorksSessionService swSession)
-        {
-            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
-            string latestFile = Directory.GetFiles(folder, "temp_Option*.SLDPRT")
-                                         .OrderByDescending(File.GetLastWriteTime)
-                                         .FirstOrDefault();
+        public static void LaunchAndSplitScreen(SolidWorksSessionService swSession, string sldprtPath) { 
 
-            if (latestFile == null)
+            if (!File.Exists(sldprtPath))
             {
-                Log("❌ No SLDPRT file found.");
+                Log($"❌ SLDPRT file not found: {sldprtPath}");
                 return;
             }
 
-            Log($"✅ Found latest SLDPRT file: {Path.GetFileName(latestFile)}");
 
             // Start SolidWorks via API
             var swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
@@ -46,7 +58,7 @@ namespace Kitchenbuilder.Core
             swApp.Visible = true;
 
             int errors = 0, warnings = 0;
-            var model = swApp.OpenDoc6(latestFile,
+            var model = swApp.OpenDoc6(sldprtPath,
                 (int)swDocumentTypes_e.swDocPART,
                 (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
                 "", ref errors, ref warnings);

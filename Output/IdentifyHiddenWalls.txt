@@ -1,0 +1,12 @@
+[00:58:04] 🔍 Processing hidden walls for: Option1.json
+[00:58:04] ✅ Usable walls: 1
+[00:58:04] ➕ Adding hidden wall 2
+[00:58:04] ➕ Adding hidden wall 3
+[00:58:04] ➕ Adding hidden wall 4
+[00:58:04] ✅ Output updated: Option1SLD.json
+[00:58:04] 🔍 Processing hidden walls for: Option2.json
+[00:58:04] 🔎 Exposed wall 2 marked as usable
+[00:58:04] ✅ Usable walls: 1, 2
+[00:58:04] ➕ Adding hidden wall 3
+[00:58:04] ➕ Adding hidden wall 4
+[00:58:04] ✅ Output updated: Option2SLD.json

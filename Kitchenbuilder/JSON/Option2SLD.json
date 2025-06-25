@@ -70,7 +70,8 @@
     "SpacesWall2": [
       {
         "Start": 0,
-        "End": 500
+        "End": 180,
+        "Name": ""
       }
     ],
     "Bases": {
@@ -78,7 +79,7 @@
         "SketchName": "2_1",
         "ExtrudeName": "Extrude_2_1",
         "Start": 60,
-        "End": 500,
+        "End": 180,
         "Visible": true,
         "SmartDim": [
           {
@@ -87,7 +88,7 @@
           },
           {
             "Name": "length@2_1",
-            "Size": 440
+            "Size": 120
           }
         ]
       },
@@ -108,7 +109,13 @@
         "SmartDim": null
       }
     },
-    "Exposed": false
+    "Exposed": true,
+    "DistanceFrom": [
+      {
+        "Name": "Distance_from_2@master_wall2",
+        "Size": 0
+      }
+    ]
   },
   "Wall3": {
     "SpacesWall3": [],
