@@ -173,7 +173,7 @@
                     else
                     {
                         logBuilder.AppendLine($"⚠️ No PNG images found in {optionDir}");
-                    }
+                    }  
                 }
                 else
                 {
@@ -203,11 +203,56 @@
             currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
         }
     }
-
     private void ConfirmSelection()
     {
         if (!string.IsNullOrEmpty(selectedOption))
         {
+            try
+            {
+                // 🔸 Delete other temp SLDPRT files
+                string tempFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
+                string keepFile = $"temp_{selectedOption}.SLDPRT";
+
+                if (Directory.Exists(tempFolder))
+                {
+                    var files = Directory.GetFiles(tempFolder, "temp_Option*.SLDPRT");
+                    foreach (var file in files)
+                    {
+                        if (!file.EndsWith(keepFile, StringComparison.OrdinalIgnoreCase))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                }
+
+                // 🔸 Delete unrelated JSON files
+                string jsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+                string keepJson1 = $"{selectedOption}.json";
+                string keepJson2 = $"{selectedOption}SLD.json";
+
+                if (Directory.Exists(jsonFolder))
+                {
+                    var allJsons = Directory.GetFiles(jsonFolder, "*.json");
+                    foreach (var file in allJsons)
+                    {
+                        var name = Path.GetFileName(file);
+                        if (
+                            !name.Equals("input.json", StringComparison.OrdinalIgnoreCase) &&
+                            !name.Equals(keepJson1, StringComparison.OrdinalIgnoreCase) &&
+                            !name.Equals(keepJson2, StringComparison.OrdinalIgnoreCase))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error while cleaning files: " + ex.Message);
+            }
+
+            // Clear state and move on
             optionImages.Clear();
             currentImageIndex.Clear();
             StateHasChanged();
@@ -216,4 +261,6 @@
             Navigation.NavigateTo($"/{targetPage}?selected={selectedOption}");
         }
     }
+
+
 }

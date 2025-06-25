@@ -4,20 +4,20 @@
   "Wall2": 2,
   "SpacesWall1": [
     {
-      "Start": 100,
+      "Start": 0,
       "End": 500
     }
   ],
   "SpacesWall2": [
     {
       "Start": 0,
-      "End": 400
+      "End": 500
     }
   ],
   "FridgeWall": 1,
   "Fridge": {
-    "Start": 100,
-    "End": 185
+    "Start": 0,
+    "End": 85
   },
   "Corner": [
     [

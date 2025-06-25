@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Kitchenbuilder.Core;
 
 namespace Kitchenbuilder
 {
@@ -15,9 +16,12 @@ namespace Kitchenbuilder
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddSingleton<SolidWorksSessionService>();
+
+
 
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
 
