@@ -204,7 +204,7 @@
 
         try
         {
-            // ✅ Normalize selected option name
+            // ✅ Normalize selected7U8 option name
             string normalized = selectedOption.StartsWith("option", StringComparison.OrdinalIgnoreCase)
                 ? "Option" + selectedOption.Substring(6)
                 : selectedOption;
@@ -259,9 +259,10 @@
             if (sketchLogs.Count == 0)
                 sketchLogs.Add($"[{DateTime.Now:HH:mm:ss}] ❌ No StationSketches collected.");
             File.WriteAllLines(sketchDebugPath, sketchLogs);
+            string partFilePath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{normalized}.SLDPRT");
 
             // ✅ Launch SolidWorks and move both windows
-            LayoutLauncher.LaunchAndSplitScreen(SwSession);
+            LayoutLauncher.LaunchAndSplitScreen(SwSession, partFilePath);
         }
         catch (Exception ex)
         {

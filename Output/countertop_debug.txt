@@ -1,17 +1,8 @@
-[22:51:42] ✅ Collected sketch: 1_2
-[22:51:42] ✅ Collected sketch: 2_1
-[22:51:58] 🎯 Trying to activate sketch: 2_1
-[22:51:59] ✅ Sketch selected.
-[22:52:00] ✅ Called EditSketch.
-[22:52:05] 🎯 Trying to activate sketch: 1_2
-[22:52:05] ✅ Sketch selected.
-[22:52:06] ✅ Called EditSketch.
-[22:52:33] 🎯 Trying to activate sketch: 2_1
-[22:52:34] ✅ Sketch selected.
-[22:52:35] ✅ Called EditSketch.
-[22:52:36] 🎯 Trying to activate sketch: 1_2
-[22:52:37] ✅ Sketch selected.
-[22:52:38] ✅ Called EditSketch.
-[22:52:55] 🎯 Trying to activate sketch: 2_1
-[22:52:56] ✅ Sketch selected.
-[22:52:57] ✅ Called EditSketch.
+[01:00:47] ✅ Collected sketch: 1_2
+[01:00:47] ✅ Collected sketch: 2_1
+[01:02:18] 🎯 Trying to activate sketch: 2_1
+[01:02:20] ✅ Sketch selected.
+[01:02:21] ✅ Called EditSketch.
+[01:03:00] 🎯 Trying to activate sketch: 1_2
+[01:03:00] ✅ Sketch selected.
+[01:03:02] ✅ Called EditSketch.

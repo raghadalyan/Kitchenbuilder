@@ -1,0 +1,3 @@
+[00:58:04] 🔍 Trying largest space in Wall 1: 0-500
+[00:58:04] 💾 Saved valid layout to JSON.
+[00:58:04] ✅ Fridge placed at start of largest space, exposed Wall 2.

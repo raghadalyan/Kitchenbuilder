@@ -1,0 +1,9 @@
+[00:58:04] 🔍 Handling usable walls for: Option1.json
+[00:58:04] ❌ NumOfExposedWall missing or invalid
+[00:58:04] ✅ Output written to: Option1SLD.json
+[00:58:04] 🔍 Handling usable walls for: Option2.json
+[00:58:04] 🔍 Checking previous wall 1 for exposed wall 2
+[00:58:04]    ➤ Space found: Start=0, End=500, Length=500
+[00:58:04] ✅ Wall 2 exposed. Size = 500 - 500 = 0
+[00:58:04] 📏 Added DistanceFrom to Wall2: 'Distance_from_2@master_wall2' = 0
+[00:58:04] ✅ Output written to: Option2SLD.json
