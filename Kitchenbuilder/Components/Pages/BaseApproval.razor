@@ -17,9 +17,9 @@
             {
                 var fileName = Path.GetFileName(optionImages[selectedOption][currentImageIndex[selectedOption]]);
                 <img src="@($"/Output/{selectedOption}/{fileName}")"
-                     @onclick="() => NextImage(selectedOption)"
-                     class="option-image"
-                     alt="@selectedOption" />
+                @onclick="() => NextImage(selectedOption)"
+                class="option-image"
+                alt="@selectedOption" />
             }
 
             <div class="radio-group">
@@ -48,114 +48,114 @@
 
 <style>
     .title {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 32px;
-        font-weight: 600;
-        color: #2c3e50;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #2c3e50;
     }
 
     .option-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 30px;
-        padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px;
     }
 
     .option-item {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 20px;
-        width: 380px;
-        text-align: center;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    width: 380px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     }
 
-        .option-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-        }
+    .option-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
 
     .option-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: opacity 0.3s;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
     }
 
-        .option-image:hover {
-            opacity: 0.88;
-        }
+    .option-image:hover {
+    opacity: 0.88;
+    }
 
     .radio-group {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: 500;
-        color: #34495e;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #34495e;
     }
 
     .confirm-button, .reject-button {
-        margin: 10px;
-        background-color: #3498db;
-        color: white;
-        padding: 10px 28px;
-        font-size: 16px;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s;
+    margin: 10px;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
     }
 
-        .confirm-button:hover {
-            background-color: #28a745;
-        }
+    .confirm-button:hover {
+    background-color: #28a745;
+    }
 
-        .reject-button:hover {
-            background-color: #e74c3c;
-        }
+    .reject-button:hover {
+    background-color: #e74c3c;
+    }
 
     .chat-box {
-        width: 60%;
-        margin: 40px auto;
-        padding: 20px;
-        background: #f9f9f9;
-        border-radius: 10px;
-        border: 1px solid #ddd;
+    width: 60%;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #ddd;
     }
 
     .chat-input {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     }
 
     .send-button {
-        margin-top: 10px;
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
     }
 
-        .send-button:hover {
-            background-color: #0069d9;
-        }
+    .send-button:hover {
+    background-color: #0069d9;
+    }
 
     .ai-response {
-        text-align: center;
-        font-size: 18px;
-        margin-top: 20px;
-        color: #333;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    color: #333;
     }
 </style>
 
@@ -194,85 +194,89 @@
             currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
         }
     }
+    // private void ApproveBase()
+    // {
+    //     if (string.IsNullOrEmpty(selectedOption))
+    //     {
+    //         Console.WriteLine("❌ selectedOption is null or empty");
+    //         return;
+    //     }
+
+    //     try
+    //     {
+    //         ✅ Normalize selected7U8 option name
+    //         string normalized = selectedOption.StartsWith("option", StringComparison.OrdinalIgnoreCase)
+    //             ? "Option" + selectedOption.Substring(6)
+    //             : selectedOption;
+
+    //         string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{normalized}SLD.json");
+
+    //         Console.WriteLine($"🔍 selectedOption: {selectedOption}");
+    //         Console.WriteLine($"🔍 Looking for JSON at: {jsonPath}");
+
+    //         if (!File.Exists(jsonPath))
+    //         {
+    //             Console.WriteLine($"❌ JSON file not found: {jsonPath}");
+    //             return;
+    //         }
+
+    //         string json = File.ReadAllText(jsonPath);
+    //         var doc = JsonDocument.Parse(json);
+    //         int baseCount = 0;
+
+    //         foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+    //         {
+    //             if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
+    //                 wallElement.TryGetProperty("Bases", out var bases))
+    //             {
+    //                 foreach (var baseProp in bases.EnumerateObject())
+    //                 {
+    //                     var visible = baseProp.Value.GetProperty("Visible").GetBoolean();
+    //                     var sketchName = baseProp.Value.GetProperty("SketchName").GetString()?.ToLower();
+
+    //                     if (visible && (sketchName == null || !sketchName.Contains("fridge")))
+    //                     {
+    //                         baseCount++;
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //         ✅ Write base count debug file
+    //         string baseCountPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
+    //         Directory.CreateDirectory(Path.GetDirectoryName(baseCountPath)!);
+    //         File.WriteAllText(baseCountPath, $"Base count: {baseCount}");
+    //         Console.WriteLine($"✅ base_count_debug.txt written with Base count: {baseCount}");
+
+    //         ✅ Collect visible sketches
+    //         LayoutLauncher.StationSketches = HandleCounterTop.GetVisibleSketches(jsonPath);
+
+    //         ✅ Write sketch debug file
+    //         string sketchDebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\station_sketches_debug.txt";
+    //         var sketchLogs = LayoutLauncher.StationSketches
+    //             .Select((sketch, i) => $"[{DateTime.Now:HH:mm:ss}] Station {i}: {sketch}")
+    //             .ToList();
+    //         if (sketchLogs.Count == 0)
+    //             sketchLogs.Add($"[{DateTime.Now:HH:mm:ss}] ❌ No StationSketches collected.");
+    //         File.WriteAllLines(sketchDebugPath, sketchLogs);
+    //         string partFilePath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{normalized}.SLDPRT");
+
+    //         ✅ Launch SolidWorks and move both windows
+    //         LayoutLauncher.LaunchAndSplitScreen(SwSession, partFilePath);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"❌ ERROR in ApproveBase(): {ex.Message}");
+    //     }
+
+    //     ✅ Navigate to countertop adjustment
+    //     NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
+    // }
     private void ApproveBase()
     {
-        if (string.IsNullOrEmpty(selectedOption))
-        {
-            Console.WriteLine("❌ selectedOption is null or empty");
-            return;
-        }
+        NavManager.NavigateTo($"/handle-cabinet");
 
-        try
-        {
-            // ✅ Normalize selected7U8 option name
-            string normalized = selectedOption.StartsWith("option", StringComparison.OrdinalIgnoreCase)
-                ? "Option" + selectedOption.Substring(6)
-                : selectedOption;
-
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{normalized}SLD.json");
-
-            Console.WriteLine($"🔍 selectedOption: {selectedOption}");
-            Console.WriteLine($"🔍 Looking for JSON at: {jsonPath}");
-
-            if (!File.Exists(jsonPath))
-            {
-                Console.WriteLine($"❌ JSON file not found: {jsonPath}");
-                return;
-            }
-
-            string json = File.ReadAllText(jsonPath);
-            var doc = JsonDocument.Parse(json);
-            int baseCount = 0;
-
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
-            {
-                if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
-                    wallElement.TryGetProperty("Bases", out var bases))
-                {
-                    foreach (var baseProp in bases.EnumerateObject())
-                    {
-                        var visible = baseProp.Value.GetProperty("Visible").GetBoolean();
-                        var sketchName = baseProp.Value.GetProperty("SketchName").GetString()?.ToLower();
-
-                        if (visible && (sketchName == null || !sketchName.Contains("fridge")))
-                        {
-                            baseCount++;
-                        }
-                    }
-                }
-            }
-
-            // ✅ Write base count debug file
-            string baseCountPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
-            Directory.CreateDirectory(Path.GetDirectoryName(baseCountPath)!);
-            File.WriteAllText(baseCountPath, $"Base count: {baseCount}");
-            Console.WriteLine($"✅ base_count_debug.txt written with Base count: {baseCount}");
-
-            // ✅ Collect visible sketches
-            LayoutLauncher.StationSketches = HandleCounterTop.GetVisibleSketches(jsonPath);
-
-            // ✅ Write sketch debug file
-            string sketchDebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\station_sketches_debug.txt";
-            var sketchLogs = LayoutLauncher.StationSketches
-                .Select((sketch, i) => $"[{DateTime.Now:HH:mm:ss}] Station {i}: {sketch}")
-                .ToList();
-            if (sketchLogs.Count == 0)
-                sketchLogs.Add($"[{DateTime.Now:HH:mm:ss}] ❌ No StationSketches collected.");
-            File.WriteAllLines(sketchDebugPath, sketchLogs);
-            string partFilePath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{normalized}.SLDPRT");
-
-            // ✅ Launch SolidWorks and move both windows
-            LayoutLauncher.LaunchAndSplitScreen(SwSession, partFilePath);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"❌ ERROR in ApproveBase(): {ex.Message}");
-        }
-
-        // ✅ Navigate to countertop adjustment
-        NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
     }
-
 
 
 

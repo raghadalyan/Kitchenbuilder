@@ -44,9 +44,9 @@ namespace Kitchenbuilder.Core.WallBuilders
             swApp.Visible = true;
 
             string sourcePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT";
-            string destFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
+            string destFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen";
             Directory.CreateDirectory(destFolder);
-            string destPath = Path.Combine(destFolder, "2Walls_WithFloor.SLDPRT");
+            string destPath = Path.Combine(destFolder, "Wall2_WithFloor.SLDPRT");
 
             if (!File.Exists(sourcePath))
             {
@@ -88,96 +88,147 @@ namespace Kitchenbuilder.Core.WallBuilders
             }
 
             Log("🔧 بدأ تعديل الأبعاد...");
-
-            SetDim("Length_Floor@Sketch2", floorLength * factor);
-            SetDim("Width_Floor@Sketch2", floorWidth * factor);
+            
+            SetDim("Width_Floor@Sketch2", floorLength * factor);
+            SetDim("Length_Floor@Sketch2", floorWidth * factor);
             SetDim("D1@Wall1", wall1.Height * factor);
             SetDim("D1@Wall2", wall2.Height * factor);
-            SetDim("wallBase@Sketch3", base1 * factor);
-            SetDim("wall2Base@Sketch4", base2 * factor);
 
+
+            // ===== WALL 1 WINDOWS =====
             if (wall1.HasWindows && wall1.Windows != null)
             {
+                string[] sketchNames = { "Win1", "Win2", "Win3" };
                 for (int i = 0; i < wall1.Windows.Count && i < 3; i++)
                 {
                     var win = wall1.Windows[i];
-                    int sketch = 5 + i;
-                    string index = (i + 1).ToString();
+                    int index = i + 1;
+                    string sketch = sketchNames[i];
 
-                    SetDim($"Window{index}Display@Sketch{sketch}", win.Width * factor);
-                    SetDim($"Window{index}Length@Sketch{sketch}", win.Height * factor);
-                    SetDim($"Window{index}BottomOffset@Sketch{sketch}", win.DistanceY * factor);
-                    SetDim($"Window{index}RightOffset@Sketch{sketch}", win.DistanceX * factor);
+                    SetDim($"Window{index}Display@{sketch}", win.Width * factor);
+                    SetDim($"Window{index}Length@{sketch}", win.Height * factor);
+                    SetDim($"Window{index}BottomOffset@{sketch}", win.DistanceY * factor);
+                    SetDim($"Window{index}RightOffset@{sketch}", win.DistanceX * factor);
                 }
             }
 
+            // ===== WALL 1 DOORS =====
             if (wall1.HasDoors && wall1.Doors != null)
             {
+                string[] sketchNames = { "D1", "D2" };
                 for (int i = 0; i < wall1.Doors.Count && i < 2; i++)
                 {
                     var door = wall1.Doors[i];
-                    int sketch = 8 + i;
-                    string index = (i + 1).ToString();
+                    int index = i + 1;
+                    string sketch = sketchNames[i];
 
-                    SetDim($"Door{index}Display@Sketch{sketch}", door.Width * factor);
-                    SetDim($"Door{index}length@Sketch{sketch}", door.Height * factor);
-                    SetDim($"Door{index}BottomOffset@Sketch{sketch}", door.DistanceY * factor);
-                    SetDim($"Door{index}RightOffset@Sketch{sketch}", door.DistanceX * factor);
+                    SetDim($"Door{index}Display@{sketch}", door.Width * factor);
+                    SetDim($"Door{index}Length@{sketch}", door.Height * factor);
+                    SetDim($"Door{index}BottomOffset@{sketch}", door.DistanceY * factor);
+                    SetDim($"Door{index}RightOffset@{sketch}", door.DistanceX * factor);
                 }
             }
 
+            // ===== WALL 2 WINDOWS =====
             if (wall2.HasWindows && wall2.Windows != null)
             {
+                string[] sketchNames = { "Win12", "Win22", "Win32" };
                 for (int i = 0; i < wall2.Windows.Count && i < 3; i++)
                 {
                     var win = wall2.Windows[i];
-                    int sketch = 10 + i;
-                    string index = (i + 1).ToString();
+                    int index = i + 1;
+                    string sketch = sketchNames[i];
 
-                    SetDim($"Window1Display@Sketch{sketch}", win.Width * factor);
-                    SetDim($"Window1Length@Sketch{sketch}", win.Height * factor);
-                    SetDim($"Window1BottomOffset@Sketch{sketch}", win.DistanceY * factor);
-                    SetDim($"Window1RightOffset@Sketch{sketch}", win.DistanceX * factor);
+                    SetDim($"Window{index}Display@{sketch}", win.Width * factor);
+                    SetDim($"Window{index}Length@{sketch}", win.Height * factor);
+                    SetDim($"Window{index}BottomOffset@{sketch}", win.DistanceY * factor);
+                    SetDim($"Window{index}RightOffset@{sketch}", win.DistanceX * factor);
                 }
             }
 
+            // ===== WALL 2 DOORS =====
             if (wall2.HasDoors && wall2.Doors != null)
             {
+                string[] sketchNames = { "D12", "D22" };
                 for (int i = 0; i < wall2.Doors.Count && i < 2; i++)
                 {
                     var door = wall2.Doors[i];
-                    int sketch = 13 + i;
-                    string index = (i + 1).ToString();
+                    int index = i + 1;
+                    string sketch = sketchNames[i];
 
-                    SetDim($"Door1Display@Sketch{sketch}", door.Width * factor);
-                    SetDim($"Door1length@Sketch{sketch}", door.Height * factor);
-                    SetDim($"Door1BottomOffset@Sketch{sketch}", door.DistanceY * factor);
-                    SetDim($"Door1RightOffset@Sketch{sketch}", door.DistanceX * factor);
+                    SetDim($"Door{index}Display@{sketch}", door.Width * factor);
+                    SetDim($"Door{index}Length@{sketch}", door.Height * factor);
+                    SetDim($"Door{index}BottomOffset@{sketch}", door.DistanceY * factor);
+                    SetDim($"Door{index}RightOffset@{sketch}", door.DistanceX * factor);
                 }
             }
 
-            // ⬇️ Suppress unused features and sketches
-            void SuppressFeaturesAndSketches(string featurePrefix, string sketchPrefix, int count, int max)
+            void SuppressWindowFeaturesWall1(int usedCount)
             {
-                for (int i = count; i < max; i++)
+                string[] features = { "WindowSlot1", "WindowSlot2", "WindowSlot3" };
+                string[] sketches = { "Win1", "Win2", "Win3" };
+
+                for (int i = usedCount; i < 3; i++)
                 {
-                    string featureName = $"{featurePrefix}{i + 1}";
-                    string sketchName = $"{sketchPrefix}{i + 5}";
+                    Feature f = FindFeatureByName(swModel, features[i]);
+                    if (f != null) f.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
 
-                    Feature feature = FindFeatureByName(swModel, featureName);
-                    if (feature != null)
-                        feature.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
-
-                    Feature sketch = FindFeatureByName(swModel, sketchName);
-                    if (sketch != null)
-                        sketch.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                    Feature s = FindFeatureByName(swModel, sketches[i]);
+                    if (s != null) s.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
                 }
             }
 
-            SuppressFeaturesAndSketches("WindowSlot", "Sketch", wall1.Windows?.Count ?? 0, 3);
-            SuppressFeaturesAndSketches("Door", "Sketch", wall1.Doors?.Count ?? 0, 2);
-            SuppressFeaturesAndSketches("Window1_Slot", "Sketch", wall2.Windows?.Count ?? 0, 3);
-            SuppressFeaturesAndSketches("Door1_", "Sketch", wall2.Doors?.Count ?? 0, 2);
+            void SuppressDoorFeaturesWall1(int usedCount)
+            {
+                string[] features = { "Door1", "Door2" };
+                string[] sketches = { "D1", "D2" };
+
+                for (int i = usedCount; i < 2; i++)
+                {
+                    Feature f = FindFeatureByName(swModel, features[i]);
+                    if (f != null) f.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                    Feature s = FindFeatureByName(swModel, sketches[i]);
+                    if (s != null) s.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+            }
+
+            void SuppressWindowFeaturesWall2(int usedCount)
+            {
+                string[] features = { "WindowSlot12", "WindowSlot22", "WindowSlot32" };
+                string[] sketches = { "Win12", "Win22", "Win32" };
+
+                for (int i = usedCount; i < 3; i++)
+                {
+                    Feature f = FindFeatureByName(swModel, features[i]);
+                    if (f != null) f.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                    Feature s = FindFeatureByName(swModel, sketches[i]);
+                    if (s != null) s.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+            }
+
+            void SuppressDoorFeaturesWall2(int usedCount)
+            {
+                string[] features = { "Door12", "Door22" };
+                string[] sketches = { "D12", "D22" };
+
+                for (int i = usedCount; i < 2; i++)
+                {
+                    Feature f = FindFeatureByName(swModel, features[i]);
+                    if (f != null) f.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+
+                    Feature s = FindFeatureByName(swModel, sketches[i]);
+                    if (s != null) s.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, 2, null);
+                }
+            }
+
+
+            SuppressWindowFeaturesWall1(wall1.Windows?.Count ?? 0);
+            SuppressDoorFeaturesWall1(wall1.Doors?.Count ?? 0);
+            SuppressWindowFeaturesWall2(wall2.Windows?.Count ?? 0);
+            SuppressDoorFeaturesWall2(wall2.Doors?.Count ?? 0);
+
 
             Log("💾 حفظ النموذج وإغلاقه...");
             swModel.EditRebuild3();

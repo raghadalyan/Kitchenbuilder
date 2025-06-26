@@ -1,0 +1,109 @@
+﻿@page "/handle-cabinet"
+@using Kitchenbuilder.Core
+@using Microsoft.AspNetCore.Components.Web
+
+<h2 class="title">💬 Cabinet Design Assistant</h2>
+
+<div class="chat-container">
+    @foreach (var message in Messages)
+    {
+        <div class="chat-bubble @(message.IsUser ? "user-message" : "ai-message")">
+            <strong>@(message.IsUser ? "You" : "AI"):</strong> @message.Text
+        </div>
+    }
+
+    <div class="input-area">
+        <input type="text" @bind="CurrentInput" @bind:event="oninput" placeholder="Type your cabinet response..." @onkeypress="HandleKeyPress" />
+        <button @onclick="SendMessage">Send</button>
+    </div>
+</div>
+
+@code {
+    private class ChatMessage
+    {
+        public string Text { get; set; }
+        public bool IsUser { get; set; }
+    }
+
+    private List<ChatMessage> Messages { get; set; } = new();
+    private string CurrentInput = "";
+    private int stationIndex = 0;
+    private List<CabinetStation> Stations = new();
+    private readonly string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Stations = CabinetStationManager.LoadStations(jsonPath);
+        if (Stations.Count == 0)
+        {
+            Messages.Add(new ChatMessage { Text = "⚠️ No usable bases with countertops found in the layout.", IsUser = false });
+            return;
+        }
+
+        await AskAboutCurrentStation();
+    }
+
+    private async Task AskAboutCurrentStation()
+    {
+        if (stationIndex >= Stations.Count)
+        {
+            Messages.Add(new ChatMessage { Text = "✅ All stations completed. Well done!", IsUser = false });
+            return;
+        }
+
+        var station = Stations[stationIndex];
+
+        string prompt = $"👋 Hi! I’m your Cabinet Builder Helper. Let’s design cabinets step by step.\n\n" +
+                        $"📍 Now working on base `{station.SketchName}` on `{station.Wall}`\n" +
+                        $"📐 It spans from {station.Start} cm to {station.End} cm (total width: {station.Width} cm).\n\n" +
+                        $"❓ What cabinet widths do you want here?\n" +
+                        $"Standard sizes: 45, 50, 60 cm. Example: 45 + 60 + 60 = 165 cm.\n" +
+                        $"You can also tell me if any are drawers.";
+
+        var aiReply = await ConnectToAI.SendPromptAsync(prompt);
+        Messages.Add(new ChatMessage { Text = aiReply, IsUser = false });
+        StateHasChanged();
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(CurrentInput)) return;
+
+        var userMessage = CurrentInput.Trim();
+        Messages.Add(new ChatMessage { Text = userMessage, IsUser = true });
+        CurrentInput = "";
+        StateHasChanged();
+
+        var station = Stations[stationIndex];
+        string context = $@"
+You are a smart kitchen assistant helping a user design **lower cabinets only** for base '{station.SketchName}' on '{station.Wall}', width: {station.Width} cm.
+
+📌 Rules:
+- Only discuss cabinet widths, standard sizes (e.g. 45, 50, 60 cm), total layout, and whether they include drawers.
+- If the user's message is unrelated (e.g., floor, lighting, colors, floating cabinets), respond:
+  'We're focusing on lower cabinet design now. Please tell me which cabinet widths you'd like for this base.'
+
+👤 User said: '{userMessage}'
+
+✅ Now evaluate:
+- If the layout fits into {station.Width} cm
+- If not, explain the mismatch and suggest valid alternatives using standard cabinet sizes or a mix of custom and standard widths.
+";
+
+
+        var aiReply = await ConnectToAI.SendPromptAsync(context);
+        Messages.Add(new ChatMessage { Text = aiReply, IsUser = false });
+
+        // Move to next station
+        stationIndex++;
+        await AskAboutCurrentStation();
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+}

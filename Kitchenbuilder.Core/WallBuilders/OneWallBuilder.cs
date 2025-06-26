@@ -35,12 +35,11 @@ namespace Kitchenbuilder.Core.WallBuilders
             }
 
             double factor = 0.01;
-
+           
             // ⬇️ تعديل أبعاد الحائط والأرضية
-            ((Dimension)swModel.Parameter("Length_Floor@Sketch2")).SystemValue = floorLength * factor;
-            ((Dimension)swModel.Parameter("Width_Floor@Sketch2")).SystemValue = floorWidth * factor;
+            ((Dimension)swModel.Parameter("Width_Floor@Sketch2")).SystemValue = floorLength * factor;
+            ((Dimension)swModel.Parameter("Length_Floor@Sketch2")).SystemValue = floorWidth * factor;
             ((Dimension)swModel.Parameter("D1@Wall1")).SystemValue = height * factor;
-            ((Dimension)swModel.Parameter("wallBase@Sketch4")).SystemValue = baseLength * factor;
 
             // ⬇️ النوافذ
             if (wall.HasWindows && wall.Windows != null)
@@ -112,7 +111,7 @@ namespace Kitchenbuilder.Core.WallBuilders
             swModel.ForceRebuild3(true);
 
             // ⬇️ إعداد المجلد واسم الملف
-            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
+            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen";
             Directory.CreateDirectory(folder);
             string outputPath = Path.Combine(folder, "Wall1_WithFloor.SLDPRT");
 
@@ -122,6 +121,9 @@ namespace Kitchenbuilder.Core.WallBuilders
                 (int)swSaveAsOptions_e.swSaveAsOptions_Copy);
 
             Console.WriteLine($"✅ File saved to: {outputPath}");
+            // ❗️Close the document after saving
+            swApp.CloseDoc(swModel.GetTitle());
+            Console.WriteLine("📁 Document closed successfully.");
         }
 
         // ✅ دالة البحث عن ميزة بالاسم
