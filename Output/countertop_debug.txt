@@ -1,0 +1,8 @@
+[14:55:09] ✅ Collected sketch: 1_2
+[14:55:09] ✅ Collected sketch: 2_1
+[14:55:23] 🎯 Trying to activate sketch: 2_1
+[14:55:24] ✅ Sketch selected.
+[14:55:25] ✅ Called EditSketch.
+[14:55:35] 🎯 Trying to activate sketch: 1_2
+[14:55:36] ✅ Sketch selected.
+[14:55:37] ✅ Called EditSketch.

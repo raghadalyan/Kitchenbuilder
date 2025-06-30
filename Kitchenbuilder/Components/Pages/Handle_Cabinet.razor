@@ -1,109 +1,229 @@
 ﻿@page "/handle-cabinet"
+@using System.Text.Json
 @using Kitchenbuilder.Core
-@using Microsoft.AspNetCore.Components.Web
+@inject IJSRuntime JS
+@using Kitchenbuilder.Core.Models
 
-<h2 class="title">💬 Cabinet Design Assistant</h2>
+<div class="container">
+    <h1>Cabinet Stations</h1>
 
-<div class="chat-container">
-    @foreach (var message in Messages)
+    @if (stations.Count > 0 && currentIndex >= 0)
     {
-        <div class="chat-bubble @(message.IsUser ? "user-message" : "ai-message")">
-            <strong>@(message.IsUser ? "You" : "AI"):</strong> @message.Text
+        <div class="station-circles">
+            @for (int i = 0; i < stations.Count; i++)
+            {
+                <button class="circle-btn @(i == currentIndex ? "active" : "")" @onclick="@(() => SelectStation(i))">
+                    @(i + 1)
+                </button>
+            }
+        </div>
+
+        <div class="station-layout">
+            <div class="station-info">
+                <h3>Station @(currentIndex + 1): @stations[currentIndex].BaseName</h3>
+                <p>From @stations[currentIndex].StationStart to @stations[currentIndex].StationEnd</p>
+
+                <div class="action-buttons">
+                    <button class="action-btn" @onclick="() => showAddCabinet = !showAddCabinet">➕ Add Cabinet</button>
+                    <button class="action-btn" @onclick="AddSpace">➕ Add Space</button>
+                </div>
+
+                @if (showAddCabinet)
+                {
+                    <div class="add-cabinet-box">
+                        <label>
+                            <input type="checkbox" @bind="isSequence" /> Sequence of copies
+                        </label>
+                        @if (isSequence)
+                        {
+                            <label>
+                                Number of copies:
+                                <input type="number" min="2" @bind="copiesCount" />
+                            </label>
+                        }
+
+                        @if (RequiresFullBox())
+                        {
+                            <label>
+                                Width:
+                                <input type="number" min="1" @bind="width" />
+                            </label>
+                            <label>
+                                Height:
+                                <input type="number" min="1" @bind="height" />
+                            </label>
+                            <label>
+                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                            </label>
+                            @if (hasDrawers)
+                            {
+                                <label>
+                                    Number of drawers:
+                                    <input type="number" min="2" @bind="drawerCount" />
+                                </label>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(errorMessage))
+                            {
+                                <div style="color: red; font-weight: bold; margin-bottom: 10px;">
+                                    @errorMessage
+                                </div>
+                            }
+                            <button class="apply-btn" @onclick="OnApplyCabinet">✅ Apply</button>
+
+                        }
+                        else if (RequiresCounterTopBox())
+                        {
+                            <label>
+                                Width:
+                                <input type="number" min="1" @bind="width" />
+                            </label>
+                            <label>
+                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                            </label>
+                            @if (hasDrawers)
+                            {
+                                <label>
+                                    Number of drawers:
+                                    <input type="number" min="2" @bind="drawerCount" />
+                                </label>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="station-reminder-box">
+                <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p>
+                <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p>
+                <p><strong>From:</strong> @stations[currentIndex].StationStart</p>
+                <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
+                <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
+            </div>
+            <div class="station-progress">
+                <div class="progress-bar">
+                    <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
+                </div>
+                <p>@GetFillPercentage(stations[currentIndex])% filled</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button @onclick="PreviousStation" disabled="@(currentIndex == 0)">⬅ Back</button>
+            <button @onclick="NextStation" disabled="@(currentIndex == stations.Count - 1)">Next ➡</button>
         </div>
     }
-
-    <div class="input-area">
-        <input type="text" @bind="CurrentInput" @bind:event="oninput" placeholder="Type your cabinet response..." @onkeypress="HandleKeyPress" />
-        <button @onclick="SendMessage">Send</button>
-    </div>
+    else
+    {
+        <p>Loading stations...</p>
+    }
 </div>
 
 @code {
-    private class ChatMessage
-    {
-        public string Text { get; set; }
-        public bool IsUser { get; set; }
-    }
+    private List<StationInfo> stations = new();
+    private int currentIndex = 0;
 
-    private List<ChatMessage> Messages { get; set; } = new();
-    private string CurrentInput = "";
-    private int stationIndex = 0;
-    private List<CabinetStation> Stations = new();
-    private readonly string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json";
+    private bool showAddCabinet = false;
+    private bool isSequence = false;
+    private int copiesCount = 2;
+    private int width = 1;
+    private int height = 1;
+    private bool hasDrawers = false;
+    private int drawerCount = 2;
 
     protected override async Task OnInitializedAsync()
     {
-        Stations = CabinetStationManager.LoadStations(jsonPath);
-        if (Stations.Count == 0)
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+        if (File.Exists(jsonPath))
         {
-            Messages.Add(new ChatMessage { Text = "⚠️ No usable bases with countertops found in the layout.", IsUser = false });
+            var json = await File.ReadAllTextAsync(jsonPath);
+            stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new List<StationInfo>();
+        }
+    }
+
+    void SelectStation(int index)
+    {
+        if (index >= 0 && index < stations.Count)
+            currentIndex = index;
+    }
+
+    void PreviousStation()
+    {
+        if (currentIndex > 0)
+            currentIndex--;
+    }
+
+    void NextStation()
+    {
+        if (currentIndex < stations.Count - 1)
+            currentIndex++;
+    }
+
+    void AddSpace()
+    {
+        Console.WriteLine($"Adding space at station {currentIndex + 1}");
+    }
+
+    bool RequiresFullBox()
+    {
+        // Simulated condition: station base name does not include "CounterTop"
+        return !stations[currentIndex].BaseName.ToLower().Contains("counter");
+    }
+
+    bool RequiresCounterTopBox()
+    {
+        return !RequiresFullBox();
+    }
+
+    string GetWallNumber(string baseName)
+    {
+        if (baseName.StartsWith("fridge_base") && baseName.Length > 11)
+            return baseName.Substring(11);
+        if (baseName.Contains("_"))
+            return baseName.Split('_')[0];
+        return "?";
+    }
+
+    string GetBaseNumber(string baseName)
+    {
+        if (baseName.StartsWith("fridge_base"))
+            return "Fridge";
+        if (baseName.Contains("_"))
+            return baseName.Split('_')[1];
+        return "?";
+    }
+    private string errorMessage = string.Empty;
+
+    async Task OnApplyCabinet()
+    {
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+
+        int copies = isSequence ? copiesCount : 1;
+        bool canAdd = ApplyCabinet.CanAddCabinet(jsonPath, currentIndex, width, copies);
+
+        if (!canAdd)
+        {
+            errorMessage = "❌ Cannot add cabinet: exceeds base width.";
             return;
         }
 
-        await AskAboutCurrentStation();
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, copies);
+        errorMessage = "";
+
+        var updatedJson = await File.ReadAllTextAsync(jsonPath);
+        stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
     }
 
-    private async Task AskAboutCurrentStation()
+    int GetFillPercentage(StationInfo station)
     {
-        if (stationIndex >= Stations.Count)
-        {
-            Messages.Add(new ChatMessage { Text = "✅ All stations completed. Well done!", IsUser = false });
-            return;
-        }
+        if (station == null || station.StationEnd <= station.StationStart)
+            return 0;
 
-        var station = Stations[stationIndex];
+        int totalWidth = station.StationEnd - station.StationStart;
+        int usedWidth = station.Cabinets?.Sum(c => c.Width) ?? 0;
 
-        string prompt = $"👋 Hi! I’m your Cabinet Builder Helper. Let’s design cabinets step by step.\n\n" +
-                        $"📍 Now working on base `{station.SketchName}` on `{station.Wall}`\n" +
-                        $"📐 It spans from {station.Start} cm to {station.End} cm (total width: {station.Width} cm).\n\n" +
-                        $"❓ What cabinet widths do you want here?\n" +
-                        $"Standard sizes: 45, 50, 60 cm. Example: 45 + 60 + 60 = 165 cm.\n" +
-                        $"You can also tell me if any are drawers.";
-
-        var aiReply = await ConnectToAI.SendPromptAsync(prompt);
-        Messages.Add(new ChatMessage { Text = aiReply, IsUser = false });
-        StateHasChanged();
+        int percentage = (int)((double)usedWidth / totalWidth * 100);
+        return Math.Min(percentage, 100); // Don't exceed 100%
     }
 
-    private async Task SendMessage()
-    {
-        if (string.IsNullOrWhiteSpace(CurrentInput)) return;
 
-        var userMessage = CurrentInput.Trim();
-        Messages.Add(new ChatMessage { Text = userMessage, IsUser = true });
-        CurrentInput = "";
-        StateHasChanged();
-
-        var station = Stations[stationIndex];
-        string context = $@"
-You are a smart kitchen assistant helping a user design **lower cabinets only** for base '{station.SketchName}' on '{station.Wall}', width: {station.Width} cm.
-
-📌 Rules:
-- Only discuss cabinet widths, standard sizes (e.g. 45, 50, 60 cm), total layout, and whether they include drawers.
-- If the user's message is unrelated (e.g., floor, lighting, colors, floating cabinets), respond:
-  'We're focusing on lower cabinet design now. Please tell me which cabinet widths you'd like for this base.'
-
-👤 User said: '{userMessage}'
-
-✅ Now evaluate:
-- If the layout fits into {station.Width} cm
-- If not, explain the mismatch and suggest valid alternatives using standard cabinet sizes or a mix of custom and standard widths.
-";
-
-
-        var aiReply = await ConnectToAI.SendPromptAsync(context);
-        Messages.Add(new ChatMessage { Text = aiReply, IsUser = false });
-
-        // Move to next station
-        stationIndex++;
-        await AskAboutCurrentStation();
-    }
-
-    private async Task HandleKeyPress(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter")
-        {
-            await SendMessage();
-        }
-    }
 }

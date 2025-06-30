@@ -1,0 +1,71 @@
+[
+  {
+    "BaseName": "Base2",
+    "StationStart": 85,
+    "StationEnd": 130,
+    "WallNumber": 1,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet1_1",
+        "Width": 45,
+        "HasDrawers": false
+      }
+    ]
+  },
+  {
+    "BaseName": "Base2",
+    "StationStart": 130,
+    "StationEnd": 500,
+    "WallNumber": 1,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet1_2",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_3",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_4",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_5",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_6",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_7",
+        "Width": 60,
+        "HasDrawers": false
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_8",
+        "Width": 10,
+        "HasDrawers": false
+      }
+    ]
+  },
+  {
+    "BaseName": "Base1",
+    "StationStart": 60,
+    "StationEnd": 400,
+    "WallNumber": 2,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet2_1",
+        "Width": 340,
+        "HasDrawers": false
+      }
+    ]
+  }
+]
