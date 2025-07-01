@@ -260,3 +260,97 @@
 [14:21:41] ✅ Found dimension 'DistanceX@Sketch_Cabinet1_7', setting to 0.395 meters
 [14:21:43] 🔁 Rebuilt model after dimension change.
 [14:21:44] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:05] 🔍 Trying to edit dimension: width@master_wall1 → 400 mm
+[18:02:05] ✅ Found dimension 'width@master_wall1', setting to 0.4 meters
+[18:02:06] 🔁 Rebuilt model after dimension change.
+[18:02:07] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:07] 🔍 Trying to edit dimension: length@Floor → 350 mm
+[18:02:07] ✅ Found dimension 'length@Floor', setting to 0.35 meters
+[18:02:09] 🔁 Rebuilt model after dimension change.
+[18:02:09] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:14] 🔍 Trying to edit dimension: DistanceX@fridge_base2 → 0 mm
+[18:02:14] ✅ Found dimension 'DistanceX@fridge_base2', setting to 0 meters
+[18:02:15] 🔁 Rebuilt model after dimension change.
+[18:02:16] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:16] 🔍 Trying to edit dimension: length@fridge_base2 → 85 mm
+[18:02:16] ❌ Dimension 'length@fridge_base2' not found or not a Dimension object.
+[18:02:16] 🔍 Trying to edit dimension: DistanceX@2_2 → 85 mm
+[18:02:16] ✅ Found dimension 'DistanceX@2_2', setting to 0.085 meters
+[18:02:17] 🔁 Rebuilt model after dimension change.
+[18:02:18] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:18] 🔍 Trying to edit dimension: length@2_2 → 265 mm
+[18:02:18] ✅ Found dimension 'length@2_2', setting to 0.265 meters
+[18:02:19] 🔁 Rebuilt model after dimension change.
+[18:02:19] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:28] 🔍 Trying to edit dimension: width@master_wall1 → 400 mm
+[18:02:28] ✅ Found dimension 'width@master_wall1', setting to 0.4 meters
+[18:02:30] 🔁 Rebuilt model after dimension change.
+[18:02:30] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:30] 🔍 Trying to edit dimension: length@Floor → 350 mm
+[18:02:30] ✅ Found dimension 'length@Floor', setting to 0.35 meters
+[18:02:32] 🔁 Rebuilt model after dimension change.
+[18:02:32] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:37] 🔍 Trying to edit dimension: DistanceX@fridge_base1 → 60 mm
+[18:02:37] ✅ Found dimension 'DistanceX@fridge_base1', setting to 0.06 meters
+[18:02:38] 🔁 Rebuilt model after dimension change.
+[18:02:39] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:39] 🔍 Trying to edit dimension: length@fridge_base1 → 85 mm
+[18:02:39] ❌ Dimension 'length@fridge_base1' not found or not a Dimension object.
+[18:02:39] 🔍 Trying to edit dimension: DistanceX@1_2 → 145 mm
+[18:02:39] ✅ Found dimension 'DistanceX@1_2', setting to 0.145 meters
+[18:02:40] 🔁 Rebuilt model after dimension change.
+[18:02:41] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:41] 🔍 Trying to edit dimension: length@1_2 → 255 mm
+[18:02:41] ✅ Found dimension 'length@1_2', setting to 0.255 meters
+[18:02:42] 🔁 Rebuilt model after dimension change.
+[18:02:43] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:43] 🔍 Trying to edit dimension: DistanceX@2_1 → 60 mm
+[18:02:43] ✅ Found dimension 'DistanceX@2_1', setting to 0.06 meters
+[18:02:44] 🔁 Rebuilt model after dimension change.
+[18:02:45] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:45] 🔍 Trying to edit dimension: length@2_1 → 290 mm
+[18:02:45] ✅ Found dimension 'length@2_1', setting to 0.29 meters
+[18:02:46] 🔁 Rebuilt model after dimension change.
+[18:02:47] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:55] 🔍 Trying to edit dimension: width@master_wall1 → 400 mm
+[18:02:55] ✅ Found dimension 'width@master_wall1', setting to 0.4 meters
+[18:02:56] 🔁 Rebuilt model after dimension change.
+[18:02:57] 💾 Saved model. Warnings: 0, Errors: 0
+[18:02:57] 🔍 Trying to edit dimension: length@Floor → 350 mm
+[18:02:57] ✅ Found dimension 'length@Floor', setting to 0.35 meters
+[18:02:58] 🔁 Rebuilt model after dimension change.
+[18:02:59] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:04] 🔍 Trying to edit dimension: DistanceX@fridge_base1 → 60 mm
+[18:03:04] ✅ Found dimension 'DistanceX@fridge_base1', setting to 0.06 meters
+[18:03:06] 🔁 Rebuilt model after dimension change.
+[18:03:06] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:06] 🔍 Trying to edit dimension: length@fridge_base1 → 85 mm
+[18:03:06] ❌ Dimension 'length@fridge_base1' not found or not a Dimension object.
+[18:03:06] 🔍 Trying to edit dimension: DistanceX@1_2 → 145 mm
+[18:03:06] ✅ Found dimension 'DistanceX@1_2', setting to 0.145 meters
+[18:03:08] 🔁 Rebuilt model after dimension change.
+[18:03:08] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:08] 🔍 Trying to edit dimension: length@1_2 → 255 mm
+[18:03:08] ✅ Found dimension 'length@1_2', setting to 0.255 meters
+[18:03:10] 🔁 Rebuilt model after dimension change.
+[18:03:10] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:10] 🔍 Trying to edit dimension: DistanceX@2_1 → 60 mm
+[18:03:10] ✅ Found dimension 'DistanceX@2_1', setting to 0.06 meters
+[18:03:12] 🔁 Rebuilt model after dimension change.
+[18:03:12] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:12] 🔍 Trying to edit dimension: length@2_1 → 290 mm
+[18:03:12] ✅ Found dimension 'length@2_1', setting to 0.29 meters
+[18:03:14] 🔁 Rebuilt model after dimension change.
+[18:03:14] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:14] 🔍 Trying to edit dimension: Distance_from_1@master_wall3 → 350 mm
+[18:03:14] ✅ Found dimension 'Distance_from_1@master_wall3', setting to 0.35 meters
+[18:03:15] 🔁 Rebuilt model after dimension change.
+[18:03:16] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:16] 🔍 Trying to edit dimension: DistanceX@3_1 → 60 mm
+[18:03:16] ✅ Found dimension 'DistanceX@3_1', setting to 0.06 meters
+[18:03:17] 🔁 Rebuilt model after dimension change.
+[18:03:17] 💾 Saved model. Warnings: 0, Errors: 0
+[18:03:17] 🔍 Trying to edit dimension: length@3_1 → 120 mm
+[18:03:17] ✅ Found dimension 'length@3_1', setting to 0.12 meters
+[18:03:19] 🔁 Rebuilt model after dimension change.
+[18:03:19] 💾 Saved model. Warnings: 0, Errors: 0

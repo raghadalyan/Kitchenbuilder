@@ -9,23 +9,23 @@
       "Height": 300,
       "HasWindows": false,
       "Windows": null,
-      "HasDoors": false,
-      "Doors": null
+      "HasDoors": true,
+      "Doors": [
+        {
+          "Width": 50,
+          "Height": 180,
+          "DistanceX": 10,
+          "DistanceY": 0
+        }
+      ]
     },
     {
       "Width": 350,
       "Height": 300,
       "HasWindows": false,
       "Windows": null,
-      "HasDoors": true,
-      "Doors": [
-        {
-          "Width": 50,
-          "Height": 180,
-          "DistanceX": 290,
-          "DistanceY": 0
-        }
-      ]
+      "HasDoors": false,
+      "Doors": null
     }
   ],
   "Base": {

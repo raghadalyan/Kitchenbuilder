@@ -12,3 +12,60 @@
 [14:04:04] 🎯 Trying to activate sketch: 1_2
 [14:04:06] ✅ Sketch selected.
 [14:04:07] ✅ Called EditSketch.
+[18:03:37] 📌 Starting GetVisibleSketches...
+[18:03:37] 📖 Reading JSON content...
+[18:03:37] 🔍 Checking wall: Wall1
+[18:03:37] ➡️ Base: Base3, Visible=True, Sketch=fridge_base1
+[18:03:37] ➡️ Base: Base2, Visible=True, Sketch=1_2
+[18:03:37] ✅ Collected sketch: 1_2
+[18:03:37] ➡️ Base: Base1, Visible=False, Sketch=1_1
+[18:03:37] 🔍 Checking wall: Wall2
+[18:03:37] ➡️ Base: Base1, Visible=True, Sketch=2_1
+[18:03:37] ✅ Collected sketch: 2_1
+[18:03:37] ➡️ Base: Base2, Visible=False, Sketch=2_2
+[18:03:37] ➡️ Base: Base3, Visible=False, Sketch=fridge_base2
+[18:03:37] 🔍 Checking wall: Wall3
+[18:03:37] ➡️ Base: Base1, Visible=False, Sketch=fridge_base3
+[18:03:37] ➡️ Base: Base2, Visible=False, Sketch=3_2
+[18:03:37] ➡️ Base: Base3, Visible=False, Sketch=3_1
+[18:03:37] 🔍 Checking wall: Wall4
+[18:03:37] ➡️ Base: Base1, Visible=False, Sketch=fridge_base4
+[18:03:37] ➡️ Base: Base2, Visible=False, Sketch=4_2
+[18:03:37] ➡️ Base: Base3, Visible=False, Sketch=4_1
+[18:03:37] 📦 Finished collecting sketches.
+[18:04:10] 📌 Activating **countertop sketch** for station index: 1
+[18:04:10] 🎯 Trying to activate sketch: CT_2_1
+[18:04:13] ✅ Sketch selected.
+[18:04:14] ✅ Called EditSketch.
+[18:04:15] 📌 Activating **countertop sketch** for station index: 0
+[18:04:15] 🎯 Trying to activate sketch: CT_1_2
+[18:04:17] ✅ Sketch selected.
+[18:04:18] ✅ Called EditSketch.
+[18:05:40] 📌 Activating **countertop sketch** for station index: 1
+[18:05:40] 🎯 Trying to activate sketch: CT_2_1
+[18:05:44] ✅ Sketch selected.
+[18:05:45] ✅ Called EditSketch.
+[18:05:45] 📌 Activating **countertop sketch** for station index: 0
+[18:05:45] 🎯 Trying to activate sketch: CT_1_2
+[18:05:47] ✅ Sketch selected.
+[18:05:47] ✅ Called EditSketch.
+[18:05:50] 📌 Starting ApplyCountertopData...
+[18:05:50] ❌ JSON not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
+[18:05:50] 🚀 Starting CountertopDimensionApplier...
+[18:05:50] ❌ JSON file not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
+[18:05:51] 🚀 Starting CountertopDimensionApplier...
+[18:05:51] ❌ JSON file not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
+[18:06:05] 📌 Activating **countertop sketch** for station index: 1
+[18:06:05] 🎯 Trying to activate sketch: CT_2_1
+[18:06:07] ✅ Sketch selected.
+[18:06:08] ✅ Called EditSketch.
+[18:06:13] 📌 Activating **countertop sketch** for station index: 0
+[18:06:13] 🎯 Trying to activate sketch: CT_1_2
+[18:06:14] ✅ Sketch selected.
+[18:06:14] ✅ Called EditSketch.
+[18:06:18] 📌 Starting ApplyCountertopData...
+[18:06:18] ❌ JSON not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
+[18:06:18] 🚀 Starting CountertopDimensionApplier...
+[18:06:18] ❌ JSON file not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
+[18:06:18] 🚀 Starting CountertopDimensionApplier...
+[18:06:18] ❌ JSON file not found: C:\Users\chouse\Downloads\Kitchenbuilder\JSON\Option2SLD.json
