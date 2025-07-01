@@ -2,70 +2,84 @@
   {
     "BaseName": "Base2",
     "StationStart": 85,
-    "StationEnd": 130,
+    "StationEnd": 145,
     "WallNumber": 1,
     "Cabinets": [
       {
         "SketchName": "Sketch_Cabinet1_1",
-        "Width": 45,
-        "HasDrawers": false
+        "Width1": 60,
+        "HasDrawers": false,
+        "DistanceX": 85,
+        "DistanceY": 70
       }
-    ]
+    ],
+    "HasCountertop": false
   },
   {
     "BaseName": "Base2",
-    "StationStart": 130,
-    "StationEnd": 500,
+    "StationStart": 145,
+    "StationEnd": 400,
     "WallNumber": 1,
     "Cabinets": [
       {
         "SketchName": "Sketch_Cabinet1_2",
-        "Width": 60,
-        "HasDrawers": false
+        "Width1": 50,
+        "HasDrawers": false,
+        "DistanceX": 145,
+        "DistanceY": 70
       },
       {
         "SketchName": "Sketch_Cabinet1_3",
-        "Width": 60,
-        "HasDrawers": false
+        "Width1": 50,
+        "HasDrawers": false,
+        "DistanceX": 195,
+        "DistanceY": 70
       },
       {
         "SketchName": "Sketch_Cabinet1_4",
-        "Width": 60,
-        "HasDrawers": false
+        "Width1": 50,
+        "HasDrawers": false,
+        "DistanceX": 245,
+        "DistanceY": 70
       },
       {
         "SketchName": "Sketch_Cabinet1_5",
-        "Width": 60,
-        "HasDrawers": false
+        "Width1": 50,
+        "HasDrawers": false,
+        "DistanceX": 295,
+        "DistanceY": 70
       },
       {
         "SketchName": "Sketch_Cabinet1_6",
-        "Width": 60,
-        "HasDrawers": false
+        "Width1": 50,
+        "HasDrawers": false,
+        "DistanceX": 345,
+        "DistanceY": 70
       },
       {
         "SketchName": "Sketch_Cabinet1_7",
-        "Width": 60,
-        "HasDrawers": false
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_8",
-        "Width": 10,
-        "HasDrawers": false
+        "Width1": 5,
+        "HasDrawers": false,
+        "DistanceX": 395,
+        "DistanceY": 70
       }
-    ]
+    ],
+    "HasCountertop": true
   },
   {
     "BaseName": "Base1",
     "StationStart": 60,
-    "StationEnd": 400,
+    "StationEnd": 230,
     "WallNumber": 2,
-    "Cabinets": [
-      {
-        "SketchName": "Sketch_Cabinet2_1",
-        "Width": 340,
-        "HasDrawers": false
-      }
-    ]
+    "Cabinets": [],
+    "HasCountertop": true
+  },
+  {
+    "BaseName": "Base1",
+    "StationStart": 230,
+    "StationEnd": 290,
+    "WallNumber": 2,
+    "Cabinets": [],
+    "HasCountertop": false
   }
 ]

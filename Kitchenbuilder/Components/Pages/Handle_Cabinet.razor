@@ -48,10 +48,13 @@
                                 Width:
                                 <input type="number" min="1" @bind="width" />
                             </label>
-                            <label>
-                                Height:
-                                <input type="number" min="1" @bind="height" />
-                            </label>
+                            @if (!stations[currentIndex].HasCountertop)
+                            {
+                                <label>
+                                    Height:
+                                    <input type="number" min="1" @bind="height" />
+                                </label>
+                            }
                             <label>
                                 <input type="checkbox" @bind="hasDrawers" /> Has drawers
                             </label>
@@ -198,6 +201,11 @@
         string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
 
         int copies = isSequence ? copiesCount : 1;
+        if (width < 5)
+        {
+            errorMessage = "❌ Width must be at least 5 cm.";
+            return;
+        }
         bool canAdd = ApplyCabinet.CanAddCabinet(jsonPath, currentIndex, width, copies);
 
         if (!canAdd)

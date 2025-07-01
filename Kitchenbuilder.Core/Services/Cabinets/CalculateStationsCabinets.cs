@@ -34,7 +34,7 @@ namespace Kitchenbuilder.Core
             {
                 if (!root.ContainsKey(wallKey)) continue;
 
-                int wallNumber = int.Parse(wallKey.Replace("Wall", "")); // Extract number
+                int wallNumber = int.Parse(wallKey.Replace("Wall", ""));
                 var wall = root[wallKey]?.AsObject();
                 var bases = wall?["Bases"]?.AsObject();
                 if (bases == null) continue;
@@ -44,7 +44,6 @@ namespace Kitchenbuilder.Core
                     var baseObj = baseEntry.Value?.AsObject();
                     if (baseObj == null || baseObj["Visible"]?.GetValue<bool>() != true) continue;
 
-                    // Skip fridge bases
                     string sketchName = baseObj["SketchName"]?.ToString() ?? "";
                     if (sketchName.Contains("fridge_base")) continue;
 
@@ -65,7 +64,8 @@ namespace Kitchenbuilder.Core
                             BaseName = baseName,
                             StationStart = totalStart,
                             StationEnd = totalEnd,
-                            WallNumber = wallNumber
+                            WallNumber = wallNumber,
+                            HasCountertop = false
                         });
                     }
                     else
@@ -80,7 +80,8 @@ namespace Kitchenbuilder.Core
                                 BaseName = baseName,
                                 StationStart = totalStart,
                                 StationEnd = totalEnd,
-                                WallNumber = wallNumber
+                                WallNumber = wallNumber,
+                                HasCountertop = true
                             });
                         }
                         else
@@ -92,7 +93,8 @@ namespace Kitchenbuilder.Core
                                     BaseName = baseName,
                                     StationStart = totalStart,
                                     StationEnd = totalStart + L,
-                                    WallNumber = wallNumber
+                                    WallNumber = wallNumber,
+                                    HasCountertop = false
                                 });
                             }
 
@@ -101,7 +103,8 @@ namespace Kitchenbuilder.Core
                                 BaseName = baseName,
                                 StationStart = totalStart + L,
                                 StationEnd = totalEnd - R,
-                                WallNumber = wallNumber
+                                WallNumber = wallNumber,
+                                HasCountertop = true
                             });
 
                             if (R > 0)
@@ -111,7 +114,8 @@ namespace Kitchenbuilder.Core
                                     BaseName = baseName,
                                     StationStart = totalEnd - R,
                                     StationEnd = totalEnd,
-                                    WallNumber = wallNumber
+                                    WallNumber = wallNumber,
+                                    HasCountertop = false
                                 });
                             }
                         }
@@ -121,7 +125,6 @@ namespace Kitchenbuilder.Core
 
             return result;
         }
-
 
 
 
