@@ -45,6 +45,8 @@ namespace Kitchenbuilder.Core
                     if (baseObj == null || baseObj["Visible"]?.GetValue<bool>() != true) continue;
 
                     string sketchName = baseObj["SketchName"]?.ToString() ?? "";
+                    string extrudeName = baseObj["ExtrudeName"]?.ToString() ?? ""; // <-- Add this line
+
                     if (sketchName.Contains("fridge_base")) continue;
 
                     var smartDims = baseObj["SmartDim"]?.AsArray();
@@ -57,15 +59,18 @@ namespace Kitchenbuilder.Core
                     int totalStart = distanceX;
                     int totalEnd = distanceX + length;
 
+                    // Add to each StationInfo the extrudeName
                     if (countertop == null || countertop.Count == 0)
                     {
                         result.Add(new StationInfo
                         {
                             BaseName = baseName,
+                            ExtrudeName = extrudeName, // <-- add this
                             StationStart = totalStart,
                             StationEnd = totalEnd,
                             WallNumber = wallNumber,
-                            HasCountertop = false
+                            HasCountertop = false,
+                            SketchName = sketchName
                         });
                     }
                     else
@@ -78,10 +83,12 @@ namespace Kitchenbuilder.Core
                             result.Add(new StationInfo
                             {
                                 BaseName = baseName,
+                                ExtrudeName = extrudeName,
                                 StationStart = totalStart,
                                 StationEnd = totalEnd,
                                 WallNumber = wallNumber,
-                                HasCountertop = true
+                                HasCountertop = true,
+                                SketchName = sketchName
                             });
                         }
                         else
@@ -91,20 +98,24 @@ namespace Kitchenbuilder.Core
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
+                                    ExtrudeName = extrudeName,
                                     StationStart = totalStart,
                                     StationEnd = totalStart + L,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false
+                                    HasCountertop = false,
+                                    SketchName = sketchName
                                 });
                             }
 
                             result.Add(new StationInfo
                             {
                                 BaseName = baseName,
+                                ExtrudeName = extrudeName,
                                 StationStart = totalStart + L,
                                 StationEnd = totalEnd - R,
                                 WallNumber = wallNumber,
-                                HasCountertop = true
+                                HasCountertop = true,
+                                SketchName = sketchName
                             });
 
                             if (R > 0)
@@ -112,15 +123,18 @@ namespace Kitchenbuilder.Core
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
+                                    ExtrudeName = extrudeName,
                                     StationStart = totalEnd - R,
                                     StationEnd = totalEnd,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false
+                                    HasCountertop = false,
+                                    SketchName = sketchName
                                 });
                             }
                         }
                     }
                 }
+
             }
 
             return result;

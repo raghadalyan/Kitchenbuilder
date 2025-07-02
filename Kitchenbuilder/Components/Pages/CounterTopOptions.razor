@@ -87,32 +87,40 @@ else
             // ✅ ثانيًا: تشغيل سوليد ووركس وفتح الملف
             try
             {
-                string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\{baseName}.SLDPRT";
-                SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-                swApp.Visible = true;
-                Console.WriteLine("✅ SolidWorks instance launched or connected.");
-
-                int errors = 0, warnings = 0;
-                ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(
-                    partPath,
-                    (int)swDocumentTypes_e.swDocPART,
-                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
-                    "", ref errors, ref warnings);
-
-                if (model == null)
+                if (SwSession.GetActiveModel() == null)
                 {
-                    Console.WriteLine($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
-                    return;
-                }
+                    string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\{baseName}.SLDPRT";
 
-                SwSession.SetActiveModel(model);
-                LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
+                    SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swApp.Visible = true;
+                    Console.WriteLine("✅ SolidWorks instance launched or connected.");
+
+                    int errors = 0, warnings = 0;
+                    ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(
+                        partPath,
+                        (int)swDocumentTypes_e.swDocPART,
+                        (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                        "", ref errors, ref warnings);
+
+                    if (model == null)
+                    {
+                        Console.WriteLine($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
+                        return;
+                    }
+
+                    SwSession.SetActiveModel(model);
+                    LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
+                }
+                else
+                {
+                    Console.WriteLine("🔁 SolidWorks already running and model already loaded.");
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"❌ Error initializing SolidWorks part: {ex.Message}");
-                return;
             }
+
         }
     }
 
