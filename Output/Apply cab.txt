@@ -1,0 +1,10 @@
+7/2/2025 2:20:06 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, WidthToAdd: 50, Copies: 2
+7/2/2025 2:20:06 PM: TotalWidth: 315, UsedWidth: 0, TotalNewWidth: 100
+7/2/2025 2:20:06 PM: ✅ CanAdd: True
+7/2/2025 2:20:06 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, Width: 50, HasDrawers: False, Copies: 2
+7/2/2025 2:20:06 PM: ➕ Adding cabinet #1: Sketch_Cabinet1_1, Width: 50, DistanceX: 85, DistanceY: 70
+7/2/2025 2:20:06 PM: ➕ Adding cabinet #2: Sketch_Cabinet1_2, Width: 50, DistanceX: 135, DistanceY: 70
+7/2/2025 2:20:06 PM: ✅ Cabinets successfully added and file saved.
+7/2/2025 2:20:06 PM: ✅ SolidWorks instance launched or connected.
+7/2/2025 2:20:06 PM: ✅ Part opened successfully: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
+7/2/2025 2:20:14 PM: ✅ ApplyCabinetDimensions completed.

@@ -92,3 +92,19 @@
 [13:16:05] ✅ Found dimension 'length@3_1', setting to 0.12 meters
 [13:16:08] 🔁 Rebuilt model after dimension change.
 [13:16:09] 💾 Saved model. Warnings: 0, Errors: 0
+[14:20:06] 🔍 Trying to edit dimension: Length@Sketch_Cabinet1_1 → 50 mm
+[14:20:06] ✅ Found dimension 'Length@Sketch_Cabinet1_1', setting to 0.05 meters
+[14:20:08] 🔁 Rebuilt model after dimension change.
+[14:20:08] 💾 Saved model. Warnings: 0, Errors: 0
+[14:20:08] 🔍 Trying to edit dimension: DistanceX@Sketch_Cabinet1_1 → 85 mm
+[14:20:08] ✅ Found dimension 'DistanceX@Sketch_Cabinet1_1', setting to 0.085 meters
+[14:20:10] 🔁 Rebuilt model after dimension change.
+[14:20:10] 💾 Saved model. Warnings: 0, Errors: 0
+[14:20:10] 🔍 Trying to edit dimension: Length@Sketch_Cabinet1_2 → 50 mm
+[14:20:10] ✅ Found dimension 'Length@Sketch_Cabinet1_2', setting to 0.05 meters
+[14:20:11] 🔁 Rebuilt model after dimension change.
+[14:20:12] 💾 Saved model. Warnings: 0, Errors: 0
+[14:20:12] 🔍 Trying to edit dimension: DistanceX@Sketch_Cabinet1_2 → 135 mm
+[14:20:12] ✅ Found dimension 'DistanceX@Sketch_Cabinet1_2', setting to 0.135 meters
+[14:20:13] 🔁 Rebuilt model after dimension change.
+[14:20:14] 💾 Saved model. Warnings: 0, Errors: 0
