@@ -1,15 +1,14 @@
 @page "/"
 @inject NavigationManager NavManager
 
-<h1> Welcome to the Smart Kitchen Builder</h1>
+<h1>Welcome to the Smart Kitchen Builder</h1>
+
+<button @onclick="HandleContinue">Continue</button>
 
 @code {
-    protected override async Task OnInitializedAsync()
+    private void HandleContinue()
     {
-        // Wait 5 seconds
-        await Task.Delay(5000);
-
-        // Navigate to Counter page
+        Kitchenbuilder.Core.CalculateStationsCabinets.ProcessAll();
         NavManager.NavigateTo("/handle-cabinet");
     }
-}
+ }

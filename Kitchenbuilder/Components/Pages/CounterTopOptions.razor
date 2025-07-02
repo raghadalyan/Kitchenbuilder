@@ -1,52 +1,63 @@
-﻿
-@page "/countertop-options"
+﻿@page "/countertop-options"
 @using System.IO
 @using System.Text.Json
 @inject NavigationManager NavManager
 @inject SolidWorksSessionService SwSession
 @using Kitchenbuilder.Core
+@using static Kitchenbuilder.Core.HandleCounterTop
+@using SolidWorks.Interop.sldworks
+using System.Runtime.InteropServices;
+@using SolidWorks.Interop.swconst
+
 
 <h1 class="title">Adjust Countertop Distances</h1>
 
 @if (baseCount > 0)
 {
-        <div class="steps">
+    <div class="steps">
         @for (int i = 0; i < baseCount; i++)
         {
-                    <div class="step-circle @(i == currentIndex ? "active" : "")" @onclick="@(() => GoTo(i))">@((i + 1).ToString())</div>
+            <div class="step-circle @(i == currentIndex ? "active" : "")" @onclick="@(() => GoTo(i))">@((i + 1).ToString())</div>
         }
-        </div>
-        <div class="station-container">
-            <div class="station">
-                <div class="distance-inputs">
-                    <label>Distance from Left:</label>
-                    <input type="number" @bind="baseDistances[currentIndex].Left" />
+    </div>
+    <div class="station-container">
+        <div class="station">
+            <div class="distance-inputs">
+                <label>Distance from Left:</label>
+                <input type="number" @bind="baseDistances[currentIndex].Left" />
 
-                    <label>Distance from Right:</label>
-                    <input type="number" @bind="baseDistances[currentIndex].Right" />
-                </div>
+                <label>Distance from Right:</label>
+                <input type="number" @bind="baseDistances[currentIndex].Right" />
             </div>
         </div>
+    </div>
 
+    <div class="navigation-buttons">
+        <button @onclick="Previous" disabled="@(currentIndex == 0)">⬅ Back</button>
+        <button @onclick="Next" disabled="@(currentIndex == baseCount - 1)">Next ➡</button>
+    </div>
 
-        <div class="navigation-buttons">
-            <button @onclick="Previous" disabled="@(currentIndex == 0)">⬅ Back</button>
-            <button @onclick="Next" disabled="@(currentIndex == baseCount - 1)">Next ➡</button>
-        </div>
+    <p class="step-indicator">Base @(currentIndex + 1) of @baseCount</p>
 
-        <p class="step-indicator">Base @(currentIndex + 1) of @baseCount</p>
-
-        <button class="save-button" @onclick="SaveDistances">Save</button>
+    <button class="save-button" @onclick="SaveDistances">💾 Save</button>
 }
 else
 {
-        <p>Loading base information...</p>
+    <p>Loading base information...</p>
 }
 
 @code {
+    // ✅ إصلاح: استعادة الخاصية المفقودة
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "base")]
+    public string? baseName { get; set; }
+
+
     private int baseCount = 0;
     private int currentIndex = 0;
-    private List<BaseDistance> baseDistances = new();
+
+    // ✅ تأكد أن النوع مستخدم من HandleCounterTop وليس معرف محلي
+    private List<HandleCounterTop.BaseDistance> baseDistances = new();
 
     protected override void OnInitialized()
     {
@@ -58,26 +69,126 @@ else
             {
                 baseCount = count;
                 baseDistances = Enumerable.Range(0, baseCount)
-                                          .Select(_ => new BaseDistance())
+                                          .Select(_ => new HandleCounterTop.BaseDistance())
                                           .ToList();
             }
         }
+
+        if (!string.IsNullOrWhiteSpace(baseName))
+        {
+            string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
+            string jsonPath = Path.Combine(
+                @"C:\Users\chouse\Downloads\Kitchenbuilder\JSON",
+                $"{fullBaseName}.json");
+
+            // ✅ أولاً: فحص الشايش (قبل فتح الملف في سوليد ووركس)
+            CheckVisibleCountertops.ProcessVisibleCountertops(jsonPath, SwSession);
+
+            // ✅ ثانيًا: تشغيل سوليد ووركس وفتح الملف
+            try
+            {
+                if (SwSession.GetActiveModel() == null)
+                {
+                    string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\{baseName}.SLDPRT";
+
+                    SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swApp.Visible = true;
+                    Console.WriteLine("✅ SolidWorks instance launched or connected.");
+
+                    int errors = 0, warnings = 0;
+                    ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(
+                        partPath,
+                        (int)swDocumentTypes_e.swDocPART,
+                        (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                        "", ref errors, ref warnings);
+
+                    if (model == null)
+                    {
+                        Console.WriteLine($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
+                        return;
+                    }
+
+                    SwSession.SetActiveModel(model);
+                    LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
+                }
+                else
+                {
+                    Console.WriteLine("🔁 SolidWorks already running and model already loaded.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error initializing SolidWorks part: {ex.Message}");
+            }
+
+        }
     }
+
+
+
+
+
     private void GoTo(int index)
     {
         if (index >= 0 && index < baseCount)
         {
             currentIndex = index;
-            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+
+            string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
+            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\JSON", $"{fullBaseName}.json");
+
+            // ✅ إنشاء SolidWorks والتأكد من أنه مفتوح
+            ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+            swApp.Visible = true;
+
+            IModelDoc2? model = SwSession.GetActiveModel();
+            if (model != null)
+            {
+                // ✅ نحاول تحديد السكيتش المناسب حسب الترتيب من قائمة السكيتشات
+                if (LayoutLauncher.StationSketches != null && index < LayoutLauncher.StationSketches.Count)
+                {
+                    string sketchName = LayoutLauncher.StationSketches[index];
+                    Feature sketchFeat = null;
+                    Feature currentFeat = (Feature)model.FirstFeature();
+
+                    while (currentFeat != null)
+                    {
+                        if (currentFeat.Name == sketchName)
+                        {
+                            sketchFeat = currentFeat;
+                            break;
+                        }
+                        currentFeat = (Feature)currentFeat.GetNextFeature();
+                    }
+
+                    if (sketchFeat != null)
+                    {
+                        bool selected = sketchFeat.Select2(false, -1);
+                        Console.WriteLine(selected
+                            ? $"✅ Sketch '{sketchName}' selected."
+                            : $"❌ Failed to select sketch '{sketchName}'.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"❌ Sketch '{sketchName}' not found.");
+                    }
+                }
+            }
+
+            // ✅ تطبيق الأبعاد على السكيتش الحالي
+            CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp);
         }
     }
+
+
+
 
     private void Previous()
     {
         if (currentIndex > 0)
         {
             currentIndex--;
-            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+            ActivateSketchForStation(currentIndex, SwSession);
         }
     }
 
@@ -86,20 +197,36 @@ else
         if (currentIndex < baseCount - 1)
         {
             currentIndex++;
-            HandleCounterTop.ActivateSketchForStation(currentIndex, SwSession); // 💡 Added
+            ActivateSketchForStation(currentIndex, SwSession);
         }
     }
 
     private void SaveDistances()
     {
-        var output = JsonSerializer.Serialize(baseDistances, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(Path.Combine("wwwroot", "Output", "base_distances.json"), output);
-        NavManager.NavigateTo("/summary");
+        if (string.IsNullOrWhiteSpace(baseName))
+            return;
+
+        string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
+        string jsonPath = Path.Combine(
+            @"C:\Users\chouse\Downloads\Kitchenbuilder\JSON",
+            $"{fullBaseName}.json");
+
+        ApplyCountertopData(jsonPath, baseDistances, SwSession);
+
+        // ✅ أنشئ swApp يدويًا هنا:
+        ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+        swApp.Visible = true;
+
+        CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp); // ✅ استخدم swApp هنا
+
+        // ❌ لا تخرج من الصفحة
+        // NavManager.NavigateTo("/summary");
+
+        // ✅ أعد تفعيل السكيتش الحالي
+        GoTo(currentIndex);
     }
 
-    private class BaseDistance
-    {
-        public double Left { get; set; }
-        public double Right { get; set; }
-    }
+
+
+
 }
