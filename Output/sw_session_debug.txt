@@ -6,3 +6,8 @@
 [20:58:51] 📤 Retrieved active model: temp_Option3
 [20:58:53] 📤 Retrieved active model: temp_Option3
 [20:58:54] 📤 Retrieved active model: temp_Option3
+[21:11:35] ✅ SolidWorks app instance stored in session.
+[21:11:35] 📤 Retrieved SolidWorks app instance.
+[21:11:45] ✅ Set active model: temp_Option3
+[21:12:02] 📤 Retrieved active model: temp_Option3
+[21:12:42] 📤 Retrieved active model: temp_Option3

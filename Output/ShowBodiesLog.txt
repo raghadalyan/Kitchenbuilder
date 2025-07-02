@@ -2,3 +2,7 @@
 [2025-07-02 20:58:35] ❌ Body not found: Extrude_CT_1_2
 [2025-07-02 20:58:36] ❌ Body not found: Extrude_CT_2_1
 [2025-07-02 20:58:36] 👁️ Made body visible: Extrude_CT_3_1
+[2025-07-02 21:12:00] ❌ Body not found: Extrude_CT_fridge_base1
+[2025-07-02 21:12:01] ❌ Body not found: Extrude_CT_1_2
+[2025-07-02 21:12:02] ❌ Body not found: Extrude_CT_2_1
+[2025-07-02 21:12:02] 👁️ Made body visible: Extrude_CT_3_1

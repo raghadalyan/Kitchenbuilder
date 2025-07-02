@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Collections.Generic;
 using SolidWorks.Interop.sldworks;
+using System.Text.Json.Nodes;
 
 namespace Kitchenbuilder.Core
 {
@@ -40,6 +41,49 @@ namespace Kitchenbuilder.Core
 
             return stations;
         }
+        public static void AddCountertopFields(string jsonPath)
+        {
+            if (!File.Exists(jsonPath)) return;
+
+            var json = File.ReadAllText(jsonPath);
+            var doc = JsonNode.Parse(json)?.AsObject();
+            if (doc == null) return;
+
+            foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            {
+                if (!doc.ContainsKey(wallKey)) continue;
+                var wall = doc[wallKey]?.AsObject();
+                if (wall == null || !wall.ContainsKey("Bases")) continue;
+
+                var bases = wall["Bases"]?.AsObject();
+                if (bases == null) continue;
+
+                foreach (var baseItem in bases)
+                {
+                    var baseObj = baseItem.Value?.AsObject();
+                    if (baseObj == null) continue;
+
+                    var visible = baseObj["Visible"]?.GetValue<bool>() ?? false;
+                    var sketchName = baseObj["SketchName"]?.GetValue<string>() ?? "";
+
+                    if (visible && !string.IsNullOrWhiteSpace(sketchName) && !sketchName.StartsWith("fridge_base"))
+                    {
+                        baseObj["Countertop"] = new JsonArray
+                {
+                    new JsonObject
+                    {
+                        ["Name"] = $"Extrude_CT_{sketchName}",
+                        ["L"] = 0,
+                        ["R"] = 0
+                    }
+                };
+                    }
+                }
+            }
+
+            File.WriteAllText(jsonPath, doc.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+        }
+
         public static void EditSketchByName(IModelDoc2 modelDoc, string sketchName, Action<string> log)
         {
             if (modelDoc is PartDoc partDoc)

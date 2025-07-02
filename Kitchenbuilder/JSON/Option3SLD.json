@@ -49,6 +49,13 @@
             "Name": "length@1_2",
             "Size": 315
           }
+        ],
+        "Countertop": [
+          {
+            "Name": "Extrude_CT_1_2",
+            "L": 0,
+            "R": 0
+          }
         ]
       },
       "Base1": {
@@ -88,6 +95,13 @@
           {
             "Name": "length@2_1",
             "Size": 290
+          }
+        ],
+        "Countertop": [
+          {
+            "Name": "Extrude_CT_2_1",
+            "L": 0,
+            "R": 0
           }
         ]
       },
@@ -133,6 +147,13 @@
           {
             "Name": "length@3_1",
             "Size": 120
+          }
+        ],
+        "Countertop": [
+          {
+            "Name": "Extrude_CT_3_1",
+            "L": 0,
+            "R": 0
           }
         ]
       },

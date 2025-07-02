@@ -132,7 +132,6 @@ else
 
                 string jsonText = File.ReadAllText(jsonPath);
                 var jsonDoc = JsonDocument.Parse(jsonText);
-
                 foreach (var wallName in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
                 {
                     if (!jsonDoc.RootElement.TryGetProperty(wallName, out JsonElement wall)) continue;
@@ -152,6 +151,12 @@ else
                         Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, extrudeName);
                     }
                 }
+
+                // ✅ Call only once after the loop:
+                AddCountertopFields(jsonPath);
+
+                // ✅ Then extract updated stations
+                stations = ExtractCountertopStations(jsonPath);
 
                 stations = ExtractCountertopStations(jsonPath);
                 if (stations.Count > 0)
