@@ -8,6 +8,9 @@ namespace Kitchenbuilder.Core
     public class CountertopStation
     {
         public string SketchName { get; set; }
+        public double? Left { get; set; }
+        public double? Right { get; set; }
+
     }
 
     public static class HandleCounterTop
@@ -112,6 +115,155 @@ namespace Kitchenbuilder.Core
                 log("❌ ModelDoc is not a PartDoc.");
             }
         }
+        public static void UpdateJsonCountertopDistances(string baseName, string currentSketch, double? left, double? right, Action<string> Log, bool removeObject = false)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(baseName) || string.IsNullOrWhiteSpace(currentSketch))
+                    return;
+
+                string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+                if (!File.Exists(jsonPath))
+                {
+                    Log("❌ JSON file not found when trying to update distances.");
+                    return;
+                }
+
+                string jsonText = File.ReadAllText(jsonPath);
+                using JsonDocument doc = JsonDocument.Parse(jsonText);
+                var root = doc.RootElement.Clone();
+
+                using var stream = new MemoryStream();
+                using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+                writer.WriteStartObject();
+
+                foreach (var wallProp in root.EnumerateObject())
+                {
+                    writer.WritePropertyName(wallProp.Name);
+                    writer.WriteStartObject();
+
+                    foreach (var section in wallProp.Value.EnumerateObject())
+                    {
+                        if (section.Name != "Bases")
+                        {
+                            section.WriteTo(writer);
+                            continue;
+                        }
+
+                        writer.WritePropertyName("Bases");
+                        writer.WriteStartObject();
+
+                        foreach (var baseProp in section.Value.EnumerateObject())
+                        {
+                            writer.WritePropertyName(baseProp.Name);
+                            writer.WriteStartObject();
+
+                            string sketchName = "";
+                            foreach (var field in baseProp.Value.EnumerateObject())
+                            {
+                                if (field.Name == "SketchName")
+                                    sketchName = field.Value.GetString() ?? "";
+
+                                if (field.Name != "Countertop")
+                                    field.WriteTo(writer);
+                            }
+
+                            if (sketchName == currentSketch)
+                            {
+                                writer.WritePropertyName("Countertop");
+
+                                if (removeObject)
+                                {
+                                    writer.WriteNullValue();
+                                    Log($"🗑️ Removed Countertop object for {currentSketch}");
+                                }
+                                else
+                                {
+                                    writer.WriteStartObject();
+                                    writer.WriteString("Name", $"Extrude_CT_{currentSketch}");
+                                    writer.WriteNumber("L", Math.Abs(left ?? 0));
+                                    writer.WriteNumber("R", Math.Abs(right ?? 0));
+                                    writer.WriteEndObject();
+                                    Log($"✅ Updated L/R values for {currentSketch}");
+                                }
+                            }
+
+                            writer.WriteEndObject(); // base
+                        }
+
+                        writer.WriteEndObject(); // Bases
+                    }
+
+                    writer.WriteEndObject(); // wall
+                }
+
+                writer.WriteEndObject(); // root
+                writer.Flush();
+
+                File.WriteAllBytes(jsonPath, stream.ToArray());
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Failed to update JSON: {ex.Message}");
+            }
+        }
+        public static void DeleteSketchByName(IModelDoc2 modelDoc, string fullSketchName, Action<string> log)
+        {
+            if (modelDoc is not PartDoc partDoc)
+            {
+                log("❌ ModelDoc is not a PartDoc.");
+                return;
+            }
+            // ✅ Exit sketch edit mode if active
+            modelDoc.SketchManager.InsertSketch(true);
+            log("↩️ Exited sketch mode if active.");
+
+
+            // 1. Delete the extrusion feature
+            string extrudeName = $"Extrude_{fullSketchName}"; // don't double-prefix
+            var extrudeObj = partDoc.FeatureByName(extrudeName);
+            if (extrudeObj is IFeature extrudeFeature)
+            {
+                bool selected = extrudeFeature.Select2(false, 0);
+                if (selected)
+                {
+                    modelDoc.EditDelete();
+                    log($"🗑️ Deleted extrusion feature {extrudeName}");
+                }
+                else
+                {
+                    log($"❌ Could not select extrusion feature {extrudeName}");
+                }
+            }
+            else
+            {
+                log($"⚠️ Extrusion feature {extrudeName} not found");
+            }
+
+            // 2. Delete the sketch itself
+            var sketchObj = partDoc.FeatureByName(fullSketchName); // no prefix
+            if (sketchObj is IFeature sketchFeature)
+            {
+                bool selected = sketchFeature.Select2(false, 0);
+                if (selected)
+                {
+                    modelDoc.EditDelete();
+                    log($"🗑️ Deleted sketch {fullSketchName}");
+                }
+                else
+                {
+                    log($"❌ Could not select sketch {fullSketchName}");
+                }
+            }
+            else
+            {
+                log($"⚠️ Sketch {fullSketchName} not found");
+            }
+        }
+
     }
+
+
 }
 

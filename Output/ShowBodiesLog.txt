@@ -1,12 +1,3 @@
-[2025-07-02 21:53:38] ❌ Body not found: Extrude_CT_fridge_base1
-[2025-07-02 21:53:40] ❌ Body not found: Extrude_CT_1_2
-[2025-07-02 21:53:41] ❌ Body not found: Extrude_CT_2_1
-[2025-07-02 21:53:42] 👁️ Made body visible: Extrude_CT_3_1
-[2025-07-02 21:56:08] ❌ Body not found: Extrude_CT_fridge_base1
-[2025-07-02 21:56:09] ❌ Body not found: Extrude_CT_1_2
-[2025-07-02 21:56:10] ❌ Body not found: Extrude_CT_2_1
-[2025-07-02 21:56:11] 👁️ Made body visible: Extrude_CT_3_1
-[2025-07-02 22:00:49] ❌ Body not found: Extrude_CT_fridge_base1
-[2025-07-02 22:00:51] ❌ Body not found: Extrude_CT_1_2
-[2025-07-02 22:00:52] ❌ Body not found: Extrude_CT_2_1
-[2025-07-02 22:00:52] 👁️ Made body visible: Extrude_CT_3_1
+[2025-07-03 00:05:29] ❌ Body not found: Extrude_CT_fridge_base1
+[2025-07-03 00:05:33] ❌ Body not found: Extrude_CT_1_2
+[2025-07-03 00:05:33] ✅ Body already visible: Extrude_CT_2_1

@@ -1,25 +1,8 @@
-[21:53:15] ✅ SolidWorks app instance stored in session.
-[21:53:15] 📤 Retrieved SolidWorks app instance.
-[21:53:24] ✅ Set active model: temp_Option3
-[21:53:42] 📤 Retrieved active model: temp_Option3
-[21:53:49] 📤 Retrieved active model: temp_Option3
-[21:53:55] 📤 Retrieved active model: temp_Option3
-[21:54:05] 📤 Retrieved active model: temp_Option3
-[21:54:11] 📤 Retrieved active model: temp_Option3
-[21:54:21] 📤 Retrieved active model: temp_Option3
-[21:54:41] 📤 Retrieved active model: temp_Option3
-[21:54:48] 📤 Retrieved active model: temp_Option3
-[21:55:54] ✅ SolidWorks app instance stored in session.
-[21:55:54] 📤 Retrieved SolidWorks app instance.
-[21:55:57] ✅ Set active model: temp_Option3
-[21:56:11] 📤 Retrieved active model: temp_Option3
-[21:56:40] 📤 Retrieved active model: temp_Option3
-[21:56:42] 📤 Retrieved active model: temp_Option3
-[21:56:44] 📤 Retrieved active model: temp_Option3
-[21:56:51] 📤 Retrieved active model: temp_Option3
-[22:00:32] ✅ SolidWorks app instance stored in session.
-[22:00:32] 📤 Retrieved SolidWorks app instance.
-[22:00:35] ✅ Set active model: temp_Option3
-[22:00:53] 📤 Retrieved active model: temp_Option3
-[22:00:57] 📤 Retrieved active model: temp_Option3
-[22:01:08] 📤 Retrieved active model: temp_Option3
+[00:04:55] ✅ SolidWorks app instance stored in session.
+[00:04:55] 📤 Retrieved SolidWorks app instance.
+[00:05:01] ✅ Set active model: temp_Option2
+[00:05:34] 📤 Retrieved active model: temp_Option2
+[00:05:40] 📤 Retrieved active model: temp_Option2
+[00:05:45] 📤 Retrieved active model: temp_Option2
+[00:05:50] 📤 Retrieved active model: temp_Option2
+[00:05:59] 📤 Retrieved active model: temp_Option2

@@ -25,7 +25,7 @@ namespace Kitchenbuilder.Core
 
             if (right.HasValue)
             {
-                double valueToSet = (wallNumber == 2 || wallNumber == 4) ? -right.Value : right.Value;
+                double valueToSet = (wallNumber == 2 ) ? -right.Value : right.Value;
                 string rightDim = $"R@{fullSketchName}";
                 bool success = SetDimension(model, rightDim, valueToSet);
                 Log(success ? $"✅ Set {rightDim} to {valueToSet}" : $"❌ Failed to set {rightDim}");

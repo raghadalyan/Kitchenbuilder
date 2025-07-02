@@ -37,7 +37,9 @@ else
             }
         </div>
 
-        <div class="station-info">
+        <div class="station-box">
+            <img src="Images/Delete.png" class="delete-icon" @onclick="DeleteCountertop" alt="Delete" title="Delete countertop" />
+
             <h3>📐 Editing: CT_@CurrentSketch</h3>
 
             <div class="distance-inputs">
@@ -48,10 +50,17 @@ else
                 <input type="number" @bind="RightDistance" placeholder="Enter right distance" /><br /><br />
 
                 <button class="save-button" @onclick="ApplyDistances">💾 Save</button>
-
             </div>
-
         </div>
+        @if (showDeleteConfirmation)
+        {
+            <div class="confirm-box">
+                <p>Are you sure you want to delete CT_@CurrentSketch?</p>
+                <button @onclick="ConfirmDelete">Yes</button>
+                <button @onclick="() => showDeleteConfirmation = false">Cancel</button>
+            </div>
+        }
+
 
         <div class="nav-buttons">
             <button @onclick="GoBack" disabled="@(currentStationIndex == 0)">⬅️ Back</button>
@@ -69,10 +78,14 @@ else
     private bool isLoading = true;
     private List<CountertopStation> stations = new();
     private int currentStationIndex = 0;
-    private string CurrentSketch => stations.Count > 0 ? stations[currentStationIndex].SketchName : "";
+    private string CurrentSketch =>
+        (stations.Count > 0 && currentStationIndex >= 0 && currentStationIndex < stations.Count)
+        ? stations[currentStationIndex].SketchName
+        : "";
     private double? LeftDistance { get; set; }
     private double? RightDistance { get; set; }
 
+    private bool showDeleteConfirmation = false;
 
     void Log(string message)
     {
@@ -219,7 +232,13 @@ else
             string sketchName = $"CT_{CurrentSketch}";
             HandleCounterTop.EditSketchByName(model, sketchName, Log);
         }
+
+        // Sync values from station
+        var current = stations[currentStationIndex];
+        LeftDistance = current.Left;
+        RightDistance = current.Right;
     }
+
     private void ApplyDistances()
     {
         var model = SwSession.GetActiveModel();
@@ -228,6 +247,8 @@ else
             int wallNumber = GetWallNumber(CurrentSketch);
             CountertopDimensionApplier.ApplyDistance(model, CurrentSketch, LeftDistance, RightDistance, wallNumber, Log);
             Log($"✅ Applied distances for {CurrentSketch}: L={LeftDistance}, R={RightDistance}, Wall={wallNumber}");
+            HandleCounterTop.UpdateJsonCountertopDistances(baseName, CurrentSketch, LeftDistance, RightDistance, Log);
+
         }
         else
         {
@@ -245,5 +266,48 @@ else
         }
         return 0; // default fallback
     }
+    private void DeleteCountertop()
+    {
+        Log($"🗑️ Delete icon clicked for CT_{CurrentSketch}");
+        showDeleteConfirmation = true;
+    }
+
+    private void ConfirmDelete()
+    {
+        showDeleteConfirmation = false;
+
+        Log($"🗑️ Confirmed deletion for CT_{CurrentSketch}");
+
+        // 1. Update JSON
+        UpdateJsonCountertopDistances(baseName, CurrentSketch, null, null, Log, true);
+
+        // 2. Delete from SLDPRT
+        var model = SwSession.GetActiveModel();
+        if (model != null)
+        {
+            string sketchName = $"CT_{CurrentSketch}";
+            HandleCounterTop.DeleteSketchByName(model, sketchName, Log);
+            Log($"🧹 Deleted sketch {sketchName}");
+        }
+
+        // 3. Remove the deleted station from the list
+        stations.RemoveAt(currentStationIndex);
+        Log($"❌ Removed station {CurrentSketch} from list");
+
+        // 4. Reset current index (go to first or previous)
+        if (stations.Count == 0)
+        {
+            Log("⚠️ No stations left after deletion.");
+            return; // optionally show a message in UI
+        }
+
+        currentStationIndex = Math.Min(currentStationIndex, stations.Count - 1);
+        EditCurrentSketch(); // sync the new active station
+
+        // 5. Clear distances (will be replaced by EditCurrentSketch)
+        LeftDistance = null;
+        RightDistance = null;
+    }
+
 
 }
