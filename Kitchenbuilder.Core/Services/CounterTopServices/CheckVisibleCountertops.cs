@@ -26,14 +26,9 @@ namespace Kitchenbuilder.Core
                 return;
             }
 
-            if (model == null)
-            {
-                Log("❌ Model is null.");
-                return;
-            }
-
             string content = File.ReadAllText(jsonPath);
             JsonObject json = JsonNode.Parse(content).AsObject();
+            bool modified = false;
 
             for (int i = 1; i <= 4; i++)
             {
@@ -48,41 +43,60 @@ namespace Kitchenbuilder.Core
 
                 foreach (var basePair in bases)
                 {
+                    string baseName = basePair.Key;
                     JsonObject baseObj = basePair.Value?.AsObject();
                     if (baseObj == null) continue;
 
                     bool isVisible = baseObj["Visible"]?.GetValue<bool>() ?? false;
-                    if (!isVisible) continue;
-
-                    bool isCountertopVisible = baseObj["IsCountertopVisible"]?.GetValue<bool>() ?? true;
-                    if (!isCountertopVisible)
+                    if (!isVisible)
                     {
-                        Log("⚠️ Countertop is marked as not visible, skipping.");
+                        Log($"⛔ Skipping {baseName} - base is not visible.");
                         continue;
                     }
 
-                    if (!baseObj.ContainsKey("Countertop")) continue;
-
-                    var countertopArray = baseObj["Countertop"]?.AsArray();
-                    if (countertopArray == null) continue;
-
-                    foreach (var item in countertopArray)
+                    string sketchName = baseObj["SketchName"]?.GetValue<string>() ?? "";
+                    if (string.IsNullOrWhiteSpace(sketchName))
                     {
-                        string name = item?["Name"]?.GetValue<string>() ?? "";
-                        if (string.IsNullOrWhiteSpace(name)) continue;
-
-                        if (name.ToLower().Contains("fridge"))
-                        {
-                            Log($"🚫 Skipping fridge-related Countertop: {name}");
-                            continue;
-                        }
-
-                        Log($"👁️ Requesting to show countertop body: {name}");
-                        Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, name);
+                        Log($"⚠️ {baseName} has no SketchName, skipping.");
+                        continue;
                     }
+
+                    string ctName = $"Extrude_CT_{sketchName}";
+
+                    // Show in SolidWorks
+                    Log($"👁️ Showing countertop body: {ctName}");
+                    Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, ctName);
+
+                    // Inject Countertop array into JSON
+                    JsonArray ctArray = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["Name"] = ctName,
+                    ["R"] = 0,
+                    ["L"] = 0
+                }
+            };
+
+                    baseObj["Countertop"] = ctArray;
+                    modified = true;
+
+                    Log($"📝 Added Countertop field to {baseName} with {ctName}");
                 }
             }
+
+            // Save modified JSON
+            if (modified)
+            {
+                File.WriteAllText(jsonPath, json.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+                Log("💾 Updated JSON file with Countertop fields.");
+            }
+            else
+            {
+                Log("ℹ️ No changes made to JSON.");
+            }
         }
+
 
         private static void Log(string message)
         {

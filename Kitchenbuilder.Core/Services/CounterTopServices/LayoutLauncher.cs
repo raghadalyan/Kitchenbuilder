@@ -38,24 +38,28 @@ namespace Kitchenbuilder.Core
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static void LaunchAndSplitScreen(SolidWorksSessionService swSession, string sldprtPath) { 
-
+        public static void LaunchAndSplitScreen(SolidWorksSessionService swSession, string sldprtPath)
+        {
             if (!File.Exists(sldprtPath))
             {
                 Log($"❌ SLDPRT file not found: {sldprtPath}");
                 return;
             }
 
+            // ✅ Get existing SolidWorks app
+            ISldWorks swApp;
 
-            // Start SolidWorks via API
-            var swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-            if (swApp == null)
+            try
             {
-                Log("❌ Failed to launch SolidWorks via API.");
-                return;
+                swApp = swSession.GetApp(); // ⬅️ This avoids creating a new instance
             }
-
-            swApp.Visible = true;
+            catch
+            {
+                swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                swApp.Visible = true;
+                swSession.SetApp(swApp); // ✅ Store for reuse
+                Log("🆕 SolidWorks launched and stored in session.");
+            }
 
             int errors = 0, warnings = 0;
             var model = swApp.OpenDoc6(sldprtPath,
@@ -69,16 +73,13 @@ namespace Kitchenbuilder.Core
                 return;
             }
 
-            // Register active model in the session
             swSession.SetActiveModel(model);
             Log("✅ Active model registered in session.");
 
-            // Move SolidWorks to left
             IntPtr swHandle = (IntPtr)swApp.IFrameObject().GetHWnd();
             MoveWindow(swHandle, 0, 0, 960, 1080, true);
             Log("✅ Moved SolidWorks to left side.");
 
-            // Move MAUI to right
             Process currentProc = Process.GetCurrentProcess();
             IntPtr currentHandle = currentProc.MainWindowHandle;
             for (int i = 0; i < 10 && currentHandle == IntPtr.Zero; i++)
@@ -97,6 +98,7 @@ namespace Kitchenbuilder.Core
                 Log("❌ Failed to get Kitchenbuilder window handle.");
             }
         }
+
 
         private static void Log(string message)
         {

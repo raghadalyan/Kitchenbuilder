@@ -91,8 +91,8 @@ else
             try
             {
                 string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\{baseName}.SLDPRT";
-                SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-                swApp.Visible = true;
+                ISldWorks swApp = SwSession.GetApp();
+
                 Log("✅ SolidWorks instance launched or connected.");
 
                 int errors = 0, warnings = 0;
@@ -124,8 +124,8 @@ else
             string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
             string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
 
-            ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-            swApp.Visible = true;
+            ISldWorks swApp = SwSession.GetApp();
+
             IModelDoc2? model = SwSession.GetActiveModel();
 
             if (model != null)
@@ -190,8 +190,8 @@ else
         string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
 
         ApplyCountertopData(jsonPath, baseDistances, SwSession);
-        ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-        swApp.Visible = true;
+        ISldWorks swApp = SwSession.GetApp();
+
         CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp, currentSketchName);
 
         GoTo(currentIndex);

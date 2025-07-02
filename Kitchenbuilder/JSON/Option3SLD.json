@@ -22,6 +22,13 @@
             "Name": "length@fridge_base1",
             "Size": 85
           }
+        ],
+        "Countertop": [
+          {
+            "Name": "Extrude_CT_fridge_base1",
+            "R": 0,
+            "L": 0
+          }
         ]
       },
       "Base2": {
@@ -43,8 +50,8 @@
         "Countertop": [
           {
             "Name": "Extrude_CT_1_2",
-            "L": 60,
-            "R": 40
+            "R": 0,
+            "L": 0
           }
         ],
         "IsCountertopVisible": true
@@ -91,8 +98,8 @@
         "Countertop": [
           {
             "Name": "Extrude_CT_2_1",
-            "L": 0,
-            "R": 0
+            "R": 0,
+            "L": 0
           }
         ],
         "IsCountertopVisible": true
@@ -144,8 +151,8 @@
         "Countertop": [
           {
             "Name": "Extrude_CT_3_1",
-            "L": 0,
-            "R": 0
+            "R": 0,
+            "L": 0
           }
         ],
         "IsCountertopVisible": true

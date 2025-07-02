@@ -1,12 +1,68 @@
-2025-07-02 16:55:17 👁️ Requesting to show countertop body: Extrude_CT_1_2
-2025-07-02 16:55:29 👁️ Requesting to show countertop body: Extrude_CT_2_1
-2025-07-02 16:55:37 👁️ Requesting to show countertop body: Extrude_CT_3_1
-2025-07-02 16:58:05 👁️ Requesting to show countertop body: Extrude_CT_1_2
-2025-07-02 16:58:07 👁️ Requesting to show countertop body: Extrude_CT_2_1
-2025-07-02 16:58:08 👁️ Requesting to show countertop body: Extrude_CT_3_1
-2025-07-02 16:58:29 👁️ Requesting to show countertop body: Extrude_CT_1_2
-2025-07-02 16:58:44 👁️ Requesting to show countertop body: Extrude_CT_2_1
-2025-07-02 16:58:56 👁️ Requesting to show countertop body: Extrude_CT_3_1
-2025-07-02 16:59:01 👁️ Requesting to show countertop body: Extrude_CT_1_2
-2025-07-02 16:59:06 👁️ Requesting to show countertop body: Extrude_CT_2_1
-2025-07-02 16:59:06 👁️ Requesting to show countertop body: Extrude_CT_3_1
+2025-07-02 19:01:38 👁️ Showing countertop body: Extrude_CT_fridge_base1
+2025-07-02 19:02:13 📝 Added Countertop field to Base3 with Extrude_CT_fridge_base1
+2025-07-02 19:02:13 👁️ Showing countertop body: Extrude_CT_1_2
+2025-07-02 19:02:17 📝 Added Countertop field to Base2 with Extrude_CT_1_2
+2025-07-02 19:02:17 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:02:17 👁️ Showing countertop body: Extrude_CT_2_1
+2025-07-02 19:03:03 📝 Added Countertop field to Base1 with Extrude_CT_2_1
+2025-07-02 19:03:03 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:03:03 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:03:03 👁️ Showing countertop body: Extrude_CT_3_1
+2025-07-02 19:03:05 📝 Added Countertop field to Base1 with Extrude_CT_3_1
+2025-07-02 19:03:05 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:03:05 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:03:05 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:03:05 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:03:05 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:03:05 💾 Updated JSON file with Countertop fields.
+2025-07-02 19:13:21 👁️ Showing countertop body: Extrude_CT_fridge_base1
+2025-07-02 19:13:59 📝 Added Countertop field to Base3 with Extrude_CT_fridge_base1
+2025-07-02 19:13:59 👁️ Showing countertop body: Extrude_CT_1_2
+2025-07-02 19:14:05 📝 Added Countertop field to Base2 with Extrude_CT_1_2
+2025-07-02 19:14:05 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:14:05 👁️ Showing countertop body: Extrude_CT_2_1
+2025-07-02 19:14:16 📝 Added Countertop field to Base1 with Extrude_CT_2_1
+2025-07-02 19:14:16 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:14:16 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:14:16 👁️ Showing countertop body: Extrude_CT_3_1
+2025-07-02 19:14:17 📝 Added Countertop field to Base1 with Extrude_CT_3_1
+2025-07-02 19:14:17 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:14:17 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:14:17 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:14:17 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:14:17 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:14:17 💾 Updated JSON file with Countertop fields.
+2025-07-02 19:14:29 👁️ Showing countertop body: Extrude_CT_fridge_base1
+2025-07-02 19:14:42 📝 Added Countertop field to Base3 with Extrude_CT_fridge_base1
+2025-07-02 19:14:42 👁️ Showing countertop body: Extrude_CT_1_2
+2025-07-02 19:14:43 📝 Added Countertop field to Base2 with Extrude_CT_1_2
+2025-07-02 19:14:43 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:14:43 👁️ Showing countertop body: Extrude_CT_2_1
+2025-07-02 19:14:46 📝 Added Countertop field to Base1 with Extrude_CT_2_1
+2025-07-02 19:14:46 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:14:46 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:14:46 👁️ Showing countertop body: Extrude_CT_3_1
+2025-07-02 19:15:06 📝 Added Countertop field to Base1 with Extrude_CT_3_1
+2025-07-02 19:15:06 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:15:06 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:15:06 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:15:06 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:15:06 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:15:06 💾 Updated JSON file with Countertop fields.
+2025-07-02 19:20:56 👁️ Showing countertop body: Extrude_CT_fridge_base1
+2025-07-02 19:21:31 📝 Added Countertop field to Base3 with Extrude_CT_fridge_base1
+2025-07-02 19:21:31 👁️ Showing countertop body: Extrude_CT_1_2
+2025-07-02 19:21:52 📝 Added Countertop field to Base2 with Extrude_CT_1_2
+2025-07-02 19:21:52 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:21:52 👁️ Showing countertop body: Extrude_CT_2_1
+2025-07-02 19:22:07 📝 Added Countertop field to Base1 with Extrude_CT_2_1
+2025-07-02 19:22:07 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:22:07 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:22:07 👁️ Showing countertop body: Extrude_CT_3_1
+2025-07-02 19:22:10 📝 Added Countertop field to Base1 with Extrude_CT_3_1
+2025-07-02 19:22:10 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:22:10 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:22:10 ⛔ Skipping Base1 - base is not visible.
+2025-07-02 19:22:10 ⛔ Skipping Base2 - base is not visible.
+2025-07-02 19:22:10 ⛔ Skipping Base3 - base is not visible.
+2025-07-02 19:22:10 💾 Updated JSON file with Countertop fields.

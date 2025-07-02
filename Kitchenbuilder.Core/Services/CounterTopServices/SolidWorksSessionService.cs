@@ -7,20 +7,33 @@ namespace Kitchenbuilder.Core
     public class SolidWorksSessionService
     {
         private IModelDoc2? _activeModel;
+        private ISldWorks? _swApp; // ✅ Store SW instance
         private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\sw_session_debug.txt";
 
-        /// <summary>
-        /// Sets the currently active model (e.g., after opening a .SLDPRT file).
-        /// </summary>
+        public void SetApp(ISldWorks swApp)
+        {
+            _swApp = swApp;
+            Log("✅ SolidWorks app instance stored in session.");
+        }
+
+        public ISldWorks GetApp()
+        {
+            if (_swApp == null)
+            {
+                Log("❌ SolidWorks app is null.");
+                throw new InvalidOperationException("SolidWorks app not initialized.");
+            }
+
+            Log("📤 Retrieved SolidWorks app instance.");
+            return _swApp;
+        }
+
         public void SetActiveModel(IModelDoc2 model)
         {
             _activeModel = model;
             Log($"✅ Set active model: {model.GetTitle()}");
         }
 
-        /// <summary>
-        /// Returns the active model (e.g., to edit it or activate sketches).
-        /// </summary>
         public IModelDoc2? GetActiveModel()
         {
             if (_activeModel == null)
@@ -31,13 +44,11 @@ namespace Kitchenbuilder.Core
             return _activeModel;
         }
 
-        /// <summary>
-        /// Clears the session state.
-        /// </summary>
         public void Clear()
         {
             _activeModel = null;
-            Log("🧹 Cleared active model session.");
+            _swApp = null;
+            Log("🧹 Cleared SolidWorks session.");
         }
 
         private void Log(string message)

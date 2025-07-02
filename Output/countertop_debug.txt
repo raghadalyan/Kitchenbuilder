@@ -1,76 +1,37 @@
-2025-07-02 16:55:03 - 🟢 OnInitialized started.
-2025-07-02 16:55:03 - 📄 base_count_debug.txt content: Base count: 3
-2025-07-02 16:55:03 - ✅ Parsed baseCount = 3
-2025-07-02 16:55:03 - 📦 Received baseName = Option3
-2025-07-02 16:55:03 - ✅ SolidWorks instance launched or connected.
-2025-07-02 16:55:03 - ❌ Failed to open part. Errors=2, Warnings=0
-2025-07-02 16:55:17 - 💾 Saving distances for baseName = Option3, currentSketch = 
-[16:55:41] 🚀 Starting CountertopDimensionApplier...
-[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_
-[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_
-[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_3_1 with expected = Extrude_CT_
-[16:55:41] ⚠️ No matching sketch found in any wall.
-2025-07-02 16:55:41 - ➡ Switching to station index 0
-2025-07-02 16:55:41 - ✅ Sketch '1_2' selected.
-2025-07-02 16:55:41 - 📏 Applying dimensions for sketch '1_2'
-[16:55:41] 🚀 Starting CountertopDimensionApplier...
-[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:55:41] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:55:41] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
-[16:55:41] ❌ Failed to set L@CT_1_2
-[16:55:41] ❌ Failed to set R@CT_1_2
-[16:55:42] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:58:05 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
-[16:58:08] 🚀 Starting CountertopDimensionApplier...
-[16:58:08] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:58:08] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:58:08] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
-[16:58:09] ✅ Set L@CT_1_2 to -60
-[16:58:09] ✅ Set R@CT_1_2 to 0
-[16:58:10] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:58:10 - ➡ Switching to station index 0
-2025-07-02 16:58:10 - ✅ Sketch '1_2' selected.
-2025-07-02 16:58:10 - 📏 Applying dimensions for sketch '1_2'
-[16:58:10] 🚀 Starting CountertopDimensionApplier...
-[16:58:10] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:58:10] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:58:10] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
-[16:58:10] ✅ Set L@CT_1_2 to -60
-[16:58:10] ✅ Set R@CT_1_2 to 0
-[16:58:12] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:58:28 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
-[16:58:57] 🚀 Starting CountertopDimensionApplier...
-[16:58:57] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:58:57] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:58:57] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
-[16:58:57] ✅ Set L@CT_1_2 to -60
-[16:58:57] ✅ Set R@CT_1_2 to 40
-[16:58:59] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:58:59 - ➡ Switching to station index 0
-2025-07-02 16:58:59 - ✅ Sketch '1_2' selected.
-2025-07-02 16:58:59 - 📏 Applying dimensions for sketch '1_2'
-[16:58:59] 🚀 Starting CountertopDimensionApplier...
-[16:58:59] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:58:59] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:58:59] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
-[16:58:59] ✅ Set L@CT_1_2 to -60
-[16:58:59] ✅ Set R@CT_1_2 to 40
-[16:59:01] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:59:01 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
-[16:59:07] 🚀 Starting CountertopDimensionApplier...
-[16:59:07] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:59:07] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:59:07] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
-[16:59:07] ✅ Set L@CT_1_2 to -60
-[16:59:07] ✅ Set R@CT_1_2 to 40
-[16:59:08] ✅ Finished applying dimensions to sketch.
-2025-07-02 16:59:08 - ➡ Switching to station index 0
-2025-07-02 16:59:09 - ✅ Sketch '1_2' selected.
-2025-07-02 16:59:09 - 📏 Applying dimensions for sketch '1_2'
-[16:59:09] 🚀 Starting CountertopDimensionApplier...
-[16:59:09] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
-[16:59:09] 🏠 Sketch '1_2' belongs to wall: Wall1
-[16:59:09] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
-[16:59:09] ✅ Set L@CT_1_2 to -60
-[16:59:09] ✅ Set R@CT_1_2 to 40
-[16:59:10] ✅ Finished applying dimensions to sketch.
+2025-07-02 19:01:38 - 🟢 OnInitialized started.
+2025-07-02 19:01:38 - 📄 base_count_debug.txt content: Base count: 3
+2025-07-02 19:01:38 - ✅ Parsed baseCount = 3
+2025-07-02 19:01:38 - 📦 Received baseName = Option3
+2025-07-02 19:03:05 - ✅ SolidWorks instance launched or connected.
+2025-07-02 19:03:05 - ❌ Failed to open part. Errors=2, Warnings=0
+2025-07-02 19:13:21 - 🟢 OnInitialized started.
+2025-07-02 19:13:21 - 📄 base_count_debug.txt content: Base count: 3
+2025-07-02 19:13:21 - ✅ Parsed baseCount = 3
+2025-07-02 19:13:21 - 📦 Received baseName = Option3
+2025-07-02 19:14:17 - ✅ SolidWorks instance launched or connected.
+2025-07-02 19:14:18 - ❌ Failed to open part. Errors=2, Warnings=0
+2025-07-02 19:14:29 - 💾 Saving distances for baseName = Option3, currentSketch = 
+[19:15:06] 🚀 Starting CountertopDimensionApplier...
+[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_fridge_base1 with expected = Extrude_CT_
+[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_
+[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_
+[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_3_1 with expected = Extrude_CT_
+[19:15:06] ⚠️ No matching sketch found in any wall.
+2025-07-02 19:15:06 - ➡ Switching to station index 1
+2025-07-02 19:15:09 - ✅ Sketch '2_1' selected.
+2025-07-02 19:15:09 - 📏 Applying dimensions for sketch '2_1'
+[19:15:09] 🚀 Starting CountertopDimensionApplier...
+[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_fridge_base1 with expected = Extrude_CT_2_1
+[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_2_1
+[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_2_1
+[19:15:09] 🏠 Sketch '2_1' belongs to wall: Wall2
+[19:15:09] 🧩 Trying to set L@CT_2_1 = -0, R@CT_2_1 = -0
+[19:15:10] ✅ Set L@CT_2_1 to -0
+[19:15:10] ✅ Set R@CT_2_1 to -0
+[19:15:12] ✅ Finished applying dimensions to sketch.
+2025-07-02 19:20:56 - 🟢 OnInitialized started.
+2025-07-02 19:20:56 - 📄 base_count_debug.txt content: Base count: 3
+2025-07-02 19:20:56 - ✅ Parsed baseCount = 3
+2025-07-02 19:20:56 - 📦 Received baseName = Option3
+2025-07-02 19:22:10 - ✅ SolidWorks instance launched or connected.
+2025-07-02 19:22:10 - ❌ Failed to open part. Errors=2, Warnings=0
