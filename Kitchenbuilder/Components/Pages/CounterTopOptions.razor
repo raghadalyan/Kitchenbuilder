@@ -9,7 +9,6 @@
 using System.Runtime.InteropServices;
 @using SolidWorks.Interop.swconst
 
-
 <h1 class="title">Adjust Countertop Distances</h1>
 
 @if (baseCount > 0)
@@ -47,27 +46,34 @@ else
 }
 
 @code {
-    // ✅ إصلاح: استعادة الخاصية المفقودة
     [Parameter]
     [SupplyParameterFromQuery(Name = "base")]
     public string? baseName { get; set; }
 
-
+    private string currentSketchName = "";
     private int baseCount = 0;
     private int currentIndex = 0;
-
-    // ✅ تأكد أن النوع مستخدم من HandleCounterTop وليس معرف محلي
     private List<HandleCounterTop.BaseDistance> baseDistances = new();
+
+    void Log(string message)
+    {
+        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug.txt";
+        string timestamped = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}{System.Environment.NewLine}";
+        File.AppendAllText(debugPath, timestamped);
+    }
 
     protected override void OnInitialized()
     {
+        Log("🟢 OnInitialized started.");
         string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
         if (File.Exists(debugPath))
         {
             string content = File.ReadAllText(debugPath);
+            Log($"📄 base_count_debug.txt content: {content}");
             if (int.TryParse(content.Split(':').Last().Trim(), out int count))
             {
                 baseCount = count;
+                Log($"✅ Parsed baseCount = {baseCount}");
                 baseDistances = Enumerable.Range(0, baseCount)
                                           .Select(_ => new HandleCounterTop.BaseDistance())
                                           .ToList();
@@ -76,84 +82,63 @@ else
 
         if (!string.IsNullOrWhiteSpace(baseName))
         {
+            Log($"📦 Received baseName = {baseName}");
             string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-            string jsonPath = Path.Combine(
-                @"C:\Users\chouse\Downloads\Kitchenbuilder\JSON",
-                $"{fullBaseName}.json");
+            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
 
-            // ✅ أولاً: فحص الشايش (قبل فتح الملف في سوليد ووركس)
             CheckVisibleCountertops.ProcessVisibleCountertops(jsonPath, SwSession);
 
-            // ✅ ثانيًا: تشغيل سوليد ووركس وفتح الملف
             try
             {
-                if (SwSession.GetActiveModel() == null)
+                string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\{baseName}.SLDPRT";
+                SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                swApp.Visible = true;
+                Log("✅ SolidWorks instance launched or connected.");
+
+                int errors = 0, warnings = 0;
+                ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(partPath, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
+
+                if (model == null)
                 {
-                    string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\{baseName}.SLDPRT";
-
-                    SldWorks swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-                    swApp.Visible = true;
-                    Console.WriteLine("✅ SolidWorks instance launched or connected.");
-
-                    int errors = 0, warnings = 0;
-                    ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(
-                        partPath,
-                        (int)swDocumentTypes_e.swDocPART,
-                        (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
-                        "", ref errors, ref warnings);
-
-                    if (model == null)
-                    {
-                        Console.WriteLine($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
-                        return;
-                    }
-
-                    SwSession.SetActiveModel(model);
-                    LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
+                    Log($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
+                    return;
                 }
-                else
-                {
-                    Console.WriteLine("🔁 SolidWorks already running and model already loaded.");
-                }
+
+                SwSession.SetActiveModel(model);
+                LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error initializing SolidWorks part: {ex.Message}");
+                Log($"❌ Error initializing SolidWorks part: {ex.Message}");
+                return;
             }
-
         }
     }
 
-
-
-
-
     private void GoTo(int index)
     {
+        Log($"➡ Switching to station index {index}");
         if (index >= 0 && index < baseCount)
         {
             currentIndex = index;
-
             string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\JSON", $"{fullBaseName}.json");
+            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
 
-            // ✅ إنشاء SolidWorks والتأكد من أنه مفتوح
             ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
             swApp.Visible = true;
-
             IModelDoc2? model = SwSession.GetActiveModel();
+
             if (model != null)
             {
-                // ✅ نحاول تحديد السكيتش المناسب حسب الترتيب من قائمة السكيتشات
                 if (LayoutLauncher.StationSketches != null && index < LayoutLauncher.StationSketches.Count)
                 {
-                    string sketchName = LayoutLauncher.StationSketches[index];
+                    currentSketchName = LayoutLauncher.StationSketches[index];
                     Feature sketchFeat = null;
                     Feature currentFeat = (Feature)model.FirstFeature();
 
                     while (currentFeat != null)
                     {
-                        if (currentFeat.Name == sketchName)
+                        if (currentFeat.Name == currentSketchName)
                         {
                             sketchFeat = currentFeat;
                             break;
@@ -164,24 +149,19 @@ else
                     if (sketchFeat != null)
                     {
                         bool selected = sketchFeat.Select2(false, -1);
-                        Console.WriteLine(selected
-                            ? $"✅ Sketch '{sketchName}' selected."
-                            : $"❌ Failed to select sketch '{sketchName}'.");
+                        Log(selected ? $"✅ Sketch '{currentSketchName}' selected." : $"❌ Failed to select sketch '{currentSketchName}'.");
                     }
                     else
                     {
-                        Console.WriteLine($"❌ Sketch '{sketchName}' not found.");
+                        Log($"❌ Sketch '{currentSketchName}' not found.");
                     }
                 }
             }
 
-            // ✅ تطبيق الأبعاد على السكيتش الحالي
-            CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp);
+            Log($"📏 Applying dimensions for sketch '{currentSketchName}'");
+            CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp, currentSketchName);
         }
     }
-
-
-
 
     private void Previous()
     {
@@ -203,30 +183,17 @@ else
 
     private void SaveDistances()
     {
-        if (string.IsNullOrWhiteSpace(baseName))
-            return;
+        Log($"💾 Saving distances for baseName = {baseName}, currentSketch = {currentSketchName}");
+        if (string.IsNullOrWhiteSpace(baseName)) return;
 
         string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-        string jsonPath = Path.Combine(
-            @"C:\Users\chouse\Downloads\Kitchenbuilder\JSON",
-            $"{fullBaseName}.json");
+        string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
 
         ApplyCountertopData(jsonPath, baseDistances, SwSession);
-
-        // ✅ أنشئ swApp يدويًا هنا:
         ISldWorks swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
         swApp.Visible = true;
+        CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp, currentSketchName);
 
-        CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp); // ✅ استخدم swApp هنا
-
-        // ❌ لا تخرج من الصفحة
-        // NavManager.NavigateTo("/summary");
-
-        // ✅ أعد تفعيل السكيتش الحالي
         GoTo(currentIndex);
     }
-
-
-
-
 }

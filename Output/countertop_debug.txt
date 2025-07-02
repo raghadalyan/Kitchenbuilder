@@ -1,33 +1,76 @@
-[13:16:23] 📌 Starting GetVisibleSketches...
-[13:16:23] 📖 Reading JSON content...
-[13:16:23] 🔍 Checking wall: Wall1
-[13:16:23] ➡️ Base: Base3, Visible=True, Sketch=fridge_base1
-[13:16:23] ➡️ Base: Base2, Visible=True, Sketch=1_2
-[13:16:23] ✅ Collected sketch: 1_2
-[13:16:23] ➡️ Base: Base1, Visible=False, Sketch=1_1
-[13:16:23] 🔍 Checking wall: Wall2
-[13:16:23] ➡️ Base: Base1, Visible=True, Sketch=2_1
-[13:16:23] ✅ Collected sketch: 2_1
-[13:16:23] ➡️ Base: Base2, Visible=False, Sketch=2_2
-[13:16:23] ➡️ Base: Base3, Visible=False, Sketch=fridge_base2
-[13:16:23] 🔍 Checking wall: Wall3
-[13:16:23] ➡️ Base: Base1, Visible=False, Sketch=fridge_base3
-[13:16:23] ➡️ Base: Base2, Visible=False, Sketch=3_2
-[13:16:23] ➡️ Base: Base3, Visible=False, Sketch=3_1
-[13:16:23] 🔍 Checking wall: Wall4
-[13:16:23] ➡️ Base: Base1, Visible=False, Sketch=fridge_base4
-[13:16:23] ➡️ Base: Base2, Visible=False, Sketch=4_2
-[13:16:23] ➡️ Base: Base3, Visible=False, Sketch=4_1
-[13:16:23] 📦 Finished collecting sketches.
-[13:16:29] 📌 Activating **countertop sketch** for station index: 1
-[13:16:29] 🎯 Trying to activate sketch: CT_2_1
-[13:16:32] ✅ Sketch selected.
-[13:16:34] ✅ Called EditSketch.
-[13:16:36] 📌 Activating **countertop sketch** for station index: 0
-[13:16:36] 🎯 Trying to activate sketch: CT_1_2
-[13:16:42] ✅ Sketch selected.
-[13:16:43] ✅ Called EditSketch.
-[13:16:45] 📌 Activating **countertop sketch** for station index: 1
-[13:16:45] 🎯 Trying to activate sketch: CT_2_1
-[13:16:47] ✅ Sketch selected.
-[13:16:48] ✅ Called EditSketch.
+2025-07-02 16:55:03 - 🟢 OnInitialized started.
+2025-07-02 16:55:03 - 📄 base_count_debug.txt content: Base count: 3
+2025-07-02 16:55:03 - ✅ Parsed baseCount = 3
+2025-07-02 16:55:03 - 📦 Received baseName = Option3
+2025-07-02 16:55:03 - ✅ SolidWorks instance launched or connected.
+2025-07-02 16:55:03 - ❌ Failed to open part. Errors=2, Warnings=0
+2025-07-02 16:55:17 - 💾 Saving distances for baseName = Option3, currentSketch = 
+[16:55:41] 🚀 Starting CountertopDimensionApplier...
+[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_
+[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_
+[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_3_1 with expected = Extrude_CT_
+[16:55:41] ⚠️ No matching sketch found in any wall.
+2025-07-02 16:55:41 - ➡ Switching to station index 0
+2025-07-02 16:55:41 - ✅ Sketch '1_2' selected.
+2025-07-02 16:55:41 - 📏 Applying dimensions for sketch '1_2'
+[16:55:41] 🚀 Starting CountertopDimensionApplier...
+[16:55:41] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:55:41] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:55:41] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
+[16:55:41] ❌ Failed to set L@CT_1_2
+[16:55:41] ❌ Failed to set R@CT_1_2
+[16:55:42] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:58:05 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
+[16:58:08] 🚀 Starting CountertopDimensionApplier...
+[16:58:08] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:58:08] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:58:08] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
+[16:58:09] ✅ Set L@CT_1_2 to -60
+[16:58:09] ✅ Set R@CT_1_2 to 0
+[16:58:10] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:58:10 - ➡ Switching to station index 0
+2025-07-02 16:58:10 - ✅ Sketch '1_2' selected.
+2025-07-02 16:58:10 - 📏 Applying dimensions for sketch '1_2'
+[16:58:10] 🚀 Starting CountertopDimensionApplier...
+[16:58:10] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:58:10] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:58:10] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 0
+[16:58:10] ✅ Set L@CT_1_2 to -60
+[16:58:10] ✅ Set R@CT_1_2 to 0
+[16:58:12] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:58:28 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
+[16:58:57] 🚀 Starting CountertopDimensionApplier...
+[16:58:57] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:58:57] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:58:57] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
+[16:58:57] ✅ Set L@CT_1_2 to -60
+[16:58:57] ✅ Set R@CT_1_2 to 40
+[16:58:59] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:58:59 - ➡ Switching to station index 0
+2025-07-02 16:58:59 - ✅ Sketch '1_2' selected.
+2025-07-02 16:58:59 - 📏 Applying dimensions for sketch '1_2'
+[16:58:59] 🚀 Starting CountertopDimensionApplier...
+[16:58:59] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:58:59] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:58:59] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
+[16:58:59] ✅ Set L@CT_1_2 to -60
+[16:58:59] ✅ Set R@CT_1_2 to 40
+[16:59:01] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:59:01 - 💾 Saving distances for baseName = Option3, currentSketch = 1_2
+[16:59:07] 🚀 Starting CountertopDimensionApplier...
+[16:59:07] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:59:07] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:59:07] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
+[16:59:07] ✅ Set L@CT_1_2 to -60
+[16:59:07] ✅ Set R@CT_1_2 to 40
+[16:59:08] ✅ Finished applying dimensions to sketch.
+2025-07-02 16:59:08 - ➡ Switching to station index 0
+2025-07-02 16:59:09 - ✅ Sketch '1_2' selected.
+2025-07-02 16:59:09 - 📏 Applying dimensions for sketch '1_2'
+[16:59:09] 🚀 Starting CountertopDimensionApplier...
+[16:59:09] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_1_2
+[16:59:09] 🏠 Sketch '1_2' belongs to wall: Wall1
+[16:59:09] 🧩 Trying to set L@CT_1_2 = -60, R@CT_1_2 = 40
+[16:59:09] ✅ Set L@CT_1_2 to -60
+[16:59:09] ✅ Set R@CT_1_2 to 40
+[16:59:10] ✅ Finished applying dimensions to sketch.

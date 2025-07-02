@@ -12,45 +12,37 @@ namespace Kitchenbuilder.Core
     {
         public static List<string> GetVisibleSketches(string jsonPath)
         {
-            Log("📌 Starting GetVisibleSketches...");
             var sketches = new List<string>();
 
             if (!File.Exists(jsonPath))
-            {
-                Log($"❌ JSON not found: {jsonPath}");
                 return sketches;
-            }
 
-            Log("📖 Reading JSON content...");
             string json = File.ReadAllText(jsonPath);
             var doc = JsonDocument.Parse(json);
 
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            foreach (var wall in doc.RootElement.EnumerateObject())
             {
-                Log($"🔍 Checking wall: {wall}");
-                if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
-                    wallElement.TryGetProperty("Bases", out var bases))
+                if (wall.Value.TryGetProperty("Bases", out JsonElement bases))
                 {
-                    foreach (var baseProp in bases.EnumerateObject())
+                    foreach (var baseItem in bases.EnumerateObject())
                     {
-                        var baseData = baseProp.Value;
-                        bool isVisible = baseData.GetProperty("Visible").GetBoolean();
-                        string? sketch = baseData.GetProperty("SketchName").GetString();
-
-                        Log($"➡️ Base: {baseProp.Name}, Visible={isVisible}, Sketch={sketch}");
-
-                        if (isVisible && !string.IsNullOrWhiteSpace(sketch) && !sketch.ToLower().Contains("fridge"))
+                        if (baseItem.Value.TryGetProperty("Visible", out JsonElement visibleElement) &&
+                            visibleElement.GetBoolean() &&
+                            baseItem.Value.TryGetProperty("SketchName", out JsonElement sketchElement))
                         {
-                            sketches.Add(sketch);
-                            Log($"✅ Collected sketch: {sketch}");
+                            string sketch = sketchElement.GetString();
+                            if (!string.IsNullOrWhiteSpace(sketch) && !sketch.ToLower().Contains("fridge"))
+                            {
+                                sketches.Add(sketch);
+                            }
                         }
                     }
                 }
             }
 
-            Log("📦 Finished collecting sketches.");
             return sketches;
         }
+
 
         public static void ApplyCountertopData(string jsonPath, List<BaseDistance> distances, SolidWorksSessionService session)
         {
@@ -308,7 +300,7 @@ namespace Kitchenbuilder.Core
 
         private static void Log(string message)
         {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug.txt";
+            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug123.txt";
             string logLine = $"[{DateTime.Now:HH:mm:ss}] {message}";
             File.AppendAllText(debugPath, logLine + System.Environment.NewLine);
         }
