@@ -1,8 +1,7 @@
-@page "/"
-@inject NavigationManager NavManager
+ @page "/"
+ @inject NavigationManager NavManager
 
 <h1> Welcome to the Smart Kitchen Builder</h1>
-
 @code {
     protected override async Task OnInitializedAsync()
     {
@@ -12,4 +11,4 @@
         // Navigate to Counter page
         NavManager.NavigateTo("/floor");
     }
-}
+  }

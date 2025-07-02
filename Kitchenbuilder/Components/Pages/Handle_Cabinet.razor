@@ -1,0 +1,237 @@
+﻿@page "/handle-cabinet"
+@using System.Text.Json
+@using Kitchenbuilder.Core
+@inject IJSRuntime JS
+@using Kitchenbuilder.Core.Models
+
+<div class="container">
+    <h1>Cabinet Stations</h1>
+
+    @if (stations.Count > 0 && currentIndex >= 0)
+    {
+        <div class="station-circles">
+            @for (int i = 0; i < stations.Count; i++)
+            {
+                <button class="circle-btn @(i == currentIndex ? "active" : "")" @onclick="@(() => SelectStation(i))">
+                    @(i + 1)
+                </button>
+            }
+        </div>
+
+        <div class="station-layout">
+            <div class="station-info">
+                <h3>Station @(currentIndex + 1): @stations[currentIndex].BaseName</h3>
+                <p>From @stations[currentIndex].StationStart to @stations[currentIndex].StationEnd</p>
+
+                <div class="action-buttons">
+                    <button class="action-btn" @onclick="() => showAddCabinet = !showAddCabinet">➕ Add Cabinet</button>
+                    <button class="action-btn" @onclick="AddSpace">➕ Add Space</button>
+                </div>
+
+                @if (showAddCabinet)
+                {
+                    <div class="add-cabinet-box">
+                        <label>
+                            <input type="checkbox" @bind="isSequence" /> Sequence of copies
+                        </label>
+                        @if (isSequence)
+                        {
+                            <label>
+                                Number of copies:
+                                <input type="number" min="2" @bind="copiesCount" />
+                            </label>
+                        }
+
+                        @if (RequiresFullBox())
+                        {
+                            <label>
+                                Width:
+                                <input type="number" min="1" @bind="width" />
+                            </label>
+                            @if (!stations[currentIndex].HasCountertop)
+                            {
+                                <label>
+                                    Height:
+                                    <input type="number" min="1" @bind="height" />
+                                </label>
+                            }
+                            <label>
+                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                            </label>
+                            @if (hasDrawers)
+                            {
+                                <label>
+                                    Number of drawers:
+                                    <input type="number" min="2" @bind="drawerCount" />
+                                </label>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(errorMessage))
+                            {
+                                <div style="color: red; font-weight: bold; margin-bottom: 10px;">
+                                    @errorMessage
+                                </div>
+                            }
+                            <button class="apply-btn" @onclick="OnApplyCabinet">✅ Apply</button>
+
+                        }
+                        else if (RequiresCounterTopBox())
+                        {
+                            <label>
+                                Width:
+                                <input type="number" min="1" @bind="width" />
+                            </label>
+                            <label>
+                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                            </label>
+                            @if (hasDrawers)
+                            {
+                                <label>
+                                    Number of drawers:
+                                    <input type="number" min="2" @bind="drawerCount" />
+                                </label>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="station-reminder-box">
+                <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p>
+                <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p>
+                <p><strong>From:</strong> @stations[currentIndex].StationStart</p>
+                <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
+                <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
+            </div>
+            <div class="station-progress">
+                <div class="progress-bar">
+                    <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
+                </div>
+                <p>@GetFillPercentage(stations[currentIndex])% filled</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button @onclick="PreviousStation" disabled="@(currentIndex == 0)">⬅ Back</button>
+            <button @onclick="NextStation" disabled="@(currentIndex == stations.Count - 1)">Next ➡</button>
+        </div>
+    }
+    else
+    {
+        <p>Loading stations...</p>
+    }
+</div>
+
+@code {
+    private List<StationInfo> stations = new();
+    private int currentIndex = 0;
+
+    private bool showAddCabinet = false;
+    private bool isSequence = false;
+    private int copiesCount = 2;
+    private int width = 1;
+    private int height = 1;
+    private bool hasDrawers = false;
+    private int drawerCount = 2;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+        if (File.Exists(jsonPath))
+        {
+            var json = await File.ReadAllTextAsync(jsonPath);
+            stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new List<StationInfo>();
+        }
+    }
+
+    void SelectStation(int index)
+    {
+        if (index >= 0 && index < stations.Count)
+            currentIndex = index;
+    }
+
+    void PreviousStation()
+    {
+        if (currentIndex > 0)
+            currentIndex--;
+    }
+
+    void NextStation()
+    {
+        if (currentIndex < stations.Count - 1)
+            currentIndex++;
+    }
+
+    void AddSpace()
+    {
+        Console.WriteLine($"Adding space at station {currentIndex + 1}");
+    }
+
+    bool RequiresFullBox()
+    {
+        // Simulated condition: station base name does not include "CounterTop"
+        return !stations[currentIndex].BaseName.ToLower().Contains("counter");
+    }
+
+    bool RequiresCounterTopBox()
+    {
+        return !RequiresFullBox();
+    }
+
+    string GetWallNumber(string baseName)
+    {
+        if (baseName.StartsWith("fridge_base") && baseName.Length > 11)
+            return baseName.Substring(11);
+        if (baseName.Contains("_"))
+            return baseName.Split('_')[0];
+        return "?";
+    }
+
+    string GetBaseNumber(string baseName)
+    {
+        if (baseName.StartsWith("fridge_base"))
+            return "Fridge";
+        if (baseName.Contains("_"))
+            return baseName.Split('_')[1];
+        return "?";
+    }
+    private string errorMessage = string.Empty;
+
+    async Task OnApplyCabinet()
+    {
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+
+        int copies = isSequence ? copiesCount : 1;
+        if (width < 5)
+        {
+            errorMessage = "❌ Width must be at least 5 cm.";
+            return;
+        }
+        bool canAdd = ApplyCabinet.CanAddCabinet(jsonPath, currentIndex, width, copies);
+
+        if (!canAdd)
+        {
+            errorMessage = "❌ Cannot add cabinet: exceeds base width.";
+            return;
+        }
+
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, copies);
+        errorMessage = "";
+
+        var updatedJson = await File.ReadAllTextAsync(jsonPath);
+        stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
+    }
+
+    int GetFillPercentage(StationInfo station)
+    {
+        if (station == null || station.StationEnd <= station.StationStart)
+            return 0;
+
+        int totalWidth = station.StationEnd - station.StationStart;
+        int usedWidth = station.Cabinets?.Sum(c => c.Width) ?? 0;
+
+        int percentage = (int)((double)usedWidth / totalWidth * 100);
+        return Math.Min(percentage, 100); // Don't exceed 100%
+    }
+
+
+}
