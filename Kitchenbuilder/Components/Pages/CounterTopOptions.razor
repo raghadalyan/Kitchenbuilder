@@ -42,12 +42,13 @@ else
 
             <div class="distance-inputs">
                 <label>Distance from Left:</label>
-                <input type="number" placeholder="Enter left distance" /><br />
+                <input type="number" @bind="LeftDistance" placeholder="Enter left distance" /><br />
 
                 <label>Distance from Right:</label>
-                <input type="number" placeholder="Enter right distance" /><br /><br />
+                <input type="number" @bind="RightDistance" placeholder="Enter right distance" /><br /><br />
 
-                <button class="save-button">💾 Save</button>
+                <button class="save-button" @onclick="ApplyDistances">💾 Save</button>
+
             </div>
 
         </div>
@@ -69,6 +70,9 @@ else
     private List<CountertopStation> stations = new();
     private int currentStationIndex = 0;
     private string CurrentSketch => stations.Count > 0 ? stations[currentStationIndex].SketchName : "";
+    private double? LeftDistance { get; set; }
+    private double? RightDistance { get; set; }
+
 
     void Log(string message)
     {
@@ -151,6 +155,11 @@ else
                         Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, extrudeName);
                     }
                 }
+                // 💾 Save the file after showing countertop bodies
+                int saveErrors = 0;
+                bool saved = model.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref saveErrors, ref saveErrors);
+                Log(saved ? "✅ Part file saved successfully after showing bodies." : $"❌ Failed to save part file. Error code: {saveErrors}");
+
 
                 // ✅ Call only once after the loop:
                 AddCountertopFields(jsonPath);
@@ -211,4 +220,30 @@ else
             HandleCounterTop.EditSketchByName(model, sketchName, Log);
         }
     }
+    private void ApplyDistances()
+    {
+        var model = SwSession.GetActiveModel();
+        if (model != null && !string.IsNullOrEmpty(CurrentSketch))
+        {
+            int wallNumber = GetWallNumber(CurrentSketch);
+            CountertopDimensionApplier.ApplyDistance(model, CurrentSketch, LeftDistance, RightDistance, wallNumber, Log);
+            Log($"✅ Applied distances for {CurrentSketch}: L={LeftDistance}, R={RightDistance}, Wall={wallNumber}");
+        }
+        else
+        {
+            Log("❌ Cannot apply distances. Model or Sketch is null.");
+        }
+    }
+    private int GetWallNumber(string sketchName)
+    {
+        // Example: "1_2" → wall 1
+        if (!string.IsNullOrWhiteSpace(sketchName) && sketchName.Contains("_"))
+        {
+            var parts = sketchName.Split('_');
+            if (int.TryParse(parts[0], out int wallNum))
+                return wallNum;
+        }
+        return 0; // default fallback
+    }
+
 }
