@@ -6,43 +6,58 @@
 @using Kitchenbuilder.Core
 @using static Kitchenbuilder.Core.HandleCounterTop
 @using SolidWorks.Interop.sldworks
-using System.Runtime.InteropServices;
 @using SolidWorks.Interop.swconst
 
 <h1 class="title">Adjust Countertop Distances</h1>
 
-@if (baseCount > 0)
+@if (isLoading)
 {
-    <div class="steps">
-        @for (int i = 0; i < baseCount; i++)
-        {
-            <div class="step-circle @(i == currentIndex ? "active" : "")" @onclick="@(() => GoTo(i))">@((i + 1).ToString())</div>
-        }
+    <div class="loading-container">
+        <img src="Images/Loading.gif" alt="Loading..." />
+        <p>Loading countertops... please wait</p>
     </div>
-    <div class="station-container">
-        <div class="station">
-            <div class="distance-inputs">
-                <label>Distance from Left:</label>
-                <input type="number" @bind="baseDistances[currentIndex].Left" />
-
-                <label>Distance from Right:</label>
-                <input type="number" @bind="baseDistances[currentIndex].Right" />
-            </div>
-        </div>
-    </div>
-
-    <div class="navigation-buttons">
-        <button @onclick="Previous" disabled="@(currentIndex == 0)">⬅ Back</button>
-        <button @onclick="Next" disabled="@(currentIndex == baseCount - 1)">Next ➡</button>
-    </div>
-
-    <p class="step-indicator">Base @(currentIndex + 1) of @baseCount</p>
-
-    <button class="save-button" @onclick="SaveDistances">💾 Save</button>
 }
 else
 {
-    <p>Loading base information...</p>
+    <p class="status-message">
+        ✅ Reached Countertop Options Page for: <span style="color:#2c3e50">@baseName</span>
+    </p>
+
+
+    @if (stations.Count > 0)
+    {
+        <div class="step-indicators">
+            @for (int i = 0; i < stations.Count; i++)
+            {
+                <div @onclick="@(() => GoTo(i))"
+                     class="@(i == currentStationIndex ? "step-indicator active" : "step-indicator")">
+                    @(i + 1)
+                </div>
+
+            }
+        </div>
+
+        <div class="station-info">
+            <h3>📐 Editing: CT_@CurrentSketch</h3>
+
+            <div class="distance-inputs">
+                <label>Distance from Left:</label>
+                <input type="number" placeholder="Enter left distance" /><br />
+
+                <label>Distance from Right:</label>
+                <input type="number" placeholder="Enter right distance" /><br /><br />
+
+                <button class="save-button">💾 Save</button>
+            </div>
+
+        </div>
+
+        <div class="nav-buttons">
+            <button @onclick="GoBack" disabled="@(currentStationIndex == 0)">⬅️ Back</button>
+            <button @onclick="GoNext" disabled="@(currentStationIndex == stations.Count - 1)">Next ➡️</button>
+        </div>
+
+    }
 }
 
 @code {
@@ -50,10 +65,10 @@ else
     [SupplyParameterFromQuery(Name = "base")]
     public string? baseName { get; set; }
 
-    private string currentSketchName = "";
-    private int baseCount = 0;
-    private int currentIndex = 0;
-    private List<HandleCounterTop.BaseDistance> baseDistances = new();
+    private bool isLoading = true;
+    private List<CountertopStation> stations = new();
+    private int currentStationIndex = 0;
+    private string CurrentSketch => stations.Count > 0 ? stations[currentStationIndex].SketchName : "";
 
     void Log(string message)
     {
@@ -62,138 +77,133 @@ else
         File.AppendAllText(debugPath, timestamped);
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Log("🟢 OnInitialized started.");
-        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
-        if (File.Exists(debugPath))
+        isLoading = true;
+
+        await Task.Run(() =>
         {
-            string content = File.ReadAllText(debugPath);
-            Log($"📄 base_count_debug.txt content: {content}");
-            if (int.TryParse(content.Split(':').Last().Trim(), out int count))
+            Log("🟢 OnInitialized started in /countertop-options");
+
+            if (string.IsNullOrWhiteSpace(baseName))
             {
-                baseCount = count;
-                Log($"✅ Parsed baseCount = {baseCount}");
-                baseDistances = Enumerable.Range(0, baseCount)
-                                          .Select(_ => new HandleCounterTop.BaseDistance())
-                                          .ToList();
+                Log("❌ baseName is null or empty");
+                return;
             }
-        }
 
-        if (!string.IsNullOrWhiteSpace(baseName))
-        {
-            Log($"📦 Received baseName = {baseName}");
-            string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
+            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+            string partPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{baseName}.SLDPRT");
 
-            CheckVisibleCountertops.ProcessVisibleCountertops(jsonPath, SwSession);
+            Log($"📦 baseName = {baseName}");
+            Log($"📄 JSON path = {jsonPath}");
+            Log($"🧱 Part path = {partPath}");
+
+            if (!File.Exists(jsonPath) || !File.Exists(partPath))
+            {
+                Log("❌ JSON or SLDPRT file does not exist.");
+                return;
+            }
 
             try
             {
-                string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\{baseName}.SLDPRT";
-                ISldWorks swApp = SwSession.GetApp();
-
-                Log("✅ SolidWorks instance launched or connected.");
+                ISldWorks swApp;
+                try { swApp = SwSession.GetApp(); }
+                catch (Exception ex)
+                {
+                    Log($"❌ Failed to get SolidWorks app: {ex.Message}");
+                    return;
+                }
 
                 int errors = 0, warnings = 0;
-                ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(partPath, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
+                var model = swApp.OpenDoc6(partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings) as IModelDoc2;
 
                 if (model == null)
                 {
-                    Log($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
+                    Log("❌ Failed to open part.");
                     return;
                 }
 
                 SwSession.SetActiveModel(model);
-                LayoutLauncher.StationSketches = GetVisibleSketches(jsonPath);
+                LayoutLauncher.ArrangeWindows(swApp); // <-- ADD THIS LINE HERE
+
+
+                string jsonText = File.ReadAllText(jsonPath);
+                var jsonDoc = JsonDocument.Parse(jsonText);
+
+                foreach (var wallName in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+                {
+                    if (!jsonDoc.RootElement.TryGetProperty(wallName, out JsonElement wall)) continue;
+                    if (!wall.TryGetProperty("Bases", out JsonElement bases)) continue;
+
+                    foreach (var baseItem in bases.EnumerateObject())
+                    {
+                        var baseValue = baseItem.Value;
+                        if (!baseValue.TryGetProperty("Visible", out JsonElement vis) || !vis.GetBoolean()) continue;
+                        if (!baseValue.TryGetProperty("SketchName", out JsonElement sketchProp)) continue;
+
+                        string sketchName = sketchProp.GetString();
+                        if (string.IsNullOrWhiteSpace(sketchName)) continue;
+
+                        string extrudeName = $"Extrude_CT_{sketchName}";
+                        Log($"👁️ Attempting to show countertop body: {extrudeName}");
+                        Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, extrudeName);
+                    }
+                }
+
+                stations = ExtractCountertopStations(jsonPath);
+                if (stations.Count > 0)
+                {
+                    EditCurrentSketch();
+                }
+
+                Log("✅ Finished showing all countertop bodies.");
             }
             catch (Exception ex)
             {
-                Log($"❌ Error initializing SolidWorks part: {ex.Message}");
-                return;
+                Log($"❌ Exception in OnInitialized: {ex.Message}");
             }
+        });
+
+        isLoading = false;
+    }
+
+    private void GoNext()
+    {
+        if (currentStationIndex < stations.Count - 1)
+        {
+            currentStationIndex++;
+            EditCurrentSketch();
+        }
+    }
+
+    private void GoBack()
+    {
+        if (currentStationIndex > 0)
+        {
+            currentStationIndex--;
+            EditCurrentSketch();
         }
     }
 
     private void GoTo(int index)
     {
-        Log($"➡ Switching to station index {index}");
-        if (index >= 0 && index < baseCount)
+        if (index >= 0 && index < stations.Count)
         {
-            currentIndex = index;
-            string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
-
-            ISldWorks swApp = SwSession.GetApp();
-
-            IModelDoc2? model = SwSession.GetActiveModel();
-
-            if (model != null)
-            {
-                if (LayoutLauncher.StationSketches != null && index < LayoutLauncher.StationSketches.Count)
-                {
-                    currentSketchName = LayoutLauncher.StationSketches[index];
-                    Feature sketchFeat = null;
-                    Feature currentFeat = (Feature)model.FirstFeature();
-
-                    while (currentFeat != null)
-                    {
-                        if (currentFeat.Name == currentSketchName)
-                        {
-                            sketchFeat = currentFeat;
-                            break;
-                        }
-                        currentFeat = (Feature)currentFeat.GetNextFeature();
-                    }
-
-                    if (sketchFeat != null)
-                    {
-                        bool selected = sketchFeat.Select2(false, -1);
-                        Log(selected ? $"✅ Sketch '{currentSketchName}' selected." : $"❌ Failed to select sketch '{currentSketchName}'.");
-                    }
-                    else
-                    {
-                        Log($"❌ Sketch '{currentSketchName}' not found.");
-                    }
-                }
-            }
-
-            Log($"📏 Applying dimensions for sketch '{currentSketchName}'");
-            CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp, currentSketchName);
+            currentStationIndex = index;
+            EditCurrentSketch();
         }
     }
 
-    private void Previous()
+    private void EditCurrentSketch()
     {
-        if (currentIndex > 0)
+        var model = SwSession.GetActiveModel();
+        if (model != null && !string.IsNullOrEmpty(CurrentSketch))
         {
-            currentIndex--;
-            ActivateSketchForStation(currentIndex, SwSession);
+            string sketchName = $"CT_{CurrentSketch}";
+            HandleCounterTop.EditSketchByName(model, sketchName, Log);
         }
-    }
-
-    private void Next()
-    {
-        if (currentIndex < baseCount - 1)
-        {
-            currentIndex++;
-            ActivateSketchForStation(currentIndex, SwSession);
-        }
-    }
-
-    private void SaveDistances()
-    {
-        Log($"💾 Saving distances for baseName = {baseName}, currentSketch = {currentSketchName}");
-        if (string.IsNullOrWhiteSpace(baseName)) return;
-
-        string fullBaseName = baseName.EndsWith("SLD") ? baseName : $"{baseName}SLD";
-        string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{fullBaseName}.json");
-
-        ApplyCountertopData(jsonPath, baseDistances, SwSession);
-        ISldWorks swApp = SwSession.GetApp();
-
-        CountertopDimensionApplier.ApplyDimensionsFromJson(jsonPath, swApp, currentSketchName);
-
-        GoTo(currentIndex);
     }
 }

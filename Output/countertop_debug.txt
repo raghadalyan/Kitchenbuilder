@@ -1,37 +1,14 @@
-2025-07-02 19:01:38 - 🟢 OnInitialized started.
-2025-07-02 19:01:38 - 📄 base_count_debug.txt content: Base count: 3
-2025-07-02 19:01:38 - ✅ Parsed baseCount = 3
-2025-07-02 19:01:38 - 📦 Received baseName = Option3
-2025-07-02 19:03:05 - ✅ SolidWorks instance launched or connected.
-2025-07-02 19:03:05 - ❌ Failed to open part. Errors=2, Warnings=0
-2025-07-02 19:13:21 - 🟢 OnInitialized started.
-2025-07-02 19:13:21 - 📄 base_count_debug.txt content: Base count: 3
-2025-07-02 19:13:21 - ✅ Parsed baseCount = 3
-2025-07-02 19:13:21 - 📦 Received baseName = Option3
-2025-07-02 19:14:17 - ✅ SolidWorks instance launched or connected.
-2025-07-02 19:14:18 - ❌ Failed to open part. Errors=2, Warnings=0
-2025-07-02 19:14:29 - 💾 Saving distances for baseName = Option3, currentSketch = 
-[19:15:06] 🚀 Starting CountertopDimensionApplier...
-[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_fridge_base1 with expected = Extrude_CT_
-[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_
-[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_
-[19:15:06] 🔍 Comparing JSON Name = Extrude_CT_3_1 with expected = Extrude_CT_
-[19:15:06] ⚠️ No matching sketch found in any wall.
-2025-07-02 19:15:06 - ➡ Switching to station index 1
-2025-07-02 19:15:09 - ✅ Sketch '2_1' selected.
-2025-07-02 19:15:09 - 📏 Applying dimensions for sketch '2_1'
-[19:15:09] 🚀 Starting CountertopDimensionApplier...
-[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_fridge_base1 with expected = Extrude_CT_2_1
-[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_1_2 with expected = Extrude_CT_2_1
-[19:15:09] 🔍 Comparing JSON Name = Extrude_CT_2_1 with expected = Extrude_CT_2_1
-[19:15:09] 🏠 Sketch '2_1' belongs to wall: Wall2
-[19:15:09] 🧩 Trying to set L@CT_2_1 = -0, R@CT_2_1 = -0
-[19:15:10] ✅ Set L@CT_2_1 to -0
-[19:15:10] ✅ Set R@CT_2_1 to -0
-[19:15:12] ✅ Finished applying dimensions to sketch.
-2025-07-02 19:20:56 - 🟢 OnInitialized started.
-2025-07-02 19:20:56 - 📄 base_count_debug.txt content: Base count: 3
-2025-07-02 19:20:56 - ✅ Parsed baseCount = 3
-2025-07-02 19:20:56 - 📦 Received baseName = Option3
-2025-07-02 19:22:10 - ✅ SolidWorks instance launched or connected.
-2025-07-02 19:22:10 - ❌ Failed to open part. Errors=2, Warnings=0
+2025-07-02 20:58:14 - 🟢 OnInitialized started in /countertop-options
+2025-07-02 20:58:14 - 📦 baseName = Option3
+2025-07-02 20:58:14 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+2025-07-02 20:58:14 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
+2025-07-02 20:58:20 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base1
+2025-07-02 20:58:34 - 👁️ Attempting to show countertop body: Extrude_CT_1_2
+2025-07-02 20:58:35 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
+2025-07-02 20:58:36 - 👁️ Attempting to show countertop body: Extrude_CT_3_1
+2025-07-02 20:58:38 - ✏️ Editing sketch CT_1_2
+2025-07-02 20:58:38 - ✅ Finished showing all countertop bodies.
+2025-07-02 20:58:51 - ✏️ Editing sketch CT_2_1
+2025-07-02 20:58:52 - ✏️ Editing sketch CT_3_1
+2025-07-02 20:58:54 - ✏️ Editing sketch CT_2_1
+2025-07-02 20:58:55 - ✏️ Editing sketch CT_1_2

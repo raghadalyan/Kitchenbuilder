@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Components
 @using Kitchenbuilder.Core
 @inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
 
 @inject NavigationManager NavManager
 
@@ -196,7 +197,7 @@
     }
     private void ApproveBase()
     {
-        if (string.IsNullOrEmpty(selectedOption))
+        if (string.IsNullOrWhiteSpace(selectedOption))
         {
             Console.WriteLine("❌ selectedOption is null or empty");
             return;
@@ -204,74 +205,24 @@
 
         try
         {
-            string normalized = selectedOption.StartsWith("option", StringComparison.OrdinalIgnoreCase)
-                ? "Option" + selectedOption.Substring(6)
-                : selectedOption;
-
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{normalized}SLD.json");
-
-            Console.WriteLine($"🔍 selectedOption: {selectedOption}");
-            Console.WriteLine($"🔍 Looking for JSON at: {jsonPath}");
-
-            if (!File.Exists(jsonPath))
+            var swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+            if (swApp == null)
             {
-                Console.WriteLine($"❌ JSON file not found: {jsonPath}");
+                Console.WriteLine("❌ Failed to start SolidWorks.");
                 return;
             }
 
-            string json = File.ReadAllText(jsonPath);
-            var doc = JsonDocument.Parse(json);
-            int baseCount = 0;
+            swApp.Visible = true;
+            SwSession.SetApp(swApp);
 
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
-            {
-                if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
-                    wallElement.TryGetProperty("Bases", out var bases))
-                {
-                    foreach (var baseProp in bases.EnumerateObject())
-                    {
-                        var visible = baseProp.Value.GetProperty("Visible").GetBoolean();
-                        var sketchName = baseProp.Value.GetProperty("SketchName").GetString()?.ToLower();
-
-                        if (visible && (sketchName == null || !sketchName.Contains("fridge")))
-                        {
-                            baseCount++;
-                        }
-                    }
-                }
-            }
-
-            string baseCountPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\base_count_debug.txt";
-            Directory.CreateDirectory(Path.GetDirectoryName(baseCountPath)!);
-            File.WriteAllText(baseCountPath, $"Base count: {baseCount}");
-            Console.WriteLine($"✅ base_count_debug.txt written with Base count: {baseCount}");
-
-            LayoutLauncher.StationSketches = HandleCounterTop.GetVisibleSketches(jsonPath);
-
-            string sketchDebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\station_sketches_debug.txt";
-            var sketchLogs = LayoutLauncher.StationSketches
-                .Select((sketch, i) => $"[{DateTime.Now:HH:mm:ss}] Station {i}: {sketch}")
-                .ToList();
-            if (sketchLogs.Count == 0)
-                sketchLogs.Add($"[{DateTime.Now:HH:mm:ss}] ❌ No StationSketches collected.");
-            File.WriteAllLines(sketchDebugPath, sketchLogs);
-            string partFilePath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{normalized}.SLDPRT");
-
-            LayoutLauncher.LaunchAndSplitScreen(SwSession, partFilePath);
+            Console.WriteLine("✅ SolidWorks initialized and stored in session.");
+            NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ ERROR in ApproveBase(): {ex.Message}");
+            Console.WriteLine($"❌ Exception while starting SolidWorks: {ex.Message}");
         }
-
-        NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
     }
-    // private void ApproveBase()
-    // {
-    //     NavManager.NavigateTo($"/handle-cabinet");
-
-    // }
-
 
 
     private void RejectBase()
@@ -283,7 +234,7 @@
     {
         try
         {
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            var apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
                 aiResponse = "⚠️ OpenAI API key not configured!";
