@@ -71,16 +71,17 @@ namespace Kitchenbuilder.Core
 
                     if (visible && !string.IsNullOrWhiteSpace(sketchName) && !sketchName.StartsWith("fridge_base"))
                     {
-                        baseObj["Countertop"] = new JsonArray
-                {
-                    new JsonObject
-                    {
-                        ["Name"] = $"Extrude_CT_{sketchName}",
-                        ["L"] = 0,
-                        ["R"] = 0
+                        if (!baseObj.ContainsKey("Countertop") || baseObj["Countertop"] is null)
+                        {
+                            baseObj["Countertop"] = new JsonObject
+                            {
+                                ["Name"] = $"Extrude_CT_{sketchName}",
+                                ["L"] = 0,
+                                ["R"] = 0
+                            };
+                        }
                     }
-                };
-                    }
+
                 }
             }
 
@@ -172,7 +173,6 @@ namespace Kitchenbuilder.Core
                             if (sketchName == currentSketch)
                             {
                                 writer.WritePropertyName("Countertop");
-
                                 if (removeObject)
                                 {
                                     writer.WriteNullValue();
@@ -188,6 +188,16 @@ namespace Kitchenbuilder.Core
                                     Log($"✅ Updated L/R values for {currentSketch}");
                                 }
                             }
+                            else
+                            {
+                                // Preserve existing countertop data
+                                if (baseProp.Value.TryGetProperty("Countertop", out var ct))
+                                {
+                                    writer.WritePropertyName("Countertop");
+                                    ct.WriteTo(writer);
+                                }
+                            }
+
 
                             writer.WriteEndObject(); // base
                         }

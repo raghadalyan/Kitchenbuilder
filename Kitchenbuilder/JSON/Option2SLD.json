@@ -6,7 +6,7 @@
     },
     "Length": {
       "Name": "length@Floor",
-      "Size": 400
+      "Size": 350
     }
   },
   "Wall1": {
@@ -50,7 +50,11 @@
             "Size": 315
           }
         ],
-        "Countertop": null
+        "Countertop": {
+          "Name": "Extrude_CT_1_2",
+          "L": 20,
+          "R": 0
+        }
       },
       "Base1": {
         "SketchName": "1_1",
@@ -71,7 +75,7 @@
     "SpacesWall2": [
       {
         "Start": 0,
-        "End": 400
+        "End": 350
       }
     ],
     "Bases": {
@@ -79,7 +83,7 @@
         "SketchName": "2_1",
         "ExtrudeName": "Extrude_2_1",
         "Start": 60,
-        "End": 400,
+        "End": 350,
         "Visible": true,
         "SmartDim": [
           {
@@ -88,9 +92,14 @@
           },
           {
             "Name": "length@2_1",
-            "Size": 340
+            "Size": 290
           }
-        ]
+        ],
+        "Countertop": {
+          "Name": "Extrude_CT_2_1",
+          "L": 0,
+          "R": 30
+        }
       },
       "Base2": {
         "SketchName": "2_2",
