@@ -1,5 +1,11 @@
 ﻿@page "/sink-cooktop-options"
+@using Kitchenbuilder.Core
 @using Microsoft.AspNetCore.Components
+
+<h3>Sink & Cooktop Layout for Option: <span style="color:#007acc">Option @SelectedOption</span></h3>
+
+<p>Processing countertop placements...</p>
+
 @code {
     [Parameter]
     [SupplyParameterFromQuery(Name = "option")]
@@ -8,5 +14,19 @@
     protected override void OnInitialized()
     {
         Console.WriteLine($"➡️ Navigated with option: {SelectedOption}");
+
+        if (!string.IsNullOrWhiteSpace(SelectedOption) && SelectedOption.StartsWith("Option"))
+        {
+            SelectedOption = SelectedOption.Replace("Option", "");
+        }
+
+        if (int.TryParse(SelectedOption, out int optionNum))
+        {
+            IdentifyRelevantCountertops.Process(optionNum);
+        }
+        else
+        {
+            Console.WriteLine("❌ Invalid option parameter after cleanup.");
+        }
     }
 }

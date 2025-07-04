@@ -40,7 +40,9 @@
         "Countertop": {
           "Name": "Extrude_CT_1_1",
           "L": 0,
-          "R": 0
+          "R": 0,
+          "Start": 0,
+          "End": 100
         }
       },
       "Base3": {
@@ -79,7 +81,9 @@
         "Countertop": {
           "Name": "Extrude_CT_1_2",
           "L": 60,
-          "R": 0
+          "R": 0,
+          "Start": 345,
+          "End": 500
         }
       }
     },
@@ -116,7 +120,9 @@
         "Countertop": {
           "Name": "Extrude_CT_2_1",
           "L": 0,
-          "R": 0
+          "R": 0,
+          "Start": 0,
+          "End": 400
         }
       },
       "Base2": {
@@ -166,7 +172,9 @@
         "Countertop": {
           "Name": "Extrude_CT_3_1",
           "L": 0,
-          "R": 0
+          "R": 0,
+          "Start": 0,
+          "End": 180
         }
       },
       "Base2": {
