@@ -1,21 +1,34 @@
-2025-07-03 00:32:39 - 🟢 OnInitialized started in /countertop-options
-2025-07-03 00:32:39 - 📦 baseName = Option2
-2025-07-03 00:32:39 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
-2025-07-03 00:32:39 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-2025-07-03 00:32:42 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base1
-2025-07-03 00:32:56 - 👁️ Attempting to show countertop body: Extrude_CT_1_2
-2025-07-03 00:32:58 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
-2025-07-03 00:32:59 - ✅ Part file saved successfully after showing bodies.
-2025-07-03 00:33:00 - ✏️ Editing sketch CT_1_2
-2025-07-03 00:33:00 - ✅ Finished showing all countertop bodies.
-2025-07-03 00:33:31 - ✏️ Editing sketch CT_2_1
-2025-07-03 00:33:37 - ✅ Set R@CT_2_1 to -30
-2025-07-03 00:33:39 - ✅ Applied distances for 2_1: L=, R=30, Wall=2
-2025-07-03 00:33:39 - ✅ Updated L/R values for 2_1
-2025-07-03 00:34:00 - ✏️ Editing sketch CT_1_2
-2025-07-03 00:34:07 - ✅ Set L@CT_1_2 to -20
-2025-07-03 00:34:08 - ✅ Applied distances for 1_2: L=20, R=, Wall=1
-2025-07-03 00:34:08 - ✅ Updated L/R values for 1_2
-2025-07-03 00:34:11 - ✅ Set L@CT_1_2 to -20
-2025-07-03 00:34:13 - ✅ Applied distances for 1_2: L=20, R=, Wall=1
-2025-07-03 00:34:13 - ✅ Updated L/R values for 1_2
+2025-07-04 14:37:10 - 🟢 OnInitialized started in /countertop-options
+2025-07-04 14:37:10 - 📦 baseName = Option3
+2025-07-04 14:37:10 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+2025-07-04 14:37:10 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
+2025-07-04 14:37:13 - 👁️ Attempting to show countertop body: Extrude_CT_1_1
+2025-07-04 14:37:16 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base1
+2025-07-04 14:37:27 - 👁️ Attempting to show countertop body: Extrude_CT_1_2
+2025-07-04 14:37:29 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
+2025-07-04 14:37:31 - 👁️ Attempting to show countertop body: Extrude_CT_3_1
+2025-07-04 14:37:32 - ✅ Part file saved successfully after showing bodies.
+2025-07-04 14:37:33 - ✏️ Editing sketch CT_1_1
+2025-07-04 14:37:33 - ✅ Finished showing all countertop bodies.
+2025-07-04 14:37:40 - ✏️ Editing sketch CT_1_2
+2025-07-04 14:37:42 - ✏️ Editing sketch CT_2_1
+2025-07-04 14:37:44 - ✏️ Editing sketch CT_3_1
+2025-07-04 14:37:47 - ✏️ Editing sketch CT_2_1
+2025-07-04 14:37:48 - ✏️ Editing sketch CT_1_2
+2025-07-04 14:38:00 - ✅ Set L@CT_1_2 to -60
+2025-07-04 14:38:02 - ✅ Applied distances for 1_2: L=60, R=, Wall=1
+2025-07-04 14:38:02 - ✅ Updated L/R values for 1_2
+2025-07-04 16:06:49 - 🟢 OnInitialized started in /countertop-options
+2025-07-04 16:06:49 - 📦 baseName = Option3
+2025-07-04 16:06:49 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+2025-07-04 16:06:49 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
+2025-07-04 16:07:39 - 👁️ Attempting to show countertop body: Extrude_CT_1_1
+2025-07-04 16:07:42 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base1
+2025-07-04 16:08:44 - 👁️ Attempting to show countertop body: Extrude_CT_1_2
+2025-07-04 16:08:46 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
+2025-07-04 16:08:50 - 👁️ Attempting to show countertop body: Extrude_CT_3_1
+2025-07-04 16:08:53 - ✅ Part file saved successfully after showing bodies.
+2025-07-04 16:09:00 - ✏️ Editing sketch CT_1_1
+2025-07-04 16:09:00 - ✅ Finished showing all countertop bodies.
+2025-07-04 16:09:33 - ✏️ Editing sketch CT_1_2
+2025-07-04 16:09:42 - ✏️ Editing sketch CT_2_1

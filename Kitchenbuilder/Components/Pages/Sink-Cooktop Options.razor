@@ -1,0 +1,12 @@
+﻿@page "/sink-cooktop-options"
+@using Microsoft.AspNetCore.Components
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "option")]
+    public string? SelectedOption { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"➡️ Navigated with option: {SelectedOption}");
+    }
+}

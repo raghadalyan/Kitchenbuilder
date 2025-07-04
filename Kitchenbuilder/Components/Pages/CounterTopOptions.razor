@@ -66,6 +66,16 @@ else
             <button @onclick="GoBack" disabled="@(currentStationIndex == 0)">⬅️ Back</button>
             <button @onclick="GoNext" disabled="@(currentStationIndex == stations.Count - 1)">Next ➡️</button>
         </div>
+        @if (stations.Count > 0)
+        {
+            <div class="continue-section">
+                <img src="Images/Continue.gif"
+                     @onclick="ContinueToSinkCooktop"
+                     style="cursor:pointer; width:150px; height:auto;"
+                     alt="Continue" title="Click to continue" />
+            </div>
+
+        }
 
     }
 }
@@ -309,5 +319,15 @@ else
         RightDistance = null;
     }
 
+
+
+    void ContinueToSinkCooktop()
+    {
+        if (!string.IsNullOrWhiteSpace(baseName))
+        {
+            string option = baseName.Replace("SLD", ""); // Converts Option3SLD → Option3
+            NavManager.NavigateTo($"/sink-cooktop-options?option={option}");
+        }
+    }
 
 }

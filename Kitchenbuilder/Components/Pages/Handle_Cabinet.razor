@@ -137,8 +137,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
-        string sldPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json";
+        string sldPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
 
         if (File.Exists(jsonPath))
         {
@@ -208,7 +208,7 @@
 
     async Task OnApplyCabinet()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json";
 
         int copies = isSequence ? copiesCount : 1;
         if (width < 5)

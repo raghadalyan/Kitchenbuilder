@@ -53,7 +53,7 @@ namespace Kitchenbuilder.Core
                     int distanceX = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("DistanceX") == true)?["Size"]?.GetValue<int>() ?? 0;
                     int length = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("length") == true)?["Size"]?.GetValue<int>() ?? 0;
 
-                    var countertop = baseObj["Countertop"]?.AsArray();
+                    var countertop = baseObj["Countertop"]?.AsObject(); // ✅ CORRECT: it's a JsonObject
                     string baseName = baseEntry.Key;
 
                     int totalStart = distanceX;
@@ -75,8 +75,9 @@ namespace Kitchenbuilder.Core
                     }
                     else
                     {
-                        int L = countertop[0]?["L"]?.GetValue<int>() ?? 0;
-                        int R = countertop[0]?["R"]?.GetValue<int>() ?? 0;
+                        int L = countertop?["L"]?.GetValue<int>() ?? 0;
+                        int R = countertop?["R"]?.GetValue<int>() ?? 0;
+
 
                         if (L == 0 && R == 0)
                         {

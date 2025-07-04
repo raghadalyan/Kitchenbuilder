@@ -1,9 +1,17 @@
 {
   "Floor": {
-    "Width": 0,
-    "Length": 0
+    "Width": 400,
+    "Length": 400
   },
   "Walls": [
+    {
+      "Width": 0,
+      "Height": 0,
+      "HasWindows": false,
+      "Windows": null,
+      "HasDoors": false,
+      "Doors": null
+    },
     {
       "Width": 0,
       "Height": 0,
