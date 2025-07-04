@@ -1,8 +1,8 @@
-[17:39:10] ▶️ Processing Option 3
-[17:39:10] Corner walls found: [1,2]
-[17:39:10] ✔️ Wall1 Base1: Start=0, End=100, Width=100
-[17:39:10] ✔️ Wall1 Base2: Start=345, End=500, Width=155
-[17:39:10] ✔️ Wall2 Base1: Start=0, End=400, Width=400
-[17:39:10] ✔️ Wall3 Base1: Start=0, End=180, Width=180
-[17:39:10] ✅ JSON update complete.
-[17:39:10] 👉 Relevant countertops: Wall1.Base2 (Width=155), Wall2.Base1 (Width=400), Wall3.Base1 (Width=180)
+[19:00:32] ▶️ Processing Option 3
+[19:00:32] Corner walls found: [1,2], Special14=False
+[19:00:32] 🟡 Wall4 is exposed and last base ends at floor length. Treat Wall1 & Wall2 first base as Start=0
+[19:00:32] ✔️ Wall1 Base1: Start=0, End=350, Width=350
+[19:00:32] ✔️ Wall2 Base1: Start=0, End=255, Width=255
+[19:00:32] ✔️ Wall4 Base1: Start=220, End=400, Width=180
+[19:00:33] ✅ JSON update complete.
+[19:00:33] 👉 Relevant countertops: Wall1.Base1 (Width=350), Wall2.Base1 (Width=255), Wall4.Base1 (Width=180)

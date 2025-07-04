@@ -110,30 +110,30 @@
                 };
 
             // 2. Decide which wall builder to run based on wall count
-            // int wallCount = input.Walls?.Count ?? 0;
+            int wallCount = input.Walls?.Count ?? 0;
 
-            // switch (wallCount)
-            // {
-            //     case 1:
-            //         OneWallBuilder.Run(input);
-            //         break;
-            //     case 2:
-            //         TwoWallBuilder.Run(input);
-            //         break;
-            //     case 3:
-            //         ThreeWallBuilder.Run(input);
-            //         break;
-            //     case 4:
-            //         FourWallBuilder.Run(input);
-            //         break;
-            //     default:
-            //         SaveMessage = "❌ Invalid number of walls (must be between 1 and 4).";
-            //         return;
-            // }
+            switch (wallCount)
+            {
+                case 1:
+                    OneWallBuilder.Run(input);
+                    break;
+                case 2:
+                    TwoWallBuilder.Run(input);
+                    break;
+                case 3:
+                    ThreeWallBuilder.Run(input);
+                    break;
+                case 4:
+                    FourWallBuilder.Run(input);
+                    break;
+                default:
+                    SaveMessage = "❌ Invalid number of walls (must be between 1 and 4).";
+                    return;
+            }
 
 
-            // var generatedBase = BaseCreator.CreateBase(input);
-            // input.Base = generatedBase;
+            var generatedBase = BaseCreator.CreateBase(input);
+            input.Base = generatedBase;
 
 
 

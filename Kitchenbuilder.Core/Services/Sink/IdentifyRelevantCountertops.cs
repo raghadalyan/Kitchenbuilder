@@ -9,10 +9,9 @@ namespace Kitchenbuilder.Core
 
         private static void Log(string message)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!); // ✅ Ensure folder exists
+            Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
-
 
         public static void Process(int optionNum)
         {
@@ -30,18 +29,46 @@ namespace Kitchenbuilder.Core
 
             var sldJson = JsonNode.Parse(File.ReadAllText(sldPath))!.AsObject();
             var metaJson = JsonNode.Parse(File.ReadAllText(metaPath))!.AsObject();
-
             var relevant = new List<string>();
 
             HashSet<int> cornerWalls = new();
+            bool specialCorner14 = false;
+            int maxCorner = -1;
+
             if (metaJson["Corner"] is JsonArray corners && corners[0] is JsonArray pair)
             {
-                cornerWalls.Add(pair[0]!.GetValue<int>());
-                cornerWalls.Add(pair[1]!.GetValue<int>());
-                Log($"Corner walls found: [{string.Join(",", cornerWalls)}]");
+                int a = pair[0]!.GetValue<int>();
+                int b = pair[1]!.GetValue<int>();
+                cornerWalls.Add(a);
+                cornerWalls.Add(b);
+                maxCorner = Math.Max(a, b);
+                specialCorner14 = (a == 1 && b == 4) || (a == 4 && b == 1);
+                Log($"Corner walls found: [{string.Join(",", cornerWalls)}], Special14={specialCorner14}");
             }
-            int maxCornerWall = cornerWalls.Count > 0 ? cornerWalls.Max() : -1;
-            bool isSpecialCase14 = cornerWalls.SetEquals([1, 4]);
+
+            bool forceWall1And2 = false;
+            double floorLength = sldJson["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? -1;
+
+            if (sldJson["Wall4"]?["Exposed"]?.GetValue<bool>() == true)
+            {
+                var basesW4 = sldJson["Wall4"]?["Bases"]?.AsObject();
+                if (basesW4 != null)
+                {
+                    var lastVisibleBase = basesW4
+                        .Select(kv => kv.Value?.AsObject())
+                        .Where(x => x != null && x["Visible"]?.GetValue<bool>() == true)
+                        .OrderByDescending(x => x["End"]?.GetValue<double>() ?? 0)
+                        .FirstOrDefault();
+
+                    double lastEnd = lastVisibleBase?["End"]?.GetValue<double>() ?? -2;
+
+                    if (Math.Abs(lastEnd - floorLength) < 0.001)
+                    {
+                        forceWall1And2 = true;
+                        Log("🟡 Wall4 is exposed and last base ends at floor length. Treat Wall1 & Wall2 first base as Start=0");
+                    }
+                }
+            }
 
             for (int wall = 1; wall <= 4; wall++)
             {
@@ -51,6 +78,9 @@ namespace Kitchenbuilder.Core
                 var wallObj = sldJson[wallKey]!.AsObject();
                 var bases = wallObj["Bases"]?.AsObject();
                 if (bases == null) continue;
+
+                bool isExposed = wallObj["Exposed"]?.GetValue<bool>() == true;
+                bool isCornerMax = cornerWalls.Contains(wall) && wall == maxCorner && !specialCorner14;
 
                 int baseIndex = 1;
                 foreach (var basePair in bases)
@@ -67,11 +97,17 @@ namespace Kitchenbuilder.Core
                     double R = ct["R"]?.GetValue<double>() ?? 0;
 
                     bool isFirstBase = baseIndex == 1;
-                    bool cornerForceStartZero = cornerWalls.Contains(wall) && wall == maxCornerWall && !isSpecialCase14 && isFirstBase;
-                    bool exposedForceStartZero = wallObj["Exposed"]?.GetValue<bool>() == true && isFirstBase;
 
-                    double newStart = cornerForceStartZero || exposedForceStartZero ? 0 : start + L;
-                    double newEnd = end - R;
+                    // ✅ Handle special case: preserve Wall4 first base Start/End if L==0, R==0, and End==floorLength
+                    bool isWall4ExactFit = wall == 4 && isExposed && isFirstBase &&
+                                           Math.Abs(end - floorLength) < 0.001 &&
+                                           L == 0 && R == 0;
+
+                    double newStart = isWall4ExactFit ? start : (isFirstBase && (
+                        (isExposed && wall != 4) || isCornerMax || (forceWall1And2 && (wall == 1 || wall == 2)))
+                        ? 0 : start + L);
+
+                    double newEnd = isWall4ExactFit ? end : end - R;
                     double width = newEnd - newStart;
 
                     ct["Start"] = newStart;
