@@ -5,19 +5,19 @@
   "SpacesWall1": [
     {
       "Start": 0,
-      "End": 350
+      "End": 400
     }
   ],
   "SpacesWall2": [
     {
       "Start": 0,
-      "End": 400
+      "End": 350
     }
   ],
-  "FridgeWall": 2,
+  "FridgeWall": 1,
   "Fridge": {
-    "Start": 315,
-    "End": 400
+    "Start": 0,
+    "End": 85
   },
   "Corner": [
     [
@@ -26,9 +26,9 @@
     ]
   ],
   "Exposed": true,
-  "NumOfExposedWall": 4,
+  "NumOfExposedWall": 3,
   "ExposedWallSpace": {
-    "Start": 220,
-    "End": 400
+    "Start": 0,
+    "End": 180
   }
 }

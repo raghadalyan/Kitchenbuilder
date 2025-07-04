@@ -1,5 +1,27 @@
 ﻿using System.Text.Json.Nodes;
 using System.Text.Json;
+using Kitchenbuilder.Models;
+/*
+ * IdentifyRelevantCountertops.cs
+ * ------------------------------
+ * This class processes Option{X}SLD.json and Option{X}.json to identify countertops 
+ * that are wide enough (width ≥ 150 cm) to host a sink or cooktop.
+ *
+ * Key Responsibilities:
+ * - Adjusts the `Start` and `End` positions of each countertop based on:
+ *     • Whether it's the first base on an exposed wall.
+ *     • Whether it's part of a corner layout.
+ *     • Special handling for Wall4 when its last base ends at the floor length.
+ * - Includes countertop only if:
+ *     • It's marked visible.
+ *     • It has a `Countertop` section.
+ *     • The final computed width is ≥ 150 cm.
+ * - Writes updated `Start` and `End` positions back to the Option{X}SLD.json.
+ * - Logs all decisions and selected countertops to: Sink-Cooktop/debug.txt
+ *
+ * Returns:
+ * A list of `Countertop` objects that are eligible for further sink/cooktop analysis.
+ */
 
 namespace Kitchenbuilder.Core
 {
@@ -13,7 +35,9 @@ namespace Kitchenbuilder.Core
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
 
-        public static void Process(int optionNum)
+        public static List<Countertop> Process(int optionNum)
+
+
         {
             string jsonFolder = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON";
             string sldPath = Path.Combine(jsonFolder, $"Option{optionNum}SLD.json");
@@ -24,12 +48,12 @@ namespace Kitchenbuilder.Core
             if (!File.Exists(sldPath) || !File.Exists(metaPath))
             {
                 Log("❌ One or both JSON files not found.");
-                return;
+                return new List<Countertop>();
             }
 
             var sldJson = JsonNode.Parse(File.ReadAllText(sldPath))!.AsObject();
             var metaJson = JsonNode.Parse(File.ReadAllText(metaPath))!.AsObject();
-            var relevant = new List<string>();
+            var relevant = new List<Countertop>();
 
             HashSet<int> cornerWalls = new();
             bool specialCorner14 = false;
@@ -114,12 +138,17 @@ namespace Kitchenbuilder.Core
                     ct["End"] = newEnd;
 
                     Log($"✔️ Wall{wall} {basePair.Key}: Start={newStart}, End={newEnd}, Width={width}");
-
                     if (width >= 150)
                     {
-                        string entry = $"Wall{wall}.{basePair.Key} (Width={width})";
-                        relevant.Add(entry);
+                        relevant.Add(new Countertop
+                        {
+                            BaseKey = basePair.Key,
+                            Start = newStart,
+                            End = newEnd,
+                            WallNumber = wall
+                        });
                     }
+
 
                     baseIndex++;
                 }
@@ -129,9 +158,11 @@ namespace Kitchenbuilder.Core
             Log("✅ JSON update complete.");
 
             if (relevant.Count > 0)
-                Log($"👉 Relevant countertops: {string.Join(", ", relevant)}");
+                Log($"👉 Relevant countertops: {string.Join(", ", relevant.Select(c => $"Wall{c.WallNumber}.{c.BaseKey} [{c.Start}-{c.End}]"))}");
             else
                 Log("⚠️ No countertops with width >= 150 found.");
+            return relevant;
+
         }
 
     }

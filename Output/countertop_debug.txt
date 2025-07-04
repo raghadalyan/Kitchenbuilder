@@ -1,15 +1,14 @@
-2025-07-04 18:52:27 - 🟢 OnInitialized started in /countertop-options
-2025-07-04 18:52:27 - 📦 baseName = Option3
-2025-07-04 18:52:27 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
-2025-07-04 18:52:27 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
-2025-07-04 18:52:33 - 👁️ Attempting to show countertop body: Extrude_CT_1_1
-2025-07-04 18:52:51 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
-2025-07-04 18:52:52 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base2
-2025-07-04 18:52:53 - 👁️ Attempting to show countertop body: Extrude_CT_4_1
-2025-07-04 18:52:54 - ✅ Part file saved successfully after showing bodies.
-2025-07-04 18:52:56 - ✏️ Editing sketch CT_1_1
-2025-07-04 18:52:56 - ✅ Finished showing all countertop bodies.
-2025-07-04 18:53:11 - ✏️ Editing sketch CT_2_1
-2025-07-04 18:53:14 - ✅ Set R@CT_2_1 to -60
-2025-07-04 18:53:16 - ✅ Applied distances for 2_1: L=, R=60, Wall=2
-2025-07-04 18:53:16 - ✅ Updated L/R values for 2_1
+2025-07-04 20:03:01 - 🟢 OnInitialized started in /countertop-options
+2025-07-04 20:03:01 - 📦 baseName = Option3
+2025-07-04 20:03:01 - 📄 JSON path = C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+2025-07-04 20:03:01 - 🧱 Part path = C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
+2025-07-04 20:03:10 - 👁️ Attempting to show countertop body: Extrude_CT_fridge_base1
+2025-07-04 20:03:46 - 👁️ Attempting to show countertop body: Extrude_CT_1_2
+2025-07-04 20:03:49 - 👁️ Attempting to show countertop body: Extrude_CT_2_1
+2025-07-04 20:03:52 - 👁️ Attempting to show countertop body: Extrude_CT_3_1
+2025-07-04 20:03:54 - ✅ Part file saved successfully after showing bodies.
+2025-07-04 20:03:57 - ✏️ Editing sketch CT_1_2
+2025-07-04 20:03:57 - ✅ Finished showing all countertop bodies.
+2025-07-04 20:04:08 - ✅ Set L@CT_1_2 to -60
+2025-07-04 20:04:11 - ✅ Applied distances for 1_2: L=60, R=, Wall=1
+2025-07-04 20:04:11 - ✅ Updated L/R values for 1_2

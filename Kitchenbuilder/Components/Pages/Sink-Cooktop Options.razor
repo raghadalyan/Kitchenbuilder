@@ -22,7 +22,8 @@
 
         if (int.TryParse(SelectedOption, out int optionNum))
         {
-            IdentifyRelevantCountertops.Process(optionNum);
+            var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
+            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum);
         }
         else
         {
