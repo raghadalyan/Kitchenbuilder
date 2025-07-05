@@ -9,7 +9,7 @@
       "Size": 350
     }
   },
-  "HasIsland": "true",
+  "HasIsland": true,
   "Wall1": {
     "SpacesWall1": [
       {
@@ -51,7 +51,13 @@
             "Size": 315
           }
         ],
-        "Countertop": null
+        "Countertop": {
+          "Name": "Extrude_CT_1_2",
+          "L": 60,
+          "R": 0,
+          "Start": 145,
+          "End": 400
+        }
       },
       "Base1": {
         "SketchName": "1_1",
@@ -94,7 +100,7 @@
         ],
         "Countertop": {
           "Name": "Extrude_CT_2_1",
-          "L": 60,
+          "L": 0,
           "R": 0,
           "Start": 0,
           "End": 350
@@ -144,7 +150,13 @@
             "Size": 120
           }
         ],
-        "Countertop": null
+        "Countertop": {
+          "Name": "Extrude_CT_3_1",
+          "L": 0,
+          "R": 0,
+          "Start": 0,
+          "End": 180
+        }
       },
       "Base2": {
         "SketchName": "3_2",

@@ -1,3 +1,5 @@
-[15:01:51] 🔍 Checking Wall 2 countertop range [0, 350]
-[15:01:51] 🪟 Window: [175, 225]
-[15:01:51] ✅ Window overlaps with countertop range.
+[20:53:10] 🔍 Checking Wall 2 countertop range [0, 350]
+[20:53:10] 🪟 Window: [125, 225]
+[20:53:10] ✅ Window overlaps with countertop range.
+[20:53:10] 🔍 Checking Wall 3 countertop range [0, 180]
+[20:53:10] ❌ Wall 3 not found in Walls array.

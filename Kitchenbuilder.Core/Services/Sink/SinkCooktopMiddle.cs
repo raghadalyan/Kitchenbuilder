@@ -21,7 +21,7 @@ namespace Kitchenbuilder.Core
 
         public static Sink? CreateSinkInMiddle(int wall, int baseNum, int optionNum)
         {
-            Log($"Creating sink on Wall {wall}, Base {baseNum}, Option {optionNum}...");
+            Log($"🛠 Creating sink on Wall {wall}, Base {baseNum}, Option {optionNum}...");
 
             string jsonFile = Path.Combine(JsonPath, $"Option{optionNum}SLD.json");
             if (!File.Exists(jsonFile)) { Log("❌ JSON file not found."); return null; }
@@ -30,16 +30,19 @@ namespace Kitchenbuilder.Core
 
             double floorWidth = root["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? -1;
             double floorLength = root["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? -1;
+            Log($"📐 Floor: Width={floorWidth}, Length={floorLength}");
 
             string wallKey = $"Wall{wall}";
             string baseKey = $"Base{baseNum}";
 
             var baseObj = root[wallKey]?["Bases"]?[baseKey]?.AsObject();
             if (baseObj == null) { Log("❌ Base not found in JSON."); return null; }
+
             double start = baseObj["Countertop"]?["Start"]?.GetValue<double>() ?? 0;
             double end = baseObj["Countertop"]?["End"]?.GetValue<double>() ?? 0;
-
             int middle = (int)((end - start) / 2);
+
+            Log($"📏 Sink Countertop: Start={start}, End={end}, Middle={middle}");
 
             Sink sink = new Sink
             {
@@ -72,13 +75,13 @@ namespace Kitchenbuilder.Core
                     break;
             }
 
-            Log("✅ Sink created successfully.");
+            Log($"✅ Sink created at (X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}), Angle={sink.Angle_Sketch_Rotate_Faucet}");
             return sink;
         }
 
         public static Cooktop? CreateCooktopInMiddle(int wall, int baseNum, int optionNum)
         {
-            Log($"Creating cooktop on Wall {wall}, Base {baseNum}, Option {optionNum}...");
+            Log($"🛠 Creating cooktop on Wall {wall}, Base {baseNum}, Option {optionNum}...");
 
             string jsonFile = Path.Combine(JsonPath, $"Option{optionNum}SLD.json");
             if (!File.Exists(jsonFile)) { Log("❌ JSON file not found."); return null; }
@@ -87,6 +90,7 @@ namespace Kitchenbuilder.Core
 
             double floorWidth = root["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? -1;
             double floorLength = root["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? -1;
+            Log($"📐 Floor: Width={floorWidth}, Length={floorLength}");
 
             string wallKey = $"Wall{wall}";
             string baseKey = $"Base{baseNum}";
@@ -97,6 +101,8 @@ namespace Kitchenbuilder.Core
             double start = baseObj["Start"]?.GetValue<double>() ?? 0;
             double end = baseObj["End"]?.GetValue<double>() ?? 0;
             int middle = (int)((end - start) / 2);
+
+            Log($"📏 Cooktop Base: Start={start}, End={end}, Middle={middle}");
 
             Cooktop cooktop = new Cooktop
             {
@@ -129,8 +135,9 @@ namespace Kitchenbuilder.Core
                     break;
             }
 
-            Log("✅ Cooktop created successfully.");
+            Log($"✅ Cooktop created at (X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}), Angle={cooktop.Angle_Sketch_Rotate_Cooktop}");
             return cooktop;
         }
+
     }
 }

@@ -17,11 +17,10 @@
       "Height": 300,
       "HasWindows": true,
       "Windows": [
-
         {
-          "Width": 50,
-          "Height": 50,
-          "DistanceX": 175,
+          "Width": 100,
+          "Height": 60,
+          "DistanceX": 125,
           "DistanceY": 100
         }
       ],

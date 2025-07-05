@@ -218,57 +218,64 @@ namespace Kitchenbuilder.Core
                 Log($"❌ Failed to update JSON: {ex.Message}");
             }
         }
-        public static void DeleteSketchByName(IModelDoc2 modelDoc, string fullSketchName, Action<string> log)
+        public static void DeleteSketchByName(IModelDoc2 modelDoc, string fullSketchName, Action<string> logToConsole)
         {
+            void Log(string message)
+            {
+                logToConsole?.Invoke(message); // Only log to app/console
+            }
+
             if (modelDoc is not PartDoc partDoc)
             {
-                log("❌ ModelDoc is not a PartDoc.");
+                Log("❌ ModelDoc is not a PartDoc.");
                 return;
             }
-            // ✅ Exit sketch edit mode if active
+
+            Log($"🚨 Deleting: {fullSketchName}");
+
+            // Exit sketch mode if active
             modelDoc.SketchManager.InsertSketch(true);
-            log("↩️ Exited sketch mode if active.");
+            Log("↩️ Exited sketch mode if active.");
 
+            // Delete Extrude
+            string extrudeName = $"Extrude_{fullSketchName}";
+            Log($"🔎 Looking for extrusion: {extrudeName}");
 
-            // 1. Delete the extrusion feature
-            string extrudeName = $"Extrude_{fullSketchName}"; // don't double-prefix
             var extrudeObj = partDoc.FeatureByName(extrudeName);
             if (extrudeObj is IFeature extrudeFeature)
             {
+                Log($"✅ Found extrusion feature: {extrudeFeature.Name}");
                 bool selected = extrudeFeature.Select2(false, 0);
+                Log($"➡️ Selecting {extrudeFeature.Name}: {(selected ? "Success" : "Failed")}");
                 if (selected)
                 {
                     modelDoc.EditDelete();
-                    log($"🗑️ Deleted extrusion feature {extrudeName}");
-                }
-                else
-                {
-                    log($"❌ Could not select extrusion feature {extrudeName}");
+                    Log($"🗑️ Deleted extrusion feature {extrudeName}");
                 }
             }
             else
             {
-                log($"⚠️ Extrusion feature {extrudeName} not found");
+                Log($"⚠️ Extrusion feature {extrudeName} not found.");
             }
 
-            // 2. Delete the sketch itself
-            var sketchObj = partDoc.FeatureByName(fullSketchName); // no prefix
+            // Delete Sketch
+            Log($"🔎 Looking for sketch: {fullSketchName}");
+
+            var sketchObj = partDoc.FeatureByName(fullSketchName);
             if (sketchObj is IFeature sketchFeature)
             {
+                Log($"✅ Found sketch feature: {sketchFeature.Name}");
                 bool selected = sketchFeature.Select2(false, 0);
+                Log($"➡️ Selecting {sketchFeature.Name}: {(selected ? "Success" : "Failed")}");
                 if (selected)
                 {
                     modelDoc.EditDelete();
-                    log($"🗑️ Deleted sketch {fullSketchName}");
-                }
-                else
-                {
-                    log($"❌ Could not select sketch {fullSketchName}");
+                    Log($"🗑️ Deleted sketch {fullSketchName}");
                 }
             }
             else
             {
-                log($"⚠️ Sketch {fullSketchName} not found");
+                Log($"⚠️ Sketch {fullSketchName} not found.");
             }
         }
 

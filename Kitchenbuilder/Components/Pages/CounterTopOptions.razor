@@ -38,7 +38,9 @@ else
         </div>
 
         <div class="station-box">
-            <img src="Images/Delete.png" class="delete-icon" @onclick="DeleteCountertop" alt="Delete" title="Delete countertop" />
+            <img src="Images/Delete.png" class="delete-icon"
+                 @onclick="() => DeleteCountertop(currentStationIndex)"
+                 alt="Delete" title="Delete countertop" />
 
             <h3>📐 Editing: CT_@CurrentSketch</h3>
 
@@ -276,47 +278,100 @@ else
         }
         return 0; // default fallback
     }
-    private void DeleteCountertop()
+    private int? pendingDeleteIndex = null;
+
+    private void DeleteCountertop(int index)
     {
-        Log($"🗑️ Delete icon clicked for CT_{CurrentSketch}");
+        pendingDeleteIndex = index;
+        Log($"🗑️ Delete icon clicked for CT_{stations[index].SketchName}");
         showDeleteConfirmation = true;
     }
 
     private void ConfirmDelete()
     {
-        showDeleteConfirmation = false;
-
-        Log($"🗑️ Confirmed deletion for CT_{CurrentSketch}");
-
-        // 1. Update JSON
-        UpdateJsonCountertopDistances(baseName, CurrentSketch, null, null, Log, true);
-
-        // 2. Delete from SLDPRT
-        var model = SwSession.GetActiveModel();
-        if (model != null)
+        if (pendingDeleteIndex == null || pendingDeleteIndex < 0 || pendingDeleteIndex >= stations.Count)
         {
-            string sketchName = $"CT_{CurrentSketch}";
-            HandleCounterTop.DeleteSketchByName(model, sketchName, Log);
-            Log($"🧹 Deleted sketch {sketchName}");
+            Log("❌ Invalid delete index.");
+            showDeleteConfirmation = false;
+            return;
         }
 
-        // 3. Remove the deleted station from the list
-        stations.RemoveAt(currentStationIndex);
-        Log($"❌ Removed station {CurrentSketch} from list");
+        var index = pendingDeleteIndex.Value;
+        var sketchToDelete = stations[index].SketchName;
 
-        // 4. Reset current index (go to first or previous)
+        showDeleteConfirmation = false;
+        pendingDeleteIndex = null;
+
+        Log($"🗑️ Confirmed deletion for CT_{sketchToDelete}");
+
+        var model = SwSession.GetActiveModel();
+        if (model == null)
+        {
+            Log("❌ No active SolidWorks model found.");
+            return;
+        }
+
+        int wallNumber = GetWallNumber(sketchToDelete);
+
+        double fakeDist = 61;
+        CountertopDimensionApplier.ApplyDistance(model, sketchToDelete, fakeDist, fakeDist, wallNumber, Log);
+        Log($"✏️ Set distances to 61 for {sketchToDelete} before deletion");
+
+        UpdateJsonCountertopDistances(baseName, sketchToDelete, null, null, Log, true);
+
+        string sketchName = $"CT_{sketchToDelete}";
+        HandleCounterTop.DeleteSketchByName(model, sketchName, Log);
+        Log($"🧹 Deleted sketch {sketchName}");
+
+        stations.RemoveAt(index);
+        Log($"❌ Removed station {sketchToDelete} from list");
+
         if (stations.Count == 0)
         {
             Log("⚠️ No stations left after deletion.");
-            return; // optionally show a message in UI
+            return;
         }
 
-        currentStationIndex = Math.Min(currentStationIndex, stations.Count - 1);
-        EditCurrentSketch(); // sync the new active station
-
-        // 5. Clear distances (will be replaced by EditCurrentSketch)
+        currentStationIndex = Math.Min(index, stations.Count - 1);
+        EditCurrentSketch();
         LeftDistance = null;
         RightDistance = null;
+
+        // 🔁 RE-SHOW ALL REMAINING COUNTERTOP BODIES
+        try
+        {
+            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+            string jsonText = File.ReadAllText(jsonPath);
+            var jsonDoc = JsonDocument.Parse(jsonText);
+
+            foreach (var wallName in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            {
+                if (!jsonDoc.RootElement.TryGetProperty(wallName, out JsonElement wall)) continue;
+                if (!wall.TryGetProperty("Bases", out JsonElement bases)) continue;
+
+                foreach (var baseItem in bases.EnumerateObject())
+                {
+                    var baseValue = baseItem.Value;
+
+                    if (!baseValue.TryGetProperty("Visible", out JsonElement vis) || !vis.GetBoolean()) continue;
+                    if (!baseValue.TryGetProperty("SketchName", out JsonElement sketchProp)) continue;
+                    if (!baseValue.TryGetProperty("Countertop", out JsonElement ctObj)) continue; // Only if still has Countertop
+
+                    string remainingSketch = sketchProp.GetString();
+                    string extrudeName = $"Extrude_CT_{remainingSketch}";
+                    Log($"🔁 Re-showing: {extrudeName}");
+                    Show_Bodies_In_Sld.ShowBody((ModelDoc2)model, extrudeName);
+                }
+            }
+
+            int saveErr = 0;
+            model.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref saveErr, ref saveErr);
+            Log("✅ Re-saved part after re-showing remaining countertops.");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error during re-showing remaining countertops: {ex.Message}");
+        }
     }
 
 
