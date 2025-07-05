@@ -51,13 +51,7 @@
             "Size": 315
           }
         ],
-        "Countertop": {
-          "Name": "Extrude_CT_1_2",
-          "L": 60,
-          "R": 0,
-          "Start": 145,
-          "End": 400
-        }
+        "Countertop": null
       },
       "Base1": {
         "SketchName": "1_1",
@@ -150,13 +144,7 @@
             "Size": 120
           }
         ],
-        "Countertop": {
-          "Name": "Extrude_CT_3_1",
-          "L": 0,
-          "R": 0,
-          "Start": 0,
-          "End": 180
-        }
+        "Countertop": null
       },
       "Base2": {
         "SketchName": "3_2",

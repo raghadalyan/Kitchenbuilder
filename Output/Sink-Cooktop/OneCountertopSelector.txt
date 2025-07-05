@@ -1,0 +1,9 @@
+[15:01:51] 🛠️ Suggesting layout for Wall2 Base1 (Start=0, End=350)
+[15:01:51] 🔍 HasIsland = True
+[15:01:51] 🪟 Window in range = True
+[15:01:51] 🔢 Windows in range = 1
+[15:01:51] ✅ Suggestion 1: Place both sink and cooktop on the same countertop.
+[15:01:51] 👉 Sink created: X=61, Y=5, Angle=180
+[15:01:51] 👉 Cooktop created: X=288, Y=30, Angle=180
+[15:01:51] ✅ Suggestion 2: Sink on countertop (under window), cooktop on island.
+[15:01:51] 👉 Sink under window (from input.json): X=200, Y=5, Angle=180

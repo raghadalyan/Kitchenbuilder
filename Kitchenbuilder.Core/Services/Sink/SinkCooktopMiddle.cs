@@ -36,9 +36,9 @@ namespace Kitchenbuilder.Core
 
             var baseObj = root[wallKey]?["Bases"]?[baseKey]?.AsObject();
             if (baseObj == null) { Log("❌ Base not found in JSON."); return null; }
+            double start = baseObj["Countertop"]?["Start"]?.GetValue<double>() ?? 0;
+            double end = baseObj["Countertop"]?["End"]?.GetValue<double>() ?? 0;
 
-            double start = baseObj["Start"]?.GetValue<double>() ?? 0;
-            double end = baseObj["End"]?.GetValue<double>() ?? 0;
             int middle = (int)((end - start) / 2);
 
             Sink sink = new Sink
