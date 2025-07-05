@@ -112,6 +112,7 @@ namespace Kitchenbuilder.Core
 
             Log($"✅ Sink placed at DistanceFromLeft={sink.DistanceFromLeft}, X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}");
             Log($"✅ Cooktop placed at DistanceFromLeft={cooktop.DistanceFromLeft}, X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}");
+            sink.ComputeSinkCutDimensions((int)floorWidth, (int)floorLength, wall);
 
             ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, cooktop);
 

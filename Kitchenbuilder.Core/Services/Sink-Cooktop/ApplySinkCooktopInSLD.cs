@@ -34,6 +34,13 @@ namespace Kitchenbuilder.Core
                     EditSketchDim_IModel.SetDimension(modelDoc, "DistanceX_faucet@On_CT", sink.DistanceX_Faucet_On_CT);
                     EditSketchDim_IModel.SetDimension(modelDoc, "DistanceY_faucet@On_CT", sink.DistanceY_Faucet_On_CT);
                     EditSketchDim_IModel.SetDimension(modelDoc, "angle@Sketch_Rotate_Faucet", sink.Angle_Sketch_Rotate_Faucet);
+
+                    // ✏️ Apply sink cut dimensions
+                    Log($"✏️ Editing Sink Cut Sketch: Width={sink.Width_Sink_Cut}, Length={sink.Length_Sink_Cut}, DX={sink.DX_Sink_Cut}, DY={sink.DY_Sink_Cut}");
+                    EditSketchDim_IModel.SetDimension(modelDoc, "Width@Sketch_Sink_Cut", sink.Width_Sink_Cut);
+                    EditSketchDim_IModel.SetDimension(modelDoc, "Length@Sketch_Sink_Cut", sink.Length_Sink_Cut);
+                    EditSketchDim_IModel.SetDimension(modelDoc, "DX@Sketch_Sink_Cut", sink.DX_Sink_Cut);
+                    EditSketchDim_IModel.SetDimension(modelDoc, "DY@Sketch_Sink_Cut", sink.DY_Sink_Cut);
                 }
 
                 if (cooktop != null)

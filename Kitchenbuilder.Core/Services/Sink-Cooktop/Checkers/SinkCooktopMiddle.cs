@@ -76,9 +76,13 @@ namespace Kitchenbuilder.Core
                     break;
             }
 
-            Log($"✅ Sink created at (X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}), Angle={sink.Angle_Sketch_Rotate_Faucet}");
+            // ✅ Compute sink cut values based on wall + faucet placement
+            sink.ComputeSinkCutDimensions((int)floorWidth, (int)floorLength, wall);
 
-            ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, null); // ✅ Apply sink
+            Log($"✅ Sink created at (X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}), Angle={sink.Angle_Sketch_Rotate_Faucet}");
+            Log($"✏️ Cut Dimensions: Width={sink.Width_Sink_Cut}, Length={sink.Length_Sink_Cut}, DX={sink.DX_Sink_Cut}, DY={sink.DY_Sink_Cut}");
+
+            ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, null); // ✅ Apply sink + dimensions
             return sink;
         }
 

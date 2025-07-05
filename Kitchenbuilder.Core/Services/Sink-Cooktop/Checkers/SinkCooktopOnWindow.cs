@@ -79,9 +79,11 @@ namespace Kitchenbuilder.Core
 
                 if (sink != null)
                 {
+                    sink.ComputeSinkCutDimensions((int)floorWidth, (int)floorLength, wall);
                     Log($"✅ Sink created: X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}, Angle={sink.Angle_Sketch_Rotate_Faucet}");
                     ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, null); // ✅ Apply sink only
                 }
+
                 else
                 {
                     Log("❌ Invalid wall number for sink.");
