@@ -374,15 +374,51 @@ else
         }
     }
 
-
-
     void ContinueToSinkCooktop()
     {
+        var model = SwSession.GetActiveModel();
+        if (model == null)
+        {
+            Log("❌ No active model found when clicking Continue.");
+            return;
+        }
+
+        try
+        {
+            // ✅ Exit sketch if one is open
+            var sketchMgr = model.SketchManager;
+            if (sketchMgr?.ActiveSketch != null)
+            {
+                Log("🔚 Exiting active sketch...");
+                sketchMgr.InsertSketch(true); // true = exit sketch
+            }
+
+            // ✅ Save the file
+            int saveErrors = 0, saveWarnings = 0;
+            bool saved = model.Extension.SaveAs(
+                model.GetPathName(),
+                (int)swSaveAsVersion_e.swSaveAsCurrentVersion,
+                (int)swSaveAsOptions_e.swSaveAsOptions_Silent,
+                null,
+                ref saveErrors,
+                ref saveWarnings
+            );
+
+            Log(saved ? "💾 File saved successfully before navigating." :
+                        $"❌ Failed to save file. Errors: {saveErrors}, Warnings: {saveWarnings}");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error during sketch exit or save: {ex.Message}");
+        }
+
+        // ✅ Navigate to next page
         if (!string.IsNullOrWhiteSpace(baseName))
         {
-            string option = baseName.Replace("SLD", ""); // Converts Option3SLD → Option3
+            string option = baseName.Replace("SLD", ""); // e.g., Option3SLD → Option3
             NavManager.NavigateTo($"/sink-cooktop-options?option={option}");
         }
     }
+
 
 }

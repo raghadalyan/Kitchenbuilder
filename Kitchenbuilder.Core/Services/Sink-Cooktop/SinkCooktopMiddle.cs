@@ -2,24 +2,25 @@
 using System.IO;
 using System.Text.Json.Nodes;
 using Kitchenbuilder.Models;
+using SolidWorks.Interop.sldworks;
 
 namespace Kitchenbuilder.Core
 {
     public static class SinkCooktopMiddle
     {
         private static readonly string JsonPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
             "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
 
-        private static readonly string DebugPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\Sink-Cooktop\\SinkCooktopMiddle.txt";
+        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\SinkCooktopMiddle.txt";
 
         private static void Log(string message)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
         }
 
-        public static Sink? CreateSinkInMiddle(int wall, int baseNum, int optionNum)
+        public static Sink? CreateSinkInMiddle(int wall, int baseNum, int optionNum, IModelDoc2 model)
         {
             Log($"🛠 Creating sink on Wall {wall}, Base {baseNum}, Option {optionNum}...");
 
@@ -76,10 +77,12 @@ namespace Kitchenbuilder.Core
             }
 
             Log($"✅ Sink created at (X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}), Angle={sink.Angle_Sketch_Rotate_Faucet}");
+
+            ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, null); // ✅ Apply sink
             return sink;
         }
 
-        public static Cooktop? CreateCooktopInMiddle(int wall, int baseNum, int optionNum)
+        public static Cooktop? CreateCooktopInMiddle(int wall, int baseNum, int optionNum, IModelDoc2 model)
         {
             Log($"🛠 Creating cooktop on Wall {wall}, Base {baseNum}, Option {optionNum}...");
 
@@ -116,28 +119,29 @@ namespace Kitchenbuilder.Core
                 case 1:
                     cooktop.DistanceX_Cooktop_On_CT = 30;
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - start - middle);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
                     break;
                 case 2:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(start + middle);
                     cooktop.DistanceY_Cooktop_On_CT = 30;
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 180;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
                     break;
                 case 3:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - 30);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(start + middle);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 90;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
                     break;
                 case 4:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - start - middle);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - 30);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
                     break;
             }
 
             Log($"✅ Cooktop created at (X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}), Angle={cooktop.Angle_Sketch_Rotate_Cooktop}");
+
+            ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, null, cooktop); // ✅ Apply cooktop
             return cooktop;
         }
-
     }
 }

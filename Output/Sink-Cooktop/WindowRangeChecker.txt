@@ -1,5 +1,5 @@
-[20:53:10] 🔍 Checking Wall 2 countertop range [0, 350]
-[20:53:10] 🪟 Window: [125, 225]
-[20:53:10] ✅ Window overlaps with countertop range.
-[20:53:10] 🔍 Checking Wall 3 countertop range [0, 180]
-[20:53:10] ❌ Wall 3 not found in Walls array.
+[01:21:36] 🔍 Checking Wall 1 countertop range [85, 400]
+[01:21:36] 🪟 Window: [160, 240]
+[01:21:36] ✅ Window overlaps with countertop range.
+[01:21:36] 🔍 Checking Wall 2 countertop range [0, 350]
+[01:21:36] ℹ️ Wall 2 has no windows.

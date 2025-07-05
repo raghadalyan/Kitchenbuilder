@@ -1,14 +1,14 @@
-﻿@page "/"
+﻿ @page "/"
  @inject NavigationManager NavManager
 
-<h2>Welcome to the Kitchen Builder</h2>
-
-<button @onclick="GoToSinkCooktop">Start Sink & Cooktop Logic</button>
-
+<h1> Welcome to the Smart Kitchen Builder</h1>
 @code {
-    private void GoToSinkCooktop()
+    protected override async Task OnInitializedAsync()
     {
-        string option = "Option3";
-        NavManager.NavigateTo($"/sink-cooktop-options?option={option}");
+        // Wait 5 seconds
+        await Task.Delay(5000);
+
+        // Navigate to Counter page
+        NavManager.NavigateTo("/floor");
     }
-}
+  }

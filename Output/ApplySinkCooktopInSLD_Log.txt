@@ -1,0 +1,6 @@
+[01:21:36] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
+[01:21:40] 🔧 Applying Sink placement on Wall1, Base2
+[01:21:48] ✅ Finished applying sink/cooktop.
+[01:21:54] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
+[01:21:56] 🔥 Applying Cooktop placement on Wall2, Base1
+[01:22:03] ✅ Finished applying sink/cooktop.

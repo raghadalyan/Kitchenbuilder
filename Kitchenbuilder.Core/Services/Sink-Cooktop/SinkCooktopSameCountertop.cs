@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Kitchenbuilder.Models;
+using SolidWorks.Interop.sldworks;
 
 namespace Kitchenbuilder.Core
 {
@@ -11,10 +12,17 @@ namespace Kitchenbuilder.Core
         private static void Log(string message)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
         }
 
-        public static (Sink?, Cooktop?) Create(int wall, int baseNum, double startOfCountertop, double endOfCountertop, double floorWidth, double floorLength)
+        public static (Sink?, Cooktop?) Create(
+            int wall,
+            int baseNum,
+            double startOfCountertop,
+            double endOfCountertop,
+            double floorWidth,
+            double floorLength,
+            IModelDoc2 model)
         {
             double width = endOfCountertop - startOfCountertop;
             Log($"📏 Countertop width = {width}");
@@ -64,7 +72,7 @@ namespace Kitchenbuilder.Core
 
                     cooktop.DistanceX_Cooktop_On_CT = 30;
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - startOfCountertop - cooktopDistance);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
                     break;
 
                 case 2:
@@ -74,7 +82,7 @@ namespace Kitchenbuilder.Core
 
                     cooktop.DistanceX_Cooktop_On_CT = (int)(startOfCountertop + cooktopDistance);
                     cooktop.DistanceY_Cooktop_On_CT = 30;
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 180;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
                     break;
 
                 case 3:
@@ -84,7 +92,7 @@ namespace Kitchenbuilder.Core
 
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - 30);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(startOfCountertop + cooktopDistance);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 90;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
                     break;
 
                 case 4:
@@ -94,7 +102,7 @@ namespace Kitchenbuilder.Core
 
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - startOfCountertop - cooktopDistance);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - 30);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
                     break;
 
                 default:
@@ -104,6 +112,8 @@ namespace Kitchenbuilder.Core
 
             Log($"✅ Sink placed at DistanceFromLeft={sink.DistanceFromLeft}, X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}");
             Log($"✅ Cooktop placed at DistanceFromLeft={cooktop.DistanceFromLeft}, X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}");
+
+            ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, cooktop);
 
             return (sink, cooktop);
         }

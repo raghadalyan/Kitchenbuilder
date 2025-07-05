@@ -1,6 +1,7 @@
 ﻿@page "/sink-cooktop-options"
 @using Kitchenbuilder.Core
 @using Microsoft.AspNetCore.Components
+@inject SolidWorksSessionService SwSession
 
 <h3>Sink & Cooktop Layout for Option: <span style="color:#007acc">Option @SelectedOption</span></h3>
 
@@ -23,7 +24,18 @@
         if (int.TryParse(SelectedOption, out int optionNum))
         {
             var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
-            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum);
+
+            // ✅ Get the active model from SwSession
+            var model = SwSession.GetActiveModel();
+
+            if (model == null)
+            {
+                Console.WriteLine("❌ No active model found in SwSession.");
+                return;
+            }
+
+            // ✅ Call the analyzer with model
+            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
         }
         else
         {

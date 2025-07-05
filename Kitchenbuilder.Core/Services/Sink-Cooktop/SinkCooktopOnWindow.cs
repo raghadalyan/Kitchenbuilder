@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Kitchenbuilder.Models;
+using SolidWorks.Interop.sldworks;
 
 namespace Kitchenbuilder.Core
 {
@@ -11,16 +12,22 @@ namespace Kitchenbuilder.Core
         private static void Log(string message)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
         }
 
         public static object? CreateSinkOrCooktopOnWindow(
-            string name, int wall, int baseNum,
-            double windowDistanceX, double windowDistanceY,
-            double windowWidth, double windowHeight,
-            double floorWidth, double floorLength,
+            string name,
+            int wall,
+            int baseNum,
+            double windowDistanceX,
+            double windowDistanceY,
+            double windowWidth,
+            double windowHeight,
+            double floorWidth,
+            double floorLength,
             double startOfCountertop,
-            double endOfCountertop)  // <-- new param
+            double endOfCountertop,
+            IModelDoc2 model) // ✅ Added model
         {
             double center = (windowDistanceX - startOfCountertop) + (windowWidth / 2);
             Log($"🧮 Center = (windowDistanceX - startOfCountertop) + (windowWidth / 2) = {center}");
@@ -73,6 +80,7 @@ namespace Kitchenbuilder.Core
                 if (sink != null)
                 {
                     Log($"✅ Sink created: X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}, Angle={sink.Angle_Sketch_Rotate_Faucet}");
+                    ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, sink, null); // ✅ Apply sink only
                 }
                 else
                 {
@@ -93,7 +101,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = 30,
                         DistanceY_Cooktop_On_CT = (int)(floorWidth - startOfCountertop - center),
-                        Angle_Sketch_Rotate_Cooktop = 270
+                        Angle_Sketch_Rotate_Cooktop = 360
                     },
                     2 => new Cooktop
                     {
@@ -102,7 +110,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(startOfCountertop + center),
                         DistanceY_Cooktop_On_CT = 30,
-                        Angle_Sketch_Rotate_Cooktop = 180
+                        Angle_Sketch_Rotate_Cooktop = 270
                     },
                     3 => new Cooktop
                     {
@@ -111,7 +119,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(floorLength - 30),
                         DistanceY_Cooktop_On_CT = (int)(startOfCountertop + center),
-                        Angle_Sketch_Rotate_Cooktop = 90
+                        Angle_Sketch_Rotate_Cooktop = 360
                     },
                     4 => new Cooktop
                     {
@@ -120,7 +128,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(floorLength - startOfCountertop - center),
                         DistanceY_Cooktop_On_CT = (int)(floorWidth - 30),
-                        Angle_Sketch_Rotate_Cooktop = 360
+                        Angle_Sketch_Rotate_Cooktop = 270
                     },
                     _ => null
                 };
@@ -128,6 +136,7 @@ namespace Kitchenbuilder.Core
                 if (cooktop != null)
                 {
                     Log($"✅ Cooktop created: X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}, Angle={cooktop.Angle_Sketch_Rotate_Cooktop}");
+                    ApplySinkCooktopInSLD.ApplySinkAndCooktop(model, null, cooktop); // ✅ Apply cooktop only
                 }
                 else
                 {
@@ -140,6 +149,5 @@ namespace Kitchenbuilder.Core
             Log("❌ Unknown object name (should be 'sink' or 'cooktop').");
             return null;
         }
-
     }
 }
