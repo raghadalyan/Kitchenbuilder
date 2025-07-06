@@ -1,0 +1,161 @@
+﻿/* صفحات walls و confwalls */
+.walls-page,
+.confwalls-page {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* حاوية النماذج */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.88);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 700px;
+    width: 90%;
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+    .form-container h2,
+    .form-container h4,
+    .form-container h5,
+    .form-container h6 {
+        color: #4b2e14;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-container label {
+        display: block;
+        margin: 0.5rem 0 0.2rem;
+        color: #3b2612;
+        font-weight: bold;
+    }
+
+    .form-container input[type="number"],
+    .form-container input[type="checkbox"] {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #b18860;
+        border-radius: 5px;
+    }
+
+/* زر المتابعة */
+.continue-button {
+    background-color: #8b5a2b;
+    color: white;
+    padding: 0.8rem 1.8rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+    .continue-button:hover {
+        background-color: #a86b3f;
+        transform: scale(1.05);
+    }
+
+/* خطوات الحائط */
+.station-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.station {
+    background-color: #d2b48c;
+    color: #4b2e14;
+    padding: 0.5rem;
+    margin: 0 0.3rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+    .station.active {
+        background-color: #8b5a2b;
+        color: white;
+    }
+
+/* أزرار التنقل */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+    .nav-buttons button,
+    .save-button-container .continue-button {
+        background-color: #8b5a2b;
+        color: white;
+        padding: 0.75rem 1.8rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Georgia', serif;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .nav-buttons button:hover,
+        .save-button-container .continue-button:hover {
+            background-color: #a86b3f;
+            transform: scale(1.05);
+        }
+
+/* الحاوية السفلية لحفظ النموذج */
+.save-button-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* تحميل */
+.loading-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+    .loading-container img {
+        width: 80px;
+        margin-bottom: 1rem;
+    }
+
+    .loading-container p {
+        font-size: 1.1rem;
+        color: #4b2e14;
+    }
+
+/* العنوان */
+.title {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+/* نص التأكيد */
+.confirmation-message {
+    text-align: center;
+    padding: 20px;
+}
+
+/* خلفية احتياطية للصفحة */
+body {
+    background-size:  cover;
+}

@@ -1,0 +1,4 @@
+🟢 Started /confwalls with Count=2, Width=400, Length=350
+🟢 SolidWorks launched and stored in session
+✅ Finished building walls
+🟢 SolidWorks launched and stored in session

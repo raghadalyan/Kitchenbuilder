@@ -1,280 +1,111 @@
 ﻿@page "/base-approval"
-@using System.IO
-@using System.Text.Json
-@using Microsoft.AspNetCore.Components
-@using Kitchenbuilder.Core
+@inject NavigationManager NavManager
 @inject SolidWorksSessionService SwSession
 @using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
 
-@inject NavigationManager NavManager
 
-<h1 class="title">Are you satisfied with the generated base?</h1>
+<link href="css/base.css" rel="stylesheet" />
 
-@if (!string.IsNullOrEmpty(selectedOption))
-{
-    <div class="option-container">
-        <div class="option-item">
-            @if (optionImages.ContainsKey(selectedOption) && optionImages[selectedOption].Length > 0)
-            {
-                var fileName = Path.GetFileName(optionImages[selectedOption][currentImageIndex[selectedOption]]);
-                <img src="@($"/Output/{selectedOption}/{fileName}")"
-                @onclick="() => NextImage(selectedOption)"
-                class="option-image"
-                alt="@selectedOption" />
-            }
-
-            <div class="radio-group">
-                <p>You selected: <strong>@selectedOption</strong></p>
-                <button class="confirm-button" @onclick="ApproveBase">✅ Yes</button>
-                <button class="reject-button" @onclick="RejectBase">❌ No</button>
-            </div>
-        </div>
+<div class="approval-page">
+    <div class="form-container">
+        @if (isLoading)
+        {
+                <div class="loading-container">
+                    <p>Please wait a moment while the base file is being prepared...</p>
+                    <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
+                    <p>Loading base preview...</p>
+                </div>
+        }
+        else
+        {
+                <p>✅ You can now review the selected base in SolidWorks.</p>
+                <button class="continue-button" @onclick="ContinueToCountertop">Continue</button>
+        }
     </div>
-}
-
-@if (showChat)
-{
-    <div class="chat-box">
-        <h4>💬 Please explain the issue to the assistant:</h4>
-        <textarea class="chat-input" @bind="userMessage" rows="4" placeholder="Describe the issue here..."></textarea>
-        <br />
-        <button class="send-button" @onclick="SendToAI">Send</button>
-    </div>
-}
-
-@if (!string.IsNullOrEmpty(aiResponse))
-{
-    <p class="ai-response"><strong>Assistant response:</strong> @aiResponse</p>
-}
-
-<style>
-    .title {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 32px;
-    font-weight: 600;
-    color: #2c3e50;
-    }
-
-    .option-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding: 30px;
-    }
-
-    .option-item {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 20px;
-    width: 380px;
-    text-align: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-    }
-
-    .option-item:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .option-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: opacity 0.3s;
-    }
-
-    .option-image:hover {
-    opacity: 0.88;
-    }
-
-    .radio-group {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #34495e;
-    }
-
-    .confirm-button, .reject-button {
-    margin: 10px;
-    background-color: #3498db;
-    color: white;
-    padding: 10px 28px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    }
-
-    .confirm-button:hover {
-    background-color: #28a745;
-    }
-
-    .reject-button:hover {
-    background-color: #e74c3c;
-    }
-
-    .chat-box {
-    width: 60%;
-    margin: 40px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    }
-
-    .chat-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    }
-
-    .send-button {
-    margin-top: 10px;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    }
-
-    .send-button:hover {
-    background-color: #0069d9;
-    }
-
-    .ai-response {
-    text-align: center;
-    font-size: 18px;
-    margin-top: 20px;
-    color: #333;
-    }
-</style>
+</div>
 
 @code {
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "selected")]
-    public string? selectedOption { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "selected")] public string? selectedOption { get; set; }
 
-    private bool showChat = false;
-    private string userMessage = "";
-    private string aiResponse = "";
-    private Dictionary<string, string[]> optionImages = new();
-    private Dictionary<string, int> currentImageIndex = new();
-    private string baseDir = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output";
+    private bool isLoading = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (string.IsNullOrWhiteSpace(selectedOption)) return;
-
-        var optionDir = Path.Combine(baseDir, selectedOption);
-        if (Directory.Exists(optionDir))
+        await Task.Run(() =>
         {
-            var images = Directory.GetFiles(optionDir, "*.png").OrderBy(f => f).ToArray();
-            if (images.Length > 0)
+            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_baseapproval.txt";
+
+            try
             {
-                optionImages[selectedOption] = images;
-                currentImageIndex[selectedOption] = 0;
-            }
-        }
-    }
+                File.AppendAllText(debugPath, $"🟢 Started /base-approval with selected={selectedOption}\n");
 
-    private void NextImage(string option)
-    {
-        if (optionImages.ContainsKey(option))
-        {
-            currentImageIndex[option] = (currentImageIndex[option] + 1) % optionImages[option].Length;
-        }
-    }
-    private void ApproveBase()
-    {
-        if (string.IsNullOrWhiteSpace(selectedOption))
-        {
-            Console.WriteLine("❌ selectedOption is null or empty");
-            return;
-        }
-
-        try
-        {
-            var swApp = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-            if (swApp == null)
-            {
-                Console.WriteLine("❌ Failed to start SolidWorks.");
-                return;
-            }
-
-            swApp.Visible = true;
-            SwSession.SetApp(swApp);
-
-            Console.WriteLine("✅ SolidWorks initialized and stored in session.");
-            NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"❌ Exception while starting SolidWorks: {ex.Message}");
-        }
-    }
-
-
-    private void RejectBase()
-    {
-        showChat = true;
-    }
-
-    private async Task SendToAI()
-    {
-        try
-        {
-            var apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                aiResponse = "⚠️ OpenAI API key not configured!";
-                return;
-            }
-
-            var systemPrompt = "You are a helpful assistant specialized in architectural design feedback.";
-
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-
-            var requestBody = new
-            {
-                model = "gpt-3.5-turbo",
-                messages = new[]
+                if (string.IsNullOrWhiteSpace(selectedOption))
                 {
-                    new { role = "system", content = systemPrompt },
-                    new { role = "user", content = userMessage }
+                    File.AppendAllText(debugPath, "❌ selectedOption is missing\n");
+                    return;
                 }
-            };
 
-            var response = await httpClient.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", requestBody);
-            var resultJson = await response.Content.ReadAsStringAsync();
+                string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_{selectedOption}.SLDPRT";
+                File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
 
-            if (!response.IsSuccessStatusCode)
-            {
-                aiResponse = $"❌ Error: {response.StatusCode}\n{resultJson}";
-                return;
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ Base file not found: {partPath}\n");
+                    return;
+                }
+
+                // ✅ أطلق SolidWorks إذا لم يكن مفعلاً
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+                if (model == null)
+                {
+                    File.AppendAllText(debugPath, $"❌ Failed to load base model into SolidWorks\n");
+                    return;
+                }
+
+                File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
             }
+            catch (Exception ex)
+            {
+                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_baseapproval.txt",
+                    $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+            }
+        });
 
-            var result = JsonDocument.Parse(resultJson);
-            aiResponse = result.RootElement
-                               .GetProperty("choices")[0]
-                               .GetProperty("message")
-                               .GetProperty("content")
-                               .GetString();
-        }
-        catch (Exception ex)
+        isLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void ContinueToCountertop()
+    {
+        if (!string.IsNullOrWhiteSpace(selectedOption))
         {
-            aiResponse = $"❌ Exception: {ex.Message}";
+            NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
         }
     }
 }

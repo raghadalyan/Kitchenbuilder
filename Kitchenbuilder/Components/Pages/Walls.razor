@@ -1,275 +1,277 @@
 ﻿@page "/walls"
-@using System.IO
-@using System.Text.Json
-@using Kitchenbuilder.Core.Models
-@using Kitchenbuilder.Core.Services
-@using Kitchenbuilder.Core.WallBuilders
-@using Kitchenbuilder.Core.Services.BaseServices
+    @using System.IO
+    @using System.Text.Json
+    @using Kitchenbuilder.Core.Models
+    @using Kitchenbuilder.Core.Services
+    @using Kitchenbuilder.Core.WallBuilders
+    @using Kitchenbuilder.Core.Services.BaseServices
 
-@inject NavigationManager NavManager
+    @inject NavigationManager NavManager
 
-@code {
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "count")]
-    public int Count { get; set; }
+<div class="walls-page">
+    <div class="form-container">
+        @code {
+            [Parameter]
+            [SupplyParameterFromQuery(Name = "count")]
+            public int Count { get; set; }
 
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "width")]
-    public int FloorWidth { get; set; }
+            [Parameter]
+            [SupplyParameterFromQuery(Name = "width")]
+            public int FloorWidth { get; set; }
 
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "length")]
-    public int FloorLength { get; set; }
+            [Parameter]
+            [SupplyParameterFromQuery(Name = "length")]
+            public int FloorLength { get; set; }
 
-    private int CurrentStep = 1;
-    private List<WallInfo> WallData = new();
-    private string SaveMessage = "";
+            private int CurrentStep = 1;
+            private List<WallInfo> WallData = new();
+            private string SaveMessage = "";
 
-    protected override void OnInitialized()
-    {
-        for (int i = 0; i < Count; i++)
-            WallData.Add(new WallInfo());
-    }
+            protected override void OnInitialized()
+            {
+                for (int i = 0; i < Count; i++)
+                    WallData.Add(new WallInfo());
+            }
 
-    private void Next()
-    {
-        if (CurrentStep < Count)
-            CurrentStep++;
-    }
+            private void Next()
+            {
+                if (CurrentStep < Count)
+                    CurrentStep++;
+            }
 
-    private void Back()
-    {
-        if (CurrentStep > 1)
-            CurrentStep--;
-    }
+            private void Back()
+            {
+                if (CurrentStep > 1)
+                    CurrentStep--;
+            }
 
-    private void UpdateWidth(ChangeEventArgs e)
-    {
-        if (int.TryParse(e.Value?.ToString(), out int value))
-            WallData[CurrentStep - 1].Width = value;
-    }
+            private void UpdateWidth(ChangeEventArgs e)
+            {
+                if (int.TryParse(e.Value?.ToString(), out int value))
+                    WallData[CurrentStep - 1].Width = value;
+            }
 
-    private void UpdateHeight(ChangeEventArgs e)
-    {
-        if (int.TryParse(e.Value?.ToString(), out int value))
-            WallData[CurrentStep - 1].Height = value;
-    }
+            private void UpdateHeight(ChangeEventArgs e)
+            {
+                if (int.TryParse(e.Value?.ToString(), out int value))
+                    WallData[CurrentStep - 1].Height = value;
+            }
 
-    private void GenerateWindowInputs()
-    {
-        var wall = WallData[CurrentStep - 1];
-        wall.Windows = new List<WindowInfo>();
-        for (int i = 0; i < wall.WindowCount; i++)
-        {
-            wall.Windows.Add(new WindowInfo());
-        }
-    }
+            private void GenerateWindowInputs()
+            {
+                var wall = WallData[CurrentStep - 1];
+                wall.Windows = new List<WindowInfo>();
+                for (int i = 0; i < wall.WindowCount; i++)
+                {
+                    wall.Windows.Add(new WindowInfo());
+                }
+            }
 
-    private void GenerateDoorInputs()
-    {
-        var wall = WallData[CurrentStep - 1];
-        wall.Doors = new List<DoorInfo>();
-        for (int i = 0; i < wall.DoorCount; i++)
-        {
-            wall.Doors.Add(new DoorInfo());
-        }
-    }
+            private void GenerateDoorInputs()
+            {
+                var wall = WallData[CurrentStep - 1];
+                wall.Doors = new List<DoorInfo>();
+                for (int i = 0; i < wall.DoorCount; i++)
+                {
+                    wall.Doors.Add(new DoorInfo());
+                }
+            }
 
-    private async Task SaveKitchenInputAsync()
-    {
-        try
-        {
-            // 1. Build the Kitchen object from user input
-            var input = new Kitchen
+            private async Task SaveKitchenInputAsync()
+            {
+                string debugPath = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+               "Downloads", "Kitchenbuilder", "Output", "Walls.txt");
+
+                try
+                {
+                    File.AppendAllText(debugPath, $"[{DateTime.Now}] 🟡 SaveKitchenInputAsync STARTED\n");
+                    File.AppendAllText(debugPath, $"Count = {Count}, FloorWidth = {FloorWidth}, FloorLength = {FloorLength}\n");
+
+                    var input = new Kitchen
                 {
                     Floor = new Floor
                     {
                         Width = FloorWidth,
                         Length = FloorLength
                     },
-                    Walls = WallData.Select(w => new Wall
+                    Walls = WallData.Select((w, index) =>
                     {
-                        Width = w.Width,
-                        Height = w.Height,
-                        HasWindows = w.HasWindows,
-                        Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                        File.AppendAllText(debugPath, $"Wall {index + 1}: Width={w.Width}, Height={w.Height}, Windows={w.WindowCount}, Doors={w.DoorCount}\n");
+                        return new Wall
                         {
-                            Width = win.Width,
-                            Height = win.Height,
-                            DistanceX = win.DistanceX,
-                            DistanceY = win.DistanceY
-                        }).ToList() : null,
-                        HasDoors = w.HasDoors,
-                        Doors = w.HasDoors ? w.Doors.Select(d => new Door
-                        {
-                            Width = d.Width,
-                            Height = d.Height,
-                            DistanceX = d.DistanceX
-                        }).ToList() : null
+                            Width = w.Width,
+                            Height = w.Height,
+                            HasWindows = w.HasWindows,
+                            Windows = w.HasWindows ? w.Windows.Select(win => new Window
+                            {
+                                Width = win.Width,
+                                Height = win.Height,
+                                DistanceX = win.DistanceX,
+                                DistanceY = win.DistanceY
+                            }).ToList() : null,
+                            HasDoors = w.HasDoors,
+                            Doors = w.HasDoors ? w.Doors.Select(d => new Door
+                            {
+                                Width = d.Width,
+                                Height = d.Height,
+                                DistanceX = d.DistanceX
+                            }).ToList() : null
+                        };
                     }).ToList()
                 };
 
-            // 2. Decide which wall builder to run based on wall count
-            int wallCount = input.Walls?.Count ?? 0;
+                    string folder = Path.Combine(
+       Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+       "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
 
-            switch (wallCount)
-            {
-                case 1:
-                    OneWallBuilder.Run(input);
-                    break;
-                case 2:
-                    TwoWallBuilder.Run(input);
-                    break;
-                case 3:
-                    ThreeWallBuilder.Run(input);
-                    break;
-                case 4:
-                    FourWallBuilder.Run(input);
-                    break;
-                default:
-                    SaveMessage = "❌ Invalid number of walls (must be between 1 and 4).";
-                    return;
+                    Directory.CreateDirectory(folder);
+
+                    string inputPath = Path.Combine(folder, "input.json");
+                    string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
+                    await File.WriteAllTextAsync(inputPath, inputJson);
+
+                    File.AppendAllText(debugPath, $"✅ Saved input.json at {inputPath}\n");
+
+
+                    NavManager.NavigateTo($"/confwalls?count={Count}&width={FloorWidth}&length={FloorLength}");
+                    File.AppendAllText(debugPath, $"✅ Called NavManager.NavigateTo\n");
+                }
+                catch (Exception ex)
+                {
+                    File.AppendAllText(debugPath, $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+                    SaveMessage = $"❌ Error: {ex.Message}";
+                }
             }
 
 
-            var generatedBase = BaseCreator.CreateBase(input);
-            input.Base = generatedBase;
 
-
-
-                string folder = Path.Combine(
-                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
-                 "Kitchenbuilder", "Kitchenbuilder", "JSON");
-                Directory.CreateDirectory(folder);
-
-                string inputPath = Path.Combine(folder, "input.json");
-                string inputJson = JsonSerializer.Serialize(input, new JsonSerializerOptions { WriteIndented = true });
-                await File.WriteAllTextAsync(inputPath, inputJson);
-
-            SaveMessage = "✅ Kitchen input saved, including base data!";
-            NavManager.NavigateTo("/base-options");
-
-        }
-        catch (Exception ex)
-        {
-            SaveMessage = $"❌ Error: {ex.Message}";
-        }
-    }
-
-
-    public class WallInfo
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public bool HasWindows { get; set; }
-        public int WindowCount { get; set; }
-        public List<WindowInfo> Windows { get; set; } = new();
-        public bool HasDoors { get; set; }
-        public int DoorCount { get; set; }
-        public List<DoorInfo> Doors { get; set; } = new();
-    }
-
-    public class WindowInfo
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int DistanceX { get; set; }
-        public int DistanceY { get; set; }
-    }
-
-    public class DoorInfo
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int DistanceX { get; set; }
-    }
-}
-
-<div class="station-bar">
-    @for (int i = 1; i <= Count; i++)
-    {
-        <span class="station @(i == CurrentStep ? "active" : "")">@i</span>
-    }
-</div>
-
-<div class="form-container">
-    <h4>Wall @CurrentStep</h4>
-
-    <label>Width (cm):</label>
-    <input type="number"
-           value="@WallData[CurrentStep - 1].Width"
-           @oninput="UpdateWidth" min="1" />
-
-    <label>Height (cm):</label>
-    <input type="number"
-           value="@WallData[CurrentStep - 1].Height"
-           @oninput="UpdateHeight" min="1" />
-
-    <label>
-        <input type="checkbox" @bind="WallData[CurrentStep - 1].HasWindows" />
-        Does this wall have windows?
-    </label>
-
-    @if (WallData[CurrentStep - 1].HasWindows)
-    {
-        <label>How many windows?</label>
-        <input type="number" min="1" @bind="WallData[CurrentStep - 1].WindowCount" />
-        <button @onclick="GenerateWindowInputs">Save Windows</button>
-
-        @if (WallData[CurrentStep - 1].Windows.Count > 0)
-        {
-            <h5>Window Details</h5>
-            @foreach (var (win, i) in WallData[CurrentStep - 1].Windows.Select((w, i) => (w, i)))
+            public class WallInfo
             {
-                <div class="window-form">
-                    <h6>Window @(i + 1)</h6>
-                    <label>Width (cm):</label>
-                    <input type="number" min="1" @bind="win.Width" />
-                    <label>Height (cm):</label>
-                    <input type="number" min="1" @bind="win.Height" />
-                    <label>Distance X from left (cm):</label>
-                    <input type="number" min="0" @bind="win.DistanceX" />
-                    <label>Distance Y from bottom (cm):</label>
-                    <input type="number" min="0" @bind="win.DistanceY" />
-                </div>
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public bool HasWindows { get; set; }
+                public int WindowCount { get; set; }
+                public List<WindowInfo> Windows { get; set; } = new();
+                public bool HasDoors { get; set; }
+                public int DoorCount { get; set; }
+                public List<DoorInfo> Doors { get; set; } = new();
+            }
+
+            public class WindowInfo
+            {
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public int DistanceX { get; set; }
+                public int DistanceY { get; set; }
+            }
+
+            public class DoorInfo
+            {
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public int DistanceX { get; set; }
             }
         }
-    }
 
-    <label>
-        <input type="checkbox" @bind="WallData[CurrentStep - 1].HasDoors" />
-        Does this wall have doors?
-    </label>
-
-    @if (WallData[CurrentStep - 1].HasDoors)
-    {
-        <label>How many doors?</label>
-        <input type="number" min="1" @bind="WallData[CurrentStep - 1].DoorCount" />
-        <button @onclick="GenerateDoorInputs">Save Doors</button>
-
-        @if (WallData[CurrentStep - 1].Doors.Count > 0)
-        {
-            <h5>Door Details</h5>
-            @foreach (var (door, i) in WallData[CurrentStep - 1].Doors.Select((d, i) => (d, i)))
+        <div class="station-bar">
+            @for (int i = 1; i <= Count; i++)
             {
-                <div class="door-form">
-                    <h6>Door @(i + 1)</h6>
-                    <label>Width (cm):</label>
-                    <input type="number" min="1" @bind="door.Width" />
-                    <label>Height (cm):</label>
-                    <input type="number" min="1" @bind="door.Height" />
-                    <label>Distance X from left (cm):</label>
-                    <input type="number" min="0" @bind="door.DistanceX" />
-                </div>
+                    <span class="station @(i == CurrentStep ? "active" : "")">@i</span>
             }
-        }
-    }
+        </div>
 
-    <div class="nav-buttons">
-        <button @onclick="Back" disabled="@(CurrentStep == 1)">Back</button>
-        <button @onclick="Next" disabled="@(CurrentStep == Count)">Next</button>
+        <div class="form-container">
+            <h4>Wall @CurrentStep</h4>
+
+            <label>Width (cm):</label>
+            <input type="number"
+                   value="@WallData[CurrentStep - 1].Width"
+                   @oninput="UpdateWidth" min="1" />
+
+            <label>Height (cm):</label>
+            <input type="number"
+                   value="@WallData[CurrentStep - 1].Height"
+                   @oninput="UpdateHeight" min="1" />
+
+            <label>
+                <input type="checkbox" @bind="WallData[CurrentStep - 1].HasWindows" />
+                Does this wall have windows?
+            </label>
+
+            @if (WallData[CurrentStep - 1].HasWindows)
+            {
+                    <label>How many windows?</label>
+                    <input type="number" min="1" @bind="WallData[CurrentStep - 1].WindowCount" />
+                    <button @onclick="GenerateWindowInputs">Save Windows</button>
+
+                @if (WallData[CurrentStep - 1].Windows.Count > 0)
+                {
+                            <h5>Window Details</h5>
+                    @foreach (var (win, i) in WallData[CurrentStep - 1].Windows.Select((w, i) => (w, i)))
+                    {
+                                    <div class="window-form">
+                                        <h6>Window @(i + 1)</h6>
+                                        <label>Width (cm):</label>
+                                        <input type="number" min="1" @bind="win.Width" />
+                                        <label>Height (cm):</label>
+                                        <input type="number" min="1" @bind="win.Height" />
+                                        <label>Distance X from left (cm):</label>
+                                        <input type="number" min="0" @bind="win.DistanceX" />
+                                        <label>Distance Y from bottom (cm):</label>
+                                        <input type="number" min="0" @bind="win.DistanceY" />
+                                    </div>
+                    }
+                }
+            }
+
+            <label>
+                <input type="checkbox" @bind="WallData[CurrentStep - 1].HasDoors" />
+                Does this wall have doors?
+            </label>
+
+            @if (WallData[CurrentStep - 1].HasDoors)
+            {
+                    <label>How many doors?</label>
+                    <input type="number" min="1" @bind="WallData[CurrentStep - 1].DoorCount" />
+                    <button @onclick="GenerateDoorInputs">Save Doors</button>
+
+                @if (WallData[CurrentStep - 1].Doors.Count > 0)
+                {
+                            <h5>Door Details</h5>
+                    @foreach (var (door, i) in WallData[CurrentStep - 1].Doors.Select((d, i) => (d, i)))
+                    {
+                                    <div class="door-form">
+                                        <h6>Door @(i + 1)</h6>
+                                        <label>Width (cm):</label>
+                                        <input type="number" min="1" @bind="door.Width" />
+                                        <label>Height (cm):</label>
+                                        <input type="number" min="1" @bind="door.Height" />
+                                        <label>Distance X from left (cm):</label>
+                                        <input type="number" min="0" @bind="door.DistanceX" />
+                                    </div>
+                    }
+                }
+            }
+
+            <div class="nav-buttons">
+                <button @onclick="Back" disabled="@(CurrentStep == 1)">Back</button>
+
+                @if (CurrentStep < Count)
+                {
+                        <button @onclick="Next">Next</button>
+                }
+            </div>
+
+            @if (CurrentStep == Count)
+            {
+                    <div class="save-button-container">
+                        <button class="continue-button" @onclick="SaveKitchenInputAsync">Continue</button>
+                    </div>
+            }
+
+
+
+        </div>
     </div>
-
-    <button @onclick="SaveKitchenInputAsync">📥 Save Kitchen Input</button>
-    <p>@SaveMessage</p>
 </div>

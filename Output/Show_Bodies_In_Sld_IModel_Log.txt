@@ -1,0 +1,4 @@
+[2025-07-06 16:05:31] ✅ Body already visible: Faucet Inox
+[2025-07-06 16:05:38] 👁️ Made body visible: Kitchen_Cooktop_Simple
+[2025-07-06 16:05:39] ✅ Body already visible: Cut-Sink
+[2025-07-06 16:05:40] 💾 Model saved after showing bodies.

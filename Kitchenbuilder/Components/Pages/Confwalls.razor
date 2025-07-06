@@ -1,0 +1,152 @@
+﻿@page "/confwalls"
+@inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<link href="css/confwalls.css" rel="stylesheet" />
+
+<h1 class="title">Wall Confirmation</h1>
+
+<div class="confwalls-page">
+    <div class="form-container">
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <p>Please wait a moment while the wall file is being generated...</p>
+                <img src="/Images/Loading.gif" alt="Loading" />
+                <p>Loading wall preview...</p>
+            </div>
+        }
+        else
+        {
+            <p>✅ You can now review the wall preview in SolidWorks.</p>
+            <button class="continue-button" @onclick="ContinueToBaseOptions">Continue</button>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter][SupplyParameterFromQuery(Name = "count")] public int Count { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "width")] public int FloorWidth { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "length")] public int FloorLength { get; set; }
+
+    private bool isLoading = true;
+    private List<int> wallHeights = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt";
+
+            try
+            {
+                File.AppendAllText(debugPath, $"🟢 Started /confwalls with Count={Count}, Width={FloorWidth}, Length={FloorLength}\n");
+
+                string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
+                if (!File.Exists(jsonPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON input file not found at: {jsonPath}\n");
+                    return;
+                }
+
+                string jsonContent = File.ReadAllText(jsonPath);
+                var kitchen = JsonSerializer.Deserialize<Kitchen>(jsonContent);
+                if (kitchen == null)
+                {
+                    File.AppendAllText(debugPath, "❌ Failed to deserialize Kitchen model\n");
+                    return;
+                }
+
+                wallHeights = kitchen.Walls.Select(w => w.Height).ToList();
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                switch (kitchen.Walls.Count)
+                {
+                    case 1: OneWallBuilder.Run(kitchen); break;
+                    case 2: TwoWallBuilder.Run(kitchen); break;
+                    case 3: ThreeWallBuilder.Run(kitchen); break;
+                    case 4: FourWallBuilder.Run(kitchen); break;
+                    default:
+                        File.AppendAllText(debugPath, $"❌ Invalid wall count: {kitchen.Walls.Count}\n");
+                        return;
+                }
+
+                File.AppendAllText(debugPath, "✅ Finished building walls\n");
+
+                string filename = $"Wall{kitchen.Walls.Count}_WithFloor.SLDPRT";
+                string partPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen", filename);
+
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ File not found: {partPath}\n");
+                    return;
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, $"🟢 SolidWorks launched and stored in session\n");
+
+                    // ✅ قم بترتيب النوافذ مباشرة بعد التشغيل
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                else
+                {
+                    File.AppendAllText(debugPath, "❌ Failed to load model\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(debugPath, $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+            }
+        });
+
+        isLoading = false;
+    }
+
+    private void ContinueToBaseOptions()
+    {
+        var swApp = SwSession.GetApp();
+        if (swApp != null)
+        {
+            swApp.FrameState = (int)swWindowState_e.swWindowMaximized;
+            swApp.SendMsgToUser2("Returning to base configuration...",
+                (int)swMessageBoxIcon_e.swMbInformation,
+                (int)swMessageBoxBtn_e.swMbOk);
+        }
+
+        NavManager.NavigateTo("/base");
+    }
+
+}

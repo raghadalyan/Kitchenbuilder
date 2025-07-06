@@ -1,40 +1,115 @@
-.station-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.station {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: lightgray;
+﻿.walls-page {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-    .station.active {
-        background-color: teal;
-        color: white;
+.form-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 700px;
+    width: 90%;
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+    /* عناوين وأزرار */
+    .form-container h4, .form-container h5, .form-container h6 {
+        color: #4b2e14;
+        margin-top: 1rem;
+    }
+
+    .form-container label {
+        display: block;
+        margin: 0.5rem 0 0.2rem;
+        color: #3b2612;
         font-weight: bold;
     }
 
-.form-container {
+    .form-container input[type="number"],
+    .form-container input[type="checkbox"] {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #b18860;
+        border-radius: 5px;
+    }
+
+    /* الأزرار */
+    .form-container button {
+        background-color: #8b5a2b;
+        color: white;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .form-container button:hover {
+            background-color: #a86b3f;
+        }
+
+.station-bar {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 250px;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
-.nav-buttons button {
-    margin-right: 10px;
+.station {
+    background-color: #d2b48c;
+    color: #4b2e14;
+    padding: 0.5rem;
+    margin: 0 0.3rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    font-weight: bold;
 }
 
-.window-form {
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f4f4f4;
+    .station.active {
+        background-color: #8b5a2b;
+        color: white;
+    }
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* ← مسافة بين Back و Next */
+    margin-top: 1.5rem;
+}
+
+    .nav-buttons button,
+    .save-button-container .continue-button {
+        background-color: #8b5a2b;
+        color: white;
+        padding: 0.75rem 1.8rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Georgia', serif;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .nav-buttons button:hover,
+        .save-button-container .continue-button:hover {
+            background-color: #a86b3f;
+            transform: scale(1.05);
+        }
+
+.save-button-container {
+    text-align: center;
+    margin-top:  2rem;
 }
