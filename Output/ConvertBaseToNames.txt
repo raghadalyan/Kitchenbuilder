@@ -1,7 +1,0 @@
-[11:29:37] ************** ConvertBaseToNames **************
-[11:29:37] 🔍 Reading Option1.json
-[11:29:37] ✅ Saved floor data to Option1SLD.json
-[11:29:38] 🔍 Reading Option2.json
-[11:29:38] ✅ Saved floor data to Option2SLD.json
-[11:29:38] 🔍 Reading Option3.json
-[11:29:38] ✅ Saved floor data to Option3SLD.json

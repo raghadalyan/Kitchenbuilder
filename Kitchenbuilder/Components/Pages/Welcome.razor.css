@@ -1,0 +1,61 @@
+﻿.welcome-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.text-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-text {
+    font-size: 2.8rem; /* ← أصغر */
+    font-family: 'Cinzel', serif;
+    color: white;
+    text-shadow: 1px 1px 0 #8b5a2b, 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: fadeInScale 2s ease-in-out forwards;
+    opacity: 0;
+}
+
+.subtitle-text {
+    font-size: 2.2rem; /* ← أصغر */
+    font-family: 'Cinzel', serif;
+    color: white;
+    margin-top: 3.5rem;
+    text-shadow: 1px 1px 0 #8b5a2b, 2px 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+    .subtitle-text.show {
+        opacity: 1;
+    }
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+            
+    }
+}
