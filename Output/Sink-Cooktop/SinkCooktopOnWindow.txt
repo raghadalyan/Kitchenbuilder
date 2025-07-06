@@ -1,3 +1,0 @@
-[02:09:52] 🧮 Center = (windowDistanceX - startOfCountertop) + (windowWidth / 2) = 175
-[02:09:52] 📌 Creating object: name=sink, wall=2, base=1
-[02:09:52] ✅ Sink created: X=175, Y=5, Angle=180

@@ -1,14 +1,14 @@
-[02:07:05] 🔍 Handling usable walls for: Option1.json
-[02:07:05] ❌ NumOfExposedWall missing or invalid
-[02:07:05] ✅ Output written to: Option1SLD.json
-[02:07:05] 🔍 Handling usable walls for: Option2.json
-[02:07:05] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
-[02:07:05] ❌ NumOfExposedWall missing or invalid
-[02:07:05] ✅ Output written to: Option2SLD.json
-[02:07:05] 🔍 Handling usable walls for: Option3.json
-[02:07:05] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
-[02:07:05] 🔍 Checking previous wall 2 for exposed wall 3
-[02:07:05]    ➤ Space found: Start=0, End=350, Length=350
-[02:07:05] ✅ Wall 3 exposed. Using space end directly: Size = 350
-[02:07:05] 📏 Added DistanceFrom to Wall3: 'Distance_from_1@master_wall3' = 350
-[02:07:05] ✅ Output written to: Option3SLD.json
+[03:06:59] 🔍 Handling usable walls for: Option1.json
+[03:06:59] ❌ NumOfExposedWall missing or invalid
+[03:06:59] ✅ Output written to: Option1SLD.json
+[03:06:59] 🔍 Handling usable walls for: Option2.json
+[03:06:59] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
+[03:06:59] ❌ NumOfExposedWall missing or invalid
+[03:06:59] ✅ Output written to: Option2SLD.json
+[03:06:59] 🔍 Handling usable walls for: Option3.json
+[03:06:59] 🛠 Adjusting Base1 of Wall2 to start from 60 (corner 1,2)
+[03:06:59] 🔍 Checking previous wall 2 for exposed wall 3
+[03:06:59]    ➤ Space found: Start=0, End=350, Length=350
+[03:06:59] ✅ Wall 3 exposed. Using space end directly: Size = 350
+[03:06:59] 📏 Added DistanceFrom to Wall3: 'Distance_from_1@master_wall3' = 350
+[03:06:59] ✅ Output written to: Option3SLD.json

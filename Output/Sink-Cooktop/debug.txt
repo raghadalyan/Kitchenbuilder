@@ -1,6 +1,0 @@
-[02:09:45] ▶️ Processing Option 2
-[02:09:45] Corner walls found: [1,2], Special14=False
-[02:09:45] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[02:09:45] ✔️ Wall2 Base1: Start=0, End=350, Width=350
-[02:09:45] ✅ JSON update complete.
-[02:09:45] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-350]

@@ -7,34 +7,34 @@
 <div class="option-container">
     @foreach (var opt in optionNames)
     {
-        <div class="option-item">
+            <div class="option-item">
             @if (optionImages.ContainsKey(opt) && optionImages[opt].Length > 0)
             {
                 var fileName = Path.GetFileName(optionImages[opt][currentImageIndex[opt]]);
-                <img src="@($"/Output/{opt}/{fileName}")"
-                     @onclick="() => NextImage(opt)"
-                     class="option-image"
-                     alt="@opt" />
+                        <img src="@($"/Output/{opt}/{fileName}")"
+                             @onclick="() => NextImage(opt)"
+                             class="option-image"
+                             alt="@opt" />
             }
-            <div class="radio-group">
-                <input type="radio"
-                       id="@($"opt-{opt}")"
-                       name="optionSelect"
-                       value="@opt"
-                       checked="@((selectedOption == opt))"
-                       @onchange="() => OnOptionSelected(opt)" />
-                <label for="@($"opt-{opt}")">@opt</label>
+                <div class="radio-group">
+                    <input type="radio"
+                           id="@($"opt-{opt}")"
+                           name="optionSelect"
+                           value="@opt"
+                           checked="@((selectedOption == opt))"
+                           @onchange="() => OnOptionSelected(opt)" />
+                    <label for="@($"opt-{opt}")">@opt</label>
+                </div>
             </div>
-        </div>
     }
 </div>
 
 @if (!string.IsNullOrEmpty(selectedOption))
 {
-    <div class="confirmation-box">
-        <p>You selected: <strong>@selectedOption</strong></p>
-        <button class="confirm-button" @onclick="ConfirmSelection">Continue</button>
-    </div>
+        <div class="confirmation-box">
+            <p>You selected: <strong>@selectedOption</strong></p>
+            <button class="confirm-button" @onclick="ConfirmSelection">Continue</button>
+        </div>
 }
 
 <style>
@@ -173,7 +173,7 @@
                     else
                     {
                         logBuilder.AppendLine($"⚠️ No PNG images found in {optionDir}");
-                    }  
+                    }
                 }
                 else
                 {

@@ -38,30 +38,30 @@ namespace Kitchenbuilder.Core
                 "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
 
-            JsonObject? root = null;
-            bool hasIsland = false;
-            if (File.Exists(jsonPath))
+            JsonObject? root = File.Exists(jsonPath)
+                ? JsonNode.Parse(File.ReadAllText(jsonPath))!.AsObject()
+                : null;
+
+            if (root == null)
             {
-                root = JsonNode.Parse(File.ReadAllText(jsonPath))!.AsObject();
-                hasIsland = root["HasIsland"]?.ToString()?.ToLower() == "true";
-                Log($"🔍 HasIsland = {hasIsland}");
+                Log("❌ Option JSON file not found.");
+                return;
             }
 
-            double floorWidth = root?["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? 0;
-            double floorLength = root?["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? 0;
+            bool hasIsland = root["HasIsland"]?.ToString()?.ToLower() == "true";
+            double floorWidth = root["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? 0;
+            double floorLength = root["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? 0;
 
             int fridgeWallNumber = -1;
-            foreach (var wallEntry in root!)
+            foreach (var wallEntry in root)
             {
                 if (wallEntry.Value is JsonObject wallObj && wallObj.TryGetPropertyValue("Fridge", out JsonNode? fridgeNode))
                 {
-                    if (fridgeNode?["Start"] != null && fridgeNode["End"] != null)
+                    if (fridgeNode?["Start"] != null && fridgeNode["End"] != null &&
+                        wallEntry.Key.StartsWith("Wall") && int.TryParse(wallEntry.Key.Substring(4), out int num))
                     {
-                        if (wallEntry.Key.StartsWith("Wall") && int.TryParse(wallEntry.Key.Substring(4), out int num))
-                        {
-                            fridgeWallNumber = num;
-                            break;
-                        }
+                        fridgeWallNumber = num;
+                        break;
                     }
                 }
             }
@@ -151,6 +151,7 @@ namespace Kitchenbuilder.Core
                         }
 
                         suggestionCount++;
+
                         if (hasIsland && suggestionCount < 3)
                         {
                             string useIsland = new Random().Next(2) == 0 ? "Sink" : "Cooktop";
@@ -174,6 +175,7 @@ namespace Kitchenbuilder.Core
 
                         if (suggestionCount >= 3) break;
                     }
+
                     if (suggestionCount >= 3) break;
                 }
 
@@ -185,5 +187,6 @@ namespace Kitchenbuilder.Core
                 Log("❌ Unexpected case: countertops are not spread on enough walls.");
             }
         }
+
     }
 }
