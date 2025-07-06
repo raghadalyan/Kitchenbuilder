@@ -45,43 +45,51 @@ namespace Kitchenbuilder.Core
                     if (baseObj == null || baseObj["Visible"]?.GetValue<bool>() != true) continue;
 
                     string sketchName = baseObj["SketchName"]?.ToString() ?? "";
+                    string extrudeName = baseObj["ExtrudeName"]?.ToString() ?? ""; // <-- Add this line
+
                     if (sketchName.Contains("fridge_base")) continue;
 
                     var smartDims = baseObj["SmartDim"]?.AsArray();
                     int distanceX = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("DistanceX") == true)?["Size"]?.GetValue<int>() ?? 0;
                     int length = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("length") == true)?["Size"]?.GetValue<int>() ?? 0;
 
-                    var countertop = baseObj["Countertop"]?.AsArray();
+                    var countertop = baseObj["Countertop"]?.AsObject(); // ✅ CORRECT: it's a JsonObject
                     string baseName = baseEntry.Key;
 
                     int totalStart = distanceX;
                     int totalEnd = distanceX + length;
 
+                    // Add to each StationInfo the extrudeName
                     if (countertop == null || countertop.Count == 0)
                     {
                         result.Add(new StationInfo
                         {
                             BaseName = baseName,
+                            ExtrudeName = extrudeName, // <-- add this
                             StationStart = totalStart,
                             StationEnd = totalEnd,
                             WallNumber = wallNumber,
-                            HasCountertop = false
+                            HasCountertop = false,
+                            SketchName = sketchName
                         });
                     }
                     else
                     {
-                        int L = countertop[0]?["L"]?.GetValue<int>() ?? 0;
-                        int R = countertop[0]?["R"]?.GetValue<int>() ?? 0;
+                        int L = countertop?["L"]?.GetValue<int>() ?? 0;
+                        int R = countertop?["R"]?.GetValue<int>() ?? 0;
+
 
                         if (L == 0 && R == 0)
                         {
                             result.Add(new StationInfo
                             {
                                 BaseName = baseName,
+                                ExtrudeName = extrudeName,
                                 StationStart = totalStart,
                                 StationEnd = totalEnd,
                                 WallNumber = wallNumber,
-                                HasCountertop = true
+                                HasCountertop = true,
+                                SketchName = sketchName
                             });
                         }
                         else
@@ -91,20 +99,24 @@ namespace Kitchenbuilder.Core
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
+                                    ExtrudeName = extrudeName,
                                     StationStart = totalStart,
                                     StationEnd = totalStart + L,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false
+                                    HasCountertop = false,
+                                    SketchName = sketchName
                                 });
                             }
 
                             result.Add(new StationInfo
                             {
                                 BaseName = baseName,
+                                ExtrudeName = extrudeName,
                                 StationStart = totalStart + L,
                                 StationEnd = totalEnd - R,
                                 WallNumber = wallNumber,
-                                HasCountertop = true
+                                HasCountertop = true,
+                                SketchName = sketchName
                             });
 
                             if (R > 0)
@@ -112,15 +124,18 @@ namespace Kitchenbuilder.Core
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
+                                    ExtrudeName = extrudeName,
                                     StationStart = totalEnd - R,
                                     StationEnd = totalEnd,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false
+                                    HasCountertop = false,
+                                    SketchName = sketchName
                                 });
                             }
                         }
                     }
                 }
+
             }
 
             return result;

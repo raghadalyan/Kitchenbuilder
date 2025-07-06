@@ -69,7 +69,7 @@
 
     <ItemGroup>
       <Folder Include="JSON\" />
-      <Folder Include="wwwroot\Output\" />
+      <Folder Include="wwwroot\Output\Sink-Cooktop\" />
       <Folder Include="wwwroot\uploads\" />
       <Folder Include="wwwroot\uploads\" />
     </ItemGroup>

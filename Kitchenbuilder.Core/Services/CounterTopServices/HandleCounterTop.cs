@@ -1,322 +1,286 @@
-﻿using SolidWorks.Interop.sldworks;
-using System;
+﻿using System.Text.Json;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using Kitchenbuilder.Core.Services;
+using SolidWorks.Interop.sldworks;
+using System.Text.Json.Nodes;
 
 namespace Kitchenbuilder.Core
 {
+    public class CountertopStation
+    {
+        public string SketchName { get; set; }
+        public double? Left { get; set; }
+        public double? Right { get; set; }
+
+    }
+
     public static class HandleCounterTop
     {
-        public static List<string> GetVisibleSketches(string jsonPath)
+        public static List<CountertopStation> ExtractCountertopStations(string jsonPath)
         {
-            Log("📌 Starting GetVisibleSketches...");
-            var sketches = new List<string>();
+            var stations = new List<CountertopStation>();
+            if (!File.Exists(jsonPath)) return stations;
 
-            if (!File.Exists(jsonPath))
-            {
-                Log($"❌ JSON not found: {jsonPath}");
-                return sketches;
-            }
-
-            Log("📖 Reading JSON content...");
-            string json = File.ReadAllText(jsonPath);
+            var json = File.ReadAllText(jsonPath);
             var doc = JsonDocument.Parse(json);
 
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            foreach (var wallName in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
             {
-                Log($"🔍 Checking wall: {wall}");
-                if (doc.RootElement.TryGetProperty(wall, out var wallElement) &&
-                    wallElement.TryGetProperty("Bases", out var bases))
+                if (!doc.RootElement.TryGetProperty(wallName, out var wall)) continue;
+                if (!wall.TryGetProperty("Bases", out var bases)) continue;
+
+                foreach (var baseItem in bases.EnumerateObject())
                 {
-                    foreach (var baseProp in bases.EnumerateObject())
+                    var baseValue = baseItem.Value;
+                    if (!baseValue.TryGetProperty("Visible", out var vis) || !vis.GetBoolean()) continue;
+                    if (!baseValue.TryGetProperty("SketchName", out var sketchJson)) continue;
+
+                    string sketchName = sketchJson.GetString();
+                    if (string.IsNullOrWhiteSpace(sketchName)) continue;
+                    if (sketchName.StartsWith("fridge_base")) continue; // skip fridge
+
+                    stations.Add(new CountertopStation { SketchName = sketchName });
+                }
+            }
+
+            return stations;
+        }
+        public static void AddCountertopFields(string jsonPath)
+        {
+            if (!File.Exists(jsonPath)) return;
+
+            var json = File.ReadAllText(jsonPath);
+            var doc = JsonNode.Parse(json)?.AsObject();
+            if (doc == null) return;
+
+            foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            {
+                if (!doc.ContainsKey(wallKey)) continue;
+                var wall = doc[wallKey]?.AsObject();
+                if (wall == null || !wall.ContainsKey("Bases")) continue;
+
+                var bases = wall["Bases"]?.AsObject();
+                if (bases == null) continue;
+
+                foreach (var baseItem in bases)
+                {
+                    var baseObj = baseItem.Value?.AsObject();
+                    if (baseObj == null) continue;
+
+                    var visible = baseObj["Visible"]?.GetValue<bool>() ?? false;
+                    var sketchName = baseObj["SketchName"]?.GetValue<string>() ?? "";
+
+                    if (visible && !string.IsNullOrWhiteSpace(sketchName) && !sketchName.StartsWith("fridge_base"))
                     {
-                        var baseData = baseProp.Value;
-                        bool isVisible = baseData.GetProperty("Visible").GetBoolean();
-                        string? sketch = baseData.GetProperty("SketchName").GetString();
-
-                        Log($"➡️ Base: {baseProp.Name}, Visible={isVisible}, Sketch={sketch}");
-
-                        if (isVisible && !string.IsNullOrWhiteSpace(sketch) && !sketch.ToLower().Contains("fridge"))
+                        if (!baseObj.ContainsKey("Countertop") || baseObj["Countertop"] is null)
                         {
-                            sketches.Add(sketch);
-                            Log($"✅ Collected sketch: {sketch}");
+                            baseObj["Countertop"] = new JsonObject
+                            {
+                                ["Name"] = $"Extrude_CT_{sketchName}",
+                                ["L"] = 0,
+                                ["R"] = 0
+                            };
                         }
                     }
+
                 }
             }
 
-            Log("📦 Finished collecting sketches.");
-            return sketches;
+            File.WriteAllText(jsonPath, doc.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
         }
 
-        public static void ApplyCountertopData(string jsonPath, List<BaseDistance> distances, SolidWorksSessionService session)
+        public static void EditSketchByName(IModelDoc2 modelDoc, string sketchName, Action<string> log)
         {
-            Log("📌 Starting ApplyCountertopData...");
-
-            if (!File.Exists(jsonPath))
+            if (modelDoc is PartDoc partDoc)
             {
-                Log($"❌ JSON not found: {jsonPath}");
-                return;
-            }
-
-            string json = File.ReadAllText(jsonPath);
-            var kitchenData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json)!;
-            var updatedData = new Dictionary<string, object>();
-            int index = 0;
-            int baseCountProcessed = 0;
-
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
-            {
-                Log($"🏠 Processing wall: {wall}");
-
-                if (!kitchenData.TryGetValue(wall, out JsonElement wallElement))
+                var featureObj = partDoc.FeatureByName(sketchName);
+                if (featureObj is IFeature feature)
                 {
-                    Log($"⚠️ Wall '{wall}' not found in JSON.");
-                    continue;
-                }
-
-                var wallDict = JsonSerializer.Deserialize<Dictionary<string, object>>(wallElement.GetRawText())!;
-                if (!wallDict.TryGetValue("Bases", out var basesObj))
-                {
-                    Log($"⚠️ No 'Bases' in {wall}");
-                    continue;
-                }
-
-                var bases = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(
-                    JsonSerializer.Serialize(basesObj)
-                )!;
-
-                foreach (var baseKey in bases.Keys.ToList())
-                {
-                    var baseData = bases[baseKey];
-                    Log($"➡️ Base: {baseKey}");
-
-                    if (!baseData.TryGetValue("Visible", out var visibleObj) || !baseData.TryGetValue("SketchName", out var sketchObj))
+                    bool success = feature.Select2(false, 0);
+                    if (success)
                     {
-                        Log("⚠️ Missing 'Visible' or 'SketchName' in base.");
-                        continue;
+                        modelDoc.EditSketch();
+                        log($"✏️ Editing sketch {sketchName}");
                     }
-
-                    bool isVisible = (visibleObj is JsonElement ve) ? ve.GetBoolean() : Convert.ToBoolean(visibleObj);
-                    string sketch = (sketchObj is JsonElement se) ? se.GetString() ?? "" : sketchObj.ToString() ?? "";
-
-                    Log($"🔍 Visible={isVisible}, Sketch={sketch}");
-
-                    if (!isVisible || sketch.ToLower().Contains("fridge"))
+                    else
                     {
-                        Log("⏩ Skipping this base.");
-                        continue;
+                        log($"❌ Could not select sketch {sketchName}");
                     }
-
-                    string centerTopName = $"Extrude_CT_{sketch}";
-                    double left = index < distances.Count ? distances[index].Left : 0;
-                    double right = index < distances.Count ? distances[index].Right : 0;
-
-                    baseData["Countertop"] = new List<Dictionary<string, object>>
-                    {
-                        new Dictionary<string, object>
-                        {
-                            { "Name", centerTopName },
-                            { "L", left },
-                            { "R", right }
-                        }
-                    };
-                    baseData["IsCountertopVisible"] = true;
-
-                    bases[baseKey] = baseData;
-                    Log($"✅ Added countertop: {centerTopName}, L={left}, R={right}");
-
-                    index++;
-                    baseCountProcessed++;
                 }
-
-                wallDict["Bases"] = bases;
-                updatedData[wall] = wallDict;
+                else
+                {
+                    log($"❌ Feature {sketchName} not found.");
+                }
             }
-
-            foreach (var kvp in kitchenData)
+            else
             {
-                if (!updatedData.ContainsKey(kvp.Key))
-                    updatedData[kvp.Key] = kvp.Value;
+                log("❌ ModelDoc is not a PartDoc.");
             }
-
-            string updatedJson = JsonSerializer.Serialize(updatedData, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(jsonPath, updatedJson);
-            Log($"💾 JSON saved. Total processed bases: {baseCountProcessed}");
-
-            Log("👁️ Calling CheckVisibleCountertops...");
-            CheckVisibleCountertops.ProcessVisibleCountertops(jsonPath, session);
-            Log("✅ Done ApplyCountertopData.");
         }
-
-        public static void PreFillCountertops(string jsonPath)
+        public static void UpdateJsonCountertopDistances(string baseName, string currentSketch, double? left, double? right, Action<string> Log, bool removeObject = false)
         {
-            Log("📌 Starting PreFillCountertops...");
-
-            if (!File.Exists(jsonPath))
-            {
-                Log($"❌ JSON not found: {jsonPath}");
-                return;
-            }
-
-            string json = File.ReadAllText(jsonPath);
-            var kitchenData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json)!;
-            var updatedData = new Dictionary<string, object>();
-            int totalCountertopsAdded = 0;
-
-            foreach (var wall in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
-            {
-                Log($"🏠 Pre-filling wall: {wall}");
-
-                if (!kitchenData.TryGetValue(wall, out JsonElement wallElement))
-                {
-                    Log($"⚠️ Wall '{wall}' not found in JSON.");
-                    continue;
-                }
-
-                var wallDict = JsonSerializer.Deserialize<Dictionary<string, object>>(wallElement.GetRawText())!;
-                if (!wallDict.TryGetValue("Bases", out var basesObj))
-                {
-                    Log($"⚠️ No 'Bases' found in wall: {wall}");
-                    continue;
-                }
-
-                var bases = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(
-                    JsonSerializer.Serialize(basesObj)
-                )!;
-
-                foreach (var baseKey in bases.Keys.ToList())
-                {
-                    var baseData = bases[baseKey];
-
-                    if (!baseData.TryGetValue("Visible", out var visibleObj) || !baseData.TryGetValue("SketchName", out var sketchObj))
-                    {
-                        Log($"⚠️ Base '{baseKey}' missing 'Visible' or 'SketchName'.");
-                        continue;
-                    }
-
-                    bool isVisible = (visibleObj is JsonElement ve) ? ve.GetBoolean() : Convert.ToBoolean(visibleObj);
-                    string sketch = (sketchObj is JsonElement se) ? se.GetString() ?? "" : sketchObj.ToString() ?? "";
-
-                    if (!isVisible)
-                    {
-                        Log($"⏩ Base '{baseKey}' is not visible.");
-                        continue;
-                    }
-
-                    if (sketch.ToLower().Contains("fridge"))
-                    {
-                        Log($"⏩ Skipping fridge sketch: {sketch}");
-                        continue;
-                    }
-
-                    string centerTopName = $"Extrude_CT_{sketch}";
-
-                    baseData["Countertop"] = new List<Dictionary<string, object>>
-                    {
-                        new Dictionary<string, object>
-                        {
-                            { "Name", centerTopName },
-                            { "L", 0 },
-                            { "R", 0 }
-                        }
-                    };
-                    baseData["IsCountertopVisible"] = true;
-
-                    bases[baseKey] = baseData;
-
-                    Log($"✅ Pre-filled Countertop for Base '{baseKey}': {centerTopName}, L=0, R=0");
-                    totalCountertopsAdded++;
-                }
-
-                wallDict["Bases"] = bases;
-                updatedData[wall] = wallDict;
-            }
-
-            foreach (var kvp in kitchenData)
-            {
-                if (!updatedData.ContainsKey(kvp.Key))
-                    updatedData[kvp.Key] = kvp.Value;
-            }
-
-            string updatedJson = JsonSerializer.Serialize(updatedData, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(jsonPath, updatedJson);
-            Log($"💾 JSON updated and saved: {jsonPath}");
-            Log($"📊 Total Countertops Added: {totalCountertopsAdded}");
-            Log("✅ Done PreFillCountertops.");
-        }
-
-        public static void ActivateSketchForStation(int index, SolidWorksSessionService session)
-        {
-            Log($"📌 Activating **countertop sketch** for station index: {index}");
-
             try
             {
-                IModelDoc2? model = session.GetActiveModel();
-                if (model == null)
+                if (string.IsNullOrWhiteSpace(baseName) || string.IsNullOrWhiteSpace(currentSketch))
+                    return;
+
+                string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+                if (!File.Exists(jsonPath))
                 {
-                    Log("❌ No active model found.");
+                    Log("❌ JSON file not found when trying to update distances.");
                     return;
                 }
 
-                if (LayoutLauncher.StationSketches == null || index >= LayoutLauncher.StationSketches.Count)
+                string jsonText = File.ReadAllText(jsonPath);
+                using JsonDocument doc = JsonDocument.Parse(jsonText);
+                var root = doc.RootElement.Clone();
+
+                using var stream = new MemoryStream();
+                using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+                writer.WriteStartObject();
+
+                foreach (var wallProp in root.EnumerateObject())
                 {
-                    Log($"❌ Invalid index or StationSketches not initialized. Index: {index}");
-                    return;
-                }
+                    writer.WritePropertyName(wallProp.Name);
+                    writer.WriteStartObject();
 
-                // 👇 نحاول تحديد سكيتش الشايش بناءً على الاسم المعدّل
-                string originalSketch = LayoutLauncher.StationSketches[index];
-                string ctSketchName = $"CT_{originalSketch}";
-
-                Log($"🎯 Trying to activate sketch: {ctSketchName}");
-
-                Feature? feature = model.FirstFeature() as Feature;
-                Feature? sketchFeature = null;
-
-                while (feature != null)
-                {
-                    if (feature.Name.Equals(ctSketchName, StringComparison.OrdinalIgnoreCase))
+                    foreach (var section in wallProp.Value.EnumerateObject())
                     {
-                        sketchFeature = feature;
-                        break;
+                        if (section.Name != "Bases")
+                        {
+                            section.WriteTo(writer);
+                            continue;
+                        }
+
+                        writer.WritePropertyName("Bases");
+                        writer.WriteStartObject();
+
+                        foreach (var baseProp in section.Value.EnumerateObject())
+                        {
+                            writer.WritePropertyName(baseProp.Name);
+                            writer.WriteStartObject();
+
+                            string sketchName = "";
+                            foreach (var field in baseProp.Value.EnumerateObject())
+                            {
+                                if (field.Name == "SketchName")
+                                    sketchName = field.Value.GetString() ?? "";
+
+                                if (field.Name != "Countertop")
+                                    field.WriteTo(writer);
+                            }
+
+                            if (sketchName == currentSketch)
+                            {
+                                writer.WritePropertyName("Countertop");
+                                if (removeObject)
+                                {
+                                    writer.WriteNullValue();
+                                    Log($"🗑️ Removed Countertop object for {currentSketch}");
+                                }
+                                else
+                                {
+                                    writer.WriteStartObject();
+                                    writer.WriteString("Name", $"Extrude_CT_{currentSketch}");
+                                    writer.WriteNumber("L", Math.Abs(left ?? 0));
+                                    writer.WriteNumber("R", Math.Abs(right ?? 0));
+                                    writer.WriteEndObject();
+                                    Log($"✅ Updated L/R values for {currentSketch}");
+                                }
+                            }
+                            else
+                            {
+                                // Preserve existing countertop data
+                                if (baseProp.Value.TryGetProperty("Countertop", out var ct))
+                                {
+                                    writer.WritePropertyName("Countertop");
+                                    ct.WriteTo(writer);
+                                }
+                            }
+
+
+                            writer.WriteEndObject(); // base
+                        }
+
+                        writer.WriteEndObject(); // Bases
                     }
-                    feature = feature.GetNextFeature() as Feature;
+
+                    writer.WriteEndObject(); // wall
                 }
 
-                if (sketchFeature == null)
-                {
-                    Log("❌ Sketch not found in model.");
-                    return;
-                }
+                writer.WriteEndObject(); // root
+                writer.Flush();
 
-                bool selected = sketchFeature.Select2(false, -1);
-                Log(selected ? "✅ Sketch selected." : "❌ Failed to select sketch.");
-
-                model.EditSketch();
-                Log("✅ Called EditSketch.");
+                File.WriteAllBytes(jsonPath, stream.ToArray());
             }
             catch (Exception ex)
             {
-                Log($"❌ Exception in ActivateSketchForStation: {ex.Message}");
+                Log($"❌ Failed to update JSON: {ex.Message}");
+            }
+        }
+        public static void DeleteSketchByName(IModelDoc2 modelDoc, string fullSketchName, Action<string> logToConsole)
+        {
+            void Log(string message)
+            {
+                logToConsole?.Invoke(message); // Only log to app/console
+            }
+
+            if (modelDoc is not PartDoc partDoc)
+            {
+                Log("❌ ModelDoc is not a PartDoc.");
+                return;
+            }
+
+            Log($"🚨 Deleting: {fullSketchName}");
+
+            // Exit sketch mode if active
+            modelDoc.SketchManager.InsertSketch(true);
+            Log("↩️ Exited sketch mode if active.");
+
+            // Delete Extrude
+            string extrudeName = $"Extrude_{fullSketchName}";
+            Log($"🔎 Looking for extrusion: {extrudeName}");
+
+            var extrudeObj = partDoc.FeatureByName(extrudeName);
+            if (extrudeObj is IFeature extrudeFeature)
+            {
+                Log($"✅ Found extrusion feature: {extrudeFeature.Name}");
+                bool selected = extrudeFeature.Select2(false, 0);
+                Log($"➡️ Selecting {extrudeFeature.Name}: {(selected ? "Success" : "Failed")}");
+                if (selected)
+                {
+                    modelDoc.EditDelete();
+                    Log($"🗑️ Deleted extrusion feature {extrudeName}");
+                }
+            }
+            else
+            {
+                Log($"⚠️ Extrusion feature {extrudeName} not found.");
+            }
+
+            // Delete Sketch
+            Log($"🔎 Looking for sketch: {fullSketchName}");
+
+            var sketchObj = partDoc.FeatureByName(fullSketchName);
+            if (sketchObj is IFeature sketchFeature)
+            {
+                Log($"✅ Found sketch feature: {sketchFeature.Name}");
+                bool selected = sketchFeature.Select2(false, 0);
+                Log($"➡️ Selecting {sketchFeature.Name}: {(selected ? "Success" : "Failed")}");
+                if (selected)
+                {
+                    modelDoc.EditDelete();
+                    Log($"🗑️ Deleted sketch {fullSketchName}");
+                }
+            }
+            else
+            {
+                Log($"⚠️ Sketch {fullSketchName} not found.");
             }
         }
 
-
-        private static void Log(string message)
-        {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug.txt";
-            string logLine = $"[{DateTime.Now:HH:mm:ss}] {message}";
-            File.AppendAllText(debugPath, logLine + System.Environment.NewLine);
-        }
-
-        public class BaseDistance
-        {
-            public double Left { get; set; }
-            public double Right { get; set; }
-        }
     }
+
+
 }
+

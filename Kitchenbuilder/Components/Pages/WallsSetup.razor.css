@@ -1,0 +1,71 @@
+﻿/* الخلفية الخشبية */
+.walls-setup-page {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* الصندوق الرئيسي */
+.walls-setup-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 3rem 4rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-family: 'Georgia', serif;
+    min-width: 340px;
+}
+
+    /* العنوان */
+    .walls-setup-container h3 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #5a3825;
+    }
+
+    /* التصنيفات والحقول */
+    .walls-setup-container label {
+        display: block;
+        font-size: 1.4rem;
+        color: #4b2e20;
+        margin: 1rem 0 0.3rem;
+    }
+
+    .walls-setup-container input[type="number"] {
+        padding: 0.6rem 1rem;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+        width: 100%;
+    }
+
+    /* الزر */
+    .walls-setup-container button {
+        margin-top: 2rem;
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+        background-color: #8b5a2b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+    }
+
+        .walls-setup-container button:hover {
+            background-color: #a6693b;
+        }
+
+    /* الرسالة الحمراء */
+    .walls-setup-container p {
+        color: red;
+        font-weight: bold;
+        margin-top:  1rem;
+            
+    }

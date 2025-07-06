@@ -1,101 +1,48 @@
-﻿
+﻿using SolidWorks.Interop.sldworks;
 using System;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using SolidWorks.Interop.sldworks;
-using SolidWorks.Interop.swconst;
 
 namespace Kitchenbuilder.Core
 {
-    public class CountertopDimensionApplier
+    public static class CountertopDimensionApplier
     {
-        private static readonly string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug.txt";
-
-        private static void Log(string message)
+        public static void ApplyDistance(IModelDoc2 model, string sketchName, double? left, double? right, int wallNumber, Action<string> Log)
         {
-            File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
-        }
-
-        public static void ApplyDimensionsFromJson(string jsonPath, ISldWorks swApp)
-        {
-            Log("🚀 Starting CountertopDimensionApplier...");
-
-            if (!File.Exists(jsonPath))
+            if (model == null || string.IsNullOrEmpty(sketchName))
             {
-                Log($"❌ JSON file not found: {jsonPath}");
+                Log("❌ Invalid model or sketch name.");
                 return;
             }
 
-            JsonDocument doc = JsonDocument.Parse(File.ReadAllText(jsonPath));
+            string fullSketchName = $"CT_{sketchName}";
 
-            if (!doc.RootElement.TryGetProperty("Wall1", out var wall) ||
-                !wall.TryGetProperty("Bases", out var bases))
+            if (left.HasValue)
             {
-                Log("❌ 'Wall1.Bases' not found in JSON.");
-                return;
+                double valueToSet = (wallNumber == 1 || wallNumber == 3) ? -left.Value : left.Value;
+                string leftDim = $"L@{fullSketchName}";
+                bool success = SetDimension(model, leftDim, valueToSet);
+                Log(success ? $"✅ Set {leftDim} to {valueToSet}" : $"❌ Failed to set {leftDim}");
             }
 
-            IModelDoc2 model = swApp.ActiveDoc as IModelDoc2;
-            if (model == null)
+            if (right.HasValue)
             {
-                Log("❌ No active SolidWorks document.");
-                return;
-            }
-
-            foreach (var baseItem in bases.EnumerateObject())
-            {
-                var baseValue = baseItem.Value;
-
-                if (!baseValue.TryGetProperty("Countertop", out var countertopArray) ||
-                    countertopArray.ValueKind != JsonValueKind.Array)
-                {
-                    continue;
-                }
-
-                foreach (var ct in countertopArray.EnumerateArray())
-                {
-                    if (!ct.TryGetProperty("Name", out var nameProp) ||
-                        !ct.TryGetProperty("L", out var lProp) ||
-                        !ct.TryGetProperty("R", out var rProp))
-                    {
-                        continue;
-                    }
-
-                    string name = nameProp.GetString();
-                    double L = lProp.GetDouble();
-                    double R = rProp.GetDouble();
-
-                    string sketchName = name.Replace("Extrude_", "");
-                    string dimL = $"L@{sketchName}";
-                    string dimR = $"R@{sketchName}";
-
-                    Log($"🧩 Trying to set {dimL} = {-L}, {dimR} = {-R}");
-
-                    Dimension dim1 = model.Parameter(dimL) as Dimension;
-                    Dimension dim2 = model.Parameter(dimR) as Dimension;
-
-                    bool successL = false, successR = false;
-
-                    if (dim1 != null)
-                    {
-                        dim1.SystemValue = L / 100.0;  // ✅ عكس الإشارة
-                        successL = true;
-                    }
-                    if (dim2 != null)
-                    {
-                        dim2.SystemValue = R / 100.0;  // ✅ عكس الإشارة
-                        successR = true;
-                    }
-
-                    Log(successL ? $"✅ Set {dimL} to {-L}" : $"❌ Failed to set {dimL}");
-                    Log(successR ? $"✅ Set {dimR} to {-R}" : $"❌ Failed to set {dimR}");
-
-                }
+                double valueToSet = (wallNumber == 2 ) ? -right.Value : right.Value;
+                string rightDim = $"R@{fullSketchName}";
+                bool success = SetDimension(model, rightDim, valueToSet);
+                Log(success ? $"✅ Set {rightDim} to {valueToSet}" : $"❌ Failed to set {rightDim}");
             }
 
             model.EditRebuild3();
-            Log("✅ Done applying all countertop dimensions.");
         }
+
+        private static bool SetDimension(IModelDoc2 model, string dimName, double value)
+        {
+            var dimension = model.Parameter(dimName) as IDimension;
+            if (dimension == null)
+                return false;
+
+            dimension.SystemValue = value / 100.0; // convert from cm to meters
+            return true;
+        }
+
     }
 }

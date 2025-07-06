@@ -1,14 +1,29 @@
- @page "/"
- @inject NavigationManager NavManager
+﻿@page "/"
+@inject NavigationManager NavManager
 
-<h1> Welcome to the Smart Kitchen Builder</h1>
+<div class="welcome-container">
+    <div class="text-box">
+        <h1 class="welcome-text">Welcome to the Smart Kitchen Builder</h1>
+        <p class="subtitle-text @(ShowSubtitle ? "show" : "")">Built with care . Designed for you</p>
+    </div>
+</div>
+
 @code {
+    private bool ShowSubtitle = false;
+
     protected override async Task OnInitializedAsync()
     {
-        // Wait 5 seconds
-        await Task.Delay(5000);
+        // عرض الجملة الأولى
+        await Task.Delay(4000);
 
-        // Navigate to Counter page
+        // ثم عرض الجملة الثانية
+        ShowSubtitle = true;
+        StateHasChanged();
+
+        // بعد 5 ثواني إضافية، الانتقال
+        await Task.Delay(5000);
         NavManager.NavigateTo("/floor");
+        // NavManager.NavigateTo("/base-options");
+
     }
-  }
+}

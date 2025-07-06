@@ -3,6 +3,7 @@
 @using Kitchenbuilder.Core
 @inject IJSRuntime JS
 @using Kitchenbuilder.Core.Models
+@using SolidWorks.Interop.sldworks
 
 <div class="container">
     <h1>Cabinet Stations</h1>
@@ -132,34 +133,43 @@
     private int height = 1;
     private bool hasDrawers = false;
     private int drawerCount = 2;
+    private ModelDoc2 swModel;
 
     protected override async Task OnInitializedAsync()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json";
+        string sldPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
+
         if (File.Exists(jsonPath))
         {
             var json = await File.ReadAllTextAsync(jsonPath);
-            stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new List<StationInfo>();
+            stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new();
+        }
+
+        if (stations.Count > 0)
+        {
+            swModel = SolidWorksLoader.LoadPart(sldPath);
+
+            MoveBetweenStations.SelectStation(0, stations, ref currentIndex, swModel);
         }
     }
 
+
     void SelectStation(int index)
     {
-        if (index >= 0 && index < stations.Count)
-            currentIndex = index;
+        MoveBetweenStations.SelectStation(index, stations, ref currentIndex, swModel);
     }
 
     void PreviousStation()
     {
-        if (currentIndex > 0)
-            currentIndex--;
+        MoveBetweenStations.PreviousStation(stations, ref currentIndex, swModel);
     }
 
     void NextStation()
     {
-        if (currentIndex < stations.Count - 1)
-            currentIndex++;
+        MoveBetweenStations.NextStation(stations, ref currentIndex, swModel);
     }
+
 
     void AddSpace()
     {
@@ -198,7 +208,7 @@
 
     async Task OnApplyCabinet()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
+        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json";
 
         int copies = isSequence ? copiesCount : 1;
         if (width < 5)

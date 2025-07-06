@@ -1,0 +1,45 @@
+﻿@page "/sink-cooktop-options"
+@using Kitchenbuilder.Core
+@using Microsoft.AspNetCore.Components
+@inject SolidWorksSessionService SwSession
+
+<h3>Sink & Cooktop Layout for Option: <span style="color:#007acc">Option @SelectedOption</span></h3>
+
+<p>Processing countertop placements...</p>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "option")]
+    public string? SelectedOption { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"➡️ Navigated with option: {SelectedOption}");
+
+        if (!string.IsNullOrWhiteSpace(SelectedOption) && SelectedOption.StartsWith("Option"))
+        {
+            SelectedOption = SelectedOption.Replace("Option", "");
+        }
+
+        if (int.TryParse(SelectedOption, out int optionNum))
+        {
+            var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
+
+            // ✅ Get the active model from SwSession
+            var model = SwSession.GetActiveModel();
+
+            if (model == null)
+            {
+                Console.WriteLine("❌ No active model found in SwSession.");
+                return;
+            }
+
+            // ✅ Call the analyzer with model
+            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
+        }
+        else
+        {
+            Console.WriteLine("❌ Invalid option parameter after cleanup.");
+        }
+    }
+}

@@ -1,111 +1,99 @@
-.title {
+.loading-container {
     text-align: center;
-    margin-top: 20px;
-    font-size: 32px;
-    color: #2c3e50;
+    margin-top: 30px;
 }
 
-.station-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
+    .loading-container img {
+        width: 80px;
+        height: 80px;
+    }
 
-.station {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 10px;
-    width: 220px;
-}
+    .loading-container p {
+        font-size: 18px;
+        color: #e67e22;
+        font-weight: bold;
+    }
 
-.circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    background-color: #008080;
-    color: white;
+.status-message {
+    text-align: center;
+    font-size: 18px;
+    color: green;
     font-weight: bold;
+}
+
+.step-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #bdc3c7;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+    .step-indicator.active {
+        background-color: #2980b9;
+    }
+
+.station-info {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .distance-inputs label {
-    display: block;
-    margin-top: 10px;
+    margin-right: 10px;
 }
 
 .distance-inputs input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-}
-
-.navigation-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-    .navigation-buttons button {
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        background-color: #3498db;
-        color: white;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-        .navigation-buttons button:disabled {
-            background-color: #ccc;
-            cursor: default;
-        }
-
-.step-indicator {
-    text-align: center;
-    font-size: 16px;
     margin-bottom: 10px;
 }
 
 .save-button {
-    margin: 20px auto;
-    display: block;
-    background-color: #28a745;
-    color: white;
-    font-size: 16px;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.steps {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+    margin-top: 10px;
 }
 
-.step-circle {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #d3d3d3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.nav-buttons {
+    text-align: center;
+    margin-top: 30px;
 }
 
-    .step-circle.active {
-        background-color: #008080;
-        color: white;
+    .nav-buttons button {
+        margin-left: 20px;
     }
+.station-box {
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.confirm-box {
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    background-color: white;
+    border: 2px solid #444;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
