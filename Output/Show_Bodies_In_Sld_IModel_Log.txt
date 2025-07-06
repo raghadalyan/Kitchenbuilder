@@ -1,0 +1,40 @@
+[2025-07-06 20:53:51] ✅ Body already visible: Faucet Inox
+[2025-07-06 20:53:54] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-06 20:53:54] ✅ Body already visible: Cut-Sink
+[2025-07-06 20:53:54] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 21:48:59] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 21:49:01] 💾 Model saved after showing bodies.
+[2025-07-06 21:50:23] ✅ Body already visible: Extrude_Island*
+[2025-07-06 21:50:23] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 21:51:31] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 21:51:32] 💾 Model saved after showing bodies.
+[2025-07-06 21:58:49] ✅ Body already visible: Extrude_Island*
+[2025-07-06 21:58:49] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 22:01:08] ✅ Body already visible: Extrude_Island*
+[2025-07-06 22:01:08] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 22:19:59] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 22:20:02] 💾 Model saved after showing bodies.
+[2025-07-06 22:27:18] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 22:27:20] 💾 Model saved after showing bodies.
+[2025-07-06 22:29:39] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 22:29:41] 💾 Model saved after showing bodies.
+[2025-07-06 22:38:29] ✅ Body already visible: Extrude_Island*
+[2025-07-06 22:38:29] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 22:45:44] 👁️ Made body visible: Extrude_Island*
+[2025-07-06 22:45:47] 💾 Model saved after showing bodies.
+[2025-07-06 22:51:42] 👁️ Made body visible: Extrude_Island1
+[2025-07-06 22:51:44] 💾 Model saved after showing bodies.
+[2025-07-06 23:11:37] 👁️ Made body visible: Extrude_Island1
+[2025-07-06 23:11:39] 💾 Model saved after showing bodies.
+[2025-07-06 23:12:25] ✅ Body already visible: Extrude_Island1
+[2025-07-06 23:12:26] 💾 Model saved after showing bodies.
+[2025-07-06 23:19:57] ✅ Body already visible: Extrude_Island1
+[2025-07-06 23:19:57] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 23:20:21] 👁️ Made body visible: Extrude_Island1
+[2025-07-06 23:20:22] 💾 Model saved after showing bodies.
+[2025-07-06 23:41:51] ✅ Body already visible: Extrude_Island1
+[2025-07-06 23:41:51] ℹ️ No bodies were shown, skipping save.
+[2025-07-06 23:42:37] 👁️ Made body visible: Extrude_Island1
+[2025-07-06 23:42:38] 💾 Model saved after showing bodies.
+[2025-07-06 23:53:24] ✅ Body already visible: Extrude_Island1
+[2025-07-06 23:53:24] ℹ️ No bodies were shown, skipping save.

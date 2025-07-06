@@ -1,0 +1,178 @@
+﻿@page "/island"
+@inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using Kitchenbuilder.Core
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<div class="page-background">
+    <div class="island-container">
+        <h2>Island Options (Option @Option)</h2>
+
+        @if (IsLoading)
+        {
+                <div class="loading-box">
+                    <img src="Images/Loading.gif" alt="Loading..." />
+                    <p>Loading from SolidWorks...</p>
+                </div>
+        }
+        else
+        {
+                <div class="checkbox-container">
+                    <label>
+                        <input type="checkbox" @bind="ShowOptions" @bind:after="OnCheckboxChanged" />
+                        Do you want to customize an island?
+                    </label>
+                </div>
+
+            @if (ShowOptions)
+            {
+                        <label>Depth (cm):</label>
+                        <input type="number" @bind="Depth" />
+
+                        <label>Width (cm):</label>
+                        <input type="number" @bind="Width" />
+
+                        <label>Direction:</label>
+                        <img src="Images/directional.png" alt="Direction" class="direction-img" />
+
+                        <label>Material:</label>
+                        <input type="text" @bind="Material" placeholder="e.g. Wood, Marble" />
+            }
+
+                <button @onclick="SaveIsland">Save</button>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "option")]
+    public int Option { get; set; } = 3;
+
+    private bool ShowOptions = false;
+    private bool IsLoading = false;
+    private int Depth;
+    private int Width;
+    private string Material = "";
+    private IModelDoc2? model;
+
+    private async Task OnCheckboxChanged()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        string targetBody = "Extrude_Island1";
+        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{Option}SLD.json";
+
+        await Task.Run(() =>
+        {
+            model = SwSession.GetActiveModel();
+            if (model == null)
+            {
+                Log("❌ Model is null.");
+                return;
+            }
+
+            Log($"✅ Model loaded: {model.GetTitle()}");
+
+            var allBodies = BodyNameHelper.GetAllBodyNames(model);
+            foreach (var b in allBodies)
+                Log($"🧱 Body found: {b}");
+
+            if (!allBodies.Contains(targetBody))
+            {
+                Log($"❌ Island body '{targetBody}' not found.");
+                return;
+            }
+
+            double floorWidth = 0, floorLength = 0;
+            try
+            {
+                var jsonText = File.ReadAllText(jsonPath);
+                var jsonDoc = System.Text.Json.JsonDocument.Parse(jsonText);
+                var root = jsonDoc.RootElement;
+
+                floorWidth = root.GetProperty("Floor").GetProperty("Width").GetProperty("Size").GetDouble();
+                floorLength = root.GetProperty("Floor").GetProperty("Length").GetProperty("Size").GetDouble();
+
+                Log($"📐 Floor dimensions: Width={floorWidth}, Length={floorLength}");
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Failed to read floor dimensions: {ex.Message}");
+                return;
+            }
+
+            if (ShowOptions)
+            {
+                Show_Bodies_In_Sld_IModel.ShowMultipleBodies(model, new[] { targetBody });
+                Log($"✅ Showing island body: {targetBody}");
+
+                EditSketchDim_IModel.SetDimension(model, "D1@Sketch_Move_Island", 0);
+                EditSketchDim_IModel.SetDimension(model, "D2@Sketch_Move_Island", 0);
+                EditSketchDim_IModel.SetDimension(model, "DX@Sketch_Move_Island", floorLength / 2);
+                EditSketchDim_IModel.SetDimension(model, "DY@Sketch_Move_Island", floorWidth / 2);
+                Log($"📏 Position set to center: DX={floorLength / 2}, DY={floorWidth / 2}");
+            }
+            else
+            {
+                Hide_Bodies_In_Sld_IModel.HideMultipleBodies(model, new[] { targetBody });
+                Log($"❌ Hiding island body: {targetBody}");
+
+                EditSketchDim_IModel.SetDimension(model, "D1@Sketch_Move_Island", 2000);
+                EditSketchDim_IModel.SetDimension(model, "D2@Sketch_Move_Island", 2000);
+                Log("📏 Dimensions set to 2000.");
+            }
+        });
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    private void SaveIsland()
+    {
+        int minSize = 60;
+
+        int adjustedDepth = Math.Max(Depth, minSize);
+        int adjustedWidth = Math.Max(Width, minSize);
+
+        Log($"💾 Saving island with adjusted Depth={adjustedDepth}, Width={adjustedWidth}, Material={Material}");
+
+        if (model == null)
+        {
+            Log("❌ Cannot save – model is null.");
+            return;
+        }
+
+        try
+        {
+            EditSketchDim_IModel.SetDimension(model, "Depth@Sketch_Island", adjustedDepth);
+            EditSketchDim_IModel.SetDimension(model, "Width@Sketch_Island", adjustedWidth);
+
+            EditSketchDim_IModel.SetDimension(model, "D1_Circle@Sketch73", adjustedDepth / 2.0);
+            EditSketchDim_IModel.SetDimension(model, "D2_Circle@Sketch73", adjustedWidth / 2.0);
+
+            Log("✅ Island dimensions updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error updating island dimensions: {ex.Message}");
+        }
+    }
+
+    private void Log(string message)
+    {
+        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\island";
+        string file = Path.Combine(folder, "island_debug.txt");
+
+        try
+        {
+            Directory.CreateDirectory(folder);
+            File.AppendAllText(file, $"{DateTime.Now:HH:mm:ss} - {message}\n");
+        }
+        catch { }
+
+        Console.WriteLine(message);
+    }
+}
