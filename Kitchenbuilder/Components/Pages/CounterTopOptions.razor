@@ -412,12 +412,23 @@ else
             Log($"❌ Error during sketch exit or save: {ex.Message}");
         }
 
-        // ✅ Navigate to next page
-        if (!string.IsNullOrWhiteSpace(baseName))
+        if (!string.IsNullOrWhiteSpace(baseName) && baseName.StartsWith("Option"))
         {
-            string option = baseName.Replace("SLD", ""); // e.g., Option3SLD → Option3
-            NavManager.NavigateTo($"/sink-cooktop-options?option={option}");
+            string optionNumber = new string(baseName
+                .Replace("SLD", "")
+                .Where(char.IsDigit)
+                .ToArray());
+
+            if (!string.IsNullOrWhiteSpace(optionNumber))
+            {
+                NavManager.NavigateTo($"/island?option={optionNumber}");
+            }
+            else
+            {
+                Log("❌ Could not extract option number from baseName.");
+            }
         }
+
     }
 
 

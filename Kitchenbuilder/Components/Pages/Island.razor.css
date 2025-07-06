@@ -72,3 +72,6 @@ button {
     button:hover {
         background-color: #734622;
     }
+.direction-img {
+    transition: transform 0.3s ease;
+}

@@ -27,14 +27,21 @@
 
             @if (ShowOptions)
             {
+                <div style="text-align:center; margin: 10px 0;">
+                    <img src="Images/directional.png"
+                         alt="Direction"
+                         class="direction-img"
+                         style="cursor:pointer; width:50px;"
+                         @onclick="ToggleIslandAngle" />
+                </div>
+
                         <label>Depth (cm):</label>
                         <input type="number" @bind="Depth" />
 
                         <label>Width (cm):</label>
                         <input type="number" @bind="Width" />
 
-                        <label>Direction:</label>
-                        <img src="Images/directional.png" alt="Direction" class="direction-img" />
+           
 
                         <label>Material:</label>
                         <input type="text" @bind="Material" placeholder="e.g. Wood, Marble" />
@@ -151,13 +158,35 @@
             EditSketchDim_IModel.SetDimension(model, "Width@Sketch_Island", adjustedWidth);
 
             EditSketchDim_IModel.SetDimension(model, "D1_Circle@Sketch73", adjustedDepth / 2.0);
-            EditSketchDim_IModel.SetDimension(model, "D2_Circle@Sketch73", adjustedWidth / 2.0);
+            EditSketchDim_IModel.SetDimension(model, "D2_Circle@Sketch73", (adjustedWidth-10) / 2.0);
 
             Log("✅ Island dimensions updated successfully.");
         }
         catch (Exception ex)
         {
             Log($"❌ Error updating island dimensions: {ex.Message}");
+        }
+    }
+    private int CurrentAngle = 90;
+
+    private void ToggleIslandAngle()
+    {
+        if (model == null)
+        {
+            Log("❌ Cannot toggle direction – model is null.");
+            return;
+        }
+
+        CurrentAngle = (CurrentAngle == 90) ? 360: 90;
+
+        try
+        {
+            EditSketchDim_IModel.SetDimension(model, "angle@Sketch_Move_Island", CurrentAngle);
+            Log($"🔄 Island rotation set to {CurrentAngle}°");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error changing island direction: {ex.Message}");
         }
     }
 

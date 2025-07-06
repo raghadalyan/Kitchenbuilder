@@ -1,6 +1,0 @@
-[20:53:54] ▶️ Starting analysis for Option 3
-[20:53:54] 🔍 Relevant countertops count: 3
-[20:53:54] 📏 Wall1.Base2 | Start=145, End=400, Width=255
-[20:53:54] 📏 Wall2.Base1 | Start=0, End=350, Width=350
-[20:53:54] 📏 Wall3.Base1 | Start=0, End=180, Width=180
-[20:53:54] ⚠️ More than two countertops found. Delegating to MultiCountertopSelector...

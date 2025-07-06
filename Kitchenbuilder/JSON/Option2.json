@@ -1,5 +1,5 @@
 {
-  "Title": "UShape",
+  "Title": "LShape",
   "Wall1": 1,
   "Wall2": 2,
   "SpacesWall1": [
@@ -25,10 +25,5 @@
       2
     ]
   ],
-  "Exposed": true,
-  "NumOfExposedWall": 3,
-  "ExposedWallSpace": {
-    "Start": 0,
-    "End": 180
-  }
+  "Exposed": false
 }

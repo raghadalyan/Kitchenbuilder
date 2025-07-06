@@ -1,224 +1,36 @@
-[20:53:54] 📏 Editing dimension 'X@On_CT' to 0
-[20:53:54] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:53:55] ✅ Dimension 'X@On_CT' set to 0. Rebuilt model.
-[20:53:56] 💾 Saved model. Warnings: 0, Errors: 0
-[20:53:56] 📏 Editing dimension 'Y@On_CT' to 0
-[20:53:56] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:53:58] ✅ Dimension 'Y@On_CT' set to 0. Rebuilt model.
-[20:53:58] 💾 Saved model. Warnings: 0, Errors: 0
-[20:53:58] 📏 Editing dimension 'DistanceX_faucet@On_CT' to 30
-[20:53:58] ℹ️ Linear dimension. Converted 30 cm to 0.3 meters.
-[20:54:00] ✅ Dimension 'DistanceX_faucet@On_CT' set to 0.3. Rebuilt model.
-[20:54:01] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:01] 📏 Editing dimension 'DistanceY_faucet@On_CT' to 5
-[20:54:01] ℹ️ Linear dimension. Converted 5 cm to 0.05 meters.
-[20:54:01] ✅ Dimension 'DistanceY_faucet@On_CT' set to 0.05. Rebuilt model.
-[20:54:02] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:02] 📏 Editing dimension 'angle@Sketch_Rotate_Faucet' to 180
-[20:54:02] ℹ️ Angle detected. Converted 180° to 3.141592653589793 radians.
-[20:54:04] ✅ Dimension 'angle@Sketch_Rotate_Faucet' set to 3.141592653589793. Rebuilt model.
-[20:54:04] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:04] 📏 Editing dimension 'Width@Sketch_Sink_Cut' to 60
-[20:54:05] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
-[20:54:05] ✅ Dimension 'Width@Sketch_Sink_Cut' set to 0.6. Rebuilt model.
-[20:54:06] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:06] 📏 Editing dimension 'Length@Sketch_Sink_Cut' to 40
-[20:54:06] ℹ️ Linear dimension. Converted 40 cm to 0.4 meters.
-[20:54:07] ✅ Dimension 'Length@Sketch_Sink_Cut' set to 0.4. Rebuilt model.
-[20:54:07] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:07] 📏 Editing dimension 'DX@Sketch_Sink_Cut' to 0
-[20:54:07] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:09] ✅ Dimension 'DX@Sketch_Sink_Cut' set to 0. Rebuilt model.
-[20:54:10] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:10] 📏 Editing dimension 'DY@Sketch_Sink_Cut' to 10
-[20:54:10] ℹ️ Linear dimension. Converted 10 cm to 0.1 meters.
-[20:54:10] ✅ Dimension 'DY@Sketch_Sink_Cut' set to 0.1. Rebuilt model.
-[20:54:11] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:11] 📏 Editing dimension 'X@On_CT' to 0
-[20:54:11] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:11] ✅ Dimension 'X@On_CT' set to 0. Rebuilt model.
-[20:54:12] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:12] 📏 Editing dimension 'Y@On_CT' to 0
-[20:54:12] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:13] ✅ Dimension 'Y@On_CT' set to 0. Rebuilt model.
-[20:54:13] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:13] 📏 Editing dimension 'DistanceX_Cooktop@On_CT' to 320
-[20:54:13] ℹ️ Linear dimension. Converted 320 cm to 3.2 meters.
-[20:54:15] ✅ Dimension 'DistanceX_Cooktop@On_CT' set to 3.2. Rebuilt model.
-[20:54:16] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:16] 📏 Editing dimension 'DistanceY_Cooktop@On_CT' to 120
-[20:54:16] ℹ️ Linear dimension. Converted 120 cm to 1.2 meters.
-[20:54:17] ✅ Dimension 'DistanceY_Cooktop@On_CT' set to 1.2. Rebuilt model.
-[20:54:18] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:18] 📏 Editing dimension 'angle@Sketch_Rotate_Cooktop' to 360
-[20:54:18] ℹ️ Angle detected. Converted 360° to 6.283185307179586 radians.
-[20:54:19] ✅ Dimension 'angle@Sketch_Rotate_Cooktop' set to 6.283185307179586. Rebuilt model.
-[20:54:19] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:26] 📏 Editing dimension 'X@On_CT' to 0
-[20:54:26] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:26] ✅ Dimension 'X@On_CT' set to 0. Rebuilt model.
-[20:54:27] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:27] 📏 Editing dimension 'Y@On_CT' to 0
-[20:54:27] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:28] ✅ Dimension 'Y@On_CT' set to 0. Rebuilt model.
-[20:54:28] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:28] 📏 Editing dimension 'DistanceX_faucet@On_CT' to 345
-[20:54:28] ℹ️ Linear dimension. Converted 345 cm to 3.45 meters.
-[20:54:30] ✅ Dimension 'DistanceX_faucet@On_CT' set to 3.45. Rebuilt model.
-[20:54:31] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:31] 📏 Editing dimension 'DistanceY_faucet@On_CT' to 90
-[20:54:31] ℹ️ Linear dimension. Converted 90 cm to 0.9 meters.
-[20:54:32] ✅ Dimension 'DistanceY_faucet@On_CT' set to 0.9. Rebuilt model.
-[20:54:33] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:33] 📏 Editing dimension 'angle@Sketch_Rotate_Faucet' to 90
-[20:54:33] ℹ️ Angle detected. Converted 90° to 1.5707963267948966 radians.
-[20:54:34] ✅ Dimension 'angle@Sketch_Rotate_Faucet' set to 1.5707963267948966. Rebuilt model.
-[20:54:35] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:35] 📏 Editing dimension 'Width@Sketch_Sink_Cut' to 40
-[20:54:35] ℹ️ Linear dimension. Converted 40 cm to 0.4 meters.
-[20:54:36] ✅ Dimension 'Width@Sketch_Sink_Cut' set to 0.4. Rebuilt model.
-[20:54:37] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:37] 📏 Editing dimension 'Length@Sketch_Sink_Cut' to 60
-[20:54:37] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
-[20:54:38] ✅ Dimension 'Length@Sketch_Sink_Cut' set to 0.6. Rebuilt model.
-[20:54:39] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:39] 📏 Editing dimension 'DX@Sketch_Sink_Cut' to 340
-[20:54:39] ℹ️ Linear dimension. Converted 340 cm to 3.4 meters.
-[20:54:41] ✅ Dimension 'DX@Sketch_Sink_Cut' set to 3.4. Rebuilt model.
-[20:54:41] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:41] 📏 Editing dimension 'DY@Sketch_Sink_Cut' to 60
-[20:54:41] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
-[20:54:43] ✅ Dimension 'DY@Sketch_Sink_Cut' set to 0.6. Rebuilt model.
-[20:54:43] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:43] 📏 Editing dimension 'X@On_CT' to 0
-[20:54:43] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:44] ✅ Dimension 'X@On_CT' set to 0. Rebuilt model.
-[20:54:45] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:45] 📏 Editing dimension 'Y@On_CT' to 0
-[20:54:45] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[20:54:45] ✅ Dimension 'Y@On_CT' set to 0. Rebuilt model.
-[20:54:46] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:46] 📏 Editing dimension 'DistanceX_Cooktop@On_CT' to 205
-[20:54:46] ℹ️ Linear dimension. Converted 205 cm to 2.05 meters.
-[20:54:47] ✅ Dimension 'DistanceX_Cooktop@On_CT' set to 2.05. Rebuilt model.
-[20:54:48] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:48] 📏 Editing dimension 'DistanceY_Cooktop@On_CT' to 30
-[20:54:48] ℹ️ Linear dimension. Converted 30 cm to 0.3 meters.
-[20:54:50] ✅ Dimension 'DistanceY_Cooktop@On_CT' set to 0.3. Rebuilt model.
-[20:54:50] 💾 Saved model. Warnings: 0, Errors: 0
-[20:54:50] 📏 Editing dimension 'angle@Sketch_Rotate_Cooktop' to 270
-[20:54:50] ℹ️ Angle detected. Converted 270° to 4.71238898038469 radians.
-[20:54:51] ✅ Dimension 'angle@Sketch_Rotate_Cooktop' set to 4.71238898038469. Rebuilt model.
-[20:54:52] 💾 Saved model. Warnings: 0, Errors: 0
-[23:11:39] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:11:39] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:11:41] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:11:41] 💾 Saved model. Warnings: 0, Errors: 0
-[23:11:41] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:11:41] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:11:43] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:11:43] 💾 Saved model. Warnings: 0, Errors: 0
-[23:12:26] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:12:27] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:12:27] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:12:28] 💾 Saved model. Warnings: 0, Errors: 0
-[23:12:28] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:12:28] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:12:28] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:12:29] 💾 Saved model. Warnings: 0, Errors: 0
-[23:19:57] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:19:57] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:19:58] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:19:59] 💾 Saved model. Warnings: 0, Errors: 0
-[23:19:59] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:19:59] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:20:00] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:20:01] 💾 Saved model. Warnings: 0, Errors: 0
-[23:20:11] 📏 Editing dimension 'D1@Sketch_Move_Island' to 2000
-[23:20:11] ℹ️ Linear dimension. Converted 2000 cm to 20 meters.
-[23:20:12] ✅ Dimension 'D1@Sketch_Move_Island' set to 20. Rebuilt model.
-[23:20:13] 💾 Saved model. Warnings: 0, Errors: 0
-[23:20:13] 📏 Editing dimension 'D2@Sketch_Move_Island' to 2000
-[23:20:13] ℹ️ Linear dimension. Converted 2000 cm to 20 meters.
-[23:20:14] ✅ Dimension 'D2@Sketch_Move_Island' set to 20. Rebuilt model.
-[23:20:15] 💾 Saved model. Warnings: 0, Errors: 0
-[23:20:22] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:20:22] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:20:24] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:20:24] 💾 Saved model. Warnings: 0, Errors: 0
-[23:20:24] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:20:24] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:20:26] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:20:27] 💾 Saved model. Warnings: 0, Errors: 0
-[23:41:51] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:41:51] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:41:52] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:41:53] 💾 Saved model. Warnings: 0, Errors: 0
-[23:41:53] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:41:53] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:41:54] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:41:54] 💾 Saved model. Warnings: 0, Errors: 0
-[23:41:54] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
-[23:41:54] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
-[23:41:56] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
-[23:41:57] 💾 Saved model. Warnings: 0, Errors: 0
-[23:41:57] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
-[23:41:57] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
-[23:41:58] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
-[23:41:59] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:21] 📏 Editing dimension 'D1@Sketch_Move_Island' to 2000
-[23:42:21] ℹ️ Linear dimension. Converted 2000 cm to 20 meters.
-[23:42:23] ✅ Dimension 'D1@Sketch_Move_Island' set to 20. Rebuilt model.
-[23:42:24] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:24] 📏 Editing dimension 'D2@Sketch_Move_Island' to 2000
-[23:42:24] ℹ️ Linear dimension. Converted 2000 cm to 20 meters.
-[23:42:25] ✅ Dimension 'D2@Sketch_Move_Island' set to 20. Rebuilt model.
-[23:42:26] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:38] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:42:38] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:42:39] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:42:40] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:40] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:42:40] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:42:41] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:42:42] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:42] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
-[23:42:42] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
-[23:42:43] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
-[23:42:43] 💾 Saved model. Warnings: 0, Errors: 0
-[23:42:43] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
-[23:42:43] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
-[23:42:44] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
-[23:42:45] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:24] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
-[23:53:24] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:53:25] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:53:26] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:26] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
-[23:53:26] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
-[23:53:27] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
-[23:53:28] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:28] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
-[23:53:28] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
-[23:53:29] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
-[23:53:29] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:29] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
-[23:53:29] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
-[23:53:30] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
-[23:53:31] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:56] 📏 Editing dimension 'Depth@Sketch_Island' to 60
-[23:53:56] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
-[23:53:57] ✅ Dimension 'Depth@Sketch_Island' set to 0.6. Rebuilt model.
-[23:53:58] 💾 Saved model. Warnings: 0, Errors: 0
-[23:53:58] 📏 Editing dimension 'Width@Sketch_Island' to 100
-[23:53:58] ℹ️ Linear dimension. Converted 100 cm to 1 meters.
-[23:54:00] ✅ Dimension 'Width@Sketch_Island' set to 1. Rebuilt model.
-[23:54:00] 💾 Saved model. Warnings: 0, Errors: 0
-[23:54:00] 📏 Editing dimension 'D1_Circle@Sketch73' to 30
-[23:54:00] ℹ️ Linear dimension. Converted 30 cm to 0.3 meters.
-[23:54:02] ✅ Dimension 'D1_Circle@Sketch73' set to 0.3. Rebuilt model.
-[23:54:02] 💾 Saved model. Warnings: 0, Errors: 0
-[23:54:02] 📏 Editing dimension 'D2_Circle@Sketch73' to 50
-[23:54:03] ℹ️ Linear dimension. Converted 50 cm to 0.5 meters.
-[23:54:04] ✅ Dimension 'D2_Circle@Sketch73' set to 0.5. Rebuilt model.
-[23:54:05] 💾 Saved model. Warnings: 0, Errors: 0
+[01:02:49] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
+[01:02:49] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[01:02:51] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
+[01:02:51] 💾 Saved model. Warnings: 0, Errors: 0
+[01:02:51] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
+[01:02:51] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[01:02:53] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
+[01:02:53] 💾 Saved model. Warnings: 0, Errors: 0
+[01:02:53] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
+[01:02:53] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
+[01:02:55] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
+[01:02:56] 💾 Saved model. Warnings: 0, Errors: 0
+[01:02:56] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
+[01:02:56] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
+[01:02:57] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
+[01:02:58] 💾 Saved model. Warnings: 0, Errors: 0
+[01:03:10] 📏 Editing dimension 'angle@Sketch_Move_Island' to 180
+[01:03:10] ℹ️ Angle detected. Converted 180° to 3.141592653589793 radians.
+[01:03:12] ✅ Dimension 'angle@Sketch_Move_Island' set to 3.141592653589793. Rebuilt model.
+[01:03:12] 💾 Saved model. Warnings: 0, Errors: 0
+[01:03:22] 📏 Editing dimension 'angle@Sketch_Move_Island' to 90
+[01:03:22] ℹ️ Angle detected. Converted 90° to 1.5707963267948966 radians.
+[01:03:24] ✅ Dimension 'angle@Sketch_Move_Island' set to 1.5707963267948966. Rebuilt model.
+[01:03:24] 💾 Saved model. Warnings: 0, Errors: 0
+[01:04:18] 📏 Editing dimension 'angle@Sketch_Move_Island' to 180
+[01:04:18] ℹ️ Angle detected. Converted 180° to 3.141592653589793 radians.
+[01:04:20] ✅ Dimension 'angle@Sketch_Move_Island' set to 3.141592653589793. Rebuilt model.
+[01:04:20] 💾 Saved model. Warnings: 0, Errors: 0
+[01:04:28] 📏 Editing dimension 'angle@Sketch_Move_Island' to 90
+[01:04:28] ℹ️ Angle detected. Converted 90° to 1.5707963267948966 radians.
+[01:04:29] ✅ Dimension 'angle@Sketch_Move_Island' set to 1.5707963267948966. Rebuilt model.
+[01:04:30] 💾 Saved model. Warnings: 0, Errors: 0
+[01:04:32] 📏 Editing dimension 'angle@Sketch_Move_Island' to 180
+[01:04:32] ℹ️ Angle detected. Converted 180° to 3.141592653589793 radians.
+[01:04:34] ✅ Dimension 'angle@Sketch_Move_Island' set to 3.141592653589793. Rebuilt model.
+[01:04:35] 💾 Saved model. Warnings: 0, Errors: 0
