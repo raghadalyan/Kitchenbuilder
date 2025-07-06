@@ -1,14 +1,32 @@
-﻿ @page "/"
- @inject NavigationManager NavManager
+﻿@page "/"
+@inject NavigationManager NavManager
 
-<h1> Welcome to the Smart Kitchen Builder</h1>
+<h1>👋 Welcome to the Smart Kitchen Builder</h1>
+
+<p>Click the button below to load the kitchen part and apply Maple material in SolidWorks:</p>
+
+<button class="btn btn-primary" @onclick="ApplyMaterial">Apply Maple Material</button>
+
+@if (statusMessage != null)
+{
+    <p>@statusMessage</p>
+}
+
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-        // Wait 5 seconds
-        await Task.Delay(5000);
+    private string? statusMessage;
 
-        // Navigate to Counter page
-        NavManager.NavigateTo("/floor");
+    private void ApplyMaterial()
+    {
+        try
+        {
+            var editor = new SolidWorksMaterialEditor();
+            editor.ApplyMaterialToPart();
+
+            statusMessage = "✅ Material applied. You can now continue building.";
+        }
+        catch (Exception ex)
+        {
+            statusMessage = $"❌ Error: {ex.Message}";
+        }
     }
-  }
+}

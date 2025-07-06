@@ -1,0 +1,7 @@
+[11:32:28] ✅ SolidWorks app instance stored in session.
+[11:32:28] 📤 Retrieved SolidWorks app instance.
+[11:32:35] ✅ Set active model: temp_Option2
+[11:33:37] 📤 Retrieved active model: temp_Option2
+[11:33:43] 📤 Retrieved active model: temp_Option2
+[11:33:47] 📤 Retrieved active model: temp_Option2
+[11:33:50] 📤 Retrieved active model: temp_Option2
