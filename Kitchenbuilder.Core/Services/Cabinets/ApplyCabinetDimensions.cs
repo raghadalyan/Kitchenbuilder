@@ -14,13 +14,13 @@ namespace Kitchenbuilder.Core
             File.AppendAllText(debugPath, $"{DateTime.Now:HH:mm:ss} - {message}{System.Environment.NewLine}");
         }
 
-        public static void Apply(ModelDoc2 model, List<CabinetInfo> cabinets)
+        public static void Apply(IModelDoc2 model, List<CabinetInfo> cabinets)
         {
             try
             {
                 if (model == null)
                 {
-                    Log("❌ ModelDoc2 is null.");
+                    Log("❌ IModelDoc2 is null.");
                     return;
                 }
 
@@ -31,8 +31,9 @@ namespace Kitchenbuilder.Core
 
                     Log($"🛠 Applying dimensions to {cabinet.SketchName}: Width={cabinet.Width}, DistanceX={cabinet.DistanceX}");
 
-                    Edit_Sketch_Dim.SetDimension(model, widthDim, cabinet.Width);
-                    Edit_Sketch_Dim.SetDimension(model, distXDim, cabinet.DistanceX);
+                    EditSketchDim_IModel.SetDimension(model, widthDim, cabinet.Width);
+                    EditSketchDim_IModel.SetDimension(model, distXDim, cabinet.DistanceX);
+
                 }
 
                 Log("✅ All cabinet dimensions applied successfully.");

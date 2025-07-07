@@ -2,6 +2,7 @@
 @using System.Text.Json
 @using Kitchenbuilder.Core
 @inject IJSRuntime JS
+@inject SolidWorksSessionService SwSession
 @using Kitchenbuilder.Core.Models
 @using SolidWorks.Interop.sldworks
 
@@ -10,121 +11,127 @@
 
     @if (stations.Count > 0 && currentIndex >= 0)
     {
-        <div class="station-circles">
+            <div class="station-circles">
             @for (int i = 0; i < stations.Count; i++)
             {
-                <button class="circle-btn @(i == currentIndex ? "active" : "")" @onclick="@(() => SelectStation(i))">
+                        <button class="circle-btn @(i == currentIndex ? "active" : "")" @onclick="@(() => SelectStation(i))">
                     @(i + 1)
-                </button>
+                        </button>
             }
-        </div>
+            </div>
 
-        <div class="station-layout">
-            <div class="station-info">
-                <h3>Station @(currentIndex + 1): @stations[currentIndex].BaseName</h3>
-                <p>From @stations[currentIndex].StationStart to @stations[currentIndex].StationEnd</p>
+            <div class="station-layout">
+                <div class="station-info">
+                    <h3>Station @(currentIndex + 1): @stations[currentIndex].BaseName</h3>
+                    <p>From @stations[currentIndex].StationStart to @stations[currentIndex].StationEnd</p>
 
-                <div class="action-buttons">
-                    <button class="action-btn" @onclick="() => showAddCabinet = !showAddCabinet">➕ Add Cabinet</button>
-                    <button class="action-btn" @onclick="AddSpace">➕ Add Space</button>
-                </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" @onclick="() => showAddCabinet = !showAddCabinet">➕ Add Cabinet</button>
+                        <button class="action-btn" @onclick="AddSpace">➕ Add Space</button>
+                    </div>
 
                 @if (showAddCabinet)
                 {
-                    <div class="add-cabinet-box">
-                        <label>
-                            <input type="checkbox" @bind="isSequence" /> Sequence of copies
-                        </label>
+                            <div class="add-cabinet-box">
+                                <label>
+                                    <input type="checkbox" @bind="isSequence" /> Sequence of copies
+                                </label>
                         @if (isSequence)
                         {
-                            <label>
-                                Number of copies:
-                                <input type="number" min="2" @bind="copiesCount" />
-                            </label>
+                                        <label>
+                                            Number of copies:
+                                            <input type="number" min="2" @bind="copiesCount" />
+                                        </label>
                         }
 
                         @if (RequiresFullBox())
                         {
-                            <label>
-                                Width:
-                                <input type="number" min="1" @bind="width" />
-                            </label>
+                                        <label>
+                                            Width:
+                                            <input type="number" min="1" @bind="width" />
+                                        </label>
                             @if (!stations[currentIndex].HasCountertop)
                             {
-                                <label>
-                                    Height:
-                                    <input type="number" min="1" @bind="height" />
-                                </label>
+                                                <label>
+                                                    Height:
+                                                    <input type="number" min="1" @bind="height" />
+                                                </label>
                             }
-                            <label>
-                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
-                            </label>
+                                        <label>
+                                            <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                                        </label>
                             @if (hasDrawers)
                             {
-                                <label>
-                                    Number of drawers:
-                                    <input type="number" min="2" @bind="drawerCount" />
-                                </label>
+                                                <label>
+                                                    Number of drawers:
+                                                    <input type="number" min="2" @bind="drawerCount" />
+                                                </label>
                             }
                             @if (!string.IsNullOrWhiteSpace(errorMessage))
                             {
-                                <div style="color: red; font-weight: bold; margin-bottom: 10px;">
+                                                <div style="color: red; font-weight: bold; margin-bottom: 10px;">
                                     @errorMessage
-                                </div>
+                                                </div>
                             }
-                            <button class="apply-btn" @onclick="OnApplyCabinet">✅ Apply</button>
+                                        <button class="apply-btn" @onclick="OnApplyCabinet">✅ Apply</button>
 
                         }
                         else if (RequiresCounterTopBox())
                         {
-                            <label>
-                                Width:
-                                <input type="number" min="1" @bind="width" />
-                            </label>
-                            <label>
-                                <input type="checkbox" @bind="hasDrawers" /> Has drawers
-                            </label>
+                                        <label>
+                                            Width:
+                                            <input type="number" min="1" @bind="width" />
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" @bind="hasDrawers" /> Has drawers
+                                        </label>
                             @if (hasDrawers)
                             {
-                                <label>
-                                    Number of drawers:
-                                    <input type="number" min="2" @bind="drawerCount" />
-                                </label>
+                                                <label>
+                                                    Number of drawers:
+                                                    <input type="number" min="2" @bind="drawerCount" />
+                                                </label>
                             }
                         }
-                    </div>
+                            </div>
                 }
-            </div>
-
-            <div class="station-reminder-box">
-                <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p>
-                <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p>
-                <p><strong>From:</strong> @stations[currentIndex].StationStart</p>
-                <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
-                <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
-            </div>
-            <div class="station-progress">
-                <div class="progress-bar">
-                    <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
                 </div>
-                <p>@GetFillPercentage(stations[currentIndex])% filled</p>
-            </div>
-        </div>
 
-        <div class="nav-buttons">
-            <button @onclick="PreviousStation" disabled="@(currentIndex == 0)">⬅ Back</button>
-            <button @onclick="NextStation" disabled="@(currentIndex == stations.Count - 1)">Next ➡</button>
-        </div>
+                <div class="station-reminder-box">
+                    <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p>
+                    <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p>
+                    <p><strong>From:</strong> @stations[currentIndex].StationStart</p>
+                    <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
+                    <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
+                </div>
+                <div class="station-progress">
+                    <div class="progress-bar">
+                        <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
+                    </div>
+                    <p>@GetFillPercentage(stations[currentIndex])% filled</p>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button @onclick="PreviousStation" disabled="@(currentIndex == 0)">⬅ Back</button>
+                <button @onclick="NextStation" disabled="@(currentIndex == stations.Count - 1)">Next ➡</button>
+            </div>
     }
     else
     {
-        <p>Loading stations...</p>
+            <p>Loading stations...</p>
     }
 </div>
 
 @code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "option")]
+    public string? SelectedOption { get; set; }
+
+    private int OptionNum;
     private List<StationInfo> stations = new();
     private int currentIndex = 0;
+    private IModelDoc2 swModel;
 
     private bool showAddCabinet = false;
     private bool isSequence = false;
@@ -133,27 +140,81 @@
     private int height = 1;
     private bool hasDrawers = false;
     private int drawerCount = 2;
-    private ModelDoc2 swModel;
+    private string errorMessage = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
-        string sldPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
+        OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
+        Log($"➡️ Selected Option: {OptionNum}");
+
+        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD_stations.json";
+        Log($"📄 JSON path: {jsonPath}");
+
+        if (!File.Exists(jsonPath))
+        {
+            Log("❌ JSON file does not exist. Attempting to calculate it...");
+
+            try
+            {
+                string originalJsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+                if (File.Exists(originalJsonPath))
+                {
+                    var calculatedStations = CalculateStationsCabinets.Calculate(originalJsonPath);
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    await File.WriteAllTextAsync(jsonPath, JsonSerializer.Serialize(calculatedStations, options));
+                    Log($"✅ Calculated and saved station file to: {jsonPath}");
+                }
+                else
+                {
+                    Log($"❌ Original Option{OptionNum}SLD.json file not found at: {originalJsonPath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Error during calculation: {ex.Message}");
+            }
+        }
 
         if (File.Exists(jsonPath))
         {
-            var json = await File.ReadAllTextAsync(jsonPath);
-            stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new();
+            try
+            {
+                var json = await File.ReadAllTextAsync(jsonPath);
+                Log("📥 JSON file read successfully.");
+                stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new();
+                Log($"✅ Loaded {stations.Count} stations.");
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Error reading or deserializing JSON: {ex.Message}");
+            }
         }
 
-        if (stations.Count > 0)
+        else
         {
-            swModel = SolidWorksLoader.LoadPart(sldPath);
+            Log("❌ JSON file does not exist.");
+        }
 
+        swModel = SwSession.GetActiveModel();
+        if (swModel != null)
+        {
+            Log("✅ Active SolidWorks model found.");
+        }
+        else
+        {
+            Log("❌ No active SolidWorks model.");
+        }
+
+        if (swModel != null && stations.Count > 0)
+        {
             MoveBetweenStations.SelectStation(0, stations, ref currentIndex, swModel);
+            Log($"🔁 Moved to station 0.");
+        }
+        else
+        {
+            Log("⚠️ Initialization skipped: no stations or model.");
         }
     }
-
 
     void SelectStation(int index)
     {
@@ -170,7 +231,6 @@
         MoveBetweenStations.NextStation(stations, ref currentIndex, swModel);
     }
 
-
     void AddSpace()
     {
         Console.WriteLine($"Adding space at station {currentIndex + 1}");
@@ -178,7 +238,6 @@
 
     bool RequiresFullBox()
     {
-        // Simulated condition: station base name does not include "CounterTop"
         return !stations[currentIndex].BaseName.ToLower().Contains("counter");
     }
 
@@ -204,18 +263,19 @@
             return baseName.Split('_')[1];
         return "?";
     }
-    private string errorMessage = string.Empty;
 
     async Task OnApplyCabinet()
     {
-        string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json";
-
         int copies = isSequence ? copiesCount : 1;
+
         if (width < 5)
         {
             errorMessage = "❌ Width must be at least 5 cm.";
             return;
         }
+
+        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD_stations.json";
+
         bool canAdd = ApplyCabinet.CanAddCabinet(jsonPath, currentIndex, width, copies);
 
         if (!canAdd)
@@ -224,12 +284,16 @@
             return;
         }
 
-        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, copies);
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, copies, swModel);
         errorMessage = "";
 
-        var updatedJson = await File.ReadAllTextAsync(jsonPath);
-        stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
+        if (File.Exists(jsonPath))
+        {
+            var updatedJson = await File.ReadAllTextAsync(jsonPath);
+            stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
+        }
     }
+
 
     int GetFillPercentage(StationInfo station)
     {
@@ -240,8 +304,13 @@
         int usedWidth = station.Cabinets?.Sum(c => c.Width) ?? 0;
 
         int percentage = (int)((double)usedWidth / totalWidth * 100);
-        return Math.Min(percentage, 100); // Don't exceed 100%
+        return Math.Min(percentage, 100);
     }
+    void Log(string message)
+{
+    string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\HandleCabinet_Debug.txt";
+    Directory.CreateDirectory(Path.GetDirectoryName(debugPath)!);
+    File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
 
-
+}
 }

@@ -67,7 +67,7 @@
             }
 
             var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
-            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
+            // AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
 
             LoadImageFolders(optionNum);
         }
@@ -123,9 +123,10 @@
     {
         if (!string.IsNullOrWhiteSpace(SelectedOption))
         {
-            Navigation.NavigateTo($"/handle-cabinet");
-            // Navigation.NavigateTo($"/handle-cabinet?option=Option{SelectedOption}");
+            Navigation.NavigateTo($"/handle-cabinet?option={SelectedOption}");
         }
     }
+
+
 
 }

@@ -4,3 +4,7 @@
 ✅ Model opened successfully
 🟢 Material options initialized for 3 items
 ✅ Applied material 'Maple' to Boss-Extrude1
+✅ Applied material 'Mahogany' to Wall1
+✅ Applied material 'Mahogany' to Wall1
+❌ Failed to apply material 'Mahogany' to WindowSlot12
+❌ Failed to apply material 'Mahogany' to WindowSlot12

@@ -1,7 +1,31 @@
-13:13:26 - 🔧 Starting material assignment...
-13:13:26 - 📄 Active document found.
-13:13:26 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-13:13:26 - 🎯 Attempting to select body: Boss-Extrude1
-13:13:27 - ✅ Body selected successfully.
-13:13:28 - 🎨 Material 'Maple' of type '' applied.
-13:13:32 - 💾 Document rebuilt and saved successfully.
+14:53:40 - 🔧 Starting material assignment...
+14:53:41 - 📄 Active document found.
+14:53:41 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+14:53:41 - 🎯 Attempting to select body: Boss-Extrude1
+14:53:41 - ✅ Body selected successfully.
+14:53:43 - 🎨 Material 'Maple' of type '' applied.
+14:53:47 - 💾 Document rebuilt and saved successfully.
+14:54:11 - 🔧 Starting material assignment...
+14:54:11 - 📄 Active document found.
+14:54:11 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+14:54:11 - 🎯 Attempting to select body: Wall1
+14:54:11 - ✅ Body selected successfully.
+14:54:13 - 🎨 Material 'Mahogany' of type '' applied.
+14:54:17 - 💾 Document rebuilt and saved successfully.
+14:54:46 - 🔧 Starting material assignment...
+14:54:46 - 📄 Active document found.
+14:54:46 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+14:54:46 - 🎯 Attempting to select body: Wall1
+14:54:47 - ✅ Body selected successfully.
+14:54:48 - 🎨 Material 'Mahogany' of type '' applied.
+14:54:52 - 💾 Document rebuilt and saved successfully.
+14:55:05 - 🔧 Starting material assignment...
+14:55:05 - 📄 Active document found.
+14:55:05 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+14:55:05 - 🎯 Attempting to select body: WindowSlot12
+14:55:05 - ❌ Failed to select the body 'WindowSlot12'.
+14:55:12 - 🔧 Starting material assignment...
+14:55:12 - 📄 Active document found.
+14:55:12 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+14:55:12 - 🎯 Attempting to select body: WindowSlot12
+14:55:12 - ❌ Failed to select the body 'WindowSlot12'.

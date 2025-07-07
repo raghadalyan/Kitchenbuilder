@@ -1,0 +1,6 @@
+[16:57:35] ➡️ Selected Option: 2
+[16:57:35] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:57:35] 📥 JSON file read successfully.
+[16:57:35] ✅ Loaded 3 stations.
+[16:57:35] ✅ Active SolidWorks model found.
+[16:57:37] 🔁 Moved to station 0.

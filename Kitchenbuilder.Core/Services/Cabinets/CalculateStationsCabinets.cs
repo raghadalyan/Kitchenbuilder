@@ -1,85 +1,95 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Nodes;
+using Kitchenbuilder.Core.Models;
 
 namespace Kitchenbuilder.Core
 {
-
-
     public static class CalculateStationsCabinets
     {
+        private static void Log(string message)
+        {
+            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\Station_Calculation_Debug.txt";
+            Directory.CreateDirectory(Path.GetDirectoryName(debugPath)!);
+            File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+        }
+
         public static void ProcessAll()
         {
             string folderPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
             var files = Directory.GetFiles(folderPath, "Option*SLD.json");
+            Log($"📁 Found {files.Length} files to process in {folderPath}");
 
             foreach (var file in files)
             {
+                Log($"📄 Processing file: {file}");
                 var stations = Calculate(file);
+                Log($"✅ Calculated {stations.Count} stations for {Path.GetFileName(file)}");
+
                 var outputPath = Path.Combine(folderPath, Path.GetFileNameWithoutExtension(file) + "_stations.json");
 
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 File.WriteAllText(outputPath, JsonSerializer.Serialize(stations, options));
+                Log($"💾 Saved stations to: {outputPath}");
             }
         }
 
         public static List<StationInfo> Calculate(string jsonPath)
         {
-            var json = File.ReadAllText(jsonPath);
-            var root = JsonNode.Parse(json)?.AsObject();
             var result = new List<StationInfo>();
 
-            if (root == null) return result;
-
-            foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            try
             {
-                if (!root.ContainsKey(wallKey)) continue;
+                var json = File.ReadAllText(jsonPath);
+                var root = JsonNode.Parse(json)?.AsObject();
 
-                int wallNumber = int.Parse(wallKey.Replace("Wall", ""));
-                var wall = root[wallKey]?.AsObject();
-                var bases = wall?["Bases"]?.AsObject();
-                if (bases == null) continue;
-
-                foreach (var baseEntry in bases)
+                if (root == null)
                 {
-                    var baseObj = baseEntry.Value?.AsObject();
-                    if (baseObj == null || baseObj["Visible"]?.GetValue<bool>() != true) continue;
+                    Log($"❌ Failed to parse root JSON object in file: {jsonPath}");
+                    return result;
+                }
 
-                    string sketchName = baseObj["SketchName"]?.ToString() ?? "";
-                    string extrudeName = baseObj["ExtrudeName"]?.ToString() ?? ""; // <-- Add this line
+                foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+                {
+                    if (!root.ContainsKey(wallKey)) continue;
 
-                    if (sketchName.Contains("fridge_base")) continue;
+                    int wallNumber = int.Parse(wallKey.Replace("Wall", ""));
+                    var wall = root[wallKey]?.AsObject();
+                    var bases = wall?["Bases"]?.AsObject();
+                    if (bases == null) continue;
 
-                    var smartDims = baseObj["SmartDim"]?.AsArray();
-                    int distanceX = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("DistanceX") == true)?["Size"]?.GetValue<int>() ?? 0;
-                    int length = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("length") == true)?["Size"]?.GetValue<int>() ?? 0;
-
-                    var countertop = baseObj["Countertop"]?.AsObject(); // ✅ CORRECT: it's a JsonObject
-                    string baseName = baseEntry.Key;
-
-                    int totalStart = distanceX;
-                    int totalEnd = distanceX + length;
-
-                    // Add to each StationInfo the extrudeName
-                    if (countertop == null || countertop.Count == 0)
+                    foreach (var baseEntry in bases)
                     {
-                        result.Add(new StationInfo
+                        var baseObj = baseEntry.Value?.AsObject();
+                        if (baseObj == null || baseObj["Visible"]?.GetValue<bool>() != true)
                         {
-                            BaseName = baseName,
-                            ExtrudeName = extrudeName, // <-- add this
-                            StationStart = totalStart,
-                            StationEnd = totalEnd,
-                            WallNumber = wallNumber,
-                            HasCountertop = false,
-                            SketchName = sketchName
-                        });
-                    }
-                    else
-                    {
-                        int L = countertop?["L"]?.GetValue<int>() ?? 0;
-                        int R = countertop?["R"]?.GetValue<int>() ?? 0;
+                            Log($"❌ Skipping hidden or null base: {baseEntry.Key}");
+                            continue;
+                        }
 
+                        string sketchName = baseObj["SketchName"]?.ToString() ?? "";
+                        string extrudeName = baseObj["ExtrudeName"]?.ToString() ?? "";
 
-                        if (L == 0 && R == 0)
+                        if (sketchName.Contains("fridge_base"))
+                        {
+                            Log($"⛔ Skipping fridge base: {sketchName}");
+                            continue;
+                        }
+
+                        var smartDims = baseObj["SmartDim"]?.AsArray();
+                        int distanceX = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("DistanceX") == true)?["Size"]?.GetValue<int>() ?? 0;
+                        int length = smartDims?.FirstOrDefault(d => d?["Name"]?.ToString().StartsWith("length") == true)?["Size"]?.GetValue<int>() ?? 0;
+
+                        var countertop = baseObj["Countertop"]?.AsObject();
+                        string baseName = baseEntry.Key;
+
+                        int totalStart = distanceX;
+                        int totalEnd = distanceX + length;
+
+                        if (countertop == null || countertop.Count == 0)
                         {
                             result.Add(new StationInfo
                             {
@@ -88,61 +98,86 @@ namespace Kitchenbuilder.Core
                                 StationStart = totalStart,
                                 StationEnd = totalEnd,
                                 WallNumber = wallNumber,
-                                HasCountertop = true,
+                                HasCountertop = false,
                                 SketchName = sketchName
                             });
+                            Log($"➕ Added full base station: {baseName}, Start={totalStart}, End={totalEnd}, CT=false");
                         }
                         else
                         {
-                            if (L > 0)
+                            int L = countertop?["L"]?.GetValue<int>() ?? 0;
+                            int R = countertop?["R"]?.GetValue<int>() ?? 0;
+
+                            if (L == 0 && R == 0)
                             {
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
                                     ExtrudeName = extrudeName,
                                     StationStart = totalStart,
-                                    StationEnd = totalStart + L,
+                                    StationEnd = totalEnd,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false,
+                                    HasCountertop = true,
                                     SketchName = sketchName
                                 });
+                                Log($"➕ Added full countertop station: {baseName}, Start={totalStart}, End={totalEnd}, CT=true");
                             }
-
-                            result.Add(new StationInfo
+                            else
                             {
-                                BaseName = baseName,
-                                ExtrudeName = extrudeName,
-                                StationStart = totalStart + L,
-                                StationEnd = totalEnd - R,
-                                WallNumber = wallNumber,
-                                HasCountertop = true,
-                                SketchName = sketchName
-                            });
+                                if (L > 0)
+                                {
+                                    result.Add(new StationInfo
+                                    {
+                                        BaseName = baseName,
+                                        ExtrudeName = extrudeName,
+                                        StationStart = totalStart,
+                                        StationEnd = totalStart + L,
+                                        WallNumber = wallNumber,
+                                        HasCountertop = false,
+                                        SketchName = sketchName
+                                    });
+                                    Log($"➕ Left base part: {baseName}, Start={totalStart}, End={totalStart + L}, CT=false");
+                                }
 
-                            if (R > 0)
-                            {
                                 result.Add(new StationInfo
                                 {
                                     BaseName = baseName,
                                     ExtrudeName = extrudeName,
-                                    StationStart = totalEnd - R,
-                                    StationEnd = totalEnd,
+                                    StationStart = totalStart + L,
+                                    StationEnd = totalEnd - R,
                                     WallNumber = wallNumber,
-                                    HasCountertop = false,
+                                    HasCountertop = true,
                                     SketchName = sketchName
                                 });
+                                Log($"➕ Center countertop: {baseName}, Start={totalStart + L}, End={totalEnd - R}, CT=true");
+
+                                if (R > 0)
+                                {
+                                    result.Add(new StationInfo
+                                    {
+                                        BaseName = baseName,
+                                        ExtrudeName = extrudeName,
+                                        StationStart = totalEnd - R,
+                                        StationEnd = totalEnd,
+                                        WallNumber = wallNumber,
+                                        HasCountertop = false,
+                                        SketchName = sketchName
+                                    });
+                                    Log($"➕ Right base part: {baseName}, Start={totalEnd - R}, End={totalEnd}, CT=false");
+                                }
                             }
                         }
                     }
                 }
 
+                Log($"📊 Total stations for {Path.GetFileName(jsonPath)}: {result.Count}");
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Exception while calculating stations for {jsonPath}: {ex.Message}");
             }
 
             return result;
         }
-
-
-
-
     }
 }
