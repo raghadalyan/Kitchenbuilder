@@ -20,9 +20,10 @@ namespace Kitchenbuilder.Core
                 }
 
                 string folderPath = Path.Combine(
-                    System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
-                    "Downloads", "Kitchenbuilder", "Output", "Sink-Cooktop",
-                    $"Option{layoutIndex}");
+               AppContext.BaseDirectory,
+               "wwwroot", "Output", "Sink_Cooktop",
+               $"Option{layoutIndex}");
+
 
                 Directory.CreateDirectory(folderPath);
 

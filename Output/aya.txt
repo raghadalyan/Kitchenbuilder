@@ -1,12 +1,12 @@
-10:07:18 - 📁 نسخ الملف من: C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT إلى C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen\Wall2_WithFloor.SLDPRT
-10:07:23 - 🔧 بدأ تعديل الأبعاد...
-10:07:23 - ✅ تم تعديل Width_Floor@Sketch2 إلى 400 mm
-10:07:23 - ✅ تم تعديل Length_Floor@Sketch2 إلى 350 mm
-10:07:23 - ✅ تم تعديل D1@Wall1 إلى 300 mm
-10:07:23 - ✅ تم تعديل D1@Wall2 إلى 300 mm
-10:07:23 - ✅ تم تعديل Window1Display@Win12 إلى 100 mm
-10:07:23 - ✅ تم تعديل Window1Length@Win12 إلى 60 mm
-10:07:23 - ✅ تم تعديل Window1BottomOffset@Win12 إلى 100 mm
-10:07:23 - ✅ تم تعديل Window1RightOffset@Win12 إلى 125 mm
-10:07:47 - 💾 حفظ النموذج وإغلاقه...
-10:07:49 - ✅ تم حفظ ملف الجدران بنجاح: C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen\Wall2_WithFloor.SLDPRT
+13:11:32 - 📁 نسخ الملف من: C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT إلى C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen\Wall2_WithFloor.SLDPRT
+13:11:55 - 🔧 بدأ تعديل الأبعاد...
+13:11:55 - ✅ تم تعديل Width_Floor@Sketch2 إلى 400 mm
+13:11:55 - ✅ تم تعديل Length_Floor@Sketch2 إلى 350 mm
+13:11:55 - ✅ تم تعديل D1@Wall1 إلى 300 mm
+13:11:55 - ✅ تم تعديل D1@Wall2 إلى 300 mm
+13:11:55 - ✅ تم تعديل Window1Display@Win12 إلى 100 mm
+13:11:55 - ✅ تم تعديل Window1Length@Win12 إلى 60 mm
+13:11:56 - ✅ تم تعديل Window1BottomOffset@Win12 إلى 100 mm
+13:11:56 - ✅ تم تعديل Window1RightOffset@Win12 إلى 125 mm
+13:12:50 - 💾 حفظ النموذج وإغلاقه...
+13:12:54 - ✅ تم حفظ ملف الجدران بنجاح: C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen\Wall2_WithFloor.SLDPRT

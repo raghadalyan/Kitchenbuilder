@@ -112,7 +112,7 @@ namespace Kitchenbuilder.Core
             // Open SolidWorks part and apply cabinet dimensions
             try
             {
-                string partPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
+                string partPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
                 SldWorks swApp = null;
 
                 try

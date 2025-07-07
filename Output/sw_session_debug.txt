@@ -1,31 +1,17 @@
-[10:07:18] ❌ Tried to get active model, but it's null.
-[10:07:18] ✅ SolidWorks app instance stored in session.
-[10:07:49] 📤 Retrieved SolidWorks app instance.
-[10:08:04] 📤 Retrieved SolidWorks app instance.
-[10:08:16] 📤 Retrieved SolidWorks app instance.
-[10:08:46] 📤 Retrieved SolidWorks app instance.
-[10:08:51] 📤 Retrieved SolidWorks app instance.
-[10:11:09] ❌ Tried to get active model, but it's null.
-[10:11:09] ✅ SolidWorks app instance stored in session.
-[10:11:09] 📤 Retrieved SolidWorks app instance.
-[10:11:25] 📤 Retrieved SolidWorks app instance.
-[10:11:25] ✅ Set active model: temp_Option2
-[10:11:41] 📤 Retrieved active model: temp_Option2
-[10:11:51] 📤 Retrieved active model: temp_Option2
-[10:11:53] 📤 Retrieved active model: temp_Option2
-[10:12:02] 📤 Retrieved active model: temp_Option2
-[10:24:43] ✅ SolidWorks app instance stored in session.
-[10:24:54] ✅ Set active model: temp_Option2
-[10:25:09] 📤 Retrieved active model: temp_Option2
-[10:40:57] ✅ SolidWorks app instance stored in session.
-[10:41:04] ✅ Set active model: temp_Option2
-[10:41:10] 📤 Retrieved active model: temp_Option2
-[10:51:15] ✅ SolidWorks app instance stored in session.
-[10:51:25] ✅ Set active model: temp_Option2
-[10:51:37] 📤 Retrieved active model: temp_Option2
-[11:12:51] ✅ SolidWorks app instance stored in session.
-[11:13:01] ✅ Set active model: temp_Option2
-[11:13:04] 📤 Retrieved active model: temp_Option2
-[11:21:48] ✅ SolidWorks app instance stored in session.
-[11:21:58] ✅ Set active model: temp_Option2
-[11:22:00] 📤 Retrieved active model: temp_Option2
+[13:10:43] ❌ Tried to get active model, but it's null.
+[13:11:30] ✅ SolidWorks app instance stored in session.
+[13:12:54] 📤 Retrieved SolidWorks app instance.
+[13:13:26] 📤 Retrieved SolidWorks app instance.
+[13:13:45] 📤 Retrieved SolidWorks app instance.
+[13:17:44] ❌ Tried to get active model, but it's null.
+[13:17:45] ✅ SolidWorks app instance stored in session.
+[13:17:45] 📤 Retrieved SolidWorks app instance.
+[13:18:07] 📤 Retrieved SolidWorks app instance.
+[13:18:07] ✅ Set active model: temp_Option2
+[13:18:52] 📤 Retrieved active model: temp_Option2
+[13:19:25] 📤 Retrieved active model: temp_Option2
+[13:19:30] 📤 Retrieved active model: temp_Option2
+[13:19:51] 📤 Retrieved active model: temp_Option2
+[13:20:01] 📤 Retrieved active model: temp_Option2
+[13:20:09] 📤 Retrieved active model: temp_Option2
+[13:22:46] 📤 Retrieved active model: temp_Option2
