@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SolidWorks.Interop.swconst;
 
 namespace Kitchenbuilder.Core
 {
@@ -14,7 +15,7 @@ namespace Kitchenbuilder.Core
             File.AppendAllText(debugPath, $"{DateTime.Now:HH:mm:ss} - {message}{System.Environment.NewLine}");
         }
 
-        public static void Apply(IModelDoc2 model, List<CabinetInfo> cabinets)
+        public static void Apply(IModelDoc2 model, List<StationInfo> stations)
         {
             try
             {
@@ -24,19 +25,32 @@ namespace Kitchenbuilder.Core
                     return;
                 }
 
-                foreach (var cabinet in cabinets)
+                foreach (var station in stations)
                 {
-                    string widthDim = $"Length@{cabinet.SketchName}";
-                    string distXDim = $"DistanceX@{cabinet.SketchName}";
+                    foreach (var cabinet in station.Cabinets)
+                    {
+                        // Step 1: Show body before editing
+                        string sketchSuffix = cabinet.SketchName.Replace("Sketch_Cabinet", ""); // e.g., "1_4"
+                        string bodyName = $"Extrude_Drawers{sketchSuffix}";
+                        Show_Bodies_In_Sld_IModel.ShowBody(model, bodyName);
 
-                    Log($"🛠 Applying dimensions to {cabinet.SketchName}: Width={cabinet.Width}, DistanceX={cabinet.DistanceX}");
+                        // Step 2: Apply dimensions
+                        string widthDim = $"Length@{cabinet.SketchName}";
+                        string distXDim = $"DistanceX@{cabinet.SketchName}";
 
-                    EditSketchDim_IModel.SetDimension(model, widthDim, cabinet.Width);
-                    EditSketchDim_IModel.SetDimension(model, distXDim, cabinet.DistanceX);
+                        Log($"🛠 Applying dimensions to {cabinet.SketchName}: Width={cabinet.Width}, DistanceX={cabinet.DistanceX}");
 
+                        EditSketchDim_IModel.SetDimension(model, widthDim, cabinet.Width);
+                        EditSketchDim_IModel.SetDimension(model, distXDim, cabinet.DistanceX);
+                    }
                 }
 
-                Log("✅ All cabinet dimensions applied successfully.");
+                // Save and rebuild
+                model.EditRebuild3();
+                int errs = 0, warns = 0;
+                model.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref errs, ref warns);
+
+                Log("✅ All cabinet dimensions applied and model saved.");
             }
             catch (Exception ex)
             {

@@ -127,7 +127,7 @@ namespace Kitchenbuilder.Core
             // Apply dimensions directly to the active part
             try
             {
-                ApplyCabinetDimensions.Apply(swModel, station.Cabinets);
+                ApplyCabinetDimensions.Apply(swModel, new List<StationInfo> { station });
                 WriteDebug("✅ ApplyCabinetDimensions completed.");
             }
             catch (Exception ex)

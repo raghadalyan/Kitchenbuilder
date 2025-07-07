@@ -6,11 +6,14 @@
 @using Kitchenbuilder.Core.Models
 @using SolidWorks.Interop.sldworks
 
-<div class="container">
-    <h1>Cabinet Stations</h1>
+<div class="cabinet-page">
+    <div class="container">
 
-    @if (stations.Count > 0 && currentIndex >= 0)
-    {
+    <div class="panel-box">
+        <h1>Cabinet Stations</h1>
+
+        @if (stations.Count > 0 && currentIndex >= 0)
+        {
             <div class="station-circles">
             @for (int i = 0; i < stations.Count; i++)
             {
@@ -104,23 +107,27 @@
                     <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
                     <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
                 </div>
-                <div class="station-progress">
-                    <div class="progress-bar">
-                        <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
-                    </div>
-                    <p>@GetFillPercentage(stations[currentIndex])% filled</p>
-                </div>
+
             </div>
 
             <div class="nav-buttons">
                 <button @onclick="PreviousStation" disabled="@(currentIndex == 0)">⬅ Back</button>
                 <button @onclick="NextStation" disabled="@(currentIndex == stations.Count - 1)">Next ➡</button>
             </div>
+        <div class="station-progress">
+            <div class="progress-bar">
+                <div class="progress-filled" style="width:@GetFillPercentage(stations[currentIndex])%"></div>
+            </div>
+            <p>@GetFillPercentage(stations[currentIndex])% filled</p>
+        </div>
+
     }
-    else
-    {
+        else
+        {
             <p>Loading stations...</p>
-    }
+        }
+    </div>
+</div>
 </div>
 
 @code {
