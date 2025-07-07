@@ -20,9 +20,7 @@ namespace Kitchenbuilder.Core
 
         private static int GetBaseNumber(string baseKey)
         {
-            if (baseKey.StartsWith("Base") && int.TryParse(baseKey.Substring(4), out int num))
-                return num;
-            return 0;
+            return baseKey.StartsWith("Base") && int.TryParse(baseKey.Substring(4), out int num) ? num : 0;
         }
 
         public static void SuggestLayouts(List<Countertop> countertops, int optionNum, IModelDoc2 model)
@@ -34,7 +32,7 @@ namespace Kitchenbuilder.Core
             Log($"📊 Countertops are on {numWalls} wall(s).");
 
             string basePath = Path.Combine(
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
+               System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
                 "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
 
@@ -75,6 +73,7 @@ namespace Kitchenbuilder.Core
             Log($"🧊 Fridge wall identified: Wall{fridgeWallNumber}");
 
             int suggestionCount = 0;
+            int layoutFolderIndex = 1;
 
             if (numWalls == 2)
             {
@@ -92,7 +91,7 @@ namespace Kitchenbuilder.Core
                 {
                     SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct1.WallNumber, base1, ct1.Start, 0, 60, 60, floorWidth, floorLength, ct1.Start, ct1.End, model);
                     SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, optionNum, $"sink_win_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}");
+                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum);
                     suggestionCount++;
                 }
 
@@ -100,7 +99,7 @@ namespace Kitchenbuilder.Core
                 {
                     SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct2.WallNumber, base2, ct2.Start, 0, 60, 60, floorWidth, floorLength, ct2.Start, ct2.End, model);
                     SinkCooktopMiddle.CreateCooktopInMiddle(ct1.WallNumber, base1, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, optionNum, $"sink_win_wall{ct2.WallNumber}_cooktop_middle_wall{ct1.WallNumber}");
+                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct2.WallNumber}_cooktop_middle_wall{ct1.WallNumber}", optionNum);
                     suggestionCount++;
                 }
 
@@ -108,14 +107,14 @@ namespace Kitchenbuilder.Core
                 {
                     SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
                     SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, optionNum, $"sink_middle_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}");
+                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum);
                     suggestionCount++;
                 }
 
                 if (hasIsland && suggestionCount < 3)
                 {
                     SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, optionNum, $"sink_middle_wall{ct1.WallNumber}_cooktop_island");
+                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{ct1.WallNumber}_cooktop_island", optionNum);
                     suggestionCount++;
                 }
             }
@@ -141,13 +140,13 @@ namespace Kitchenbuilder.Core
                         {
                             SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", sinkWall, sinkBase, sinkCt.Start, 0, 60, 60, floorWidth, floorLength, sinkCt.Start, sinkCt.End, model);
                             SinkCooktopMiddle.CreateCooktopInMiddle(cooktopWall, cookBase, optionNum, model);
-                            SaveSinkCooktopImage.Save(model, optionNum, $"sink_win_wall{sinkWall}_cooktop_middle_wall{cooktopWall}");
+                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{sinkWall}_cooktop_middle_wall{cooktopWall}", optionNum);
                         }
                         else
                         {
                             SinkCooktopMiddle.CreateSinkInMiddle(sinkWall, sinkBase, optionNum, model);
                             SinkCooktopMiddle.CreateCooktopInMiddle(cooktopWall, cookBase, optionNum, model);
-                            SaveSinkCooktopImage.Save(model, optionNum, $"sink_middle_wall{sinkWall}_cooktop_middle_wall{cooktopWall}");
+                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{sinkWall}_cooktop_middle_wall{cooktopWall}", optionNum);
                         }
 
                         suggestionCount++;
@@ -162,12 +161,12 @@ namespace Kitchenbuilder.Core
                             if (useIsland == "Sink")
                             {
                                 SinkCooktopMiddle.CreateCooktopInMiddle(otherWall, otherBase, optionNum, model);
-                                SaveSinkCooktopImage.Save(model, optionNum, $"sink_island_cooktop_wall{otherWall}");
+                                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_island_cooktop_wall{otherWall}", optionNum);
                             }
                             else
                             {
                                 SinkCooktopMiddle.CreateSinkInMiddle(otherWall, otherBase, optionNum, model);
-                                SaveSinkCooktopImage.Save(model, optionNum, $"sink_wall{otherWall}_cooktop_island");
+                                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_wall{otherWall}_cooktop_island", optionNum);
                             }
 
                             suggestionCount++;
@@ -187,6 +186,5 @@ namespace Kitchenbuilder.Core
                 Log("❌ Unexpected case: countertops are not spread on enough walls.");
             }
         }
-
     }
 }

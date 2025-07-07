@@ -8,3 +8,15 @@
 [2025-07-07 10:41:15] 👁️ Made body visible: Kitchen_Cooktop_Simple
 [2025-07-07 10:41:15] 👁️ Made body visible: Cut-Sink
 [2025-07-07 10:41:17] 💾 Model saved after showing bodies.
+[2025-07-07 10:51:39] ✅ Body already visible: Faucet Inox
+[2025-07-07 10:51:40] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-07 10:51:47] ❌ Body not found: Cut-Sink
+[2025-07-07 10:51:47] ℹ️ No bodies were shown, skipping save.
+[2025-07-07 11:13:05] ✅ Body already visible: Faucet Inox
+[2025-07-07 11:13:09] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-07 11:13:27] ❌ Body not found: Cut-Sink
+[2025-07-07 11:13:27] ℹ️ No bodies were shown, skipping save.
+[2025-07-07 11:22:02] ✅ Body already visible: Faucet Inox
+[2025-07-07 11:22:03] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-07 11:22:23] ❌ Body not found: Cut-Sink
+[2025-07-07 11:22:23] ℹ️ No bodies were shown, skipping save.
