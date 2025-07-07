@@ -67,12 +67,13 @@ namespace Kitchenbuilder.Core
                 floorLength,
                 model
             );
-
+            bool layoutSaved = false;
             if (sink != null && cooktop != null)
             {
                 SaveSinkCooktopImage.Save(model, optionNum, $"sink_cooktop_same_wall{widerCT.WallNumber}");
-                return; // ✅ Done, exit early to prevent duplicates
+                layoutSaved = true;
             }
+
 
             // 🔁 Step 3: Fallback to existing logic if width not enough
             int baseNum1 = int.Parse(ct1.BaseKey.Replace("Base", ""));

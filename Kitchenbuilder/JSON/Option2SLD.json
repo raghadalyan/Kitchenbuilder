@@ -53,7 +53,9 @@
         "Countertop": {
           "Name": "Extrude_CT_1_2",
           "L": 60,
-          "R": 0
+          "R": 0,
+          "Start": 145,
+          "End": 400
         }
       },
       "Base1": {
@@ -98,7 +100,9 @@
         "Countertop": {
           "Name": "Extrude_CT_2_1",
           "L": 0,
-          "R": 0
+          "R": 0,
+          "Start": 0,
+          "End": 350
         }
       },
       "Base2": {

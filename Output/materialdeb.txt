@@ -1,0 +1,21 @@
+10:08:04 - 🔧 Starting material assignment...
+10:08:04 - 📄 Active document found.
+10:08:04 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+10:08:04 - 🎯 Attempting to select body: Boss-Extrude1
+10:08:04 - ✅ Body selected successfully.
+10:08:05 - 🎨 Material 'Maple' of type '' applied.
+10:08:08 - 💾 Document rebuilt and saved successfully.
+10:08:16 - 🔧 Starting material assignment...
+10:08:16 - 📄 Active document found.
+10:08:16 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+10:08:16 - 🎯 Attempting to select body: WindowSlot12
+10:08:16 - ✅ Body selected successfully.
+10:08:17 - 🎨 Material 'Mahogany' of type '' applied.
+10:08:20 - 💾 Document rebuilt and saved successfully.
+10:08:46 - 🔧 Starting material assignment...
+10:08:46 - 📄 Active document found.
+10:08:46 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+10:08:46 - 🎯 Attempting to select body: Wall1
+10:08:46 - ✅ Body selected successfully.
+10:08:46 - 🎨 Material 'Mahogany' of type '' applied.
+10:08:49 - 💾 Document rebuilt and saved successfully.

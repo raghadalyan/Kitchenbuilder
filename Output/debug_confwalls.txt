@@ -1,4 +1,8 @@
 🟢 Started /confwalls with Count=2, Width=400, Length=350
 🟢 SolidWorks launched and stored in session
 ✅ Finished building walls
-🟢 SolidWorks launched and stored in session
+✅ Model opened successfully
+🟢 Material options initialized for 3 items
+✅ Applied material 'Maple' to Boss-Extrude1
+✅ Applied material 'Mahogany' to WindowSlot12
+✅ Applied material 'Mahogany' to Wall1
