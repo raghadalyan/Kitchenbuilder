@@ -1,7 +1,0 @@
-19:01:30 - 🔧 Starting material assignment...
-19:01:30 - 📄 Active document found.
-19:01:30 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-19:01:30 - 🎯 Attempting to select body: Boss-Extrude1
-19:01:31 - ✅ Body selected successfully.
-19:01:31 - 🎨 Material 'Maple' of type '' applied.
-19:01:34 - 💾 Document rebuilt and saved successfully.

@@ -6,7 +6,7 @@
   "Walls": [
     {
       "Width": 400,
-      "Height": 350,
+      "Height": 300,
       "HasWindows": false,
       "Windows": null,
       "HasDoors": false,
@@ -14,16 +14,9 @@
     },
     {
       "Width": 350,
-      "Height": 350,
-      "HasWindows": true,
-      "Windows": [
-        {
-          "Width": 100,
-          "Height": 60,
-          "DistanceX": 125,
-          "DistanceY": 100
-        }
-      ],
+      "Height": 300,
+      "HasWindows": false,
+      "Windows": null,
       "HasDoors": false,
       "Doors": null
     }

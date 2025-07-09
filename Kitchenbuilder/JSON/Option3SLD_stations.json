@@ -1,0 +1,182 @@
+[
+  {
+    "BaseName": "Base2",
+    "ExtrudeName": "Extrude_1_2",
+    "StationStart": 85,
+    "StationEnd": 145,
+    "WallNumber": 1,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet1_1",
+        "Height": 80,
+        "Width": 60,
+        "HasDrawers": false,
+        "DistanceX": 85,
+        "DistanceY": 70
+      }
+    ],
+    "HasCountertop": false,
+    "SketchName": "1_2"
+  },
+  {
+    "BaseName": "Base2",
+    "ExtrudeName": "Extrude_1_2",
+    "StationStart": 145,
+    "StationEnd": 400,
+    "WallNumber": 1,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet1_2",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 145,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_3",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 185,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_4",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 225,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_5",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 265,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_6",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 305,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_7",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 345,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet1_8",
+        "Height": 80,
+        "Width": 15,
+        "HasDrawers": false,
+        "DistanceX": 385,
+        "DistanceY": 70
+      }
+    ],
+    "HasCountertop": true,
+    "SketchName": "1_2"
+  },
+  {
+    "BaseName": "Base1",
+    "ExtrudeName": "Extrude_2_1",
+    "StationStart": 60,
+    "StationEnd": 350,
+    "WallNumber": 2,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet2_1",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 60,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_2",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 100,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_3",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 140,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_4",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 180,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_5",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 220,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_6",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 260,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_7",
+        "Height": 80,
+        "Width": 40,
+        "HasDrawers": false,
+        "DistanceX": 300,
+        "DistanceY": 70
+      },
+      {
+        "SketchName": "Sketch_Cabinet2_8",
+        "Height": 80,
+        "Width": 10,
+        "HasDrawers": false,
+        "DistanceX": 340,
+        "DistanceY": 70
+      }
+    ],
+    "HasCountertop": true,
+    "SketchName": "2_1"
+  },
+  {
+    "BaseName": "Base1",
+    "ExtrudeName": "Extrude_3_1",
+    "StationStart": 60,
+    "StationEnd": 180,
+    "WallNumber": 3,
+    "Cabinets": [
+      {
+        "SketchName": "Sketch_Cabinet3_1",
+        "Height": 80,
+        "Width": 120,
+        "HasDrawers": false,
+        "DistanceX": 60,
+        "DistanceY": 70
+      }
+    ],
+    "HasCountertop": true,
+    "SketchName": "3_1"
+  }
+]

@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="station-reminder-box">
-                    <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p>
-                    <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p>
+                    @* <p><strong>Wall:</strong> @GetWallNumber(stations[currentIndex].BaseName)</p> *@
+                    @* <p><strong>Base:</strong> @GetBaseNumber(stations[currentIndex].BaseName)</p> *@
                     <p><strong>From:</strong> @stations[currentIndex].StationStart</p>
                     <p><strong>To:</strong> @stations[currentIndex].StationEnd</p>
                     <p><strong>Length:</strong> @(stations[currentIndex].StationEnd - stations[currentIndex].StationStart) cm</p>
@@ -144,7 +144,7 @@
     private bool isSequence = false;
     private int copiesCount = 2;
     private int width = 1;
-    private int height = 1;
+    private int height = 66;
     private bool hasDrawers = false;
     private int drawerCount = 2;
     private string errorMessage = string.Empty;
@@ -280,6 +280,11 @@
             errorMessage = "❌ Width must be at least 5 cm.";
             return;
         }
+        if (height < 5)
+        {
+            errorMessage = "❌ Height must be at least 5 cm.";
+            return;
+        }
 
         string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD_stations.json";
 
@@ -291,7 +296,7 @@
             return;
         }
 
-        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, copies, swModel);
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, height, copies, swModel);
         errorMessage = "";
 
         if (File.Exists(jsonPath))

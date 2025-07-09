@@ -48,9 +48,9 @@ namespace Kitchenbuilder.Core
             return canAdd;
         }
 
-        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int copiesCount, IModelDoc2 swModel)
+        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int copiesCount, IModelDoc2 swModel)
         {
-            WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
+            WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, Height: {height}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
 
             if (width < 5)
             {
@@ -58,17 +58,9 @@ namespace Kitchenbuilder.Core
                 return;
             }
 
-            if (!File.Exists(jsonPath))
+            if (height < 5)
             {
-                WriteDebug("❌ File not found.");
-                throw new FileNotFoundException($"File not found: {jsonPath}");
-            }
-
-            WriteDebug($"[AddCabinet] StationIndex: {stationIndex}, Width: {width}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
-
-            if (width < 5)
-            {
-                WriteDebug("❌ Cabinet width must be at least 5 cm.");
+                WriteDebug("❌ Cabinet height must be at least 5 cm.");
                 return;
             }
 
@@ -96,6 +88,7 @@ namespace Kitchenbuilder.Core
                 .Count();
 
             int currentX = station.StationStart + (station.Cabinets?.Sum(c => c.Width) ?? 0);
+            List<CabinetInfo> newlyAdded = new();
 
             for (int i = 0; i < copiesCount; i++)
             {
@@ -106,16 +99,18 @@ namespace Kitchenbuilder.Core
                     SketchName = $"Sketch_Cabinet{wall}_{cabinetNum}",
                     Width = width,
                     HasDrawers = hasDrawers,
+                    Height = height,
                     DistanceX = currentX,
                     DistanceY = 70
                 };
 
-                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, DistanceX: {currentX}, DistanceY: 70");
+                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, Height: {height}, DistanceX: {currentX}");
 
                 if (station.Cabinets == null)
                     station.Cabinets = new List<CabinetInfo>();
 
                 station.Cabinets.Add(cabinet);
+                newlyAdded.Add(cabinet);
                 currentX += width;
             }
 
@@ -124,11 +119,17 @@ namespace Kitchenbuilder.Core
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, options));
             WriteDebug("✅ Cabinets successfully added and file saved.");
 
-            // Apply dimensions directly to the active part
+            // Apply dimensions only to newly added cabinets
             try
             {
-                ApplyCabinetDimensions.Apply(swModel, new List<StationInfo> { station });
-                WriteDebug("✅ ApplyCabinetDimensions completed.");
+                var tempStation = new StationInfo
+                {
+                    WallNumber = wall,
+                    Cabinets = newlyAdded
+                };
+
+                ApplyCabinetDimensions.Apply(swModel, new List<StationInfo> { tempStation });
+                WriteDebug("✅ ApplyCabinetDimensions completed for newly added cabinets.");
             }
             catch (Exception ex)
             {
