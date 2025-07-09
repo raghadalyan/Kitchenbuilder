@@ -48,13 +48,19 @@ namespace Kitchenbuilder.Core
             return canAdd;
         }
 
-        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int copiesCount = 1)
+        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int copiesCount, IModelDoc2 swModel)
         {
-            WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
+            WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, Height: {height}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
 
             if (width < 5)
             {
                 WriteDebug("❌ Cabinet width must be at least 5 cm.");
+                return;
+            }
+
+            if (height < 5)
+            {
+                WriteDebug("❌ Cabinet height must be at least 5 cm.");
                 return;
             }
 
@@ -65,7 +71,7 @@ namespace Kitchenbuilder.Core
             }
 
             var json = File.ReadAllText(jsonPath);
-            var stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new List<StationInfo>();
+            var stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new();
 
             if (stationIndex < 0 || stationIndex >= stations.Count)
             {
@@ -82,6 +88,7 @@ namespace Kitchenbuilder.Core
                 .Count();
 
             int currentX = station.StationStart + (station.Cabinets?.Sum(c => c.Width) ?? 0);
+            List<CabinetInfo> newlyAdded = new();
 
             for (int i = 0; i < copiesCount; i++)
             {
@@ -92,63 +99,44 @@ namespace Kitchenbuilder.Core
                     SketchName = $"Sketch_Cabinet{wall}_{cabinetNum}",
                     Width = width,
                     HasDrawers = hasDrawers,
+                    Height = height,
                     DistanceX = currentX,
                     DistanceY = 70
                 };
 
-                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, DistanceX: {currentX}, DistanceY: 70");
+                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, Height: {height}, DistanceX: {currentX}");
 
                 if (station.Cabinets == null)
                     station.Cabinets = new List<CabinetInfo>();
 
                 station.Cabinets.Add(cabinet);
+                newlyAdded.Add(cabinet);
                 currentX += width;
             }
 
+            // Save updated JSON
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, options));
             WriteDebug("✅ Cabinets successfully added and file saved.");
 
-            // Open SolidWorks part and apply cabinet dimensions
+            // Apply dimensions only to newly added cabinets
             try
             {
-                string partPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
-                SldWorks swApp = null;
-
-                try
+                var tempStation = new StationInfo
                 {
-                    // Try to get running SolidWorks instance
-                    swApp = (SldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-                    swApp.Visible = true;
-                    WriteDebug("✅ SolidWorks instance launched or connected.");
-                }
-                catch (Exception ex)
-                {
-                    WriteDebug($"❌ Failed to create or connect to SolidWorks: {ex.Message}");
-                    return;
-                }
+                    WallNumber = wall,
+                    Cabinets = newlyAdded
+                };
 
-                int errors = 0, warnings = 0;
-                ModelDoc2 model = (ModelDoc2)swApp.OpenDoc6(
-                    partPath,
-                    (int)swDocumentTypes_e.swDocPART,
-                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
-                    "", ref errors, ref warnings);
-
-                if (model == null)
-                {
-                    WriteDebug($"❌ Failed to open part. Errors={errors}, Warnings={warnings}");
-                    return;
-                }
-
-                WriteDebug($"✅ Part opened successfully: {partPath}");
-                ApplyCabinetDimensions.Apply(model, station.Cabinets);
-                WriteDebug("✅ ApplyCabinetDimensions completed.");
+                ApplyCabinetDimensions.Apply(swModel, new List<StationInfo> { tempStation });
+                WriteDebug("✅ ApplyCabinetDimensions completed for newly added cabinets.");
             }
             catch (Exception ex)
             {
                 WriteDebug($"❌ Error applying cabinet dimensions: {ex.Message}");
             }
         }
+
+
     }
 }

@@ -17,16 +17,16 @@
     <div class="form-container">
         @if (isLoading)
         {
-                <div class="loading-container">
-                    <p>Please wait a moment while the base file is being prepared...</p>
-                    <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
-                    <p>Loading base preview...</p>
-                </div>
+            <div class="loading-container">
+                <p>Please wait a moment while the base file is being prepared...</p>
+                <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
+                <p>Loading base preview...</p>
+            </div>
         }
         else
         {
-                <p>✅ You can now review the selected base in SolidWorks.</p>
-                <button class="continue-button" @onclick="ContinueToCountertop">Continue</button>
+            <p>✅ You can now review the selected base in SolidWorks.</p>
+            <button class="continue-button" @onclick="ContinueToCountertop">Continue</button>
         }
     </div>
 </div>

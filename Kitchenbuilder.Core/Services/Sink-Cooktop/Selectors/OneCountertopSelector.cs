@@ -15,8 +15,11 @@ namespace Kitchenbuilder.Core
             Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
         }
+
         public static void SuggestLayouts(Countertop countertop, int optionNum, IModelDoc2 model)
         {
+            int layoutFolderIndex = 1;
+
             Log($"🛠️ Suggesting layout for Wall{countertop.WallNumber} {countertop.BaseKey} (Start={countertop.Start}, End={countertop.End})");
 
             string basePath = Path.Combine(
@@ -71,7 +74,7 @@ namespace Kitchenbuilder.Core
                 Log($"👉 Cooktop: X={cooktop1.DistanceX_Cooktop_On_CT}, Y={cooktop1.DistanceY_Cooktop_On_CT}, Angle={cooktop1.Angle_Sketch_Rotate_Cooktop}");
 
             if (sink1 != null && cooktop1 != null)
-                SaveSinkCooktopImage.Save(model, optionNum, "Suggestion1_SameCountertop");
+                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion1_SameCountertop", optionNum);
 
             // ✅ Suggestion 2: One on countertop, one on island
             if (!hasIsland)
@@ -161,8 +164,7 @@ namespace Kitchenbuilder.Core
             }
 
             if (suggestion2Valid)
-                SaveSinkCooktopImage.Save(model, optionNum, "Suggestion2_Island");
+                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion2_Island", optionNum);
         }
-
     }
 }

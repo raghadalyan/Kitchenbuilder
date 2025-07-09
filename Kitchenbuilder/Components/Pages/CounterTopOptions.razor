@@ -8,80 +8,77 @@
 @using SolidWorks.Interop.sldworks
 @using SolidWorks.Interop.swconst
 
-<h1 class="title">Adjust Countertop Distances</h1>
+<!-- 🔧 START WRAPPER -->
+<div class="countertop-page">
+    <div class="content-container">
+        <h1 class="title">Adjust Countertop Distances</h1>
 
-@if (isLoading)
-{
-    <div class="loading-container">
-        <img src="Images/Loading.gif" alt="Loading..." />
-        <p>Loading countertops... please wait</p>
-    </div>
-}
-else
-{
-    <p class="status-message">
-        ✅ Reached Countertop Options Page for: <span style="color:#2c3e50">@baseName</span>
-    </p>
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <img src="Images/Loading.gif" alt="Loading..." />
+                <p>Loading countertops... please wait</p>
+            </div>
+        }
+        else
+        {
+            <p class="status-message">
+                ✅ Reached Countertop Options Page for: <span style="color:#2c3e50">@baseName</span>
+            </p>
 
-
-    @if (stations.Count > 0)
-    {
-        <div class="step-indicators">
-            @for (int i = 0; i < stations.Count; i++)
+            @if (stations.Count > 0)
             {
-                <div @onclick="@(() => GoTo(i))"
-                     class="@(i == currentStationIndex ? "step-indicator active" : "step-indicator")">
-                    @(i + 1)
+                <div class="step-indicators">
+                    @for (int i = 0; i < stations.Count; i++)
+                    {
+                        <div @onclick="@(() => GoTo(i))"
+                             class="@(i == currentStationIndex ? "step-indicator active" : "step-indicator")">
+                            @(i + 1)
+                        </div>
+                    }
                 </div>
 
+                <div class="station-box">
+                    <img src="Images/Delete.png" class="delete-icon"
+                         @onclick="() => DeleteCountertop(currentStationIndex)"
+                         alt="Delete" title="Delete countertop" />
+
+                    <h3>📐 Editing: CT_@CurrentSketch</h3>
+
+                    <div class="distance-inputs">
+                        <label>Distance from Left:</label>
+                        <input type="number" @bind="LeftDistance" placeholder="Enter left distance" /><br />
+
+                        <label>Distance from Right:</label>
+                        <input type="number" @bind="RightDistance" placeholder="Enter right distance" /><br /><br />
+
+                        <button class="save-button" @onclick="ApplyDistances">💾 Save</button>
+                    </div>
+                </div>
+
+                @if (showDeleteConfirmation)
+                {
+                    <div class="confirm-box">
+                        <p>Are you sure you want to delete CT_@CurrentSketch?</p>
+                        <button @onclick="ConfirmDelete">Yes</button>
+                        <button @onclick="() => showDeleteConfirmation = false">Cancel</button>
+                    </div>
+                }
+
+                <div class="nav-buttons">
+                    <button @onclick="GoBack" disabled="@(currentStationIndex == 0)">⬅️ Back</button>
+                    <button @onclick="GoNext" disabled="@(currentStationIndex == stations.Count - 1)">Next ➡️</button>
+                </div>
+
+                <div class="continue-section">
+                    <img src="Images/Continue.gif"
+                         @onclick="ContinueToSinkCooktop"
+                         alt="Continue" title="Click to continue" />
+                </div>
             }
-        </div>
-
-        <div class="station-box">
-            <img src="Images/Delete.png" class="delete-icon"
-                 @onclick="() => DeleteCountertop(currentStationIndex)"
-                 alt="Delete" title="Delete countertop" />
-
-            <h3>📐 Editing: CT_@CurrentSketch</h3>
-
-            <div class="distance-inputs">
-                <label>Distance from Left:</label>
-                <input type="number" @bind="LeftDistance" placeholder="Enter left distance" /><br />
-
-                <label>Distance from Right:</label>
-                <input type="number" @bind="RightDistance" placeholder="Enter right distance" /><br /><br />
-
-                <button class="save-button" @onclick="ApplyDistances">💾 Save</button>
-            </div>
-        </div>
-        @if (showDeleteConfirmation)
-        {
-            <div class="confirm-box">
-                <p>Are you sure you want to delete CT_@CurrentSketch?</p>
-                <button @onclick="ConfirmDelete">Yes</button>
-                <button @onclick="() => showDeleteConfirmation = false">Cancel</button>
-            </div>
         }
-
-
-        <div class="nav-buttons">
-            <button @onclick="GoBack" disabled="@(currentStationIndex == 0)">⬅️ Back</button>
-            <button @onclick="GoNext" disabled="@(currentStationIndex == stations.Count - 1)">Next ➡️</button>
-        </div>
-        @if (stations.Count > 0)
-        {
-            <div class="continue-section">
-                <img src="Images/Continue.gif"
-                     @onclick="ContinueToSinkCooktop"
-                     style="cursor:pointer; width:150px; height:auto;"
-                     alt="Continue" title="Click to continue" />
-            </div>
-
-        }
-
-    }
-}
-
+    </div>
+</div>
 @code {
     [Parameter]
     [SupplyParameterFromQuery(Name = "base")]
@@ -412,12 +409,23 @@ else
             Log($"❌ Error during sketch exit or save: {ex.Message}");
         }
 
-        // ✅ Navigate to next page
-        if (!string.IsNullOrWhiteSpace(baseName))
+        if (!string.IsNullOrWhiteSpace(baseName) && baseName.StartsWith("Option"))
         {
-            string option = baseName.Replace("SLD", ""); // e.g., Option3SLD → Option3
-            NavManager.NavigateTo($"/sink-cooktop-options?option={option}");
+            string optionNumber = new string(baseName
+                .Replace("SLD", "")
+                .Where(char.IsDigit)
+                .ToArray());
+
+            if (!string.IsNullOrWhiteSpace(optionNumber))
+            {
+                NavManager.NavigateTo($"/island-page?option={optionNumber}");
+            }
+            else
+            {
+                Log("❌ Could not extract option number from baseName.");
+            }
         }
+
     }
 
 

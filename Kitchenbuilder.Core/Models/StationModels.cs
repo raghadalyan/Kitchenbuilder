@@ -20,9 +20,10 @@ namespace Kitchenbuilder.Core
     public class CabinetInfo
     {
         public string SketchName { get; set; }
-        [JsonPropertyName("Width1")]
+        public int Height { get; set; } = 66;
 
         public int Width { get; set; }
+       
         public bool HasDrawers { get; set; }
         public int DistanceX { get; set; }  // Start of cabinet along the station
         public int DistanceY { get; set; } = 70;  // Always 70

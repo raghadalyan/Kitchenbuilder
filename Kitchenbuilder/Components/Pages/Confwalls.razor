@@ -6,6 +6,7 @@
 @using Kitchenbuilder.Core
 @using Kitchenbuilder.Core.Models
 @using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
 @using System.Text.Json
 @using System.IO
 @using Microsoft.AspNetCore.Components
@@ -26,12 +27,67 @@
         }
         else
         {
-            <p>✅ You can now review the wall preview in SolidWorks.</p>
-            <button class="continue-button" @onclick="ContinueToBaseOptions">Continue</button>
+            <div class="confirmation-message">
+                <p>✅ You can now review the wall preview in SolidWorks.</p>
+                <h3>Would you like to apply materials?</h3>
+            </div>
+
+            @foreach (var item in materialOptions)
+            {
+                <div class="material-item">
+                    <label>
+                        <input type="checkbox" @bind="item.Apply" />
+                        Apply material to @item.Label
+                    </label>
+
+                    @if (item.Apply)
+                    {
+                        <div class="material-selection">
+                            <label>Type:</label>
+                            <select @bind="item.Type">
+                                <option value="">-- Select Type --</option>
+                                <option>Woods</option>
+                                <option>Color</option>
+                                <option>Option3</option>
+                                <option>Option4</option>
+                            </select>
+                        </div>
+
+                        @if (item.Type == "Woods" && !item.Saved)
+                        {
+                            <div class="wood-grid">
+                                @foreach (var wood in woodMaterials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="wood_@item.BodyName" value="@wood.Name" @onchange="() => item.Material = wood.Name" checked="@((item.Material == wood.Name))" />
+                                            @wood.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <div class="save-button-container">
+                            <button @onclick="() => SaveMaterial(item)">Save</button>
+                        </div>
+                    }
+                    @if (item.Saved)
+                    {
+                        <div class="save-button-container">
+                            <button @onclick="() => EditMaterialAgain(item)">Edit</button>
+                        </div>
+                    }
+                </div>
+            }
+
+            <div class="save-button-container">
+                <button class="continue-button" @onclick="ContinueToBaseOptions">Continue</button>
+            </div>
         }
     </div>
 </div>
-
 
 @code {
     [Parameter][SupplyParameterFromQuery(Name = "count")] public int Count { get; set; }
@@ -40,6 +96,35 @@
 
     private bool isLoading = true;
     private List<int> wallHeights = new();
+
+    class MaterialOption
+    {
+        public string Label { get; set; } = "";
+        public string BodyName { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public string Type { get; set; } = "";
+        public string Material { get; set; } = "";
+        public bool Saved { get; set; } = false;
+    }
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    private List<MaterialOption> materialOptions = new();
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
 
     protected override async Task OnInitializedAsync()
     {
@@ -109,26 +194,17 @@
                     "", ref errors, ref warnings
                 ) as IModelDoc2;
 
+                File.AppendAllText(debugPath, "✅ Model opened successfully\n");
 
-                if (SwSession.GetActiveModel() == null)
-                {
-                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
-                    swAppInstance.Visible = true;
-                    SwSession.SetApp(swAppInstance);
-                    File.AppendAllText(debugPath, $"🟢 SolidWorks launched and stored in session\n");
+                materialOptions.Add(new MaterialOption { Label = "Floor", BodyName = "Boss-Extrude1" });
+                if (kitchen.Walls.Count >= 1) materialOptions.Add(new MaterialOption { Label = "Wall 1", BodyName = "Wall1" });
+                if (kitchen.Walls.Count >= 2) materialOptions.Add(new MaterialOption { Label = "Wall 2", BodyName = "WindowSlot12" });
 
-                    // ✅ قم بترتيب النوافذ مباشرة بعد التشغيل
-                    LayoutLauncher.ArrangeWindows(swAppInstance);
-                }
-
-                else
-                {
-                    File.AppendAllText(debugPath, "❌ Failed to load model\n");
-                }
+                File.AppendAllText(debugPath, $"🟢 Material options initialized for {materialOptions.Count} items\n");
             }
             catch (Exception ex)
             {
-                File.AppendAllText(debugPath, $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt", $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
             }
         });
 
@@ -149,4 +225,27 @@
         NavManager.NavigateTo("/base");
     }
 
+    private void SaveMaterial(MaterialOption item)
+    {
+        var swApp = SwSession.GetApp();
+        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt";
+
+        if (string.IsNullOrWhiteSpace(item.Material))
+        {
+            File.AppendAllText(debugPath, $"⚠ Material not selected for {item.BodyName}\n");
+            return;
+        }
+
+        bool result = EditMaterial.ApplyMaterialToBody(swApp, item.BodyName, item.Material, "");
+        item.Saved = result;
+
+        File.AppendAllText(debugPath, result
+            ? $"✅ Applied material '{item.Material}' to {item.BodyName}\n"
+            : $"❌ Failed to apply material '{item.Material}' to {item.BodyName}\n");
+    }
+
+    private void EditMaterialAgain(MaterialOption item)
+    {
+        item.Saved = false;
+    }
 }

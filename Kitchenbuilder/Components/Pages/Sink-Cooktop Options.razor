@@ -3,14 +3,48 @@
 @using Microsoft.AspNetCore.Components
 @inject SolidWorksSessionService SwSession
 
-<h3>Sink & Cooktop Layout for Option: <span style="color:#007acc">Option @SelectedOption</span></h3>
+<div class="sink-cooktop-page">
+    <div class="card-container">
+        <h3 class="option-title">Choose your preferred sink & cooktop layout:</h3>
 
-<p>Processing countertop placements...</p>
+        @if (IsLoading)
+        {
+            <p>Processing countertop placements...</p>
+            <img src="/Images/Loading.gif" alt="Loading..." style="width: 100px;" />
+        }
+        else if (ImageFolders.Any())
+        {
+            <div class="image-grid">
+                @foreach (var folder in ImageFolders)
+                {
+                    <div class="image-box">
+                        <img src="@folder.CurrentImagePath" @onclick="() => NextImage(folder)" class="preview-img" />
+                        <p>@folder.Description</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No layout suggestions found.</p>
+        }
+    </div>
+    <div style="margin-top: 20px; text-align: center;">
+        <button class="btn btn-success" @onclick="GoToHandleCabinet">Continue</button>
+    </div>
+</div>
+
 
 @code {
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
     [Parameter]
     [SupplyParameterFromQuery(Name = "option")]
     public string? SelectedOption { get; set; }
+
+    private bool IsLoading = true;
+
+    private List<ImageFolder> ImageFolders = new();
 
     protected override void OnInitialized()
     {
@@ -23,23 +57,76 @@
 
         if (int.TryParse(SelectedOption, out int optionNum))
         {
-            var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
-
-            // ✅ Get the active model from SwSession
             var model = SwSession.GetActiveModel();
 
             if (model == null)
             {
                 Console.WriteLine("❌ No active model found in SwSession.");
+                IsLoading = false;
                 return;
             }
 
-            // ✅ Call the analyzer with model
-            AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
+            var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
+            // AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
+
+            LoadImageFolders(optionNum);
         }
         else
         {
             Console.WriteLine("❌ Invalid option parameter after cleanup.");
         }
+
+        IsLoading = false;
     }
+    private void LoadImageFolders(int optionNum)
+    {
+        string sinkCooktopPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output", "Sink_Cooktop");
+        if (!Directory.Exists(sinkCooktopPath)) return;
+
+        var optionDirs = Directory.GetDirectories(sinkCooktopPath, "Option*");
+
+        foreach (var dir in optionDirs)
+        {
+            string folderName = Path.GetFileName(dir); // Option1, Option2, etc.
+            string webPath = $"/Output/Sink_Cooktop/{folderName}";
+            var images = Directory.GetFiles(dir, "*.png");
+
+            if (images.Length > 0)
+            {
+                ImageFolders.Add(new ImageFolder
+                    {
+                        Description = $"{folderName} Layout",
+                        ImageWebPaths = images.Select(f => Path.Combine(webPath, Path.GetFileName(f)).Replace("\\", "/")).ToArray(),
+                        CurrentIndex = 0
+                    });
+            }
+        }
+    }
+
+
+
+
+    private void NextImage(ImageFolder folder)
+    {
+        folder.CurrentIndex = (folder.CurrentIndex + 1) % folder.ImageWebPaths.Length;
+    }
+
+
+    private class ImageFolder
+    {
+        public string Description { get; set; } = string.Empty;
+        public string[] ImageWebPaths { get; set; } = Array.Empty<string>();
+        public int CurrentIndex { get; set; }
+        public string CurrentImagePath => ImageWebPaths.ElementAtOrDefault(CurrentIndex) ?? string.Empty;
+    }
+    private void GoToHandleCabinet()
+    {
+        if (!string.IsNullOrWhiteSpace(SelectedOption))
+        {
+            Navigation.NavigateTo($"/handle-cabinet?option={SelectedOption}");
+        }
+    }
+
+
+
 }
