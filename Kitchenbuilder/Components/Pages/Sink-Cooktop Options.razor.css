@@ -1,25 +1,58 @@
-.continue-section {
-    margin-top: 30px;
-    padding: 10px;
+.sink-cooktop-page {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.card-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     text-align: center;
 }
 
-.continue-message {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #2c3e50;
+.option-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #5e3b00;
+    margin-bottom: 30px;
 }
 
-.continue-button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.image-box {
+    background-color: white;
+    border: 2px solid #d4a373;
+    border-radius: 12px;
+    padding: 15px;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+    .image-box:hover {
+        transform: scale(1.03);
+    }
+
+.preview-img {
+    width: 100%;
+    height: auto;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
 }
 
-    .continue-button:hover {
-        background-color: #2980b9;
-    }
+.image-box p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #5e3b00;
+}

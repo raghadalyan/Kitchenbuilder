@@ -1,0 +1,184 @@
+[19:04:50] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
+[19:04:50] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[19:04:52] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
+[19:04:52] 💾 Saved model. Warnings: 0, Errors: 0
+[19:04:52] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
+[19:04:52] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[19:04:54] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
+[19:04:55] 💾 Saved model. Warnings: 0, Errors: 0
+[19:04:55] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
+[19:04:55] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
+[19:04:56] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
+[19:04:57] 💾 Saved model. Warnings: 0, Errors: 0
+[19:04:57] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
+[19:04:57] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
+[19:04:58] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
+[19:04:59] 💾 Saved model. Warnings: 0, Errors: 0
+[19:05:05] 📏 Editing dimension 'angle@Sketch_Move_Island' to 360
+[19:05:05] ℹ️ Angle detected. Converted 360° to 6.283185307179586 radians.
+[19:05:06] ✅ Dimension 'angle@Sketch_Move_Island' set to 6.283185307179586. Rebuilt model.
+[19:05:07] 💾 Saved model. Warnings: 0, Errors: 0
+[19:05:15] 📏 Editing dimension 'DX@Sketch_Move_Island' to 200
+[19:05:15] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
+[19:05:16] ✅ Dimension 'DX@Sketch_Move_Island' set to 2. Rebuilt model.
+[19:05:17] 💾 Saved model. Warnings: 0, Errors: 0
+[19:05:17] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
+[19:05:17] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
+[19:05:17] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
+[19:05:18] 💾 Saved model. Warnings: 0, Errors: 0
+[19:06:16] 📏 Editing dimension 'Length@Sketch_Cabinet1_1' to 60
+[19:06:16] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
+[19:06:17] ✅ Dimension 'Length@Sketch_Cabinet1_1' set to 0.6. Rebuilt model.
+[19:06:18] 💾 Saved model. Warnings: 0, Errors: 0
+[19:06:18] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_1' to 85
+[19:06:18] ℹ️ Linear dimension. Converted 85 cm to 0.85 meters.
+[19:06:20] ✅ Dimension 'DistanceX@Sketch_Cabinet1_1' set to 0.85. Rebuilt model.
+[19:06:20] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:31] 📏 Editing dimension 'Length@Sketch_Cabinet1_2' to 45
+[19:07:31] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:07:32] ✅ Dimension 'Length@Sketch_Cabinet1_2' set to 0.45. Rebuilt model.
+[19:07:33] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:33] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_2' to 145
+[19:07:33] ℹ️ Linear dimension. Converted 145 cm to 1.45 meters.
+[19:07:34] ✅ Dimension 'DistanceX@Sketch_Cabinet1_2' set to 1.45. Rebuilt model.
+[19:07:35] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:37] 📏 Editing dimension 'Length@Sketch_Cabinet1_3' to 45
+[19:07:37] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:07:38] ✅ Dimension 'Length@Sketch_Cabinet1_3' set to 0.45. Rebuilt model.
+[19:07:38] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:38] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_3' to 190
+[19:07:39] ℹ️ Linear dimension. Converted 190 cm to 1.9 meters.
+[19:07:40] ✅ Dimension 'DistanceX@Sketch_Cabinet1_3' set to 1.9. Rebuilt model.
+[19:07:40] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:43] 📏 Editing dimension 'Length@Sketch_Cabinet1_4' to 45
+[19:07:43] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:07:44] ✅ Dimension 'Length@Sketch_Cabinet1_4' set to 0.45. Rebuilt model.
+[19:07:44] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:44] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_4' to 235
+[19:07:45] ℹ️ Linear dimension. Converted 235 cm to 2.35 meters.
+[19:07:46] ✅ Dimension 'DistanceX@Sketch_Cabinet1_4' set to 2.35. Rebuilt model.
+[19:07:46] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:48] 📏 Editing dimension 'Length@Sketch_Cabinet1_5' to 45
+[19:07:49] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:07:50] ✅ Dimension 'Length@Sketch_Cabinet1_5' set to 0.45. Rebuilt model.
+[19:07:50] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:50] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_5' to 280
+[19:07:50] ℹ️ Linear dimension. Converted 280 cm to 2.8 meters.
+[19:07:51] ✅ Dimension 'DistanceX@Sketch_Cabinet1_5' set to 2.8. Rebuilt model.
+[19:07:52] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:54] 📏 Editing dimension 'Length@Sketch_Cabinet1_6' to 45
+[19:07:55] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:07:56] ✅ Dimension 'Length@Sketch_Cabinet1_6' set to 0.45. Rebuilt model.
+[19:07:56] 💾 Saved model. Warnings: 0, Errors: 0
+[19:07:56] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_6' to 325
+[19:07:56] ℹ️ Linear dimension. Converted 325 cm to 3.25 meters.
+[19:07:57] ✅ Dimension 'DistanceX@Sketch_Cabinet1_6' set to 3.25. Rebuilt model.
+[19:07:58] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:07] 📏 Editing dimension 'Length@Sketch_Cabinet1_2' to 45
+[19:08:07] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:08:08] ✅ Dimension 'Length@Sketch_Cabinet1_2' set to 0.45. Rebuilt model.
+[19:08:08] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:08] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_2' to 145
+[19:08:08] ℹ️ Linear dimension. Converted 145 cm to 1.45 meters.
+[19:08:09] ✅ Dimension 'DistanceX@Sketch_Cabinet1_2' set to 1.45. Rebuilt model.
+[19:08:10] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:12] 📏 Editing dimension 'Length@Sketch_Cabinet1_3' to 45
+[19:08:12] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:08:12] ✅ Dimension 'Length@Sketch_Cabinet1_3' set to 0.45. Rebuilt model.
+[19:08:13] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:13] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_3' to 190
+[19:08:13] ℹ️ Linear dimension. Converted 190 cm to 1.9 meters.
+[19:08:13] ✅ Dimension 'DistanceX@Sketch_Cabinet1_3' set to 1.9. Rebuilt model.
+[19:08:14] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:16] 📏 Editing dimension 'Length@Sketch_Cabinet1_4' to 45
+[19:08:16] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:08:17] ✅ Dimension 'Length@Sketch_Cabinet1_4' set to 0.45. Rebuilt model.
+[19:08:17] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:17] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_4' to 235
+[19:08:17] ℹ️ Linear dimension. Converted 235 cm to 2.35 meters.
+[19:08:18] ✅ Dimension 'DistanceX@Sketch_Cabinet1_4' set to 2.35. Rebuilt model.
+[19:08:19] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:21] 📏 Editing dimension 'Length@Sketch_Cabinet1_5' to 45
+[19:08:21] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:08:21] ✅ Dimension 'Length@Sketch_Cabinet1_5' set to 0.45. Rebuilt model.
+[19:08:22] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:22] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_5' to 280
+[19:08:22] ℹ️ Linear dimension. Converted 280 cm to 2.8 meters.
+[19:08:22] ✅ Dimension 'DistanceX@Sketch_Cabinet1_5' set to 2.8. Rebuilt model.
+[19:08:23] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:25] 📏 Editing dimension 'Length@Sketch_Cabinet1_6' to 45
+[19:08:25] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:08:25] ✅ Dimension 'Length@Sketch_Cabinet1_6' set to 0.45. Rebuilt model.
+[19:08:26] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:26] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_6' to 325
+[19:08:26] ℹ️ Linear dimension. Converted 325 cm to 3.25 meters.
+[19:08:26] ✅ Dimension 'DistanceX@Sketch_Cabinet1_6' set to 3.25. Rebuilt model.
+[19:08:27] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:29] 📏 Editing dimension 'Length@Sketch_Cabinet1_7' to 30
+[19:08:29] ℹ️ Linear dimension. Converted 30 cm to 0.3 meters.
+[19:08:30] ✅ Dimension 'Length@Sketch_Cabinet1_7' set to 0.3. Rebuilt model.
+[19:08:31] 💾 Saved model. Warnings: 0, Errors: 0
+[19:08:31] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_7' to 370
+[19:08:31] ℹ️ Linear dimension. Converted 370 cm to 3.7 meters.
+[19:08:32] ✅ Dimension 'DistanceX@Sketch_Cabinet1_7' set to 3.7. Rebuilt model.
+[19:08:32] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:39] 📏 Editing dimension 'Length@Sketch_Cabinet2_1' to 45
+[19:09:39] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:09:40] ✅ Dimension 'Length@Sketch_Cabinet2_1' set to 0.45. Rebuilt model.
+[19:09:41] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:41] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_1' to 60
+[19:09:41] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
+[19:09:42] ✅ Dimension 'DistanceX@Sketch_Cabinet2_1' set to 0.6. Rebuilt model.
+[19:09:43] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:46] 📏 Editing dimension 'Length@Sketch_Cabinet2_2' to 45
+[19:09:46] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:09:47] ✅ Dimension 'Length@Sketch_Cabinet2_2' set to 0.45. Rebuilt model.
+[19:09:47] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:47] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_2' to 105
+[19:09:47] ℹ️ Linear dimension. Converted 105 cm to 1.05 meters.
+[19:09:48] ✅ Dimension 'DistanceX@Sketch_Cabinet2_2' set to 1.05. Rebuilt model.
+[19:09:49] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:51] 📏 Editing dimension 'Length@Sketch_Cabinet2_3' to 45
+[19:09:51] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:09:52] ✅ Dimension 'Length@Sketch_Cabinet2_3' set to 0.45. Rebuilt model.
+[19:09:53] 💾 Saved model. Warnings: 0, Errors: 0
+[19:09:53] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_3' to 150
+[19:09:53] ❌ Dimension 'DistanceX@Sketch_Cabinet2_3' not found.
+[19:10:31] 📏 Editing dimension 'Length@Sketch_Cabinet2_1' to 45
+[19:10:31] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:10:32] ✅ Dimension 'Length@Sketch_Cabinet2_1' set to 0.45. Rebuilt model.
+[19:10:33] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:33] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_1' to 60
+[19:10:33] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
+[19:10:33] ✅ Dimension 'DistanceX@Sketch_Cabinet2_1' set to 0.6. Rebuilt model.
+[19:10:34] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:36] 📏 Editing dimension 'Length@Sketch_Cabinet2_2' to 45
+[19:10:36] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:10:36] ✅ Dimension 'Length@Sketch_Cabinet2_2' set to 0.45. Rebuilt model.
+[19:10:37] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:37] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_2' to 105
+[19:10:37] ℹ️ Linear dimension. Converted 105 cm to 1.05 meters.
+[19:10:37] ✅ Dimension 'DistanceX@Sketch_Cabinet2_2' set to 1.05. Rebuilt model.
+[19:10:38] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:40] 📏 Editing dimension 'Length@Sketch_Cabinet2_3' to 45
+[19:10:40] ℹ️ Linear dimension. Converted 45 cm to 0.45 meters.
+[19:10:40] ✅ Dimension 'Length@Sketch_Cabinet2_3' set to 0.45. Rebuilt model.
+[19:10:41] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:41] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_3' to 150
+[19:10:41] ❌ Dimension 'DistanceX@Sketch_Cabinet2_3' not found.
+[19:10:43] 📏 Editing dimension 'Length@Sketch_Cabinet2_4' to 65
+[19:10:43] ℹ️ Linear dimension. Converted 65 cm to 0.65 meters.
+[19:10:44] ✅ Dimension 'Length@Sketch_Cabinet2_4' set to 0.65. Rebuilt model.
+[19:10:45] 💾 Saved model. Warnings: 0, Errors: 0
+[19:10:45] 📏 Editing dimension 'DistanceX@Sketch_Cabinet2_4' to 195
+[19:10:45] ℹ️ Linear dimension. Converted 195 cm to 1.95 meters.
+[19:10:46] ✅ Dimension 'DistanceX@Sketch_Cabinet2_4' set to 1.95. Rebuilt model.
+[19:10:47] 💾 Saved model. Warnings: 0, Errors: 0
+[19:45:39] 📏 Editing dimension 'Length@Sketch_Cabinet1_1' to 60
+[19:45:39] ℹ️ Linear dimension. Converted 60 cm to 0.6 meters.
+[19:45:40] ✅ Dimension 'Length@Sketch_Cabinet1_1' set to 0.6. Rebuilt model.
+[19:45:41] 💾 Saved model. Warnings: 0, Errors: 0
+[19:45:41] 📏 Editing dimension 'DistanceX@Sketch_Cabinet1_1' to 85
+[19:45:41] ℹ️ Linear dimension. Converted 85 cm to 0.85 meters.
+[19:45:41] ✅ Dimension 'DistanceX@Sketch_Cabinet1_1' set to 0.85. Rebuilt model.
+[19:45:42] 💾 Saved model. Warnings: 0, Errors: 0

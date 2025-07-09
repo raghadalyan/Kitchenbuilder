@@ -20,7 +20,6 @@
     text-align: center;
 }
 
-    /* عناوين وأزرار */
     .form-container h4, .form-container h5, .form-container h6 {
         color: #4b2e14;
         margin-top: 1rem;
@@ -43,7 +42,6 @@
         border-radius: 5px;
     }
 
-    /* الأزرار */
     .form-container button {
         background-color: #8b5a2b;
         color: white;
@@ -86,7 +84,7 @@
 .nav-buttons {
     display: flex;
     justify-content: center;
-    gap: 1rem; /* ← مسافة بين Back و Next */
+    gap: 1rem; 
     margin-top: 1.5rem;
 }
 

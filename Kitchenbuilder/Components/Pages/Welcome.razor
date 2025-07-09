@@ -1,29 +1,39 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
+@inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
 
-<div class="welcome-container">
-    <div class="text-box">
-        <h1 class="welcome-text">Welcome to the Smart Kitchen Builder</h1>
-        <p class="subtitle-text @(ShowSubtitle ? "show" : "")">Built with care . Designed for you</p>
-    </div>
-</div>
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
 
 @code {
-    private bool ShowSubtitle = false;
-
     protected override async Task OnInitializedAsync()
     {
-        // عرض الجملة الأولى
-        await Task.Delay(4000);
+        try
+        {
+            // 1. Connect to SolidWorks
+            var swType = Type.GetTypeFromProgID("SldWorks.Application");
+            var swApp = (ISldWorks)Activator.CreateInstance(swType)!;
+            swApp.Visible = true;
 
-        // ثم عرض الجملة الثانية
-        ShowSubtitle = true;
-        StateHasChanged();
+            SwSession.SetApp(swApp); // Save instance
 
-        // بعد 5 ثواني إضافية، الانتقال
-        await Task.Delay(5000);
-        NavManager.NavigateTo("/floor");
-        // NavManager.NavigateTo("/base-options");
+            // 2. Open the SLDPRT file
+            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
+            int errs = 0, warns = 0;
+            var model = (IModelDoc2)swApp.OpenDoc6(path,
+                (int)swDocumentTypes_e.swDocPART,
+                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                "", ref errs, ref warns)!;
 
+            // 3. Save to session
+            SwSession.SetActiveModel(model);
+
+            // 4. Navigate to Island page
+            NavManager.NavigateTo("/sink-cooktop-options?option=2");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Error: {ex.Message}");
+        }
     }
 }
