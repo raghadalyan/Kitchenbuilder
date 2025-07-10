@@ -120,6 +120,9 @@
             </div>
             <p>@GetFillPercentage(stations[currentIndex])% filled</p>
         </div>
+                <div class="nav-buttons">
+                    <button class="continue-btn" @onclick="GoToUpperCabinet">Continue to Upper Cabinets</button>
+                </div>
 
     }
         else
@@ -335,4 +338,12 @@
     File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
 
 }
+    [Inject]
+    private NavigationManager NavManager { get; set; }
+
+    void GoToUpperCabinet()
+    {
+NavManager.NavigateTo("/upper-cabinets/3");
+    }
+
 }

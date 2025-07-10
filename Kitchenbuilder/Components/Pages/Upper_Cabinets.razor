@@ -1,0 +1,78 @@
+﻿@page "/upper-cabinets/{option:int}"
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+@inject SolidWorksSessionService SwSession
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using SolidWorks.Interop.sldworks
+
+<h3>Upper Cabinets Setup</h3>
+
+@if (stationCount == -1)
+{
+    <p>Loading station data...</p>
+}
+else
+{
+    <p>Total valid stations found: <strong>@stationCount</strong></p>
+}
+
+@code {
+    [Parameter]
+    public int option { get; set; }
+
+    private int stationCount = -1;
+
+    protected override void OnInitialized()
+    {
+        LoadStationCount();
+    }
+
+    private void LoadStationCount()
+    {
+        try
+        {
+            string path = @$"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{option}SLD.json";
+
+            if (!File.Exists(path))
+            {
+                stationCount = 0;
+                return;
+            }
+
+            string json = File.ReadAllText(path);
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+
+            int count = 0;
+
+            foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            {
+                if (!root.TryGetProperty(wallKey, out var wall)) continue;
+                if (wall.TryGetProperty("Exposed", out var exposed) && exposed.GetBoolean()) continue;
+
+                if (wall.TryGetProperty("Bases", out var bases))
+                {
+                    foreach (var baseProp in bases.EnumerateObject())
+                    {
+                        if (baseProp.Value.TryGetProperty("Visible", out var visible) && visible.GetBoolean())
+                        {
+                            count++;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            stationCount = count;
+        }
+        catch (Exception ex)
+        {
+            stationCount = 0;
+            Console.WriteLine($"❌ Error: {ex.Message}");
+        }
+    }
+}
