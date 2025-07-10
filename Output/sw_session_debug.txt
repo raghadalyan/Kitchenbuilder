@@ -1,26 +1,17 @@
-[13:37:10] ❌ Tried to get active model, but it's null.
-[13:37:10] ✅ SolidWorks app instance stored in session.
-[13:37:54] 📤 Retrieved SolidWorks app instance.
-[13:38:10] 📤 Retrieved SolidWorks app instance.
-[13:40:36] ❌ Tried to get active model, but it's null.
-[13:40:36] ✅ SolidWorks app instance stored in session.
-[13:40:36] 📤 Retrieved SolidWorks app instance.
-[13:40:41] 📤 Retrieved SolidWorks app instance.
-[13:40:41] ✅ Set active model: temp_Option3
-[13:41:01] 📤 Retrieved active model: temp_Option3
-[13:41:06] 📤 Retrieved active model: temp_Option3
-[13:41:11] 📤 Retrieved active model: temp_Option3
-[13:41:16] 📤 Retrieved active model: temp_Option3
-[13:44:01] 📤 Retrieved active model: temp_Option3
-[13:44:07] 📤 Retrieved active model: temp_Option3
-[20:55:30] ✅ SolidWorks app instance stored in session.
-[20:55:40] ✅ Set active model: temp_Option3
-[20:55:40] 📤 Retrieved active model: temp_Option3
-[20:57:25] 📤 Retrieved active model: temp_Option3
-[21:36:05] ✅ SolidWorks app instance stored in session.
-[21:36:14] ✅ Set active model: temp_Option3
-[21:36:14] 📤 Retrieved active model: temp_Option3
-[21:36:43] ✅ SolidWorks app instance stored in session.
-[21:36:43] ✅ Set active model: temp_Option3
-[21:36:43] 📤 Retrieved active model: temp_Option3
-[21:36:47] 📤 Retrieved active model: temp_Option3
+[16:50:49] ❌ Tried to get active model, but it's null.
+[16:51:15] ✅ SolidWorks app instance stored in session.
+[16:51:57] 📤 Retrieved SolidWorks app instance.
+[16:52:41] 📤 Retrieved SolidWorks app instance.
+[16:52:47] 📤 Retrieved SolidWorks app instance.
+[16:54:56] ❌ Tried to get active model, but it's null.
+[16:54:56] ✅ SolidWorks app instance stored in session.
+[16:54:56] 📤 Retrieved SolidWorks app instance.
+[16:55:14] 📤 Retrieved SolidWorks app instance.
+[16:55:29] 📤 Retrieved SolidWorks app instance.
+[16:55:29] ✅ Set active model: temp_Option3
+[16:55:41] 📤 Retrieved active model: temp_Option3
+[16:55:45] 📤 Retrieved active model: temp_Option3
+[16:56:17] 📤 Retrieved active model: temp_Option3
+[16:56:20] 📤 Retrieved active model: temp_Option3
+[16:57:33] 📤 Retrieved active model: temp_Option3
+[17:01:25] 📤 Retrieved active model: temp_Option3

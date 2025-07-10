@@ -49,9 +49,17 @@ namespace Kitchenbuilder.Core
             return canAdd;
         }
 
-        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int copiesCount = 1)
+        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int drawerCount, int copiesCount, IModelDoc2 swModel)
         {
             WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, Height: {height}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
+            if (!hasDrawers)
+            {
+                drawerCount = 1;
+            }
+            else
+            {
+                drawerCount = Math.Clamp(drawerCount, 2, 5);
+            }
 
             if (width < 5)
             {
@@ -94,12 +102,9 @@ namespace Kitchenbuilder.Core
             for (int i = 0; i < copiesCount; i++)
             {
                 int cabinetNum = existingCount + i + 1;
-                string sketchName = $"Sketch_Cabinet{wall}_{cabinetNum}";
-                string drawerSketch = $"Drawers_{wall}_{cabinetNum}";
-
                 var cabinet = new CabinetInfo
                 {
-                    SketchName = sketchName,
+                    SketchName = $"Sketch_Cabinet{wall}_{cabinetNum}",
                     Width = width,
                     HasDrawers = hasDrawers,
                     Height = height,
@@ -107,7 +112,23 @@ namespace Kitchenbuilder.Core
                     DistanceY = 70
                 };
 
-                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, DistanceX: {currentX}, DistanceY: 70");
+                // Create the Drawers object and compute dimensions
+                var drawers = new Drawers($"Drawers{wall}_{cabinetNum}");
+
+                double availableHeight = height - 4 - (drawerCount > 1 ? 2 * (drawerCount - 1) : 0);
+                double drawerHeight = drawerCount > 0 ? availableHeight / drawerCount : 0;
+
+                for (int d = 1; d <= drawerCount; d++)
+                {
+                    double dy = 2 + (drawerHeight + 2) * (drawerCount - d);
+
+                    typeof(Drawers).GetProperty($"Width{d}")?.SetValue(drawers, drawerHeight);
+                    typeof(Drawers).GetProperty($"DistanceY{d}")?.SetValue(drawers, dy);
+                }
+                cabinet.Drawers = drawers;
+
+
+                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, Height: {height}, DistanceX: {currentX}");
 
                 if (station.Cabinets == null)
                     station.Cabinets = new List<CabinetInfo>();
@@ -115,10 +136,9 @@ namespace Kitchenbuilder.Core
                 station.Cabinets.Add(cabinet);
                 newlyAdded.Add(cabinet);
                 currentX += width;
-
-                WriteDebug($"➕ Added cabinet #{cabinetNum} with {actualDrawerCount} drawers.");
             }
 
+            // Save updated JSON
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, options));
             WriteDebug("✅ Cabinets successfully added and file saved.");

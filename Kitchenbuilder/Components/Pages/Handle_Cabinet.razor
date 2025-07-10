@@ -296,8 +296,17 @@
             return;
         }
 
-        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, height, copies, swModel);
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, height, drawerCount, copies, swModel);
+
         errorMessage = "";
+
+        // Reset state to default after successful apply
+        width = 1;
+        height = 70; // <-- reset to your preferred default
+        hasDrawers = false;
+        drawerCount = 2;
+        isSequence = false;
+        copiesCount = 2;
 
         if (File.Exists(jsonPath))
         {
@@ -305,6 +314,7 @@
             stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
         }
     }
+
 
 
     int GetFillPercentage(StationInfo station)

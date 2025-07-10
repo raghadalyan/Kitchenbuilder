@@ -12,7 +12,20 @@
         "Width": 60,
         "HasDrawers": false,
         "DistanceX": 85,
-        "DistanceY": 70
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers1_1",
+          "Width1": 76,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       }
     ],
     "HasCountertop": false,
@@ -27,59 +40,66 @@
     "Cabinets": [
       {
         "SketchName": "Sketch_Cabinet1_2",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 55,
         "HasDrawers": false,
         "DistanceX": 145,
-        "DistanceY": 70
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers1_2",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet1_3",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 55,
         "HasDrawers": false,
-        "DistanceX": 185,
-        "DistanceY": 70
+        "DistanceX": 200,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers1_3",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet1_4",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 55,
         "HasDrawers": false,
-        "DistanceX": 225,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_5",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 265,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_6",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 305,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_7",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 345,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_8",
-        "Height": 80,
-        "Width": 15,
-        "HasDrawers": false,
-        "DistanceX": 385,
-        "DistanceY": 70
+        "DistanceX": 255,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers1_4",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       }
     ],
     "HasCountertop": true,
@@ -94,67 +114,108 @@
     "Cabinets": [
       {
         "SketchName": "Sketch_Cabinet2_1",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
+        "Height": 70,
+        "Width": 60,
+        "HasDrawers": true,
         "DistanceX": 60,
-        "DistanceY": 70
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers2_1",
+          "Width1": 20.666666666666668,
+          "DistanceY1": 47.333333333333336,
+          "Width2": 20.666666666666668,
+          "DistanceY2": 24.666666666666668,
+          "Width3": 20.666666666666668,
+          "DistanceY3": 2,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet2_2",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 100,
-        "DistanceY": 70
+        "Height": 70,
+        "Width": 60,
+        "HasDrawers": true,
+        "DistanceX": 120,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers2_2",
+          "Width1": 20.666666666666668,
+          "DistanceY1": 47.333333333333336,
+          "Width2": 20.666666666666668,
+          "DistanceY2": 24.666666666666668,
+          "Width3": 20.666666666666668,
+          "DistanceY3": 2,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet2_3",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 50,
         "HasDrawers": false,
-        "DistanceX": 140,
-        "DistanceY": 70
+        "DistanceX": 180,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers2_3",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet2_4",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 50,
         "HasDrawers": false,
-        "DistanceX": 180,
-        "DistanceY": 70
+        "DistanceX": 230,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers2_4",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       },
       {
         "SketchName": "Sketch_Cabinet2_5",
-        "Height": 80,
-        "Width": 40,
+        "Height": 70,
+        "Width": 50,
         "HasDrawers": false,
-        "DistanceX": 220,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet2_6",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 260,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet2_7",
-        "Height": 80,
-        "Width": 40,
-        "HasDrawers": false,
-        "DistanceX": 300,
-        "DistanceY": 70
-      },
-      {
-        "SketchName": "Sketch_Cabinet2_8",
-        "Height": 80,
-        "Width": 10,
-        "HasDrawers": false,
-        "DistanceX": 340,
-        "DistanceY": 70
+        "DistanceX": 280,
+        "DistanceY": 70,
+        "Drawers": {
+          "SketchName": "Drawers2_5",
+          "Width1": 66,
+          "DistanceY1": 2,
+          "Width2": 0,
+          "DistanceY2": 0,
+          "Width3": 0,
+          "DistanceY3": 0,
+          "Width4": 0,
+          "DistanceY4": 0,
+          "Width5": 0,
+          "DistanceY5": 0
+        }
       }
     ],
     "HasCountertop": true,
@@ -166,16 +227,7 @@
     "StationStart": 60,
     "StationEnd": 180,
     "WallNumber": 3,
-    "Cabinets": [
-      {
-        "SketchName": "Sketch_Cabinet3_1",
-        "Height": 80,
-        "Width": 120,
-        "HasDrawers": false,
-        "DistanceX": 60,
-        "DistanceY": 70
-      }
-    ],
+    "Cabinets": [],
     "HasCountertop": true,
     "SketchName": "3_1"
   }

@@ -3,3 +3,4 @@
 ✅ Finished building walls
 ✅ Model opened successfully
 🟢 Material options initialized for 3 items
+✅ Applied material 'Oak' to Boss-Extrude1
