@@ -4,6 +4,7 @@ using System.IO;
 using SolidWorks.Interop.sldworks;
 using System.Runtime.InteropServices;
 using SolidWorks.Interop.swconst;
+using Kitchenbuilder.Core.Models;
 
 namespace Kitchenbuilder.Core
 {
@@ -48,7 +49,7 @@ namespace Kitchenbuilder.Core
             return canAdd;
         }
 
-        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int copiesCount, IModelDoc2 swModel)
+        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int copiesCount = 1)
         {
             WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, Height: {height}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
 
@@ -93,10 +94,12 @@ namespace Kitchenbuilder.Core
             for (int i = 0; i < copiesCount; i++)
             {
                 int cabinetNum = existingCount + i + 1;
+                string sketchName = $"Sketch_Cabinet{wall}_{cabinetNum}";
+                string drawerSketch = $"Drawers_{wall}_{cabinetNum}";
 
                 var cabinet = new CabinetInfo
                 {
-                    SketchName = $"Sketch_Cabinet{wall}_{cabinetNum}",
+                    SketchName = sketchName,
                     Width = width,
                     HasDrawers = hasDrawers,
                     Height = height,
@@ -104,7 +107,7 @@ namespace Kitchenbuilder.Core
                     DistanceY = 70
                 };
 
-                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, Height: {height}, DistanceX: {currentX}");
+                WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, DistanceX: {currentX}, DistanceY: 70");
 
                 if (station.Cabinets == null)
                     station.Cabinets = new List<CabinetInfo>();
@@ -112,9 +115,10 @@ namespace Kitchenbuilder.Core
                 station.Cabinets.Add(cabinet);
                 newlyAdded.Add(cabinet);
                 currentX += width;
+
+                WriteDebug($"➕ Added cabinet #{cabinetNum} with {actualDrawerCount} drawers.");
             }
 
-            // Save updated JSON
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, options));
             WriteDebug("✅ Cabinets successfully added and file saved.");
