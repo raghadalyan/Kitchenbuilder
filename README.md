@@ -63,4 +63,10 @@ It enables users to enter kitchen dimensions via a dashboard UI and generates up
 - `EditSketchDim_IModel.cs`: Edits a specific SolidWorks sketch dimension by name and value  
 - `Show_Bodies_In_Sld_IModel.cs`: Makes specific SolidWorks bodies visible by name  
 - `Hide_Bodies_In_Sld_IModel.cs`: Hides specific SolidWorks bodies by name  
-- `SaveImgs.cs`: Saves multiple standard view images (top, front, right, isometric) of the model to a folder  
+- `SaveImgs.cs`: Saves multiple standard view images (top, front, right, isometric) of the model to a folder
+
+
+---
+##  License
+This project is licensed under the MIT License. See the LICENSE file for more information.
+
