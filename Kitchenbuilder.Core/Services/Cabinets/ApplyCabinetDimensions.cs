@@ -39,13 +39,15 @@ namespace Kitchenbuilder.Core
                         string widthDim = $"Length@{cabinet.SketchName}";
                         string heightDim = $"Width@{cabinet.SketchName}";
                         string distXDim = $"DistanceX@{cabinet.SketchName}";
+                        string distYDim = $"DistanceY@{cabinet.SketchName}";
 
                         Log($"🛠 Applying cabinet dims: {cabinet.SketchName} => Width={cabinet.Width}, Height={cabinet.Height}, DistanceX={cabinet.DistanceX}");
 
                         EditSketchDim_IModel.SetDimension(model, widthDim, cabinet.Width);
                         EditSketchDim_IModel.SetDimension(model, heightDim, cabinet.Height);
                         EditSketchDim_IModel.SetDimension(model, distXDim, cabinet.DistanceX);
-
+                        EditSketchDim_IModel.SetDimension(model, distYDim, cabinet.DistanceY);
+                        Log($"📐 DistanceY={cabinet.DistanceY} applied to {cabinet.SketchName}");
                         // Apply drawer dimensions (only non-zero)
                         if (cabinet.Drawers != null)
                         {

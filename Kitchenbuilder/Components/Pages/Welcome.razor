@@ -17,7 +17,7 @@
             SwSession.SetApp(swApp); // Save instance
 
             // 2. Open the SLDPRT file
-            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
+            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
             int errs = 0, warns = 0;
             var model = (IModelDoc2)swApp.OpenDoc6(path,
                 (int)swDocumentTypes_e.swDocPART,
@@ -28,11 +28,10 @@
             SwSession.SetActiveModel(model);
 
             // 4. Navigate to Island page
-            NavManager.NavigateTo("/handle-cabinet?option=3");
+            NavManager.NavigateTo("/sink-cooktop-options?option=2");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"❌ Error: {ex.Message}");
         }
-    }
-}
+    }}

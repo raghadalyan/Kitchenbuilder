@@ -1,5 +1,5 @@
-🟢 Started /base-approval with selected=Option3
-📁 Target base file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT
+🟢 Started /base-approval with selected=Option2
+📁 Target base file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
 🟢 SolidWorks launched and stored in session
 ✅ Base model loaded successfully
-✅ Extracted 4 visible base bodies from JSON
+✅ Extracted 3 visible base bodies from JSON

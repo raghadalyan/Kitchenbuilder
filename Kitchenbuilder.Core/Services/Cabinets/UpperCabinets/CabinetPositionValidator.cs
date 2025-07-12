@@ -4,80 +4,47 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Kitchenbuilder.Core.Models;
-/*
- * CabinetPositionValidator.cs
- * ---------------------------
- * This utility validates whether a new upper cabinet can be legally added to the kitchen layout
- * without conflicting with existing elements. It performs multiple checks using input JSON files.
- *
- * Method: CheckDownPosition(int optionNum, CabinetInfo cabinet)
- * --------------------------------------------------------------
- * ✅ Detects the wall number based on the cabinet's DistanceX and visible base ranges.
- * ✅ Validates cabinet DistanceY based on proximity to:
- *    - Fridge base (must be ≥ 182 cm away)
- *    - Countertop (must be ≥ 150 cm away)
- * ✅ Checks for X/Y range overlap with:
- *    - Cabinets already placed in OptionXSLD_stations.json
- *    - Cabinets in UpperCabinets.json
- * ❌ If any collision or illegal positioning is detected, returns a specific error message.
- * ✅ Otherwise, returns a success message indicating the position is valid for the "down" side.
- *
- * Overlap Check Helpers:
- * - IsXOverlap(): Validates horizontal intersection
- * - IsYOverlap(): Validates vertical intersection
- */
 
 namespace Kitchenbuilder.Core
 {
+    /*
+     * CabinetPositionValidator.cs
+     * ---------------------------
+     * This utility validates whether a new upper cabinet can be legally added to the kitchen layout
+     * without conflicting with existing elements. It performs multiple checks using input JSON files.
+     * 
+     * Main Method:
+     * - CheckDownPosition(): Validates based on proximity, collision, and layout rules.
+     * 
+     * Debug log saved at: \Output\upper\validator_debug.txt
+     */
+
     public static class CabinetPositionValidator
     {
-        public static string CheckDownPosition(int optionNum, CabinetInfo cabinet)
+        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\validator_debug.txt";
+
+        public static string CheckDownPosition(int optionNum, int wallNumber, CabinetInfo cabinet)
         {
             try
             {
+                Log($"📦 Checking cabinet on Wall {wallNumber}: (X={cabinet.DistanceX}, Y={cabinet.DistanceY}, W={cabinet.Width}, H={cabinet.Height})");
+
                 string basePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
-                string optionPath = $@"{basePath}\Option{optionNum}SLD.json";
-                string stationPath = $@"{basePath}\Option{optionNum}SLD_stations.json";
-                string upperPath = $@"{basePath}\UpperCabinets.json";
+                string optionPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
+                string stationPath = Path.Combine(basePath, $"Option{optionNum}SLD_stations.json");
+                string upperPath = Path.Combine(basePath, "UpperCabinets.json");
 
-                string optionJson = File.ReadAllText(optionPath);
-                using var optionDoc = JsonDocument.Parse(optionJson);
-
-                int detectedWall = -1;
-
-                // 1. Detect Wall Number by DistanceX location
-                foreach (var wall in optionDoc.RootElement.EnumerateObject().Where(p => p.Name.StartsWith("Wall")))
-                {
-                    if (wall.Value.TryGetProperty("Bases", out var bases))
-                    {
-                        foreach (var b in bases.EnumerateObject())
-                        {
-                            var baseObj = b.Value;
-                            if (baseObj.TryGetProperty("Visible", out var vis) && vis.GetBoolean())
-                            {
-                                double start = baseObj.GetProperty("Start").GetDouble();
-                                double end = baseObj.GetProperty("End").GetDouble();
-                                if (cabinet.DistanceX >= start && cabinet.DistanceX < end)
-                                {
-                                    detectedWall = int.Parse(wall.Name.Replace("Wall", ""));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (detectedWall != -1)
-                        break;
-                }
-
-                if (detectedWall == -1)
-                    return "❌ Cannot detect wall number for cabinet position.";
-
+                int detectedWall = wallNumber;
                 string wallKey = $"Wall{detectedWall}";
 
-                // 2. Check proximity to fridge and countertop
-                var wallElement = optionDoc.RootElement.GetProperty(wallKey);
-                if (wallElement.TryGetProperty("Bases", out var basesElement))
+                if (!File.Exists(optionPath))
+                    return $"❌ Option file not found: {optionPath}";
+
+                using var optionDoc = JsonDocument.Parse(File.ReadAllText(optionPath));
+
+                // 1. Check fridge/countertop proximity
+                if (optionDoc.RootElement.TryGetProperty(wallKey, out var wallElement) &&
+                    wallElement.TryGetProperty("Bases", out var basesElement))
                 {
                     foreach (var b in basesElement.EnumerateObject())
                     {
@@ -90,6 +57,8 @@ namespace Kitchenbuilder.Core
                         if (cabinet.DistanceX >= start && cabinet.DistanceX < end)
                         {
                             string sketch = baseObj.GetProperty("SketchName").GetString();
+                            Log($"🔍 Cabinet overlaps base: {sketch}");
+
                             if (sketch.Contains("fridge") && cabinet.DistanceY < 182)
                                 return "❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.";
 
@@ -105,43 +74,44 @@ namespace Kitchenbuilder.Core
                     }
                 }
 
-                // 3. Check overlap with OptionXSLD_stations.json
+                // 2. Check overlap with OptionXSLD_stations.json
                 if (File.Exists(stationPath))
                 {
-                    string stationJson = File.ReadAllText(stationPath);
-                    var stations = JsonSerializer.Deserialize<List<StationInfo>>(stationJson);
-
+                    Log($"📄 Checking station overlaps from: {stationPath}");
+                    var stations = JsonSerializer.Deserialize<List<StationInfo>>(File.ReadAllText(stationPath));
                     foreach (var station in stations.Where(s => s.WallNumber == detectedWall && s.Cabinets != null))
                     {
                         foreach (var existing in station.Cabinets)
                         {
+                            Log($"↔ Compare with station cabinet {existing.SketchName} at (X={existing.DistanceX}, Y={existing.DistanceY})");
                             if (IsXOverlap(cabinet, existing) && IsYOverlap(cabinet, existing))
                                 return $"❌ Overlaps with cabinet in stations (Sketch: {existing.SketchName})";
                         }
                     }
                 }
 
-                // 4. Check overlap with UpperCabinets.json
+                // 3. Check overlap with UpperCabinets.json
                 if (File.Exists(upperPath))
                 {
-                    string upperJson = File.ReadAllText(upperPath);
-                    var wallDict = JsonSerializer.Deserialize<Dictionary<string, List<CabinetInfo>>>(upperJson);
-                    string key = $"Wall{detectedWall}";
-
-                    if (wallDict != null && wallDict.ContainsKey(key))
+                    Log($"📄 Checking upper cabinet overlaps from: {upperPath}");
+                    var wallDict = JsonSerializer.Deserialize<Dictionary<string, List<CabinetInfo>>>(File.ReadAllText(upperPath));
+                    if (wallDict != null && wallDict.TryGetValue(wallKey, out var upperList))
                     {
-                        foreach (var existing in wallDict[key])
+                        foreach (var existing in upperList)
                         {
+                            Log($"↔ Compare with upper cabinet {existing.SketchName} at (X={existing.DistanceX}, Y={existing.DistanceY})");
                             if (IsXOverlap(cabinet, existing) && IsYOverlap(cabinet, existing))
                                 return $"❌ Overlaps with cabinet in UpperCabinets.json (Sketch: {existing.SketchName})";
                         }
                     }
                 }
 
+                Log("✅ Position is legal.");
                 return "✅ Position is legal (down side).";
             }
             catch (Exception ex)
             {
+                Log($"❌ Exception: {ex.Message}");
                 return $"❌ Error in CheckDownPosition: {ex.Message}";
             }
         }
@@ -151,5 +121,11 @@ namespace Kitchenbuilder.Core
 
         private static bool IsYOverlap(CabinetInfo a, CabinetInfo b) =>
             a.DistanceY < b.DistanceY + b.Height && a.DistanceY + a.Height > b.DistanceY;
+
+        private static void Log(string msg)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{Environment.NewLine}");
+        }
     }
 }

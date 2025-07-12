@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Kitchenbuilder.Core.Models;
-
+using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 namespace Kitchenbuilder.Core
 {
     public static class ApplyUpperCabinet
@@ -13,49 +14,31 @@ namespace Kitchenbuilder.Core
         private static readonly string StationPathBase = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option";
         private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\apply_upper_cabinet_debug.txt";
 
-        public static string Apply(int optionNum, CabinetInfo cabinet, UpperCabinetStation station)
+        public static string Apply(IModelDoc2 model, int optionNum, CabinetInfo baseCabinet, UpperCabinetStation station, int copiesCount, string sequenceDirection)
         {
             try
             {
-                // 1. Validate dimensions
-                if (cabinet.Width < 5 || cabinet.Depth < 5 || cabinet.Height < 5)
+                if (baseCabinet.Width < 5 || baseCabinet.Depth < 5 || baseCabinet.Height < 5)
                 {
-                    string error = $"❌ Cabinet size too small. Width: {cabinet.Width}, Depth: {cabinet.Depth}, Height: {cabinet.Height}. Each must be ≥ 5.";
+                    string error = $"❌ Cabinet size too small. Width: {baseCabinet.Width}, Depth: {baseCabinet.Depth}, Height: {baseCabinet.Height}. Each must be ≥ 5.";
                     Log(error);
                     return error;
                 }
 
-                // 2. Validate position legality
-                string legality = CabinetPositionValidator.CheckDownPosition(optionNum, cabinet);
-                if (!legality.StartsWith("✅"))
-                {
-                    Log(legality);
-                    return legality;
-                }
-
-
                 string stationJsonPath = $"{StationPathBase}{optionNum}SLD_stations.json";
                 var usedSketchNums = new HashSet<int>();
 
-                // 1. Check OptionXSLD_stations.json
+                // Load used sketch numbers
                 if (File.Exists(stationJsonPath))
                 {
                     string json = File.ReadAllText(stationJsonPath);
                     var stations = JsonSerializer.Deserialize<List<StationInfo>>(json) ?? new();
 
-                    foreach (var s in stations.Where(s => s.WallNumber == station.WallNumber))
-                    {
-                        if (s.Cabinets != null)
-                        {
-                            foreach (var c in s.Cabinets)
-                            {
-                                ExtractSketchNumber(c.SketchName, station.WallNumber, usedSketchNums);
-                            }
-                        }
-                    }
+                    foreach (var s in stations.Where(s => s.WallNumber == station.WallNumber && s.Cabinets != null))
+                        foreach (var c in s.Cabinets)
+                            ExtractSketchNumber(c.SketchName, station.WallNumber, usedSketchNums);
                 }
 
-                // 2. Check UpperCabinets.json
                 if (File.Exists(SavePath))
                 {
                     string json = File.ReadAllText(SavePath);
@@ -63,22 +46,46 @@ namespace Kitchenbuilder.Core
                     string wallKey = $"Wall{station.WallNumber}";
 
                     if (wallCabinets != null && wallCabinets.ContainsKey(wallKey))
-                    {
                         foreach (var c in wallCabinets[wallKey])
-                        {
                             ExtractSketchNumber(c.SketchName, station.WallNumber, usedSketchNums);
-                        }
-                    }
                 }
 
-                // 3. Assign next unused number
-                int cabinetNum = 1;
-                while (usedSketchNums.Contains(cabinetNum) && cabinetNum <= 19)
-                    cabinetNum++;
+                // 2. Generate all cabinets with calculated positions
+                List<CabinetInfo> newCabinets = new();
 
-                cabinet.SketchName = $"Sketch_Cabinet{station.WallNumber}_{cabinetNum}";
+                for (int i = 0; i < copiesCount; i++)
+                {
+                    var cabinet = new CabinetInfo
+                    {
+                        Width = baseCabinet.Width,
+                        Height = baseCabinet.Height,
+                        Depth = baseCabinet.Depth,
+                        HasDrawers = false,
+                        Drawers = null,
+                        DistanceX = baseCabinet.DistanceX + (sequenceDirection == "Horizontal" ? i * baseCabinet.Width : 0),
+                        DistanceY = baseCabinet.DistanceY + (sequenceDirection == "Vertical" ? i * baseCabinet.Height : 0)
+                    };
 
-                // 4. Save to UpperCabinets.json
+                    // Validate
+                    string legality = CabinetPositionValidator.CheckDownPosition(optionNum, station.WallNumber, cabinet);
+                    if (!legality.StartsWith("✅"))
+                    {
+                        string failMsg = $"❌ Copy {i + 1} failed: {legality}";
+                        Log(failMsg);
+                        return failMsg;
+                    }
+
+                    // Assign sketch name
+                    int cabinetNum = 1;
+                    while (usedSketchNums.Contains(cabinetNum) && cabinetNum <= 99)
+                        cabinetNum++;
+
+                    cabinet.SketchName = $"Sketch_Cabinet{station.WallNumber}_{cabinetNum}";
+                    usedSketchNums.Add(cabinetNum);
+                    newCabinets.Add(cabinet);
+                }
+
+                // 3. Save if all legal
                 Dictionary<string, List<CabinetInfo>> upperCabinets;
 
                 if (File.Exists(SavePath))
@@ -96,11 +103,20 @@ namespace Kitchenbuilder.Core
                 if (!upperCabinets.ContainsKey(wallKeyFinal))
                     upperCabinets[wallKeyFinal] = new();
 
-                upperCabinets[wallKeyFinal].Add(cabinet);
+                upperCabinets[wallKeyFinal].AddRange(newCabinets);
 
                 File.WriteAllText(SavePath, JsonSerializer.Serialize(upperCabinets, new JsonSerializerOptions { WriteIndented = true }));
+                // 4. Apply dimensions in SolidWorks
+                var tempStation = new StationInfo
+                {
+                    WallNumber = station.WallNumber,
 
-                string successMsg = "✅ Cabinet created successfully.";
+                    Cabinets = newCabinets
+                };
+
+                ApplyCabinetDimensions.Apply(model, new List<StationInfo> { tempStation });
+
+                string successMsg = $"✅ {copiesCount} cabinet(s) created and applied successfully.";
                 Log(successMsg);
                 return successMsg;
             }
@@ -125,7 +141,7 @@ namespace Kitchenbuilder.Core
         private static void Log(string msg)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(DebugPath)!);
-            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{Environment.NewLine}");
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
         }
     }
 }

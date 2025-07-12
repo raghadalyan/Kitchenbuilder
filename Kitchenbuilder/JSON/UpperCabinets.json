@@ -2,22 +2,12 @@
   "Wall1": [
     {
       "SketchName": "Sketch_Cabinet1_7",
-      "Height": 5,
-      "Depth": 5,
-      "Width": 5,
+      "Height": 30,
+      "Depth": 60,
+      "Width": 80,
       "HasDrawers": false,
-      "DistanceX": 90,
-      "DistanceY": 250,
-      "Drawers": null
-    },
-    {
-      "SketchName": "Sketch_Cabinet1_8",
-      "Height": 100,
-      "Depth": 5,
-      "Width": 100,
-      "HasDrawers": false,
-      "DistanceX": 95,
-      "DistanceY": 250,
+      "DistanceX": 0,
+      "DistanceY": 270,
       "Drawers": null
     }
   ]

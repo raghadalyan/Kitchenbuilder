@@ -1,30 +1,55 @@
-7/10/2025 10:17:32 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 0, WidthToAdd: 60, Copies: 1
-7/10/2025 10:17:32 PM: TotalWidth: 60, UsedWidth: 0, TotalNewWidth: 60
-7/10/2025 10:17:32 PM: ✅ CanAdd: True
-7/10/2025 10:17:32 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 0, Width: 60, Height: 200, HasDrawers: False, Copies: 1
-7/10/2025 10:17:32 PM: ➕ Adding cabinet #1: Sketch_Cabinet1_1, Width: 60, Height: 200, DistanceX: 85
-7/10/2025 10:17:32 PM: ✅ Cabinets successfully added and file saved.
-7/10/2025 10:17:55 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
-7/12/2025 5:26:09 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, WidthToAdd: 50, Copies: 2
-7/12/2025 5:26:09 PM: TotalWidth: 255, UsedWidth: 0, TotalNewWidth: 100
-7/12/2025 5:26:09 PM: ✅ CanAdd: True
-7/12/2025 5:26:09 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, Width: 50, Height: 66, HasDrawers: False, Copies: 2
-7/12/2025 5:26:09 PM: ➕ Adding cabinet #2: Sketch_Cabinet1_2, Width: 50, Height: 66, DistanceX: 145
-7/12/2025 5:26:09 PM: ➕ Adding cabinet #3: Sketch_Cabinet1_3, Width: 50, Height: 66, DistanceX: 195
-7/12/2025 5:26:09 PM: ✅ Cabinets successfully added and file saved.
-7/12/2025 5:26:34 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
-7/12/2025 5:26:43 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, WidthToAdd: 55, Copies: 1
-7/12/2025 5:26:43 PM: TotalWidth: 255, UsedWidth: 100, TotalNewWidth: 55
-7/12/2025 5:26:43 PM: ✅ CanAdd: True
-7/12/2025 5:26:43 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, Width: 55, Height: 70, HasDrawers: True, Copies: 1
-7/12/2025 5:26:43 PM: ➕ Adding cabinet #4: Sketch_Cabinet1_4, Width: 55, Height: 70, DistanceX: 245
-7/12/2025 5:26:43 PM: ✅ Cabinets successfully added and file saved.
-7/12/2025 5:27:08 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
-7/12/2025 5:27:14 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, WidthToAdd: 50, Copies: 2
-7/12/2025 5:27:14 PM: TotalWidth: 255, UsedWidth: 155, TotalNewWidth: 100
-7/12/2025 5:27:14 PM: ✅ CanAdd: True
-7/12/2025 5:27:14 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD_stations.json, StationIndex: 1, Width: 50, Height: 70, HasDrawers: False, Copies: 2
-7/12/2025 5:27:14 PM: ➕ Adding cabinet #5: Sketch_Cabinet1_5, Width: 50, Height: 70, DistanceX: 300
-7/12/2025 5:27:14 PM: ➕ Adding cabinet #6: Sketch_Cabinet1_6, Width: 50, Height: 70, DistanceX: 350
-7/12/2025 5:27:14 PM: ✅ Cabinets successfully added and file saved.
-7/12/2025 5:27:41 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:13:35 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, WidthToAdd: 60, Copies: 1
+7/12/2025 9:13:35 PM: TotalWidth: 60, UsedWidth: 0, TotalNewWidth: 60
+7/12/2025 9:13:35 PM: ✅ CanAdd: True
+7/12/2025 9:13:35 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, Width: 60, Height: 90, HasDrawers: False, Copies: 1
+7/12/2025 9:13:35 PM: ➕ Adding cabinet #1: Sketch_Cabinet1_1, Width: 60, Height: 90, DistanceX: 85
+7/12/2025 9:13:35 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:13:53 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:15:54 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, WidthToAdd: 50, Copies: 2
+7/12/2025 9:15:54 PM: TotalWidth: 255, UsedWidth: 0, TotalNewWidth: 100
+7/12/2025 9:15:54 PM: ✅ CanAdd: True
+7/12/2025 9:15:54 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, Width: 50, Height: 70, HasDrawers: False, Copies: 2
+7/12/2025 9:15:54 PM: ➕ Adding cabinet #2: Sketch_Cabinet1_2, Width: 50, Height: 70, DistanceX: 145
+7/12/2025 9:15:54 PM: ➕ Adding cabinet #3: Sketch_Cabinet1_3, Width: 50, Height: 70, DistanceX: 195
+7/12/2025 9:15:54 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:16:26 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:25:23 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, WidthToAdd: 60, Copies: 1
+7/12/2025 9:25:23 PM: TotalWidth: 60, UsedWidth: 0, TotalNewWidth: 60
+7/12/2025 9:25:23 PM: ✅ CanAdd: True
+7/12/2025 9:25:23 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 0, Width: 60, Height: 90, HasDrawers: False, Copies: 1
+7/12/2025 9:25:23 PM: ➕ Adding cabinet #1: Sketch_Cabinet1_1, Width: 60, Height: 90, DistanceX: 85
+7/12/2025 9:25:23 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:25:33 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:25:56 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, WidthToAdd: 50, Copies: 2
+7/12/2025 9:25:56 PM: TotalWidth: 255, UsedWidth: 0, TotalNewWidth: 100
+7/12/2025 9:25:56 PM: ✅ CanAdd: True
+7/12/2025 9:25:56 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, Width: 50, Height: 70, HasDrawers: False, Copies: 2
+7/12/2025 9:25:56 PM: ➕ Adding cabinet #2: Sketch_Cabinet1_2, Width: 50, Height: 70, DistanceX: 145
+7/12/2025 9:25:56 PM: ➕ Adding cabinet #3: Sketch_Cabinet1_3, Width: 50, Height: 70, DistanceX: 195
+7/12/2025 9:25:56 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:26:19 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:27:01 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, WidthToAdd: 55, Copies: 1
+7/12/2025 9:27:01 PM: TotalWidth: 255, UsedWidth: 100, TotalNewWidth: 55
+7/12/2025 9:27:01 PM: ✅ CanAdd: True
+7/12/2025 9:27:01 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, Width: 55, Height: 70, HasDrawers: True, Copies: 1
+7/12/2025 9:27:01 PM: ➕ Adding cabinet #4: Sketch_Cabinet1_4, Width: 55, Height: 70, DistanceX: 245
+7/12/2025 9:27:01 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:27:54 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:28:12 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, WidthToAdd: 50, Copies: 2
+7/12/2025 9:28:12 PM: TotalWidth: 255, UsedWidth: 155, TotalNewWidth: 100
+7/12/2025 9:28:12 PM: ✅ CanAdd: True
+7/12/2025 9:28:12 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 1, Width: 50, Height: 70, HasDrawers: False, Copies: 2
+7/12/2025 9:28:12 PM: ➕ Adding cabinet #5: Sketch_Cabinet1_5, Width: 50, Height: 70, DistanceX: 300
+7/12/2025 9:28:12 PM: ➕ Adding cabinet #6: Sketch_Cabinet1_6, Width: 50, Height: 70, DistanceX: 350
+7/12/2025 9:28:12 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:28:53 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.
+7/12/2025 9:30:10 PM: [CanAddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 2, WidthToAdd: 60, Copies: 4
+7/12/2025 9:30:10 PM: TotalWidth: 290, UsedWidth: 0, TotalNewWidth: 240
+7/12/2025 9:30:10 PM: ✅ CanAdd: True
+7/12/2025 9:30:10 PM: [AddCabinet] Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json, StationIndex: 2, Width: 60, Height: 70, HasDrawers: False, Copies: 4
+7/12/2025 9:30:10 PM: ➕ Adding cabinet #1: Sketch_Cabinet2_1, Width: 60, Height: 70, DistanceX: 60
+7/12/2025 9:30:10 PM: ➕ Adding cabinet #2: Sketch_Cabinet2_2, Width: 60, Height: 70, DistanceX: 120
+7/12/2025 9:30:10 PM: ➕ Adding cabinet #3: Sketch_Cabinet2_3, Width: 60, Height: 70, DistanceX: 180
+7/12/2025 9:30:10 PM: ➕ Adding cabinet #4: Sketch_Cabinet2_4, Width: 60, Height: 70, DistanceX: 240
+7/12/2025 9:30:10 PM: ✅ Cabinets successfully added and file saved.
+7/12/2025 9:31:29 PM: ✅ ApplyCabinetDimensions completed for newly added cabinets.

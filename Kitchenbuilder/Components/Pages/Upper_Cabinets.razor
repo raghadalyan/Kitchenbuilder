@@ -100,6 +100,7 @@
     private double distanceX = 0, distanceY = 15;
     private string? resultMessage = null;
 
+
     protected override void OnInitialized()
     {
         OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
@@ -242,8 +243,9 @@
                     DistanceY = (int)distanceY,
                     Drawers = null
                 };
+            var model = SwSession.GetActiveModel();
+            resultMessage = ApplyUpperCabinet.Apply(model, OptionNum, cabinet, station, hasSequence ? sequenceCount : 1, hasSequence ? sequenceDirection : "Horizontal");
 
-            resultMessage = ApplyUpperCabinet.Apply(OptionNum, cabinet, station);
             Log(resultMessage);
 
             // ✅ Only hide the box if successful

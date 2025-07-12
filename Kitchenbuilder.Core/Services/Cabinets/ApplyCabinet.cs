@@ -109,7 +109,7 @@ namespace Kitchenbuilder.Core
                     HasDrawers = hasDrawers,
                     Height = height,
                     DistanceX = currentX,
-                    DistanceY = 70
+                    DistanceY = 15
                 };
 
                 // Create the Drawers object and compute dimensions
