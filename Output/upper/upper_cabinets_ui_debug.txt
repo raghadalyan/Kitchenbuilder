@@ -1,0 +1,108 @@
+[23:08:27] 🔄 Page loaded with Option 3
+[23:08:27] 📊 Stations loaded: 2
+[23:08:27] 🧭 Navigating to station 1 / Wall: Wall1
+[23:08:41] 🧭 Navigating to station 2 / Wall: Wall2
+[23:08:46] 🧭 Navigating to station 1 / Wall: Wall1
+[23:09:25] 🧭 Navigating to station 2 / Wall: Wall2
+[23:09:30] 🧭 Navigating to station 1 / Wall: Wall1
+[23:09:33] 🧭 Navigating to station 2 / Wall: Wall2
+[23:09:41] 🧭 Navigating to station 1 / Wall: Wall1
+[23:09:43] 🧭 Navigating to station 2 / Wall: Wall2
+[23:27:12] 🔄 Page loaded with Option 3
+[23:27:12] 📊 Stations loaded: 2
+[23:27:12] 🧭 Navigating to station 1 / Wall: Wall1
+[23:27:19] 🧭 Navigating to station 2 / Wall: Wall2
+[23:27:21] 🧭 Navigating to station 1 / Wall: Wall1
+[23:27:25] 🧭 Navigating to station 2 / Wall: Wall2
+[23:27:27] 🧭 Navigating to station 1 / Wall: Wall1
+[23:27:37] ➕ Add Cabinet clicked.
+[23:38:09] 🔄 Page loaded with Option 3
+[23:38:09] 📊 Stations loaded: 2
+[23:38:09] 🧭 Navigating to station 1 / Wall: Wall1
+[23:38:11] ➕ Add Cabinet clicked.
+[23:38:19] ➕ Add Cabinet clicked.
+[23:38:25] 🧭 Navigating to station 2 / Wall: Wall2
+[23:38:27] 🧭 Navigating to station 1 / Wall: Wall1
+[23:38:29] ➕ Add Cabinet clicked.
+[23:42:39] 🔄 Page loaded with Option 3
+[23:42:39] 📊 Stations loaded: 2
+[23:42:39] 🧭 Navigating to station 1 / Wall: Wall1
+[23:42:42] 🧭 Navigating to station 2 / Wall: Wall2
+[23:42:44] 🧭 Navigating to station 1 / Wall: Wall1
+[23:42:46] ➕ Add Cabinet clicked.
+[23:43:22] 🧭 Navigating to station 2 / Wall: Wall2
+[23:43:24] 🧭 Navigating to station 1 / Wall: Wall1
+[23:43:26] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[23:43:39] ➕ Add Space clicked.
+[23:43:40] ➕ Add Cabinet clicked.
+[23:43:41] ➕ Add Cabinet clicked.
+[01:06:43] 🔄 Page loaded with Option 3
+[01:06:43] 📊 Stations loaded: 2
+[01:06:43] 🧭 Navigating to station 1 / Wall: Wall1
+[01:06:45] ➕ Add Cabinet clicked.
+[01:07:53] 💾 Saving cabinet: width=50, height=50, depth=50, DX=50, DY=50
+[01:07:53] ✅ Cabinet saved successfully.
+[12:49:55] 🔄 Page loaded with Option 3
+[12:49:55] 📊 Stations loaded: 2
+[12:49:55] 🧭 Navigating to station 1 / Wall: Wall1
+[12:49:58] ➕ Add Cabinet clicked.
+[12:50:03] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[12:50:03] ✅ Cabinet saved successfully.
+[12:50:33] ➕ Add Cabinet clicked.
+[12:50:36] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[12:50:36] ✅ Cabinet saved successfully.
+[12:51:21] ➕ Add Cabinet clicked.
+[12:51:23] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[12:51:23] ✅ Cabinet saved successfully.
+[12:51:51] ➕ Add Cabinet clicked.
+[12:51:53] ➕ Add Cabinet clicked.
+[12:51:55] ➕ Add Cabinet clicked.
+[12:51:56] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[12:51:56] ✅ Cabinet saved successfully.
+[13:46:36] 🔄 Page loaded with Option 3
+[13:46:36] 📊 Stations loaded: 2
+[13:46:36] 🧭 Navigating to station 1 / Wall: Wall1
+[13:47:04] 💾 Saving cabinet: width=-1, height=2, depth=3, DX=0, DY=15
+[13:47:04] ❌ Cabinet size too small. Width: -1, Depth: 3, Height: 2. Each must be ≥ 5.
+[13:47:23] ➕ Add Cabinet clicked.
+[13:50:21] 🔄 Page loaded with Option 3
+[13:50:21] 📊 Stations loaded: 2
+[13:50:21] 🧭 Navigating to station 1 / Wall: Wall1
+[13:50:27] 💾 Saving cabinet: width=0, height=5, depth=5, DX=0, DY=15
+[13:50:27] ❌ Cabinet size too small. Width: 0, Depth: 5, Height: 5. Each must be ≥ 5.
+[13:50:31] ➕ Add Cabinet clicked.
+[13:50:32] ➕ Add Cabinet clicked.
+[13:50:44] 💾 Saving cabinet: width=55, height=70, depth=60, DX=0, DY=15
+[13:50:44] ✅ Cabinet created successfully.
+[13:50:46] ➕ Add Cabinet clicked.
+[21:53:58] 🔄 Page loaded with Option 3
+[21:53:58] 📊 Stations loaded: 2
+[21:53:58] 🧭 Navigating to station 1 / Wall: Wall1
+[21:54:20] 💾 Saving cabinet: width=60, height=60, depth=60, DX=10, DY=15
+[21:54:20] ❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.
+[21:54:42] 💾 Saving cabinet: width=-1, height=60, depth=60, DX=10, DY=15
+[21:54:42] ❌ Cabinet size too small. Width: -1, Depth: 60, Height: 60. Each must be ≥ 5.
+[21:55:08] 💾 Saving cabinet: width=60, height=60, depth=60, DX=200, DY=20
+[21:55:08] ❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.
+[17:28:49] 🔄 Page loaded with Option 3
+[17:28:49] 📊 Stations loaded: 2
+[17:28:49] 🧭 Navigating to station 1 / Wall: Wall1
+[17:29:12] 💾 Saving cabinet: width=5, height=5, depth=5, DX=0, DY=15
+[17:29:12] ❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.
+[17:30:09] 💾 Saving cabinet: width=5, height=5, depth=5, DX=90, DY=15
+[17:30:09] ❌ Overlaps with cabinet in stations (Sketch: Sketch_Cabinet1_1)
+[17:30:26] 💾 Saving cabinet: width=5, height=5, depth=5, DX=90, DY=70
+[17:30:26] ❌ Overlaps with cabinet in stations (Sketch: Sketch_Cabinet1_1)
+[17:30:41] 💾 Saving cabinet: width=5, height=5, depth=5, DX=90, DY=250
+[17:30:41] ✅ Cabinet created successfully.
+[19:25:10] 🔄 Page loaded with Option 3
+[19:25:10] 📊 Stations loaded: 2
+[19:25:10] 🧭 Navigating to station 1 / Wall: Wall1
+[19:25:46] 💾 Saving cabinet: width=100, height=100, depth=5, DX=80, DY=230
+[19:25:46] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:22] 💾 Saving cabinet: width=100, height=100, depth=5, DX=90, DY=250
+[19:26:22] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:28] 💾 Saving cabinet: width=100, height=100, depth=5, DX=92.5, DY=250
+[19:26:28] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:33] 💾 Saving cabinet: width=100, height=100, depth=5, DX=95, DY=250
+[19:26:33] ✅ Cabinet created successfully.

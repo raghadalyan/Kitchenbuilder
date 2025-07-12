@@ -1,6 +1,6 @@
-[7/10/2025 4:50:49 PM] 🟡 SaveKitchenInputAsync STARTED
-Count = 2, FloorWidth = 400, FloorLength = 350
+[7/10/2025 7:02:25 PM] 🟡 SaveKitchenInputAsync STARTED
+Count = 2, FloorWidth = 400, FloorLength = 300
 Wall 1: Width=400, Height=300, Windows=0, Doors=0
-Wall 2: Width=350, Height=300, Windows=0, Doors=0
+Wall 2: Width=300, Height=300, Windows=0, Doors=0
 ✅ Saved input.json at C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\input.json
 ✅ Called NavManager.NavigateTo

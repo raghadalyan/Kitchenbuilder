@@ -1,78 +1,268 @@
-﻿@page "/upper-cabinets/{option:int}"
-@using System.Text.Json
-@using System.IO
-@using Microsoft.AspNetCore.Components
-@inject NavigationManager NavManager
-@inject IJSRuntime JS
-@inject SolidWorksSessionService SwSession
+﻿@page "/upper-cabinets"
 @using Kitchenbuilder.Core
 @using Kitchenbuilder.Core.Models
+@inject SolidWorksSessionService SwSession
+@using Microsoft.AspNetCore.Components
 @using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
 
-<h3>Upper Cabinets Setup</h3>
+<div class="page-background">
+    <div class="upper-box">
+        <div class="station-header">
+            Upper Cabinets - Station @(currentIndex + 1)
+        </div>
 
-@if (stationCount == -1)
-{
-    <p>Loading station data...</p>
-}
-else
-{
-    <p>Total valid stations found: <strong>@stationCount</strong></p>
-}
+        <div class="button-group">
+            <button @onclick="AddCabinet">+ Add Cabinet</button>
+            <button @onclick="AddSpace">+ Add Space</button>
+        </div>
+
+        @if (showAddCabinetBox)
+        {
+            <div class="add-cabinet-box">
+                <label>
+                    <input type="checkbox" @bind="hasSequence" />
+                    Is part of a sequence?
+                </label>
+
+                @if (hasSequence)
+                {
+                    <div class="sequence-options">
+                        <label>Number of Cabinets (min 2):</label>
+                        <input type="number" min="2" @bind="sequenceCount" />
+
+                        <label>Sequence Direction:</label>
+                        <select @bind="sequenceDirection">
+                            <option value="Horizontal">Horizontal</option>
+                            <option value="Vertical">Vertical</option>
+                        </select>
+                    </div>
+                }
+
+                <div class="dimension-fields">
+                    <label>Width (cm):</label>
+                    <input type="number" min="5" @bind="width" />
+
+                    <label>Height (cm):</label>
+                    <input type="number" min="5" @bind="height" />
+
+                    <label>Depth (cm):</label>
+                    <input type="number" min="5" @bind="depth" />
+
+                    <label>Distance X (relative to floor):</label>
+                    <input type="number" @bind="distanceX" />
+
+                    <label>Distance Y (relative to floor, min 15):</label>
+                    <input type="number" min="15" @bind="distanceY" />
+                    <button @onclick="SaveCabinet">💾 Save Cabinet</button>
+
+                </div>
+                @if (!string.IsNullOrEmpty(resultMessage))
+                {
+                    <div class="status-message @(resultMessage.StartsWith("✅") ? "success" : "error")">
+                        @resultMessage
+                    </div>
+                }
+            </div>
+        }
+
+        @if (stations.Count == 0)
+        {
+            <p>Loading stations...</p>
+        }
+        else
+        {
+            <div class="nav-buttons">
+                <button @onclick="GoBack" disabled="@((currentIndex == 0))">⬅ Back</button>
+                <button @onclick="GoNext" disabled="@((currentIndex == stations.Count - 1))">Next ➡</button>
+            </div>
+        }
+    </div>
+</div>
+
 
 @code {
     [Parameter]
-    public int option { get; set; }
+    [SupplyParameterFromQuery(Name = "option")]
+    public string? SelectedOption { get; set; }
 
-    private int stationCount = -1;
+    private int OptionNum;
+    private List<UpperCabinetStation> stations = new();
+    private int currentIndex = 0;
+
+    private bool showAddCabinetBox = false;
+    private bool hasSequence = false;
+
+    private int sequenceCount = 2;
+    private string sequenceDirection = "Horizontal";
+
+    private double width = 5, height = 5, depth = 5;
+    private double distanceX = 0, distanceY = 15;
+    private string? resultMessage = null;
 
     protected override void OnInitialized()
     {
-        LoadStationCount();
+        OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
+        Log($"🔄 Page loaded with Option {OptionNum}");
+
+        string path = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+        stations = CalculateStationsUpperCabinets.GetStations(path);
+
+        Log($"📊 Stations loaded: {stations.Count}");
+
+        if (stations.Count > 0)
+            MoveCurrentStation();
     }
 
-    private void LoadStationCount()
+    private void GoBack()
+    {
+        if (currentIndex > 0)
+        {
+            currentIndex--;
+            MoveCurrentStation();
+        }
+    }
+
+    private void GoNext()
+    {
+        if (currentIndex < stations.Count - 1)
+        {
+            currentIndex++;
+            MoveCurrentStation();
+        }
+    }
+
+    private void MoveCurrentStation()
     {
         try
         {
-            string path = @$"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{option}SLD.json";
+            Log($"🧭 Navigating to station {currentIndex + 1} / Wall: {stations[currentIndex].WallName}");
 
-            if (!File.Exists(path))
+            // 1. Ensure SolidWorks is running
+            var app = SwSession.GetApp();
+            if (app == null)
             {
-                stationCount = 0;
-                return;
+                Log("🔧 SolidWorks app was null. Initializing...");
+                var swType = Type.GetTypeFromProgID("SldWorks.Application");
+                app = (ISldWorks)Activator.CreateInstance(swType)!;
+                app.Visible = true;
+                SwSession.SetApp(app);
             }
 
-            string json = File.ReadAllText(path);
-            using var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
-
-            int count = 0;
-
-            foreach (var wallKey in new[] { "Wall1", "Wall2", "Wall3", "Wall4" })
+            // 2. Ensure model is open and active
+            var model = SwSession.GetActiveModel();
+            if (model == null)
             {
-                if (!root.TryGetProperty(wallKey, out var wall)) continue;
-                if (wall.TryGetProperty("Exposed", out var exposed) && exposed.GetBoolean()) continue;
+                string filePath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option{OptionNum}.SLDPRT";
+                Log($"📂 Opening model file: {filePath}");
 
-                if (wall.TryGetProperty("Bases", out var bases))
+                int errs = 0, warns = 0;
+                model = (IModelDoc2)app.OpenDoc6(filePath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errs, ref warns);
+
+                if (model == null)
                 {
-                    foreach (var baseProp in bases.EnumerateObject())
-                    {
-                        if (baseProp.Value.TryGetProperty("Visible", out var visible) && visible.GetBoolean())
-                        {
-                            count++;
-                            break;
-                        }
-                    }
+                    Log("❌ Failed to open SolidWorks model.");
+                    throw new Exception("❌ Failed to open SolidWorks file.");
                 }
-            }
 
-            stationCount = count;
+                SwSession.SetActiveModel(model);
+                Log("✅ Model opened and set as active.");
+            }
+            showAddCabinetBox = !showAddCabinetBox;
+
+            // 3. Move to the station plane
+            string wallName = stations[currentIndex].WallName;
+            Move_Stations_Upper.MoveTo(app, model, wallName);
         }
         catch (Exception ex)
         {
-            stationCount = 0;
-            Console.WriteLine($"❌ Error: {ex.Message}");
+            Log($"❌ MoveCurrentStation failed: {ex.Message}");
         }
+    }
+    private void Log(string message)
+    {
+        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper";
+        string path = Path.Combine(folder, "upper_cabinets_ui_debug.txt");
+
+        try
+        {
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
+            // Write the log message
+            string line = $"[{DateTime.Now:HH:mm:ss}] {message}";
+            File.AppendAllText(path, line + System.Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Failed to write log: {ex.Message}");
+        }
+    }
+
+    private void AddCabinet()
+    {
+        showAddCabinetBox = !showAddCabinetBox;
+
+        if (showAddCabinetBox)
+        {
+            hasSequence = false;
+            sequenceCount = 2;
+            sequenceDirection = "Horizontal";
+            width = 55;
+            height = 70;
+            depth = 60;
+            distanceX = 0;
+            distanceY = 15;
+        }
+
+        Log("➕ Add Cabinet clicked.");
+    }
+
+    private void SaveCabinet()
+    {
+        Log($"💾 Saving cabinet: width={width}, height={height}, depth={depth}, DX={distanceX}, DY={distanceY}");
+
+        try
+        {
+            var station = stations[currentIndex];
+            int wallNum = int.Parse(station.WallName.Replace("Wall", ""));
+            station.WallNumber = wallNum;
+
+            var cabinet = new CabinetInfo
+                {
+                    Width = (int)width,
+                    Height = (int)height,
+                    Depth = (int)depth,
+                    HasDrawers = false,
+                    DistanceX = (int)distanceX,
+                    DistanceY = (int)distanceY,
+                    Drawers = null
+                };
+
+            resultMessage = ApplyUpperCabinet.Apply(OptionNum, cabinet, station);
+            Log(resultMessage);
+
+            // ✅ Only hide the box if successful
+            if (resultMessage.StartsWith("✅"))
+                showAddCabinetBox = false;
+            else
+                showAddCabinetBox = true; // Keep it open for correction
+        }
+        catch (Exception ex)
+        {
+            resultMessage = $"❌ SaveCabinet failed: {ex.Message}";
+            Log(resultMessage);
+            showAddCabinetBox = true; // Keep it open
+        }
+    }
+
+    private void AddSpace()
+    {
+        Log("➕ Add Space clicked.");
+        // your logic here
     }
 }

@@ -1,58 +1,40 @@
-17:01:37 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=60, Height=80, DistanceX=85
-17:01:49 - ✏️ Drawer 1: Width=76, DistanceY=2 @ Drawers1_1
-17:01:49 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:01:49 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:01:49 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:01:49 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:01:50 - ✅ All cabinet and drawer dimensions applied and model saved.
-17:04:56 - 🛠 Applying cabinet dims: Sketch_Cabinet1_2 => Width=55, Height=70, DistanceX=145
-17:05:05 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_2
-17:05:05 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:05:05 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:05:05 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:05:05 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:05:06 - 🛠 Applying cabinet dims: Sketch_Cabinet1_3 => Width=55, Height=70, DistanceX=200
-17:05:14 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_3
-17:05:14 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:05:14 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:05:14 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:05:14 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:05:16 - 🛠 Applying cabinet dims: Sketch_Cabinet1_4 => Width=55, Height=70, DistanceX=255
-17:05:24 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_4
-17:05:24 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:05:24 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:05:24 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:05:24 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:05:26 - ✅ All cabinet and drawer dimensions applied and model saved.
-17:07:16 - 🛠 Applying cabinet dims: Sketch_Cabinet2_1 => Width=60, Height=70, DistanceX=60
-17:07:27 - ✏️ Drawer 1: Width=20.666666666666668, DistanceY=47.333333333333336 @ Drawers2_1
-17:07:32 - ✏️ Drawer 2: Width=20.666666666666668, DistanceY=24.666666666666668 @ Drawers2_1
-17:07:37 - ✏️ Drawer 3: Width=20.666666666666668, DistanceY=2 @ Drawers2_1
-17:07:37 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:07:37 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:07:43 - 🛠 Applying cabinet dims: Sketch_Cabinet2_2 => Width=60, Height=70, DistanceX=120
-17:07:54 - ✏️ Drawer 1: Width=20.666666666666668, DistanceY=47.333333333333336 @ Drawers2_2
-17:07:58 - ✏️ Drawer 2: Width=20.666666666666668, DistanceY=24.666666666666668 @ Drawers2_2
-17:08:03 - ✏️ Drawer 3: Width=20.666666666666668, DistanceY=2 @ Drawers2_2
-17:08:03 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:08:03 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:08:04 - ✅ All cabinet and drawer dimensions applied and model saved.
-17:16:24 - 🛠 Applying cabinet dims: Sketch_Cabinet2_3 => Width=50, Height=70, DistanceX=180
-17:16:34 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_3
-17:16:34 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:16:34 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:16:34 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:16:34 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:16:36 - 🛠 Applying cabinet dims: Sketch_Cabinet2_4 => Width=50, Height=70, DistanceX=230
-17:16:46 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_4
-17:16:46 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:16:46 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:16:46 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:16:46 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:16:48 - 🛠 Applying cabinet dims: Sketch_Cabinet2_5 => Width=50, Height=70, DistanceX=280
-17:16:58 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_5
-17:16:58 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:16:58 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:16:58 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:16:58 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:16:59 - ✅ All cabinet and drawer dimensions applied and model saved.
+22:17:35 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=60, Height=200, DistanceX=85
+22:17:53 - ✏️ Drawer 1: Width=196, DistanceY=2 @ Drawers1_1
+22:17:53 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+22:17:53 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+22:17:53 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+22:17:53 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+22:17:55 - ✅ All cabinet and drawer dimensions applied and model saved.
+17:26:11 - 🛠 Applying cabinet dims: Sketch_Cabinet1_2 => Width=50, Height=66, DistanceX=145
+17:26:22 - ✏️ Drawer 1: Width=62, DistanceY=2 @ Drawers1_2
+17:26:22 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+17:26:22 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+17:26:22 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+17:26:22 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+17:26:23 - 🛠 Applying cabinet dims: Sketch_Cabinet1_3 => Width=50, Height=66, DistanceX=195
+17:26:33 - ✏️ Drawer 1: Width=62, DistanceY=2 @ Drawers1_3
+17:26:33 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+17:26:33 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+17:26:33 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+17:26:33 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+17:26:34 - ✅ All cabinet and drawer dimensions applied and model saved.
+17:26:45 - 🛠 Applying cabinet dims: Sketch_Cabinet1_4 => Width=55, Height=70, DistanceX=245
+17:26:54 - ✏️ Drawer 1: Width=15, DistanceY=53 @ Drawers1_4
+17:26:58 - ✏️ Drawer 2: Width=15, DistanceY=36 @ Drawers1_4
+17:27:02 - ✏️ Drawer 3: Width=15, DistanceY=19 @ Drawers1_4
+17:27:07 - ✏️ Drawer 4: Width=15, DistanceY=2 @ Drawers1_4
+17:27:07 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+17:27:08 - ✅ All cabinet and drawer dimensions applied and model saved.
+17:27:16 - 🛠 Applying cabinet dims: Sketch_Cabinet1_5 => Width=50, Height=70, DistanceX=300
+17:27:24 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_5
+17:27:24 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+17:27:24 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+17:27:24 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+17:27:24 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+17:27:26 - 🛠 Applying cabinet dims: Sketch_Cabinet1_6 => Width=50, Height=70, DistanceX=350
+17:27:40 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_6
+17:27:40 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+17:27:40 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+17:27:40 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+17:27:40 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+17:27:41 - ✅ All cabinet and drawer dimensions applied and model saved.

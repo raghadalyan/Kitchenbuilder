@@ -1,0 +1,19 @@
+[01:07:53] ✅ Cabinet saved to Wall1 as Sketch_Cabinet1_2
+[12:50:03] ✅ Cabinet saved to Wall1 as Sketch_Cabinet1_3
+[12:50:36] ✅ Cabinet saved to Wall1 as Sketch_Cabinet1_2
+[12:51:23] ✅ Cabinet saved to Wall1 as Sketch_Cabinet1_1
+[12:51:56] ✅ Cabinet saved to Wall1 as Sketch_Cabinet1_2
+[13:47:04] ❌ Cabinet size too small. Width: -1, Depth: 3, Height: 2. Each must be ≥ 5.
+[13:50:27] ❌ Cabinet size too small. Width: 0, Depth: 5, Height: 5. Each must be ≥ 5.
+[13:50:44] ✅ Cabinet created successfully.
+[21:54:20] ❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.
+[21:54:42] ❌ Cabinet size too small. Width: -1, Depth: 60, Height: 60. Each must be ≥ 5.
+[21:55:08] ❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.
+[17:29:12] ❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.
+[17:30:09] ❌ Overlaps with cabinet in stations (Sketch: Sketch_Cabinet1_1)
+[17:30:26] ❌ Overlaps with cabinet in stations (Sketch: Sketch_Cabinet1_1)
+[17:30:41] ✅ Cabinet created successfully.
+[19:25:46] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:22] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:28] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_7)
+[19:26:33] ✅ Cabinet created successfully.
