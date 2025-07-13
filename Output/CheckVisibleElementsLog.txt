@@ -1,0 +1,24 @@
+[2025-07-13 22:45:18] 👁️ Requesting to show fridge body: Extrude_fridge_base1[1]
+[2025-07-13 22:45:19] 👁️ Requesting to show fridge body: Extrude_fridge_base1[2]
+[2025-07-13 22:45:20] 👁️ Requesting to show fridge body: <Fridge1>-<Extrude-Thin1>
+[2025-07-13 22:45:20] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[1]>
+[2025-07-13 22:45:21] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude3>
+[2025-07-13 22:45:22] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[2]>
+[2025-07-13 22:45:22] 👁️ Requesting to show: Extrude_1_2
+[2025-07-13 22:46:06] 👁️ Requesting to show fridge body: Extrude_fridge_base1[1]
+[2025-07-13 22:46:08] 👁️ Requesting to show fridge body: Extrude_fridge_base1[2]
+[2025-07-13 22:46:08] 👁️ Requesting to show fridge body: <Fridge1>-<Extrude-Thin1>
+[2025-07-13 22:46:09] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[1]>
+[2025-07-13 22:46:10] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude3>
+[2025-07-13 22:46:10] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[2]>
+[2025-07-13 22:46:11] 👁️ Requesting to show: Extrude_1_2
+[2025-07-13 22:46:12] 👁️ Requesting to show: Extrude_2_1
+[2025-07-13 22:47:10] 👁️ Requesting to show fridge body: Extrude_fridge_base1[1]
+[2025-07-13 22:47:12] 👁️ Requesting to show fridge body: Extrude_fridge_base1[2]
+[2025-07-13 22:47:12] 👁️ Requesting to show fridge body: <Fridge1>-<Extrude-Thin1>
+[2025-07-13 22:47:13] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[1]>
+[2025-07-13 22:47:14] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude3>
+[2025-07-13 22:47:14] 👁️ Requesting to show fridge body: <Fridge1>-<Cut-Extrude2[2]>
+[2025-07-13 22:47:15] 👁️ Requesting to show: Extrude_1_2
+[2025-07-13 22:47:16] 👁️ Requesting to show: Extrude_2_1
+[2025-07-13 22:47:16] 👁️ Requesting to show: Extrude_3_1

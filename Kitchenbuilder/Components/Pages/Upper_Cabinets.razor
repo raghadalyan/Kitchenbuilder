@@ -77,6 +77,44 @@
                 }
             </div>
         }
+        @if (showAddSpaceBox)
+        {
+                <h4 style="color: #5a3e1b;">Add Space</h4>
+
+            <div class="add-space-box">
+                <label>Space Type:</label>
+                <select @bind="space.Type">
+                    <option>Microwave</option>
+                    <option>Oven</option>
+                    <option>DishWasher</option>
+                    <option>Range Hood</option>
+                    <option>Other</option>
+                </select>
+
+                <label>Width (cm):</label>
+                <input type="number" min="5" @bind="space.Width" />
+
+                <label>Height (cm):</label>
+                <input type="number" min="5" @bind="space.Height" />
+
+
+                <label>Distance X (relative to floor):</label>
+                <input type="number" @bind="space.DistanceX" />
+
+                <label>Distance Y (relative to floor):</label>
+                <input type="number" min="15" @bind="space.DistanceY" />
+
+                <button @onclick="SaveSpace">💾 Save Space</button>
+
+                @if (!string.IsNullOrEmpty(spaceResultMessage))
+                {
+                    <div class="status-message @(spaceResultMessage.StartsWith("✅") ? "success" : "error")">
+                        @spaceResultMessage
+                    </div>
+                }
+            </div>
+        }
+
 
         @if (stations.Count == 0)
         {
@@ -113,6 +151,11 @@
     private string? resultMessage = null;
     private bool hasDrawers = false;
     private int drawerCount = 2;
+
+
+    private bool showAddSpaceBox = false;
+    private Space space = new(); // default: Microwave, 60x60x60, 0,15
+    private string? spaceResultMessage = null;
 
     protected override void OnInitialized()
     {
@@ -223,6 +266,7 @@
 
         if (showAddCabinetBox)
         {
+            showAddSpaceBox = false; // 🔁 Hide space box
             hasSequence = false;
             sequenceCount = 2;
             sequenceDirection = "Horizontal";
@@ -237,6 +281,7 @@
 
         Log("➕ Add Cabinet clicked.");
     }
+
 
     private void SaveCabinet()
     {
@@ -302,7 +347,54 @@
 
     private void AddSpace()
     {
+        showAddSpaceBox = !showAddSpaceBox;
+
+        if (showAddSpaceBox)
+        {
+            showAddCabinetBox = false; // 🔁 Hide cabinet box
+            space = new Space(); // reset to defaults
+        }
+
         Log("➕ Add Space clicked.");
-        // your logic here
     }
+    private void SaveSpace()
+    {
+        Log($"💾 Saving space: {space.Type}, width={space.Width}, height={space.Height}, DX={space.DistanceX}, DY={space.DistanceY}");
+
+        try
+        {
+            var station = stations[currentIndex];
+            station.WallNumber = int.Parse(station.WallName.Replace("Wall", ""));
+
+            // 🛠️ Set missing properties
+            space.WallNum = station.WallNumber;
+            if (string.IsNullOrEmpty(space.Type))
+                space.Type = "Other";
+
+            var model = SwSession.GetActiveModel();
+            spaceResultMessage = ApplySpace.Apply(
+                model,
+                OptionNum,
+                space,
+                station
+            );
+
+            Log(spaceResultMessage);
+
+            if (spaceResultMessage.StartsWith("✅"))
+            {
+                showAddSpaceBox = false;
+                space = new Space(); // reset
+            }
+        }
+        catch (Exception ex)
+        {
+            spaceResultMessage = $"❌ SaveSpace failed: {ex.Message}";
+            Log(spaceResultMessage);
+            showAddSpaceBox = true;
+        }
+    }
+
+
+
 }

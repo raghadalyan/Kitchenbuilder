@@ -94,16 +94,17 @@ namespace Kitchenbuilder.Core
                 if (File.Exists(upperPath))
                 {
                     Log($"📄 Checking upper cabinet overlaps from: {upperPath}");
-                    var wallDict = JsonSerializer.Deserialize<Dictionary<string, List<CabinetInfo>>>(File.ReadAllText(upperPath));
-                    if (wallDict != null && wallDict.TryGetValue(wallKey, out var upperList))
+                    var wallDict = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(File.ReadAllText(upperPath));
+                    if (wallDict != null && wallDict.TryGetValue(wallKey, out var wrapper) && wrapper.Cabinets != null)
                     {
-                        foreach (var existing in upperList)
+                        foreach (var existing in wrapper.Cabinets)
                         {
                             Log($"↔ Compare with upper cabinet {existing.SketchName} at (X={existing.DistanceX}, Y={existing.DistanceY})");
                             if (IsXOverlap(cabinet, existing) && IsYOverlap(cabinet, existing))
                                 return $"❌ Overlaps with cabinet in UpperCabinets.json (Sketch: {existing.SketchName})";
                         }
                     }
+
                 }
 
                 Log("✅ Position is legal.");

@@ -1,19 +1,71 @@
-[15:40:01] 🔄 Page loaded with Option 2
-[15:40:01] 📊 Stations loaded: 2
-[15:40:01] 🧭 Navigating to station 1 / Wall: Wall1
-[15:40:04] 🧭 Navigating to station 2 / Wall: Wall2
-[15:40:07] ➕ Add Cabinet clicked.
-[15:42:50] 💾 Saving cabinet: width=145, height=45, depth=60, DX=0, DY=255
-[15:43:23] ✅ 2 cabinet(s) created and applied successfully.
-[15:45:32] 🧭 Navigating to station 1 / Wall: Wall1
-[15:46:19] 💾 Saving cabinet: width=170, height=45, depth=60, DX=0, DY=255
-[15:46:42] ✅ 1 cabinet(s) created and applied successfully.
-[15:46:49] ➕ Add Cabinet clicked.
-[15:47:06] 💾 Saving cabinet: width=170, height=45, depth=60, DX=170, DY=255
-[15:47:29] ✅ 1 cabinet(s) created and applied successfully.
-[15:48:29] 🧭 Navigating to station 2 / Wall: Wall2
-[15:51:25] 💾 Saving cabinet: width=60, height=165, depth=60, DX=0, DY=90
-[15:51:47] ✅ 1 cabinet(s) created and applied successfully.
-[15:52:17] ➕ Add Cabinet clicked.
-[15:53:35] 💾 Saving cabinet: width=46, height=55, depth=60, DX=60, DY=200
-[15:55:20] ✅ 5 cabinet(s) created and applied successfully.
+[22:53:13] 🔄 Page loaded with Option 2
+[22:53:13] 📊 Stations loaded: 2
+[22:53:13] 🧭 Navigating to station 1 / Wall: Wall1
+[22:56:43] 💾 Saving cabinet: width=54, height=118, depth=60, DX=0, DY=182
+[22:57:21] ✅ 1 cabinet(s) created and applied successfully.
+[23:00:01] ➕ Add Space clicked.
+[23:00:37] ➕ Add Cabinet clicked.
+[23:01:40] 💾 Saving cabinet: width=60, height=140, depth=60, DX=85, DY=160
+[23:02:21] ✅ 1 cabinet(s) created and applied successfully.
+[23:09:24] ➕ Add Cabinet clicked.
+[23:09:29] ➕ Add Space clicked.
+[23:09:30] ➕ Add Cabinet clicked.
+[23:09:31] ➕ Add Space clicked.
+[23:09:32] ➕ Add Cabinet clicked.
+[23:09:42] ➕ Add Space clicked.
+[23:09:46] ➕ Add Space clicked.
+[23:09:49] ➕ Add Cabinet clicked.
+[23:11:28] ➕ Add Cabinet clicked.
+[23:20:55] 🔄 Page loaded with Option 2
+[23:20:55] 📊 Stations loaded: 2
+[23:20:55] 🧭 Navigating to station 1 / Wall: Wall1
+[23:21:00] ➕ Add Space clicked.
+[23:21:03] ➕ Add Space clicked.
+[23:21:05] ➕ Add Space clicked.
+[23:21:06] ➕ Add Cabinet clicked.
+[23:21:08] ➕ Add Cabinet clicked.
+[23:21:13] ➕ Add Cabinet clicked.
+[23:21:15] ➕ Add Cabinet clicked.
+[23:21:15] ➕ Add Cabinet clicked.
+[23:21:20] ➕ Add Cabinet clicked.
+[23:21:26] ➕ Add Space clicked.
+[23:21:29] ➕ Add Space clicked.
+[23:23:58] 🔄 Page loaded with Option 2
+[23:23:58] 📊 Stations loaded: 2
+[23:23:58] 🧭 Navigating to station 1 / Wall: Wall1
+[23:24:07] ➕ Add Space clicked.
+[23:24:08] ➕ Add Cabinet clicked.
+[23:24:09] ➕ Add Space clicked.
+[23:24:11] ➕ Add Cabinet clicked.
+[23:24:14] ➕ Add Space clicked.
+[01:45:16] 🔄 Page loaded with Option 2
+[01:45:16] 📊 Stations loaded: 2
+[01:45:16] 🧭 Navigating to station 1 / Wall: Wall1
+[01:45:54] 💾 Saving cabinet: width=85, height=118, depth=60, DX=0, DY=182
+[01:46:19] ✅ 1 cabinet(s) created and applied successfully.
+[01:46:53] ➕ Add Cabinet clicked.
+[01:47:12] 💾 Saving cabinet: width=60, height=150, depth=60, DX=85, DY=150
+[01:47:12] ❌ Error in Apply: The JSON value could not be converted to System.Collections.Generic.List`1[Kitchenbuilder.Core.CabinetInfo]. Path: $.Wall1 | LineNumber: 1 | BytePositionInLine: 12.
+[01:52:18] 🔄 Page loaded with Option 2
+[01:52:18] 📊 Stations loaded: 2
+[01:52:18] 🧭 Navigating to station 1 / Wall: Wall1
+[01:52:49] 💾 Saving cabinet: width=60, height=150, depth=60, DX=85, DY=150
+[01:53:13] ✅ 1 cabinet(s) created and applied successfully.
+[02:04:54] 🔄 Page loaded with Option 2
+[02:04:54] 📊 Stations loaded: 2
+[02:04:54] 🧭 Navigating to station 1 / Wall: Wall1
+[02:05:03] ➕ Add Space clicked.
+[02:05:34] 💾 Saving space: , width=60, height=60, DX=85, DY=90
+[02:05:34] ✅ Space saved to wall Wall1.
+[02:06:21] 🔄 Page loaded with Option 2
+[02:06:21] 📊 Stations loaded: 2
+[02:06:21] 🧭 Navigating to station 1 / Wall: Wall1
+[02:06:27] ➕ Add Space clicked.
+[02:06:47] 💾 Saving space: , width=60, height=60, DX=85, DY=90
+[02:06:47] ✅ Space saved to wall Wall1.
+[02:09:12] 🔄 Page loaded with Option 2
+[02:09:12] 📊 Stations loaded: 2
+[02:09:12] 🧭 Navigating to station 1 / Wall: Wall1
+[02:09:16] ➕ Add Space clicked.
+[02:09:25] 💾 Saving space: Microwave, width=60, height=60, DX=85, DY=90
+[02:09:25] ✅ Space saved to wall Wall1.

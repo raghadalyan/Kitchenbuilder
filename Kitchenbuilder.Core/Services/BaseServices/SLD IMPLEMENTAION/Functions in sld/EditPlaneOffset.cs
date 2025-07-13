@@ -5,61 +5,56 @@ using System.IO;
 
 namespace Kitchenbuilder.Core
 {
-    public static class EditPlaneOffset
+    public static class CreatePlaneWithInsertRef
     {
-        private static readonly string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\EditPlaneDebug.txt";
+        private static readonly string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\CreatePlaneDebug.txt";
 
         private static void Log(string message)
         {
             File.AppendAllText(debugPath, $"{DateTime.Now:HH:mm:ss} - {message}{System.Environment.NewLine}");
         }
 
-        public static void UpdatePlaneOffset(ISldWorks swApp, string planeName, double newOffset)
+        public static void CreateOffsetPlane(ISldWorks swApp)
         {
             try
             {
-                var model = (ModelDoc2)swApp.ActiveDoc;
-                if (model == null)
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                if (swModel == null)
                 {
                     Log("❌ No document open.");
                     return;
                 }
 
-                var ext = model.Extension;
-
-                // Select the plane by name
-                bool selected = ext.SelectByID2(planeName, "PLANE", 0, 0, 0, false, 0, null, 0);
+                // Select the Top Plane
+                bool selected = swModel.Extension.SelectByID2("Top Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
                 if (!selected)
                 {
-                    Log($"❌ Could not select plane '{planeName}'.");
+                    Log("❌ Could not select Top Plane.");
                     return;
                 }
 
-                var selMgr = (SelectionMgr)model.SelectionManager;
-                var feat = selMgr.GetSelectedObject6(1, -1) as Feature;
-                if (feat == null)
+                IFeatureManager swFeatMgr = swModel.FeatureManager;
+
+                RefPlane newPlane = (RefPlane)swFeatMgr.InsertRefPlane(
+                    (int)swRefPlaneReferenceConstraints_e.swRefPlaneReferenceConstraint_Distance,
+                    0.5,    // 60 cm offset
+                    0,      // Flip direction
+                    0, 0, 0
+                );
+
+                if (newPlane != null)
                 {
-                    Log("❌ Could not get feature from selection.");
-                    return;
+                    Feature feat = (Feature)newPlane;
+                    feat.Name = "Plane_Microwave";
+                    Log("✅ Plane created successfully. Name set to 'Plane_Microwave'");
                 }
-
-                var def = feat.GetDefinition() as RefPlaneFeatureData;
-                if (def == null)
+                else
                 {
-                    Log("❌ Could not get RefPlaneFeatureData.");
-                    return;
+                    Log("❌ Failed to create offset plane.");
                 }
 
-                // Set new distance
-                def.Distance = newOffset;
-
-                // Re-apply the definition
-                bool modified = feat.ModifyDefinition(def, model, null);
-                Log(modified
-                    ? $"✅ Offset of plane '{planeName}' updated to {newOffset}m (90cm)."
-                    : $"❌ Failed to update the plane.");
-
-                model.ClearSelection2(true);
+                swModel.ClearSelection2(true);
             }
             catch (Exception ex)
             {

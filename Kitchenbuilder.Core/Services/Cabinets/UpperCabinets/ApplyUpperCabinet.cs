@@ -42,12 +42,12 @@ namespace Kitchenbuilder.Core
                 if (File.Exists(SavePath))
                 {
                     string json = File.ReadAllText(SavePath);
-                    var wallCabinets = JsonSerializer.Deserialize<Dictionary<string, List<CabinetInfo>>>(json);
+                    var wallCabinets = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json);
                     string wallKey = $"Wall{station.WallNumber}";
-
-                    if (wallCabinets != null && wallCabinets.ContainsKey(wallKey))
-                        foreach (var c in wallCabinets[wallKey])
+                    if (wallCabinets != null && wallCabinets.TryGetValue(wallKey, out var wrapper) && wrapper.Cabinets != null)
+                        foreach (var c in wrapper.Cabinets)
                             ExtractSketchNumber(c.SketchName, station.WallNumber, usedSketchNums);
+
                 }
 
                 // 2. Generate all cabinets with calculated positions
@@ -114,14 +114,14 @@ namespace Kitchenbuilder.Core
                     usedSketchNums.Add(cabinetNum);
                     newCabinets.Add(cabinet);
                 }
+                string wallKeyFinal = $"Wall{station.WallNumber}";
 
-                // 3. Save if all legal
-                Dictionary<string, List<CabinetInfo>> upperCabinets;
+                Dictionary<string, WallCabinetWrapper> upperCabinets;
 
                 if (File.Exists(SavePath))
                 {
                     string json = File.ReadAllText(SavePath);
-                    upperCabinets = JsonSerializer.Deserialize<Dictionary<string, List<CabinetInfo>>>(json)
+                    upperCabinets = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json)
                                     ?? new();
                 }
                 else
@@ -129,13 +129,15 @@ namespace Kitchenbuilder.Core
                     upperCabinets = new();
                 }
 
-                string wallKeyFinal = $"Wall{station.WallNumber}";
                 if (!upperCabinets.ContainsKey(wallKeyFinal))
-                    upperCabinets[wallKeyFinal] = new();
+                    upperCabinets[wallKeyFinal] = new WallCabinetWrapper();
 
-                upperCabinets[wallKeyFinal].AddRange(newCabinets);
+                upperCabinets[wallKeyFinal].Cabinets.AddRange(newCabinets);
 
+
+               
                 File.WriteAllText(SavePath, JsonSerializer.Serialize(upperCabinets, new JsonSerializerOptions { WriteIndented = true }));
+                
                 // 4. Apply dimensions in SolidWorks
                 var tempStation = new StationInfo
                 {
@@ -167,6 +169,10 @@ namespace Kitchenbuilder.Core
                     used.Add(num);
             }
         }
+
+
+
+
 
         private static void Log(string msg)
         {

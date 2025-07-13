@@ -1,18 +1,10 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
 @inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
 @using SolidWorks.Interop.sldworks
-@using Kitchenbuilder.Core
-
-<h3>Welcome to the Kitchen Builder</h3>
-
-@if (!string.IsNullOrEmpty(status))
-{
-    <p>@status</p>
-}
+@using SolidWorks.Interop.swconst
 
 @code {
-    string status = "Initializing...";
-
     protected override async Task OnInitializedAsync()
     {
         try
@@ -22,28 +14,37 @@
             var swApp = (ISldWorks)Activator.CreateInstance(swType)!;
             swApp.Visible = true;
 
-            SwSession.SetApp(swApp);
+            SwSession.SetApp(swApp); // Save instance
 
-            // 2. Open the Wall2 part
-            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall2.SLDPRT";
+            // 2. Open the SLDPRT file
+            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT";
             int errs = 0, warns = 0;
-
-            var model = (IModelDoc2)swApp.OpenDoc6(path, 1, 1, "", ref errs, ref warns)!;
-
-            if (model != null)
+            if (!File.Exists(path))
             {
-                status = "✅ SolidWorks connected and part opened!";
+                Console.WriteLine($"❌ File not found: {path}");
+                return;
+            }
 
-                EditPlaneOffset.UpdatePlaneOffset(swApp, "Plane_Microwave", 1.2); // 90 cm
-            }
-            else
+            var model = (IModelDoc2)swApp.OpenDoc6(path,
+                (int)swDocumentTypes_e.swDocPART,
+                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                "", ref errs, ref warns);
+
+            if (model == null)
             {
-                status = "❌ Failed to open the part.";
+                Console.WriteLine("❌ SolidWorks failed to open the model.");
+                return;
             }
+
+            SwSession.SetActiveModel(model);
+
+
+            // 4. Navigate to Island page
+            NavManager.NavigateTo("/sink-cooktop-options?option=2");
         }
         catch (Exception ex)
         {
-            status = $"❌ Error: {ex.Message}";
+            Console.WriteLine($"❌ Error: {ex.Message}");
         }
     }
 }
