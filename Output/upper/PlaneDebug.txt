@@ -1,0 +1,8 @@
+17:26:19 - --- Editing plane: Plane_Microwave, New Distance: 120 cm ---
+17:26:20 - ℹ️ Current distance: 60 cm
+17:26:20 - ℹ️ Type2: 11, Type: 5
+17:26:20 - ❌ Not a constraint-based distance plane.
+17:31:08 - --- Editing plane: Plane_Microwave, New Distance: 120 cm ---
+17:31:09 - ℹ️ Current distance: 60 cm
+17:31:09 - ℹ️ Type2: 11, Type: 5
+17:31:09 - ❌ Not a constraint-based distance plane.

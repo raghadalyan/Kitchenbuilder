@@ -48,6 +48,18 @@ namespace Kitchenbuilder.Core
                         EditSketchDim_IModel.SetDimension(model, distXDim, cabinet.DistanceX);
                         EditSketchDim_IModel.SetDimension(model, distYDim, cabinet.DistanceY);
                         Log($"📐 DistanceY={cabinet.DistanceY} applied to {cabinet.SketchName}");
+                        // ✅ APPLY DEPTH (Extrude)
+                        if (!string.IsNullOrEmpty(cabinet.ExtrudeName))
+                        {
+                            bool result = EditExtrusionDim_IModel.EditExtrude(model, cabinet.ExtrudeName, cabinet.Depth);
+                            Log(result
+                                ? $"✅ Depth {cabinet.Depth} applied to {cabinet.ExtrudeName}"
+                                : $"❌ Failed to apply depth to {cabinet.ExtrudeName}");
+                        }
+                        else
+                        {
+                            Log($"⚠️ Missing ExtrudeName for cabinet {cabinet.SketchName}");
+                        }
                         // Apply drawer dimensions (only non-zero)
                         if (cabinet.Drawers != null)
                         {
@@ -80,6 +92,7 @@ namespace Kitchenbuilder.Core
                                 }
                             }
                         }
+
                     }
                 }
 

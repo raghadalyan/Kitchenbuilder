@@ -1,4 +1,8 @@
-[21:17:33] ➡ Attempting to move to: Plane_Wall_1
-[21:17:34] ✅ Successfully set Normal To: Plane_Wall_1
-[21:44:03] ➡ Attempting to move to: Plane_Wall_1
-[21:44:04] ✅ Successfully set Normal To: Plane_Wall_1
+[15:40:01] ➡ Attempting to move to: Plane_Wall_1
+[15:40:02] ✅ Successfully set Normal To: Plane_Wall_1
+[15:40:04] ➡ Attempting to move to: Plane_Wall_2
+[15:40:05] ✅ Successfully set Normal To: Plane_Wall_2
+[15:45:32] ➡ Attempting to move to: Plane_Wall_1
+[15:45:33] ✅ Successfully set Normal To: Plane_Wall_1
+[15:48:29] ➡ Attempting to move to: Plane_Wall_2
+[15:48:30] ✅ Successfully set Normal To: Plane_Wall_2

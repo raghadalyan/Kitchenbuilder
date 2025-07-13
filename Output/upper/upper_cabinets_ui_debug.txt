@@ -1,10 +1,19 @@
-[21:17:33] 🔄 Page loaded with Option 2
-[21:17:33] 📊 Stations loaded: 2
-[21:17:33] 🧭 Navigating to station 1 / Wall: Wall1
-[21:18:17] 💾 Saving cabinet: width=50, height=20, depth=60, DX=0, DY=280
-[21:20:01] ✅ 8 cabinet(s) created and applied successfully.
-[21:44:03] 🔄 Page loaded with Option 2
-[21:44:03] 📊 Stations loaded: 2
-[21:44:03] 🧭 Navigating to station 1 / Wall: Wall1
-[21:44:28] 💾 Saving cabinet: width=80, height=30, depth=60, DX=0, DY=270
-[21:44:56] ✅ 1 cabinet(s) created and applied successfully.
+[15:40:01] 🔄 Page loaded with Option 2
+[15:40:01] 📊 Stations loaded: 2
+[15:40:01] 🧭 Navigating to station 1 / Wall: Wall1
+[15:40:04] 🧭 Navigating to station 2 / Wall: Wall2
+[15:40:07] ➕ Add Cabinet clicked.
+[15:42:50] 💾 Saving cabinet: width=145, height=45, depth=60, DX=0, DY=255
+[15:43:23] ✅ 2 cabinet(s) created and applied successfully.
+[15:45:32] 🧭 Navigating to station 1 / Wall: Wall1
+[15:46:19] 💾 Saving cabinet: width=170, height=45, depth=60, DX=0, DY=255
+[15:46:42] ✅ 1 cabinet(s) created and applied successfully.
+[15:46:49] ➕ Add Cabinet clicked.
+[15:47:06] 💾 Saving cabinet: width=170, height=45, depth=60, DX=170, DY=255
+[15:47:29] ✅ 1 cabinet(s) created and applied successfully.
+[15:48:29] 🧭 Navigating to station 2 / Wall: Wall2
+[15:51:25] 💾 Saving cabinet: width=60, height=165, depth=60, DX=0, DY=90
+[15:51:47] ✅ 1 cabinet(s) created and applied successfully.
+[15:52:17] ➕ Add Cabinet clicked.
+[15:53:35] 💾 Saving cabinet: width=46, height=55, depth=60, DX=60, DY=200
+[15:55:20] ✅ 5 cabinet(s) created and applied successfully.

@@ -55,6 +55,18 @@
                     <label>Distance Y (relative to floor, min 15):</label>
                     <input type="number" min="15" @bind="distanceY" />
                     <button @onclick="SaveCabinet">💾 Save Cabinet</button>
+                    <label>
+                        <input type="checkbox" @bind="hasDrawers" /> Has Drawers
+                    </label>
+
+                    @if (hasDrawers)
+                    {
+                        <label>
+                            Number of Drawers:
+                            <input type="number" min="1" @bind="drawerCount" />
+                        </label>
+                    }
+
 
                 </div>
                 @if (!string.IsNullOrEmpty(resultMessage))
@@ -99,7 +111,8 @@
     private double width = 5, height = 5, depth = 5;
     private double distanceX = 0, distanceY = 15;
     private string? resultMessage = null;
-
+    private bool hasDrawers = false;
+    private int drawerCount = 2;
 
     protected override void OnInitialized()
     {
@@ -218,6 +231,8 @@
             depth = 60;
             distanceX = 0;
             distanceY = 15;
+            hasDrawers = false;
+            drawerCount = 2;
         }
 
         Log("➕ Add Cabinet clicked.");
@@ -238,19 +253,42 @@
                     Width = (int)width,
                     Height = (int)height,
                     Depth = (int)depth,
-                    HasDrawers = false,
+                    HasDrawers = hasDrawers,
                     DistanceX = (int)distanceX,
                     DistanceY = (int)distanceY,
                     Drawers = null
                 };
             var model = SwSession.GetActiveModel();
-            resultMessage = ApplyUpperCabinet.Apply(model, OptionNum, cabinet, station, hasSequence ? sequenceCount : 1, hasSequence ? sequenceDirection : "Horizontal");
+            resultMessage = ApplyUpperCabinet.Apply(
+                model,
+                OptionNum,
+                cabinet,
+                station,
+                hasSequence ? sequenceCount : 1,
+                hasSequence ? sequenceDirection : "Horizontal",
+                drawerCount
+            );
 
             Log(resultMessage);
 
             // ✅ Only hide the box if successful
             if (resultMessage.StartsWith("✅"))
+            {
                 showAddCabinetBox = false;
+
+                // Reset inputs to default
+                width = 55;
+                height = 70;
+                depth = 60;
+                distanceX = 0;
+                distanceY = 15;
+                hasDrawers = false;
+                drawerCount = 2;
+                hasSequence = false;
+                sequenceCount = 2;
+                sequenceDirection = "Horizontal";
+            }
+
             else
                 showAddCabinetBox = true; // Keep it open for correction
         }
