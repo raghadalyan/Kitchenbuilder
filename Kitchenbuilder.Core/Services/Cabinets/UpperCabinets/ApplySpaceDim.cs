@@ -32,7 +32,7 @@ namespace Kitchenbuilder.Core
                     Log("🧱 Wall 1 detected:");
                     Log($"  ↪ angle = 180°, DX = 30 cm, DY = {dy} cm, Plane offset = {space.DistanceY} cm");
 
-                    EditSketchDim_IModel.SetDimension(model, $"angle@Sketch_Rotate_{type}", 180);
+                    EditSketchDim_IModel.SetDimension(model, $"angle@Sketch_Rotate_{type}", 179.999);
                     EditSketchDim_IModel.SetDimension(model, $"DX@Sketch_Move_{type}", 30);
                     EditSketchDim_IModel.SetDimension(model, $"DY@Sketch_Move_{type}", dy - (space.Width / 2));
                     EditPlaneOffset.SetOffset(model, $"Plane_{space.Type}", space.DistanceY);

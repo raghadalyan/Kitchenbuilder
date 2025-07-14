@@ -1,16 +1,11 @@
-[03:13:32] 🔍 Processing hidden walls for: Option1.json
-[03:13:32] ✅ Usable walls: 1
-[03:13:32] ➕ Adding hidden wall 2
-[03:13:32] ➕ Adding hidden wall 3
-[03:13:32] ➕ Adding hidden wall 4
-[03:13:32] ✅ Output updated: Option1SLD.json
-[03:13:32] 🔍 Processing hidden walls for: Option2.json
-[03:13:32] ✅ Usable walls: 1, 2
-[03:13:32] ➕ Adding hidden wall 3
-[03:13:32] ➕ Adding hidden wall 4
-[03:13:32] ✅ Output updated: Option2SLD.json
-[03:13:32] 🔍 Processing hidden walls for: Option3.json
-[03:13:32] 🔎 Exposed wall 3 marked as usable
-[03:13:32] ✅ Usable walls: 1, 2, 3
-[03:13:32] ➕ Adding hidden wall 4
-[03:13:32] ✅ Output updated: Option3SLD.json
+[20:39:05] 🔍 Processing hidden walls for: Option1.json
+[20:39:05] ✅ Usable walls: 1
+[20:39:05] ➕ Adding hidden wall 2
+[20:39:05] ➕ Adding hidden wall 3
+[20:39:05] ➕ Adding hidden wall 4
+[20:39:05] ✅ Output updated: Option1SLD.json
+[20:39:05] 🔍 Processing hidden walls for: Option2.json
+[20:39:05] ✅ Usable walls: 1, 2
+[20:39:05] ➕ Adding hidden wall 3
+[20:39:05] ➕ Adding hidden wall 4
+[20:39:05] ✅ Output updated: Option2SLD.json
