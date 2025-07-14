@@ -42,6 +42,9 @@
     <Reference Include="SolidWorks.Interop.swconst">
       <HintPath>..\..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
     </Reference>
+    <Reference Include="SolidWorks.Interop.swpublished">
+      <HintPath>..\..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist\SolidWorks.Interop.swpublished.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

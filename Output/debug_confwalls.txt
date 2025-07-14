@@ -1,5 +1,6 @@
 🟢 Started /confwalls with Count=2, Width=400, Length=350
 🟢 SolidWorks launched and stored in session
-✅ Finished building walls
-✅ Model opened successfully
-🟢 Material options initialized for 3 items
+❌ Exception: The server threw an exception. (0x80010105 (RPC_E_SERVERFAULT))
+   at SolidWorks.Interop.sldworks.ISldWorks.CloseDoc(String Name)
+   at Kitchenbuilder.Core.WallBuilders.TwoWallBuilder.Run(Kitchen kitchen)
+   at Kitchenbuilder.Components.Pages.Confwalls.<OnInitializedAsync>b__19_0()

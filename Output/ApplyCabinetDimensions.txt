@@ -1,60 +1,9 @@
-13:44:28 - 🛠 Applying dimensions to Sketch_Cabinet1_1: Width=60, DistanceX=85
-13:44:33 - ✅ All cabinet dimensions applied and model saved.
-13:45:13 - 🛠 Applying dimensions to Sketch_Cabinet1_2: Width=50, DistanceX=145
-13:45:20 - 🛠 Applying dimensions to Sketch_Cabinet1_3: Width=50, DistanceX=195
-13:45:26 - 🛠 Applying dimensions to Sketch_Cabinet1_4: Width=50, DistanceX=245
-13:45:32 - 🛠 Applying dimensions to Sketch_Cabinet1_5: Width=50, DistanceX=295
-13:45:39 - 🛠 Applying dimensions to Sketch_Cabinet1_6: Width=50, DistanceX=345
-13:45:44 - ✅ All cabinet dimensions applied and model saved.
-13:45:53 - 🛠 Applying dimensions to Sketch_Cabinet1_2: Width=50, DistanceX=145
-13:45:58 - 🛠 Applying dimensions to Sketch_Cabinet1_3: Width=50, DistanceX=195
-13:46:02 - 🛠 Applying dimensions to Sketch_Cabinet1_4: Width=50, DistanceX=245
-13:46:06 - 🛠 Applying dimensions to Sketch_Cabinet1_5: Width=50, DistanceX=295
-13:46:10 - 🛠 Applying dimensions to Sketch_Cabinet1_6: Width=50, DistanceX=345
-13:46:15 - 🛠 Applying dimensions to Sketch_Cabinet1_7: Width=5, DistanceX=395
-13:46:20 - ✅ All cabinet dimensions applied and model saved.
-13:47:15 - 🛠 Applying dimensions to Sketch_Cabinet2_1: Width=50, DistanceX=60
-13:47:22 - 🛠 Applying dimensions to Sketch_Cabinet2_2: Width=50, DistanceX=110
-13:47:28 - 🛠 Applying dimensions to Sketch_Cabinet2_3: Width=50, DistanceX=160
-13:47:35 - 🛠 Applying dimensions to Sketch_Cabinet2_4: Width=50, DistanceX=210
-13:47:40 - 🛠 Applying dimensions to Sketch_Cabinet2_5: Width=50, DistanceX=260
-13:47:44 - ✅ All cabinet dimensions applied and model saved.
-13:47:56 - 🛠 Applying dimensions to Sketch_Cabinet2_1: Width=50, DistanceX=60
-13:48:00 - 🛠 Applying dimensions to Sketch_Cabinet2_2: Width=50, DistanceX=110
-13:48:04 - 🛠 Applying dimensions to Sketch_Cabinet2_3: Width=50, DistanceX=160
-13:48:09 - 🛠 Applying dimensions to Sketch_Cabinet2_4: Width=50, DistanceX=210
-13:48:14 - 🛠 Applying dimensions to Sketch_Cabinet2_5: Width=50, DistanceX=260
-13:48:20 - 🛠 Applying dimensions to Sketch_Cabinet2_6: Width=40, DistanceX=310
-13:48:25 - ✅ All cabinet dimensions applied and model saved.
-13:48:52 - 🛠 Applying dimensions to Sketch_Cabinet3_1: Width=40, DistanceX=60
-13:48:58 - 🛠 Applying dimensions to Sketch_Cabinet3_2: Width=40, DistanceX=100
-13:49:04 - 🛠 Applying dimensions to Sketch_Cabinet3_3: Width=40, DistanceX=140
-13:49:08 - ✅ All cabinet dimensions applied and model saved.
-20:58:07 - 🛠 Applying dimensions to Sketch_Cabinet1_1: Width=30, DistanceX=85
-20:58:12 - ✅ All cabinet dimensions applied and model saved.
-20:58:26 - 🛠 Applying dimensions to Sketch_Cabinet1_1: Width=30, DistanceX=85
-20:58:33 - 🛠 Applying dimensions to Sketch_Cabinet1_2: Width=30, DistanceX=115
-20:58:37 - ✅ All cabinet dimensions applied and model saved.
-21:37:05 - 🛠 Applying dimensions to Sketch_Cabinet1_1: Width=60, DistanceX=85
-21:37:10 - ✅ All cabinet dimensions applied and model saved.
-21:37:50 - 🛠 Applying dimensions to Sketch_Cabinet1_2: Width=40, DistanceX=145
-21:37:55 - 🛠 Applying dimensions to Sketch_Cabinet1_3: Width=40, DistanceX=185
-21:38:00 - 🛠 Applying dimensions to Sketch_Cabinet1_4: Width=40, DistanceX=225
-21:38:04 - 🛠 Applying dimensions to Sketch_Cabinet1_5: Width=40, DistanceX=265
-21:38:08 - 🛠 Applying dimensions to Sketch_Cabinet1_6: Width=40, DistanceX=305
-21:38:13 - 🛠 Applying dimensions to Sketch_Cabinet1_7: Width=40, DistanceX=345
-21:38:17 - ✅ All cabinet dimensions applied and model saved.
-21:38:29 - 🛠 Applying dimensions to Sketch_Cabinet1_8: Width=15, DistanceX=385
-21:38:33 - ✅ All cabinet dimensions applied and model saved.
-21:39:08 - 🛠 Applying dimensions to Sketch_Cabinet2_1: Width=40, DistanceX=60
-21:39:12 - 🛠 Applying dimensions to Sketch_Cabinet2_2: Width=40, DistanceX=100
-21:39:16 - 🛠 Applying dimensions to Sketch_Cabinet2_3: Width=40, DistanceX=140
-21:39:21 - 🛠 Applying dimensions to Sketch_Cabinet2_4: Width=40, DistanceX=180
-21:39:25 - 🛠 Applying dimensions to Sketch_Cabinet2_5: Width=40, DistanceX=220
-21:39:29 - 🛠 Applying dimensions to Sketch_Cabinet2_6: Width=40, DistanceX=260
-21:39:34 - 🛠 Applying dimensions to Sketch_Cabinet2_7: Width=40, DistanceX=300
-21:39:37 - ✅ All cabinet dimensions applied and model saved.
-21:39:45 - 🛠 Applying dimensions to Sketch_Cabinet2_8: Width=10, DistanceX=340
-21:39:49 - ✅ All cabinet dimensions applied and model saved.
-21:40:12 - 🛠 Applying dimensions to Sketch_Cabinet3_1: Width=120, DistanceX=60
-21:40:16 - ✅ All cabinet dimensions applied and model saved.
+03:17:44 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=60, Height=75, DistanceX=85
+03:17:55 - 📐 DistanceY=15 applied to Sketch_Cabinet1_1
+03:17:55 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_1
+03:18:00 - ✏️ Drawer 1: Width=71, DistanceY=2 @ Drawers1_1
+03:18:00 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+03:18:00 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+03:18:00 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+03:18:00 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+03:18:02 - ✅ All cabinet and drawer dimensions applied and model saved.

@@ -4,6 +4,7 @@ using System.IO;
 using SolidWorks.Interop.sldworks;
 using System.Runtime.InteropServices;
 using SolidWorks.Interop.swconst;
+using Kitchenbuilder.Core.Models;
 
 namespace Kitchenbuilder.Core
 {
@@ -48,9 +49,17 @@ namespace Kitchenbuilder.Core
             return canAdd;
         }
 
-        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int copiesCount, IModelDoc2 swModel)
+        public static void AddCabinet(string jsonPath, int stationIndex, int width, bool hasDrawers, int height, int drawerCount, int copiesCount, IModelDoc2 swModel)
         {
             WriteDebug($"[AddCabinet] Path: {jsonPath}, StationIndex: {stationIndex}, Width: {width}, Height: {height}, HasDrawers: {hasDrawers}, Copies: {copiesCount}");
+            if (!hasDrawers)
+            {
+                drawerCount = 1;
+            }
+            else
+            {
+                drawerCount = Math.Clamp(drawerCount, 2, 5);
+            }
 
             if (width < 5)
             {
@@ -93,7 +102,6 @@ namespace Kitchenbuilder.Core
             for (int i = 0; i < copiesCount; i++)
             {
                 int cabinetNum = existingCount + i + 1;
-
                 var cabinet = new CabinetInfo
                 {
                     SketchName = $"Sketch_Cabinet{wall}_{cabinetNum}",
@@ -101,8 +109,24 @@ namespace Kitchenbuilder.Core
                     HasDrawers = hasDrawers,
                     Height = height,
                     DistanceX = currentX,
-                    DistanceY = 70
+                    DistanceY = 15
                 };
+
+                // Create the Drawers object and compute dimensions
+                var drawers = new Drawers($"Drawers{wall}_{cabinetNum}");
+
+                double availableHeight = height - 4 - (drawerCount > 1 ? 2 * (drawerCount - 1) : 0);
+                double drawerHeight = drawerCount > 0 ? availableHeight / drawerCount : 0;
+
+                for (int d = 1; d <= drawerCount; d++)
+                {
+                    double dy = 2 + (drawerHeight + 2) * (drawerCount - d);
+
+                    typeof(Drawers).GetProperty($"Width{d}")?.SetValue(drawers, drawerHeight);
+                    typeof(Drawers).GetProperty($"DistanceY{d}")?.SetValue(drawers, dy);
+                }
+                cabinet.Drawers = drawers;
+
 
                 WriteDebug($"➕ Adding cabinet #{cabinetNum}: {cabinet.SketchName}, Width: {width}, Height: {height}, DistanceX: {currentX}");
 

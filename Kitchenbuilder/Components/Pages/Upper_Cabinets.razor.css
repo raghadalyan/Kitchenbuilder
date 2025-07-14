@@ -1,0 +1,173 @@
+.page-background {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upper-box {
+    background-color: #fdf7f1;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.station-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #5a3e1b;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+    .button-group button {
+        background-color: #9c5c26;
+        color: white;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+        .button-group button:hover {
+            background-color: #b46e36;
+        }
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .nav-buttons button {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        background-color: #d6c2b2;
+        color: #3f2c14;
+    }
+
+        .nav-buttons button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+.page-background {
+    background-image: url('/Images/wood.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upper-box {
+    background-color: #fffaf3;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.station-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4e2e1a;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .button-group button {
+        padding: 0.75rem 1.25rem;
+        background-color: #a25f30;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.add-cabinet-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fff3e6;
+    border: 2px dashed #b46e36;
+    border-radius: 10px;
+}
+
+    .add-cabinet-box label {
+        font-weight: bold;
+        color: #5a3e1b;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    .add-cabinet-box input,
+    .add-cabinet-box select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+.status-message.success {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.status-message.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.add-space-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fff3e6;
+    border: 2px dashed #b46e36;
+    border-radius: 10px;
+}
+
+    .add-space-box label {
+        font-weight: bold;
+        color: #5a3e1b;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    .add-space-box input,
+    .add-space-box select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }

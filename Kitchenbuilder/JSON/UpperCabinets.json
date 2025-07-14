@@ -1,0 +1,44 @@
+{
+  "Wall1": {
+    "Cabinets": [],
+    "Spaces": [
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 85,
+        "DistanceY": 90,
+        "WallNum": 1
+      },
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 85,
+        "DistanceY": 90,
+        "WallNum": 1
+      }
+    ]
+  },
+  "Wall2": {
+    "Cabinets": [],
+    "Spaces": [
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 290,
+        "DistanceY": 90,
+        "WallNum": 2
+      },
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 290,
+        "DistanceY": 90,
+        "WallNum": 2
+      }
+    ]
+  }
+}

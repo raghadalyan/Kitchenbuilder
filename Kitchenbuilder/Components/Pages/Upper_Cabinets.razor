@@ -1,0 +1,400 @@
+﻿@page "/upper-cabinets"
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@inject SolidWorksSessionService SwSession
+@using Microsoft.AspNetCore.Components
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+
+<div class="page-background">
+    <div class="upper-box">
+        <div class="station-header">
+            Upper Cabinets - Station @(currentIndex + 1)
+        </div>
+
+        <div class="button-group">
+            <button @onclick="AddCabinet">+ Add Cabinet</button>
+            <button @onclick="AddSpace">+ Add Space</button>
+        </div>
+
+        @if (showAddCabinetBox)
+        {
+            <div class="add-cabinet-box">
+                <label>
+                    <input type="checkbox" @bind="hasSequence" />
+                    Is part of a sequence?
+                </label>
+
+                @if (hasSequence)
+                {
+                    <div class="sequence-options">
+                        <label>Number of Cabinets (min 2):</label>
+                        <input type="number" min="2" @bind="sequenceCount" />
+
+                        <label>Sequence Direction:</label>
+                        <select @bind="sequenceDirection">
+                            <option value="Horizontal">Horizontal</option>
+                            <option value="Vertical">Vertical</option>
+                        </select>
+                    </div>
+                }
+
+                <div class="dimension-fields">
+                    <label>Width (cm):</label>
+                    <input type="number" min="5" @bind="width" />
+
+                    <label>Height (cm):</label>
+                    <input type="number" min="5" @bind="height" />
+
+                    <label>Depth (cm):</label>
+                    <input type="number" min="5" @bind="depth" />
+
+                    <label>Distance X (relative to floor):</label>
+                    <input type="number" @bind="distanceX" />
+
+                    <label>Distance Y (relative to floor, min 15):</label>
+                    <input type="number" min="15" @bind="distanceY" />
+                    <button @onclick="SaveCabinet">💾 Save Cabinet</button>
+                    <label>
+                        <input type="checkbox" @bind="hasDrawers" /> Has Drawers
+                    </label>
+
+                    @if (hasDrawers)
+                    {
+                        <label>
+                            Number of Drawers:
+                            <input type="number" min="1" @bind="drawerCount" />
+                        </label>
+                    }
+
+
+                </div>
+                @if (!string.IsNullOrEmpty(resultMessage))
+                {
+                    <div class="status-message @(resultMessage.StartsWith("✅") ? "success" : "error")">
+                        @resultMessage
+                    </div>
+                }
+            </div>
+        }
+        @if (showAddSpaceBox)
+        {
+                <h4 style="color: #5a3e1b;">Add Space</h4>
+
+            <div class="add-space-box">
+                <label>Space Type:</label>
+                <select @bind="space.Type">
+                    <option>Microwave</option>
+                    <option>Oven</option>
+                    <option>DishWasher</option>
+                    <option>Range Hood</option>
+                    <option>Other</option>
+                </select>
+
+                <label>Width (cm):</label>
+                <input type="number" min="5" @bind="space.Width" />
+
+                <label>Height (cm):</label>
+                <input type="number" min="5" @bind="space.Height" />
+
+
+                <label>Distance X (relative to floor):</label>
+                <input type="number" @bind="space.DistanceX" />
+
+                <label>Distance Y (relative to floor):</label>
+                <input type="number" min="15" @bind="space.DistanceY" />
+
+                <button @onclick="SaveSpace">💾 Save Space</button>
+
+                @if (!string.IsNullOrEmpty(spaceResultMessage))
+                {
+                    <div class="status-message @(spaceResultMessage.StartsWith("✅") ? "success" : "error")">
+                        @spaceResultMessage
+                    </div>
+                }
+            </div>
+        }
+
+
+        @if (stations.Count == 0)
+        {
+            <p>Loading stations...</p>
+        }
+        else
+        {
+            <div class="nav-buttons">
+                <button @onclick="GoBack" disabled="@((currentIndex == 0))">⬅ Back</button>
+                <button @onclick="GoNext" disabled="@((currentIndex == stations.Count - 1))">Next ➡</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "option")]
+    public string? SelectedOption { get; set; }
+
+    private int OptionNum;
+    private List<UpperCabinetStation> stations = new();
+    private int currentIndex = 0;
+
+    private bool showAddCabinetBox = false;
+    private bool hasSequence = false;
+
+    private int sequenceCount = 2;
+    private string sequenceDirection = "Horizontal";
+
+    private double width = 5, height = 5, depth = 5;
+    private double distanceX = 0, distanceY = 15;
+    private string? resultMessage = null;
+    private bool hasDrawers = false;
+    private int drawerCount = 2;
+
+
+    private bool showAddSpaceBox = false;
+    private Space space = new(); // default: Microwave, 60x60x60, 0,15
+    private string? spaceResultMessage = null;
+
+    protected override void OnInitialized()
+    {
+        OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
+        Log($"🔄 Page loaded with Option {OptionNum}");
+
+        string path = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+        stations = CalculateStationsUpperCabinets.GetStations(path);
+
+        Log($"📊 Stations loaded: {stations.Count}");
+
+        if (stations.Count > 0)
+            MoveCurrentStation();
+    }
+
+    private void GoBack()
+    {
+        if (currentIndex > 0)
+        {
+            currentIndex--;
+            MoveCurrentStation();
+        }
+    }
+
+    private void GoNext()
+    {
+        if (currentIndex < stations.Count - 1)
+        {
+            currentIndex++;
+            MoveCurrentStation();
+        }
+    }
+
+    private void MoveCurrentStation()
+    {
+        try
+        {
+            Log($"🧭 Navigating to station {currentIndex + 1} / Wall: {stations[currentIndex].WallName}");
+
+            // 1. Ensure SolidWorks is running
+            var app = SwSession.GetApp();
+            if (app == null)
+            {
+                Log("🔧 SolidWorks app was null. Initializing...");
+                var swType = Type.GetTypeFromProgID("SldWorks.Application");
+                app = (ISldWorks)Activator.CreateInstance(swType)!;
+                app.Visible = true;
+                SwSession.SetApp(app);
+            }
+
+            // 2. Ensure model is open and active
+            var model = SwSession.GetActiveModel();
+            if (model == null)
+            {
+                string filePath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option{OptionNum}.SLDPRT";
+                Log($"📂 Opening model file: {filePath}");
+
+                int errs = 0, warns = 0;
+                model = (IModelDoc2)app.OpenDoc6(filePath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errs, ref warns);
+
+                if (model == null)
+                {
+                    Log("❌ Failed to open SolidWorks model.");
+                    throw new Exception("❌ Failed to open SolidWorks file.");
+                }
+
+                SwSession.SetActiveModel(model);
+                Log("✅ Model opened and set as active.");
+            }
+            showAddCabinetBox = !showAddCabinetBox;
+
+            // 3. Move to the station plane
+            string wallName = stations[currentIndex].WallName;
+            Move_Stations_Upper.MoveTo(app, model, wallName);
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ MoveCurrentStation failed: {ex.Message}");
+        }
+    }
+    private void Log(string message)
+    {
+        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper";
+        string path = Path.Combine(folder, "upper_cabinets_ui_debug.txt");
+
+        try
+        {
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
+            // Write the log message
+            string line = $"[{DateTime.Now:HH:mm:ss}] {message}";
+            File.AppendAllText(path, line + System.Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Failed to write log: {ex.Message}");
+        }
+    }
+
+    private void AddCabinet()
+    {
+        showAddCabinetBox = !showAddCabinetBox;
+
+        if (showAddCabinetBox)
+        {
+            showAddSpaceBox = false; // 🔁 Hide space box
+            hasSequence = false;
+            sequenceCount = 2;
+            sequenceDirection = "Horizontal";
+            width = 55;
+            height = 70;
+            depth = 60;
+            distanceX = 0;
+            distanceY = 15;
+            hasDrawers = false;
+            drawerCount = 2;
+        }
+
+        Log("➕ Add Cabinet clicked.");
+    }
+
+
+    private void SaveCabinet()
+    {
+        Log($"💾 Saving cabinet: width={width}, height={height}, depth={depth}, DX={distanceX}, DY={distanceY}");
+
+        try
+        {
+            var station = stations[currentIndex];
+            int wallNum = int.Parse(station.WallName.Replace("Wall", ""));
+            station.WallNumber = wallNum;
+
+            var cabinet = new CabinetInfo
+                {
+                    Width = (int)width,
+                    Height = (int)height,
+                    Depth = (int)depth,
+                    HasDrawers = hasDrawers,
+                    DistanceX = (int)distanceX,
+                    DistanceY = (int)distanceY,
+                    Drawers = null
+                };
+            var model = SwSession.GetActiveModel();
+            resultMessage = ApplyUpperCabinet.Apply(
+                model,
+                OptionNum,
+                cabinet,
+                station,
+                hasSequence ? sequenceCount : 1,
+                hasSequence ? sequenceDirection : "Horizontal",
+                drawerCount
+            );
+
+            Log(resultMessage);
+
+            // ✅ Only hide the box if successful
+            if (resultMessage.StartsWith("✅"))
+            {
+                showAddCabinetBox = false;
+
+                // Reset inputs to default
+                width = 55;
+                height = 70;
+                depth = 60;
+                distanceX = 0;
+                distanceY = 15;
+                hasDrawers = false;
+                drawerCount = 2;
+                hasSequence = false;
+                sequenceCount = 2;
+                sequenceDirection = "Horizontal";
+            }
+
+            else
+                showAddCabinetBox = true; // Keep it open for correction
+        }
+        catch (Exception ex)
+        {
+            resultMessage = $"❌ SaveCabinet failed: {ex.Message}";
+            Log(resultMessage);
+            showAddCabinetBox = true; // Keep it open
+        }
+    }
+
+    private void AddSpace()
+    {
+        showAddSpaceBox = !showAddSpaceBox;
+
+        if (showAddSpaceBox)
+        {
+            showAddCabinetBox = false; // 🔁 Hide cabinet box
+            space = new Space(); // reset to defaults
+        }
+
+        Log("➕ Add Space clicked.");
+    }
+    private void SaveSpace()
+    {
+        Log($"💾 Saving space: {space.Type}, width={space.Width}, height={space.Height}, DX={space.DistanceX}, DY={space.DistanceY}");
+
+        try
+        {
+            var station = stations[currentIndex];
+            station.WallNumber = int.Parse(station.WallName.Replace("Wall", ""));
+
+            // 🛠️ Set missing properties
+            space.WallNum = station.WallNumber;
+            if (string.IsNullOrEmpty(space.Type))
+                space.Type = "Other";
+
+            var model = SwSession.GetActiveModel();
+            spaceResultMessage = ApplySpace.Apply(
+                model,
+                OptionNum,
+                space,
+                station
+            );
+
+            Log(spaceResultMessage);
+
+            if (spaceResultMessage.StartsWith("✅"))
+            {
+                showAddSpaceBox = false;
+                space = new Space(); // reset
+            }
+        }
+        catch (Exception ex)
+        {
+            spaceResultMessage = $"❌ SaveSpace failed: {ex.Message}";
+            Log(spaceResultMessage);
+            showAddSpaceBox = true;
+        }
+    }
+
+
+
+}

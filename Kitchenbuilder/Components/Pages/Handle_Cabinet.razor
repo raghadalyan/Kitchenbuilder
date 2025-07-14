@@ -120,6 +120,9 @@
             </div>
             <p>@GetFillPercentage(stations[currentIndex])% filled</p>
         </div>
+                <div class="nav-buttons">
+                    <button class="continue-btn" @onclick="GoToUpperCabinet">Continue to Upper Cabinets</button>
+                </div>
 
     }
         else
@@ -296,8 +299,17 @@
             return;
         }
 
-        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, height, copies, swModel);
+        ApplyCabinet.AddCabinet(jsonPath, currentIndex, width, hasDrawers, height, drawerCount, copies, swModel);
+
         errorMessage = "";
+
+        // Reset state to default after successful apply
+        width = 1;
+        height = 70; // <-- reset to your preferred default
+        hasDrawers = false;
+        drawerCount = 2;
+        isSequence = false;
+        copiesCount = 2;
 
         if (File.Exists(jsonPath))
         {
@@ -305,6 +317,7 @@
             stations = JsonSerializer.Deserialize<List<StationInfo>>(updatedJson) ?? new();
         }
     }
+
 
 
     int GetFillPercentage(StationInfo station)
@@ -325,4 +338,12 @@
     File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
 
 }
+    [Inject]
+    private NavigationManager NavManager { get; set; }
+
+    void GoToUpperCabinet()
+    {
+        NavManager.NavigateTo($"/upper-cabinets?option={OptionNum}");
+    }
+
 }

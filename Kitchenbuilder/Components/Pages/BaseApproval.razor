@@ -6,10 +6,10 @@
 @using Kitchenbuilder.Core
 @using Kitchenbuilder.Core.Models
 @using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
 @using System.Text.Json
 @using System.IO
 @using Microsoft.AspNetCore.Components
-
 
 <link href="css/base.css" rel="stylesheet" />
 
@@ -26,15 +26,155 @@
         else
         {
             <p>✅ You can now review the selected base in SolidWorks.</p>
+
+            <div>
+                <input type="checkbox" @bind="askForMaterial" id="askForMaterial" />
+                <label for="askForMaterial">Do you want to assign materials to base sketches?</label>
+            </div>
+
+            @if (askForMaterial && baseMaterialOptions.Count > 0)
+            {
+                <div class="material-selection-list">
+                    <h3>Material Selection</h3>
+                    <div class="material-single-box">
+                        <label>Type:</label>
+                        <select @bind="globalMaterial.Type">
+                            <option value="">-- Select Type --</option>
+                            <option>Woods</option>
+                            <option>Color</option>
+                            <option>Stone</option>
+                            <option>Metal</option>
+                        </select>
+
+                        @if (globalMaterial.Type == "Woods" && !IsSaved)
+                        {
+                            <div class="wood-grid">
+                                @foreach (var wood in woodMaterials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="woodSelection" value="@wood.Name" @onchange="() => globalMaterial.Material = wood.Name" checked="@(globalMaterial.Material == wood.Name)" />
+                                            @wood.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        @if (globalMaterial.Type == "Color")
+                        {
+                            <div class="color-picker">
+                                <label>Select Color:</label>
+                                <input type="color" @onchange="e => globalMaterial.Material = e.Value.ToString()" />
+                                <p>Selected: @globalMaterial.Material</p>
+                            </div>
+                        }
+
+                        @if (IsSaved)
+                        {
+                            <p><strong>Selected Material:</strong> @globalMaterial.Material</p>
+                        }
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="save-button" @onclick="SaveMaterialSelection" disabled="@IsSaved">Save</button>
+                        <button class="edit-button" @onclick="EditMaterialSelection" disabled="@(IsSaved == false)">Edit</button>
+                    </div>
+                </div>
+            }
+
             <button class="continue-button" @onclick="ContinueToCountertop">Continue</button>
         }
     </div>
 </div>
 
+<style>
+    .wood-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .wood-item {
+        width: 100px;
+        text-align: center;
+    }
+
+    .wood-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .material-single-box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        max-width: 500px;
+        margin-top: 1rem;
+    }
+
+    .save-button, .edit-button {
+        padding: 0.5rem 1rem;
+        margin-right: 0.5rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .edit-button {
+        background-color: #2196F3;
+    }
+</style>
+
 @code {
     [Parameter][SupplyParameterFromQuery(Name = "selected")] public string? selectedOption { get; set; }
 
     private bool isLoading = true;
+    private bool askForMaterial = false;
+
+    class BaseMaterialOption
+    {
+        public string SketchName { get; set; } = "";
+        public string Material { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public string Type { get; set; } = "";
+        public bool Saved { get; set; } = false;
+    }
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    class MaterialChoice
+    {
+        public string Type { get; set; } = "";
+        public string Material { get; set; } = "";
+    }
+
+    private bool IsSaved => baseMaterialOptions.All(b => b.Saved);
+
+    private List<BaseMaterialOption> baseMaterialOptions = new();
+    private MaterialChoice globalMaterial = new();
+
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
 
     protected override async Task OnInitializedAsync()
     {
@@ -61,7 +201,6 @@
                     return;
                 }
 
-                // ✅ أطلق SolidWorks إذا لم يكن مفعلاً
                 if (SwSession.GetActiveModel() == null)
                 {
                     var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
@@ -89,16 +228,87 @@
                 }
 
                 File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
+
+
+
+                string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\{selectedOption}SLD.json";
+                if (File.Exists(jsonPath))
+                {
+                    string jsonContent = File.ReadAllText(jsonPath);
+                    using JsonDocument doc = JsonDocument.Parse(jsonContent);
+
+                    foreach (JsonProperty wall in doc.RootElement.EnumerateObject())
+                    {
+                        if (wall.Value.TryGetProperty("Bases", out JsonElement bases))
+                        {
+                            foreach (JsonProperty baseItem in bases.EnumerateObject())
+                            {
+                                var baseInfo = baseItem.Value;
+
+                                if (baseInfo.TryGetProperty("Visible", out JsonElement visibleElement) &&
+                                    visibleElement.GetBoolean() &&
+                                    baseInfo.TryGetProperty("ExtrudeName", out JsonElement extrudeElement))
+                                {
+                                    string extrudeName = extrudeElement.GetString();
+                                    baseMaterialOptions.Add(new BaseMaterialOption
+                                        {
+                                            SketchName = extrudeName,
+                                            Material = ""
+                                        });
+                                }
+                            }
+                        }
+                    }
+
+                    File.AppendAllText(debugPath, $"✅ Extracted {baseMaterialOptions.Count} visible base bodies from JSON\n");
+                }
+                else
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON file not found: {jsonPath}\n");
+                }
             }
             catch (Exception ex)
             {
-                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_baseapproval.txt",
+                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Outputdebug_baseapproval.txt",
                     $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
             }
         });
 
         isLoading = false;
         await InvokeAsync(StateHasChanged);
+    }
+
+    private void SaveMaterialSelection()
+    {
+        var swApp = SwSession.GetApp();
+
+        foreach (var item in baseMaterialOptions)
+        {
+            item.Material = globalMaterial.Material;
+            item.Type = globalMaterial.Type;
+            item.Apply = true;
+            item.Saved = true;
+
+            // ✅ لا ترسل البوديز التي تحتوي على "fridge"
+            if (!item.SketchName.ToLower().Contains("fridge"))
+            {
+                EditMaterial.ApplyMaterialToBody(swApp, item.SketchName, item.Material, item.Type);
+            }
+        }
+    }
+
+
+    private void EditMaterialSelection()
+    {
+        foreach (var item in baseMaterialOptions)
+        {
+            item.Apply = false;
+            item.Saved = false;
+            item.Material = "";
+            item.Type = "";
+        }
+
+        StateHasChanged();
     }
 
     private void ContinueToCountertop()

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Kitchenbuilder.Core.Models;
+using System.Text.Json.Serialization;
 
 namespace Kitchenbuilder.Core
 {
@@ -20,12 +21,16 @@ namespace Kitchenbuilder.Core
     public class CabinetInfo
     {
         public string SketchName { get; set; }
-        public int Height { get; set; } = 66;
-
+        public int Height { get; set; } = 70;
+        public int Depth { get; set; } = 60;
         public int Width { get; set; }
        
         public bool HasDrawers { get; set; }
         public int DistanceX { get; set; }  // Start of cabinet along the station
-        public int DistanceY { get; set; } = 70;  // Always 70
+        public int DistanceY { get; set; } = 15;  // Always 
+        public string ExtrudeName { get; set; } = "";  // Add this line
+
+        public Drawers? Drawers { get; set; }
+
     }
 }
