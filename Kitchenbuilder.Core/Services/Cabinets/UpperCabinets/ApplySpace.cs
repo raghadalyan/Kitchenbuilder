@@ -16,12 +16,17 @@ namespace Kitchenbuilder.Core
         {
             try
             {
-                // Validation
+                // Simple dimension validation
                 if (newSpace.Width < 60 || newSpace.Height < 60)
                     return LogAndReturn("❌ Width and Height must be ≥ 60 cm");
 
                 if (newSpace.DistanceX < 0 || newSpace.DistanceY < 0)
                     return LogAndReturn("❌ DistanceX and DistanceY cannot be negative");
+
+                // ✅ Check legality using validator
+                string validationMessage = SpacePositionValidator.CheckDownPosition(optionNum, station.WallNumber, newSpace);
+                if (!validationMessage.StartsWith("✅"))
+                    return LogAndReturn(validationMessage);
 
                 string wallKey = $"Wall{station.WallNumber}";
                 Dictionary<string, WallCabinetWrapper> upperData;
@@ -43,6 +48,9 @@ namespace Kitchenbuilder.Core
                 upperData[wallKey].Spaces.Add(newSpace);
 
                 File.WriteAllText(SavePath, JsonSerializer.Serialize(upperData, new JsonSerializerOptions { WriteIndented = true }));
+                double floorLength = GetFloorLength(optionNum);
+                double floorWidth = GetFloorWidth(optionNum);
+                ApplySpaceDim.Apply(model, newSpace, station.WallNumber, floorLength, floorWidth);
 
                 return LogAndReturn($"✅ Space saved to wall {wallKey}.");
             }
@@ -50,6 +58,44 @@ namespace Kitchenbuilder.Core
             {
                 return LogAndReturn($"❌ Exception in ApplySpace: {ex.Message}");
             }
+
+        }
+        private static double GetFloorWidth(int optionNum)
+        {
+            string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNum}SLD.json";
+
+            if (!File.Exists(jsonPath))
+                return 0;
+
+            string json = File.ReadAllText(jsonPath);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("Floor", out var floorElement) &&
+                floorElement.TryGetProperty("Width", out var widthElement) &&
+                widthElement.TryGetProperty("Size", out var sizeElement))
+            {
+                return sizeElement.GetDouble();
+            }
+
+            return 0;
+        }
+
+        private static double GetFloorLength(int optionNum)
+        {
+            string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNum}SLD.json";
+
+            if (!File.Exists(jsonPath))
+                return 0;
+
+            string json = File.ReadAllText(jsonPath);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("Floor", out var floorElement) &&
+                floorElement.TryGetProperty("Length", out var lengthElement) &&
+                lengthElement.TryGetProperty("Size", out var sizeElement))
+            {
+                return sizeElement.GetDouble();
+            }
+
+            return 0;
         }
 
         private static string LogAndReturn(string message)

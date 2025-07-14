@@ -1,0 +1,16 @@
+[03:29:05] 📦 Applying space type: Microwave on wall 1 (FloorLength: 350)
+[03:29:05] ➡️ Resetting D1 and D2 to 0...
+[03:29:10] 🧱 Wall 1 detected:
+[03:29:10]   ↪ angle = 180°, DX = 30 cm, DY = 85 cm, Plane offset = 90 cm
+[03:37:01] 📦 Applying space type: Microwave on wall 2 (FloorLength: 350, FloorWidth: 400)
+[03:37:01] ➡️ Resetting D1 and D2 to 0...
+[03:37:05] 🧱 Wall 2 detected:
+[03:37:05]   ↪ angle = 90°, DX = 290 cm, DY = 30 cm, Plane offset = 90 cm
+[03:41:27] 📦 Applying space type: Microwave on wall 1 (FloorLength: 350, FloorWidth: 400)
+[03:41:27] ➡️ Resetting D1 and D2 to 0...
+[03:41:31] 🧱 Wall 1 detected:
+[03:41:31]   ↪ angle = 180°, DX = 30 cm, DY = 315 cm, Plane offset = 90 cm
+[03:42:11] 📦 Applying space type: Microwave on wall 2 (FloorLength: 350, FloorWidth: 400)
+[03:42:11] ➡️ Resetting D1 and D2 to 0...
+[03:42:15] 🧱 Wall 2 detected:
+[03:42:15]   ↪ angle = 90°, DX = 290 cm, DY = 30 cm, Plane offset = 90 cm

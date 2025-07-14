@@ -1,5 +1,0 @@
-[22:57:21] ✅ 1 cabinet(s) created and applied successfully.
-[23:02:21] ✅ 1 cabinet(s) created and applied successfully.
-[01:46:19] ✅ 1 cabinet(s) created and applied successfully.
-[01:47:12] ❌ Error in Apply: The JSON value could not be converted to System.Collections.Generic.List`1[Kitchenbuilder.Core.CabinetInfo]. Path: $.Wall1 | LineNumber: 1 | BytePositionInLine: 12.
-[01:53:13] ✅ 1 cabinet(s) created and applied successfully.

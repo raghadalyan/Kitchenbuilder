@@ -5,56 +5,59 @@ using System.IO;
 
 namespace Kitchenbuilder.Core
 {
-    public static class CreatePlaneWithInsertRef
+    public static class EditPlaneOffset
     {
-        private static readonly string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\CreatePlaneDebug.txt";
+        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\EditPlaneOffsetDebug.txt";
 
-        private static void Log(string message)
+        private static void Log(string msg)
         {
-            File.AppendAllText(debugPath, $"{DateTime.Now:HH:mm:ss} - {message}{System.Environment.NewLine}");
+            File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
         }
 
-        public static void CreateOffsetPlane(ISldWorks swApp)
+        public static void SetOffset(IModelDoc2 model, string planeName, double offsetCm)
         {
             try
             {
-                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+                Log($"📐 Editing offset of plane '{planeName}' to {offsetCm} cm");
 
-                if (swModel == null)
+                PartDoc part = model as PartDoc;
+                if (part == null)
                 {
-                    Log("❌ No document open.");
+                    Log("❌ Model is not a PartDoc.");
                     return;
                 }
 
-                // Select the Top Plane
-                bool selected = swModel.Extension.SelectByID2("Top Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
-                if (!selected)
+                Feature feat = (Feature)part.FeatureByName(planeName);
+                if (feat == null)
                 {
-                    Log("❌ Could not select Top Plane.");
+                    Log($"❌ Plane '{planeName}' not found.");
                     return;
                 }
 
-                IFeatureManager swFeatMgr = swModel.FeatureManager;
-
-                RefPlane newPlane = (RefPlane)swFeatMgr.InsertRefPlane(
-                    (int)swRefPlaneReferenceConstraints_e.swRefPlaneReferenceConstraint_Distance,
-                    0.5,    // 60 cm offset
-                    0,      // Flip direction
-                    0, 0, 0
-                );
-
-                if (newPlane != null)
+                object def = feat.GetDefinition();
+                if (def is not IRefPlaneFeatureData refPlaneData)
                 {
-                    Feature feat = (Feature)newPlane;
-                    feat.Name = "Plane_Microwave";
-                    Log("✅ Plane created successfully. Name set to 'Plane_Microwave'");
+                    Log($"❌ '{planeName}' is not a reference plane.");
+                    return;
                 }
+
+                // Convert cm to meters
+                double offsetMeters = offsetCm / 100.0;
+
+                // Access selections (required)
+                refPlaneData.AccessSelections(model, null);
+
+                // Set offset
+                refPlaneData.Distance = offsetMeters;
+
+                // Save back
+                bool success = feat.ModifyDefinition(refPlaneData, model, null);
+                model.EditRebuild3();
+
+                if (success)
+                    Log($"✅ Offset updated to {offsetCm} cm (={offsetMeters} m)");
                 else
-                {
-                    Log("❌ Failed to create offset plane.");
-                }
-
-                swModel.ClearSelection2(true);
+                    Log("❌ ModifyDefinition failed.");
             }
             catch (Exception ex)
             {

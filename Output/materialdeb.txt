@@ -1,7 +1,0 @@
-22:44:45 - 🔧 Starting material assignment...
-22:44:46 - 📄 Active document found.
-22:44:46 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-22:44:46 - 🎯 Attempting to select body: Boss-Extrude1
-22:44:46 - ✅ Body selected successfully.
-22:44:47 - 🎨 Material 'Oak' of type '' applied.
-22:44:53 - 💾 Document rebuilt and saved successfully.

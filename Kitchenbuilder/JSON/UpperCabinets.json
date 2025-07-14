@@ -1,53 +1,6 @@
 {
   "Wall1": {
-    "Cabinets": [
-      {
-        "SketchName": "Sketch_Cabinet1_7",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 85,
-        "HasDrawers": false,
-        "DistanceX": 0,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_7",
-        "Drawers": {
-          "SketchName": "Drawers1_7",
-          "Width1": 114,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_8",
-        "Height": 150,
-        "Depth": 60,
-        "Width": 60,
-        "HasDrawers": false,
-        "DistanceX": 85,
-        "DistanceY": 150,
-        "ExtrudeName": "Extrude_Cabinet1_8",
-        "Drawers": {
-          "SketchName": "Drawers1_8",
-          "Width1": 146,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      }
-    ],
+    "Cabinets": [],
     "Spaces": [
       {
         "Type": "Microwave",
@@ -56,6 +9,35 @@
         "DistanceX": 85,
         "DistanceY": 90,
         "WallNum": 1
+      },
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 85,
+        "DistanceY": 90,
+        "WallNum": 1
+      }
+    ]
+  },
+  "Wall2": {
+    "Cabinets": [],
+    "Spaces": [
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 290,
+        "DistanceY": 90,
+        "WallNum": 2
+      },
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 290,
+        "DistanceY": 90,
+        "WallNum": 2
       }
     ]
   }
