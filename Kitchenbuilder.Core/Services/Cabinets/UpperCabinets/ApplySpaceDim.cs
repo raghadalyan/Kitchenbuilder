@@ -13,7 +13,6 @@ namespace Kitchenbuilder.Core
         {
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
         }
-
         public static void Apply(IModelDoc2 model, Space space, int wallNumber, double floorLength, double floorWidth)
         {
             try
@@ -35,7 +34,7 @@ namespace Kitchenbuilder.Core
 
                     EditSketchDim_IModel.SetDimension(model, $"angle@Sketch_Rotate_{type}", 180);
                     EditSketchDim_IModel.SetDimension(model, $"DX@Sketch_Move_{type}", 30);
-                    EditSketchDim_IModel.SetDimension(model, $"DY@Sketch_Move_{type}", dy- (space.Width / 2));
+                    EditSketchDim_IModel.SetDimension(model, $"DY@Sketch_Move_{type}", dy - (space.Width / 2));
                     EditPlaneOffset.SetOffset(model, $"Plane_{space.Type}", space.DistanceY);
                 }
                 else if (wallNumber == 2)
@@ -44,7 +43,7 @@ namespace Kitchenbuilder.Core
                     Log($"  ↪ angle = 90°, DX = {space.DistanceX} cm, DY = 30 cm, Plane offset = {space.DistanceY} cm");
 
                     EditSketchDim_IModel.SetDimension(model, $"angle@Sketch_Rotate_{type}", 90);
-                    EditSketchDim_IModel.SetDimension(model, $"DX@Sketch_Move_{type}", space.DistanceX+(space.Width/2));
+                    EditSketchDim_IModel.SetDimension(model, $"DX@Sketch_Move_{type}", space.DistanceX + (space.Width / 2));
                     EditSketchDim_IModel.SetDimension(model, $"DY@Sketch_Move_{type}", 30);
                     EditPlaneOffset.SetOffset(model, $"Plane_{space.Type}", space.DistanceY);
                 }
@@ -63,11 +62,27 @@ namespace Kitchenbuilder.Core
                 {
                     Log($"❌ Unsupported wall number: {wallNumber}");
                 }
+
+                // ✅ Step 3: Apply Width & Height
+                Log("📏 Applying width and height...");
+
+                // Width sketch
+                EditSketchDim_IModel.SetDimension(model, $"Width@Sketch_Size1_{type}", space.Width);
+                EditSketchDim_IModel.SetDimension(model, $"right@Sketch_Size2_{type}", (space.Width - 56) / 2);
+                EditSketchDim_IModel.SetDimension(model, $"left@Sketch_Size2_{type}", (space.Width - 56) / 2);
+
+                // Height sketch and extrusion
+                EditSketchDim_IModel.SetDimension(model, $"up@Sketch_Size2_{type}", (space.Height - 40) / 2);
+                EditSketchDim_IModel.SetDimension(model, $"down@Sketch_Size2_{type}", (space.Height - 40) / 2);
+                EditExtrusionDim_IModel.EditExtrude(model, $"Extrude_Size1_{type}", space.Height);
+
+                Log($"✅ Width set to {space.Width} cm, Height set to {space.Height} cm");
             }
             catch (Exception ex)
             {
                 Log($"❌ Exception in Apply: {ex.Message}");
             }
         }
+
     }
 }
