@@ -1,0 +1,24 @@
+[00:29:19] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:29:24] ✅ Feature selected: Extrude_Cabinet1_1
+[00:32:53] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:32:57] ✅ Feature selected: Extrude_Cabinet1_1
+[00:33:01] 🔍 Trying to select feature: Extrude_Cabinet1_3
+[00:33:05] ✅ Feature selected: Extrude_Cabinet1_3
+[00:34:16] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:34:21] ✅ Feature selected: Extrude_Cabinet1_1
+[00:34:24] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:34:24] ✅ Feature selected: Extrude_Cabinet1_1
+[00:34:26] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:34:28] ✅ Feature selected: Extrude_Cabinet1_1
+[00:34:32] 🔍 Trying to select feature: Extrude_Cabinet1_4
+[00:34:37] ✅ Feature selected: Extrude_Cabinet1_4
+[00:37:13] 🔍 Trying to select feature: Extrude_Cabinet1_2
+[00:37:19] ✅ Feature selected: Extrude_Cabinet1_2
+[00:40:54] 🔍 Trying to select feature: Extrude_Cabinet2_1
+[00:41:04] ✅ Feature selected: Extrude_Cabinet2_1
+[00:41:11] 🔍 Trying to select feature: Extrude_Cabinet1_1
+[00:41:15] ✅ Feature selected: Extrude_Cabinet1_1
+[00:41:42] 🔍 Trying to select feature: Extrude_Cabinet1_3
+[00:41:45] ✅ Feature selected: Extrude_Cabinet1_3
+[00:41:49] 🔍 Trying to select feature: Extrude_Cabinet1_3
+[00:41:51] ✅ Feature selected: Extrude_Cabinet1_3

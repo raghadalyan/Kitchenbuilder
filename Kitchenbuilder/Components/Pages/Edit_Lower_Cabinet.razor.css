@@ -1,0 +1,117 @@
+/* Cabinet box container */
+.cabinet-icons-box {
+    margin-top: 15px;
+    background-color: #fff6e6;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    min-width: 250px;
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* Cabinet icons layout */
+.cabinet-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+/* Single cabinet image */
+.cabinet-icon {
+    width: 28px;
+    height: 28px;
+}
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 160px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.tooltip-wrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.corner-icons {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+}
+
+.corner-icon {
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+.tooltip {
+    visibility: hidden;
+    width: 160px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Show tooltip + icons on hover */
+.tooltip-wrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.corner-icons {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 4px;
+}
+
+.corner-icon {
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}

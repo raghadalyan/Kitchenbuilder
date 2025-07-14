@@ -23,25 +23,25 @@ html, body {
 
 /* Main wrapper */
 .container {
+    width: 100%;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 40px;
+    justify-content: flex-start;
 }
 
-/* Inner white box */
+
 .panel-box {
     background-color: #fffaf2;
     padding: 40px;
     border-radius: 24px;
-    max-width: 1100px;
-    width: 90%;
+    width: 100%; /* was 95% */
+    max-width: 1400px; /* was 1300px, increase for stability */
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch; /* stretch children horizontally */
     gap: 30px;
 }
 
@@ -78,15 +78,16 @@ h1, h3 {
         transform: scale(1.05);
     }
 
-/* Layout */
 .station-layout {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 40px;
-    width: 90%;
-    max-width: 1000px;
+    width: 100%;
+    max-width: 1000px; /* Try 900-1100px range */
+    margin: auto;
+    gap: 30px;
 }
+
 
 /* Left section */
 .station-info {
@@ -179,4 +180,108 @@ h1, h3 {
     height: 100%;
     background-color: #a05a2c;
     transition: width 0.3s ease;
+}
+.cabinet-icons-box {
+    margin-top: 15px;
+    background-color: #fff6e6;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+}
+.cabinet-icons-box {
+    min-width: 200px;
+    max-width: 300px;
+    width: 100%;
+    background-color: #fff6e6;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.cabinet-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.cabinet-icon {
+    width: 28px;
+    height: 28px;
+}
+.station-reminder-box.inline {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #fff2e6;
+    border: 2px dashed #a05a2c;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 14px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    width: fit-content;
+    margin-bottom: 20px;
+}
+.station-info-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 1;
+}
+.cabinet-icons-box {
+    flex-shrink: 0;
+    min-width: 250px;
+}
+.form-row {
+    margin-bottom: 12px;
+}
+
+    .form-row label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-weight: 500;
+        font-size: 14px;
+        color: #5a3e1b;
+    }
+
+    .form-row input[type="number"] {
+        margin-top: 4px;
+        padding: 6px;
+        width: 80px;
+    }
+.station-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.station-info {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.corner-icons {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: flex;
+    gap: 2px;
+}
+
+.corner-icon {
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 1px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }

@@ -1,0 +1,4 @@
+[00:47:40] 🔍 Trying to select body: Extrude_Drawers1_1
+[00:47:41] ✅ Body selected: Extrude_Drawers1_1
+[00:47:43] 🔍 Trying to select body: Extrude_Drawers1_4
+[00:47:44] ✅ Body selected: Extrude_Drawers1_4
