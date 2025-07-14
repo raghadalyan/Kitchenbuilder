@@ -33,6 +33,22 @@
         "DistanceX": 205,
         "DistanceY": 65,
         "WallNum": 2
+      },
+      {
+        "Type": "Oven",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 205,
+        "DistanceY": 65,
+        "WallNum": 2
+      },
+      {
+        "Type": "Microwave",
+        "Width": 60,
+        "Height": 60,
+        "DistanceX": 205,
+        "DistanceY": 125,
+        "WallNum": 2
       }
     ]
   }

@@ -71,12 +71,19 @@ namespace Kitchenbuilder.Core
                 EditSketchDim_IModel.SetDimension(model, $"right@Sketch_Size2_{type}", (space.Width - 56) / 2);
                 EditSketchDim_IModel.SetDimension(model, $"left@Sketch_Size2_{type}", (space.Width - 56) / 2);
 
-                // Height sketch and extrusion
-                EditSketchDim_IModel.SetDimension(model, $"up@Sketch_Size2_{type}", (space.Height - 40) / 2);
-                EditSketchDim_IModel.SetDimension(model, $"down@Sketch_Size2_{type}", (space.Height - 40) / 2);
+                // Determine vertical margin based on type
+                double verticalMargin = type.ToLower() switch
+                {
+                    "microwave" => 40,
+                    "oven" => 56,
+                    _ => 40 // Default fallback
+                };
+
+                EditSketchDim_IModel.SetDimension(model, $"up@Sketch_Size2_{type}", (space.Height - verticalMargin) / 2);
+                EditSketchDim_IModel.SetDimension(model, $"down@Sketch_Size2_{type}", (space.Height - verticalMargin) / 2);
                 EditExtrusionDim_IModel.EditExtrude(model, $"Extrude_Size1_{type}", space.Height);
 
-                Log($"✅ Width set to {space.Width} cm, Height set to {space.Height} cm");
+                Log($"✅ Width set to {space.Width} cm, Height set to {space.Height} cm, Vertical margin = {verticalMargin} cm");
             }
             catch (Exception ex)
             {

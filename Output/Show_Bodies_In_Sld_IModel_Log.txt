@@ -1,3 +1,14 @@
 [2025-07-14 20:42:03] 👁️ Made body visible: Extrude_Island1
 [2025-07-14 20:42:04] 💾 Model saved after showing bodies.
 [2025-07-14 20:45:56] 👁️ Made body visible: Extrude_Drawers2_1
+[2025-07-14 21:14:18] 👁️ Made body visible: Extrude_Drawers1_1
+[2025-07-14 21:14:39] 👁️ Made body visible: Extrude_Drawers1_2
+[2025-07-14 21:14:58] 👁️ Made body visible: Extrude_Drawers1_3
+[2025-07-14 21:16:56] 👁️ Made body visible: Extrude_Drawers1_4
+[2025-07-14 21:17:57] 👁️ Made body visible: Extrude_Drawers1_5
+[2025-07-14 21:18:14] 👁️ Made body visible: Extrude_Drawers1_6
+[2025-07-14 21:18:30] 👁️ Made body visible: Extrude_Drawers1_7
+[2025-07-14 21:19:24] ✅ Body already visible: Extrude_Drawers2_1
+[2025-07-14 21:19:54] 👁️ Made body visible: Extrude_Drawers2_2
+[2025-07-14 21:20:41] 👁️ Made body visible: Extrude_Drawers2_3
+[2025-07-14 21:21:11] 👁️ Made body visible: Extrude_Drawers2_4
