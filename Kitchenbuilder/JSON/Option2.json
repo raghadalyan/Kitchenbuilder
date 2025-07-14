@@ -14,10 +14,10 @@
       "End": 350
     }
   ],
-  "FridgeWall": 1,
+  "FridgeWall": 2,
   "Fridge": {
-    "Start": 0,
-    "End": 85
+    "Start": 265,
+    "End": 350
   },
   "Corner": [
     [

@@ -1,156 +1,18 @@
 {
-  "Wall1": {
+  "Wall2": {
     "Cabinets": [
       {
-        "SketchName": "Sketch_Cabinet1_2",
-        "Height": 140,
+        "SketchName": "Sketch_Cabinet2_1",
+        "Height": 50,
         "Depth": 60,
         "Width": 60,
         "HasDrawers": false,
-        "DistanceX": 85,
-        "DistanceY": 160,
-        "ExtrudeName": "Extrude_Cabinet1_2",
+        "DistanceX": 205,
+        "DistanceY": 15,
+        "ExtrudeName": "Extrude_Cabinet2_1",
         "Drawers": {
-          "SketchName": "Drawers1_2",
-          "Width1": 136,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_3",
-        "Height": 115,
-        "Depth": 60,
-        "Width": 85,
-        "HasDrawers": false,
-        "DistanceX": 0,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_3",
-        "Drawers": {
-          "SketchName": "Drawers1_3",
-          "Width1": 111,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_4",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 51,
-        "HasDrawers": false,
-        "DistanceX": 145,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_4",
-        "Drawers": {
-          "SketchName": "Drawers1_4",
-          "Width1": 114,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_5",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 51,
-        "HasDrawers": false,
-        "DistanceX": 196,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_5",
-        "Drawers": {
-          "SketchName": "Drawers1_5",
-          "Width1": 114,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_6",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 51,
-        "HasDrawers": false,
-        "DistanceX": 247,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_6",
-        "Drawers": {
-          "SketchName": "Drawers1_6",
-          "Width1": 114,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_7",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 51,
-        "HasDrawers": false,
-        "DistanceX": 298,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_7",
-        "Drawers": {
-          "SketchName": "Drawers1_7",
-          "Width1": 114,
-          "DistanceY1": 2,
-          "Width2": 0,
-          "DistanceY2": 0,
-          "Width3": 0,
-          "DistanceY3": 0,
-          "Width4": 0,
-          "DistanceY4": 0,
-          "Width5": 0,
-          "DistanceY5": 0
-        }
-      },
-      {
-        "SketchName": "Sketch_Cabinet1_8",
-        "Height": 118,
-        "Depth": 60,
-        "Width": 51,
-        "HasDrawers": false,
-        "DistanceX": 349,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_8",
-        "Drawers": {
-          "SketchName": "Drawers1_8",
-          "Width1": 114,
+          "SketchName": "Drawers2_1",
+          "Width1": 46,
           "DistanceY1": 2,
           "Width2": 0,
           "DistanceY2": 0,
@@ -165,48 +27,11 @@
     ],
     "Spaces": [
       {
-        "Type": "Microwave",
+        "Type": "Oven",
         "Width": 60,
         "Height": 60,
-        "DistanceX": 85,
-        "DistanceY": 90,
-        "WallNum": 1
-      },
-      {
-        "Type": "Microwave",
-        "Width": 60,
-        "Height": 60,
-        "DistanceX": 85,
-        "DistanceY": 90,
-        "WallNum": 1
-      },
-      {
-        "Type": "Microwave",
-        "Width": 60,
-        "Height": 70,
-        "DistanceX": 85,
-        "DistanceY": 90,
-        "WallNum": 1
-      }
-    ]
-  },
-  "Wall2": {
-    "Cabinets": [],
-    "Spaces": [
-      {
-        "Type": "Microwave",
-        "Width": 60,
-        "Height": 60,
-        "DistanceX": 290,
-        "DistanceY": 90,
-        "WallNum": 2
-      },
-      {
-        "Type": "Microwave",
-        "Width": 60,
-        "Height": 60,
-        "DistanceX": 290,
-        "DistanceY": 90,
+        "DistanceX": 205,
+        "DistanceY": 65,
         "WallNum": 2
       }
     ]
