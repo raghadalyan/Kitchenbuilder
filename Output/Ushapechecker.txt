@@ -1,1 +1,2 @@
-[20:29:00] ❌ Fridge placement overlaps with a window
+[23:21:54] ✅ Wall 3: Fridge is in last space of Wall 1 and has enough space after (≥ 60 cm)
+[23:21:54] 📤 Result written to Option3.json

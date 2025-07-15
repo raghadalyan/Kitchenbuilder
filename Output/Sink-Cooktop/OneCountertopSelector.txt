@@ -1,7 +1,0 @@
-[20:35:37] 🛠️ Suggesting layout for Wall1 Base1 (Start=0, End=400)
-[20:35:37] 🔍 HasIsland = False
-[20:35:37] 🪟 Window in range = True
-[20:35:37] 🔢 Windows in range = 1
-[20:35:37] ✅ Suggestion 1: Place both sink and cooktop on the same countertop.
-[20:36:49] 👉 Sink: X=5, Y=70, Angle=270
-[20:36:49] 👉 Cooktop: X=30, Y=330, Angle=360

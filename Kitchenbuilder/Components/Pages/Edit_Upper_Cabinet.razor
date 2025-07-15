@@ -1,0 +1,70 @@
+﻿@using Kitchenbuilder.Core.Models
+@using System.Text.Json
+
+@code {
+    [Parameter] public int OptionNum { get; set; }
+    [Parameter] public int WallNumber { get; set; }
+
+    private WallCabinetWrapper? data;
+    private string wallKey => $"Wall{WallNumber}";
+    private string jsonPath => $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
+
+    protected override void OnParametersSet()
+    {
+        if (!File.Exists(jsonPath)) return;
+
+        try
+        {
+            var json = File.ReadAllText(jsonPath);
+            var all = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json);
+            if (all != null && all.TryGetValue(wallKey, out var wrapper))
+                data = wrapper;
+        }
+        catch { data = null; }
+    }
+}
+@if (data != null)
+{
+    <div class="edit-box">
+        <h4 style="color: #5a3e1b;">📦 Added Items</h4>
+        <div class="icon-grid">
+            @foreach (var cab in data.Cabinets)
+            {
+                <img src="Images/cabinet.gif" title="Cabinet @cab.Width x @cab.Height" class="icon" />
+            }
+            @foreach (var sp in data.Spaces)
+            {
+                var icon = sp.Type switch
+                {
+                    "Microwave" => "Microwave.gif",
+                    "Oven" => "Oven.png",
+                    "Range Hood" => "Range Hood.gif",
+                    "DishWasher" => "dishwasher.gif",
+                    _ => "other.png"
+                };
+                <img src=$"Images/@icon" title="@sp.Type @sp.Width x @sp.Height" class="icon" />
+            }
+        </div>
+    </div>
+}
+
+<style>
+    .edit-box {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #faf3e0;
+        border-radius: 8px;
+    }
+
+    .icon-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+</style>

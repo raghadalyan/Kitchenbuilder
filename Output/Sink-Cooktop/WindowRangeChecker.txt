@@ -1,3 +1,8 @@
-[20:35:37] 🔍 Checking Wall 1 countertop range [0, 400]
-[20:35:37] 🪟 Window: [80, 280]
-[20:35:37] ✅ Window overlaps with countertop range.
+[23:28:17] 🔍 Checking Wall 1 countertop range [85, 400]
+[23:28:17] ℹ️ Wall 1 has no windows.
+[23:28:17] 🔍 Checking Wall 2 countertop range [0, 350]
+[23:28:17] ℹ️ Wall 2 has no windows.
+[01:04:11] 🔍 Checking Wall 1 countertop range [85, 400]
+[01:04:11] ℹ️ Wall 1 has no windows.
+[01:04:11] 🔍 Checking Wall 2 countertop range [0, 350]
+[01:04:11] ℹ️ Wall 2 has no windows.

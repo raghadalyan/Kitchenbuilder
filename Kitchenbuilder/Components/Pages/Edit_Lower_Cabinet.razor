@@ -147,79 +147,79 @@
             var hasDrawers = cabinet.HasDrawers && cabinet.Drawers is not null;
             var drawerCount = hasDrawers ? CountDrawers(cabinet.Drawers!) : 0;
 
-                <div class="tooltip-wrapper">
-                    <img src="/Images/cabinet.gif"
-                         class="cabinet-icon"
-                         alt="Cabinet"
-                         @onclick="() => SelectCabinet(cabinet)" />
+                    <div class="tooltip-wrapper">
+                        <img src="/Images/cabinet.gif"
+                             class="cabinet-icon"
+                             alt="Cabinet"
+                             @onclick="() => SelectCabinet(cabinet)" />
 
-                    <div class="tooltip">
+                        <div class="tooltip">
                     @if (cabinet == GetLastCabinet())
                     {
-            <div class="corner-icons">
-                <img src="/Images/edit.png" class="corner-icon" alt="Edit" @onclick="() => StartEdit(cabinet)" />
-                            <img src="/Images/delete.png" class="corner-icon" alt="Delete" @onclick="() => DeleteCabinet(cabinet)" />
-                        </div>
+                    <div class="corner-icons">
+                        <img src="/Images/edit.png" class="corner-icon" alt="Edit" @onclick="() => StartEdit(cabinet)" />
+                                    <img src="/Images/delete.png" class="corner-icon" alt="Delete" @onclick="() => DeleteCabinet(cabinet)" />
+                                </div>
                     }
 
-                        Width: @cabinet.Width cm<br />
-                        Height: @cabinet.Height cm<br />
-                        Depth: @cabinet.Depth cm<br />
-                        Has Drawers: @(hasDrawers ? "Yes" : "No")<br />
+                            Width: @cabinet.Width cm<br />
+                            Height: @cabinet.Height cm<br />
+                            Depth: @cabinet.Depth cm<br />
+                            Has Drawers: @(hasDrawers ? "Yes" : "No")<br />
                     @if (hasDrawers)
                     {
-                                <span>Drawer Count: @drawerCount</span>
+                                        <span>Drawer Count: @drawerCount</span>
                     }
+                        </div>
+
+
                     </div>
-
-
-                </div>
         }
         @if (editingCabinet != null)
         {
-        <div class="modal-overlay">
-            <div class="modal-box">
-                <h3>Edit Cabinet</h3>
+            <div class="modal-overlay">
+                <div class="modal-box">
+                    <h3>Edit Cabinet</h3>
 
-                <label>Width:
-    <input type="number" @bind="tempWidth" min="5" />
-                    </label><br />
+                    <label>Width:
+        <input type="number" @bind="tempWidth" min="5" />
+                        </label><br />
 
                     @if (!Station.HasCountertop)
                     {
-            <label>Height:
-                <input type="number" @bind="tempHeight" min="10" />
-            </label>
-            <br />
+                    <label>Height:
+                        <input type="number" @bind="tempHeight" min="10" />
+                    </label>
+                    <br />
                     }
 
 
-                <label>
-                    <input type="checkbox" @bind="editingHasDrawers" />
-                    Has Drawers
-                </label><br />
+                    <label>
+                        <input type="checkbox" @bind="editingHasDrawers" />
+                        Has Drawers
+                    </label><br />
 
                     @if (editingHasDrawers)
                     {
-                        <label>Drawer Count:
-                            <input type="number" @bind="editingDrawerCount" min="2" max="5" />
-                        </label>
+                                <label>Drawer Count:
+                                    <input type="number" @bind="editingDrawerCount" min="2" max="5" />
+                                </label>
 
-                        <br />
+                                <br />
                     }
 
-                <div style="margin-top: 10px;">
-                    <button @onclick="SaveCabinetEdit">Save</button>
-                    <button @onclick="CancelEdit" style="margin-left: 10px;">Cancel</button>
-                </div>
+                    <div style="margin-top: 10px;">
+                        <button @onclick="SaveCabinetEdit">Save</button>
+                        <button @onclick="CancelEdit" style="margin-left: 10px;">Cancel</button>
+                    </div>
                     @if (!string.IsNullOrWhiteSpace(errorMessage))
                     {
-            <div style="color: red; margin-bottom: 10px;">
+                    <div style="color: red; margin-bottom: 10px;">
                             @errorMessage
-            </div>
+                    </div>
                     }
+                </div>
             </div>
-        </div>
         }
 
 
