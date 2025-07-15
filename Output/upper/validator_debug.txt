@@ -1,4 +1,160 @@
-[20:45:54] 📦 Checking cabinet on Wall 2: (X=205, Y=15, W=60, H=50)
-[20:45:54] 🔍 Cabinet overlaps base: 2_1
-[20:45:54] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
-[20:45:54] ✅ Position is legal.
+[21:04:30] 📦 Checking cabinet on Wall 1: (X=0, Y=260, W=400, H=40)
+[21:04:30] 🔍 Cabinet overlaps base: 1_1
+[21:04:30] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:04:30] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:04:30] ✅ Position is legal.
+[21:05:38] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:05:38] 🔍 Cabinet overlaps base: 2_1
+[21:05:38] ❌ Exception: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:06:05] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:06:05] 🔍 Cabinet overlaps base: 2_1
+[21:06:05] ❌ Exception: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:09:56] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:09:56] 🔍 Cabinet overlaps base: 2_1
+[21:09:56] ❌ Exception: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:13:34] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:13:34] 🔍 Cabinet overlaps base: 2_1
+[21:13:35] ❌ Exception: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:29:50] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:29:50] 🔍 Cabinet overlaps base: 2_1
+[21:29:50] ❌ Exception: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:32:49] 📦 Checking cabinet on Wall 2: (X=60, Y=260, W=290, H=40)
+[21:32:49] 🔍 Cabinet overlaps base: 2_1
+[21:32:49] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:32:49] ↔ Compare with station cabinet Sketch_Cabinet2_1 at (X=60, Y=15)
+[21:32:49] ↔ Compare with station cabinet Sketch_Cabinet2_2 at (X=128, Y=15)
+[21:32:49] ↔ Compare with station cabinet Sketch_Cabinet2_3 at (X=195, Y=15)
+[21:32:49] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:32:49] ✅ Position is legal.
+[21:35:35] 📦 Checking cabinet on Wall 2: (X=195, Y=195, W=70, H=65)
+[21:35:35] 🔍 Cabinet overlaps base: 2_1
+[21:35:35] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:35:35] ↔ Compare with station cabinet Sketch_Cabinet2_1 at (X=60, Y=15)
+[21:35:35] ↔ Compare with station cabinet Sketch_Cabinet2_2 at (X=128, Y=15)
+[21:35:35] ↔ Compare with station cabinet Sketch_Cabinet2_3 at (X=195, Y=15)
+[21:35:35] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:35:35] ↔ Compare with upper cabinet Sketch_Cabinet2_4 at (X=60, Y=260)
+[21:35:35] ✅ Position is legal.
+[21:36:27] 📦 Checking cabinet on Wall 2: (X=265, Y=182, W=85, H=78)
+[21:36:27] 🔍 Cabinet overlaps base: fridge_base2
+[21:36:27] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:36:27] ↔ Compare with station cabinet Sketch_Cabinet2_1 at (X=60, Y=15)
+[21:36:27] ↔ Compare with station cabinet Sketch_Cabinet2_2 at (X=128, Y=15)
+[21:36:27] ↔ Compare with station cabinet Sketch_Cabinet2_3 at (X=195, Y=15)
+[21:36:27] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:36:27] ↔ Compare with upper cabinet Sketch_Cabinet2_4 at (X=60, Y=260)
+[21:36:27] ↔ Compare with upper cabinet Sketch_Cabinet2_5 at (X=195, Y=195)
+[21:36:27] ✅ Position is legal.
+[21:40:02] 📦 Checking cabinet on Wall 2: (X=0, Y=90, W=60, H=170)
+[21:40:02] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:40:02] ↔ Compare with station cabinet Sketch_Cabinet2_1 at (X=60, Y=15)
+[21:40:02] ↔ Compare with station cabinet Sketch_Cabinet2_2 at (X=128, Y=15)
+[21:40:02] ↔ Compare with station cabinet Sketch_Cabinet2_3 at (X=195, Y=15)
+[21:40:02] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:40:02] ↔ Compare with upper cabinet Sketch_Cabinet2_4 at (X=60, Y=260)
+[21:40:02] ↔ Compare with upper cabinet Sketch_Cabinet2_5 at (X=195, Y=195)
+[21:40:02] ↔ Compare with upper cabinet Sketch_Cabinet2_6 at (X=265, Y=182)
+[21:40:02] ✅ Position is legal.
+[21:46:31] 📦 Checking cabinet on Wall 1: (X=0, Y=210, W=50, H=50)
+[21:46:31] 🔍 Cabinet overlaps base: 1_1
+[21:46:31] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:46:31] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:46:31] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:46:31] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:46:31] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=50, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=95, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=140, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=185, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=230, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.
+[21:48:37] 📦 Checking cabinet on Wall 1: (X=275, Y=210, W=45, H=45)
+[21:48:37] 🔍 Cabinet overlaps base: 1_1
+[21:48:37] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=0, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=50, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=100, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=190, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=240, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_6 at (X=290, Y=15)
+[21:48:37] ↔ Compare with station cabinet Sketch_Cabinet1_7 at (X=345, Y=15)
+[21:48:37] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_8 at (X=0, Y=260)
+[21:48:37] ↔ Compare with upper cabinet Sketch_Cabinet1_9 at (X=0, Y=210)
+[21:48:37] ✅ Position is legal.

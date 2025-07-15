@@ -1,29 +1,98 @@
-[20:43:18] 🔄 Page loaded with Option 2
-[20:43:18] 📊 Stations loaded: 2
-[20:43:18] 🧭 Navigating to station 1 / Wall: Wall1
-[20:43:21] 🧭 Navigating to station 2 / Wall: Wall2
-[20:43:29] ➕ Add Space clicked.
-[20:45:26] ➕ Add Cabinet clicked.
-[20:45:53] 💾 Saving cabinet: width=60, height=50, depth=60, DX=205, DY=15
-[20:46:15] ✅ 1 cabinet(s) created and applied successfully.
-[20:46:51] ➕ Add Space clicked.
-[20:47:17] 💾 Saving space: Oven, width=60, height=60, DX=205, DY=65
-[20:47:36] ✅ Space saved to wall Wall2.
-[21:00:19] 🔄 Page loaded with Option 2
-[21:00:19] 📊 Stations loaded: 2
-[21:00:19] 🧭 Navigating to station 1 / Wall: Wall1
-[21:00:27] 🧭 Navigating to station 2 / Wall: Wall2
-[21:00:32] ➕ Add Space clicked.
-[21:01:00] 💾 Saving space: Oven, width=60, height=60, DX=205, DY=65
-[21:01:24] ✅ Space saved to wall Wall2.
-[21:04:02] ➕ Add Space clicked.
-[21:09:50] 🔄 Page loaded with Option 2
-[21:09:50] 📊 Stations loaded: 2
-[21:09:50] 🧭 Navigating to station 1 / Wall: Wall1
-[21:09:55] 🧭 Navigating to station 2 / Wall: Wall2
-[21:09:59] ➕ Add Space clicked.
-[21:10:10] 💾 Saving space: Oven, width=60, height=60, DX=205, DY=65
-[21:10:34] ✅ Space saved to wall Wall2.
-[21:11:04] ➕ Add Space clicked.
-[21:11:24] 💾 Saving space: Microwave, width=60, height=60, DX=205, DY=125
-[21:11:51] ✅ Space saved to wall Wall2.
+[20:53:49] 🔄 Page loaded with Option 2
+[20:53:49] 📊 Stations loaded: 2
+[20:53:49] 🧭 Navigating to station 1 / Wall: Wall1
+[20:53:52] 🧭 Navigating to station 2 / Wall: Wall2
+[20:53:57] ➕ Add Cabinet clicked.
+[20:53:58] ➕ Add Space clicked.
+[20:54:39] 💾 Saving space: Oven, width=70, height=60, DX=195, DY=65
+[20:54:40] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[20:54:54] 💾 Saving space: Oven, width=70, height=60, DX=195, DY=65
+[20:54:55] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[20:57:39] 💾 Saving space: Oven, width=70, height=60, DX=195, DY=65
+[20:57:40] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[20:57:51] 🧭 Navigating to station 1 / Wall: Wall1
+[20:57:56] ➕ Add Space clicked.
+[20:58:29] 💾 Saving cabinet: width=400, height=40, depth=60, DX=0, DY=260
+[20:58:29] ❌ Error in Apply: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+[20:58:43] ➕ Add Space clicked.
+[20:58:45] ➕ Add Cabinet clicked.
+[21:02:33] 🔄 Page loaded with Option 2
+[21:02:33] 📊 Stations loaded: 2
+[21:02:33] 🧭 Navigating to station 1 / Wall: Wall1
+[21:03:14] 💾 Saving cabinet: width=400, height=40, depth=60, DX=0, DY=260
+[21:03:14] ❌ Error in Apply: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+[21:04:12] 🔄 Page loaded with Option 2
+[21:04:12] 📊 Stations loaded: 2
+[21:04:12] 🧭 Navigating to station 1 / Wall: Wall1
+[21:04:30] 💾 Saving cabinet: width=400, height=40, depth=60, DX=0, DY=260
+[21:05:02] ✅ 1 cabinet(s) created and applied successfully.
+[21:05:10] 🧭 Navigating to station 2 / Wall: Wall2
+[21:05:38] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:05:38] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:06:05] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:06:05] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:09:31] 🔄 Page loaded with Option 2
+[21:09:31] 📊 Stations loaded: 2
+[21:09:31] 🧭 Navigating to station 1 / Wall: Wall1
+[21:09:38] 🧭 Navigating to station 2 / Wall: Wall2
+[21:09:42] ➕ Add Cabinet clicked.
+[21:09:56] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:09:56] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:13:03] 🔄 Page loaded with Option 2
+[21:13:03] 📊 Stations loaded: 2
+[21:13:03] 🧭 Navigating to station 1 / Wall: Wall1
+[21:13:11] 🧭 Navigating to station 2 / Wall: Wall2
+[21:13:14] ➕ Add Cabinet clicked.
+[21:13:34] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:13:35] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:14:46] 🔄 Page loaded with Option 2
+[21:14:46] 📊 Stations loaded: 2
+[21:14:46] 🧭 Navigating to station 1 / Wall: Wall1
+[21:14:53] ➕ Add Space clicked.
+[21:15:02] 🧭 Navigating to station 2 / Wall: Wall2
+[21:15:04] ➕ Add Space clicked.
+[21:15:05] ➕ Add Space clicked.
+[21:16:28] 💾 Saving space: Oven, width=70, height=80, DX=195, DY=65
+[21:17:02] ✅ Space saved to wall Wall2.
+[21:22:10] ➕ Add Space clicked.
+[21:22:41] 💾 Saving space: Oven, width=70, height=70, DX=195, DY=65
+[21:23:11] ✅ Space saved to wall Wall2.
+[21:23:33] 🧭 Navigating to station 1 / Wall: Wall1
+[21:26:34] 🔄 Page loaded with Option 2
+[21:26:34] 📊 Stations loaded: 2
+[21:26:34] 🧭 Navigating to station 1 / Wall: Wall1
+[21:26:39] 🧭 Navigating to station 2 / Wall: Wall2
+[21:26:42] ➕ Add Space clicked.
+[21:26:55] 💾 Saving space: Oven, width=70, height=70, DX=195, DY=65
+[21:27:22] ✅ Space saved to wall Wall2.
+[21:27:32] ➕ Add Space clicked.
+[21:28:20] 💾 Saving space: Microwave, width=70, height=60, DX=195, DY=135
+[21:28:52] ✅ Space saved to wall Wall2.
+[21:29:23] ➕ Add Cabinet clicked.
+[21:29:50] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:29:50] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:32:23] 🔄 Page loaded with Option 2
+[21:32:23] 📊 Stations loaded: 2
+[21:32:23] 🧭 Navigating to station 1 / Wall: Wall1
+[21:32:27] 🧭 Navigating to station 2 / Wall: Wall2
+[21:32:33] ➕ Add Cabinet clicked.
+[21:32:49] 💾 Saving cabinet: width=290, height=40, depth=60, DX=60, DY=260
+[21:33:20] ✅ 1 cabinet(s) created and applied successfully.
+[21:34:20] ➕ Add Cabinet clicked.
+[21:35:35] 💾 Saving cabinet: width=70, height=65, depth=60, DX=195, DY=195
+[21:36:01] ✅ 1 cabinet(s) created and applied successfully.
+[21:36:03] ➕ Add Cabinet clicked.
+[21:36:27] 💾 Saving cabinet: width=85, height=78, depth=60, DX=265, DY=182
+[21:36:46] ✅ 1 cabinet(s) created and applied successfully.
+[21:38:29] 🧭 Navigating to station 1 / Wall: Wall1
+[21:38:45] 🧭 Navigating to station 2 / Wall: Wall2
+[21:39:49] ➕ Add Space clicked.
+[21:39:51] ➕ Add Cabinet clicked.
+[21:40:02] 💾 Saving cabinet: width=60, height=170, depth=60, DX=0, DY=90
+[21:40:29] ✅ 1 cabinet(s) created and applied successfully.
+[21:41:32] 🧭 Navigating to station 1 / Wall: Wall1
+[21:46:31] 💾 Saving cabinet: width=50, height=50, depth=60, DX=0, DY=210
+[21:47:00] ✅ 1 cabinet(s) created and applied successfully.
+[21:47:45] ➕ Add Cabinet clicked.
+[21:48:37] 💾 Saving cabinet: width=45, height=45, depth=45, DX=50, DY=210
+[21:51:32] ✅ 6 cabinet(s) created and applied successfully.

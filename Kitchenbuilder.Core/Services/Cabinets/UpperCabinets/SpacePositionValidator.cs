@@ -36,7 +36,8 @@ namespace Kitchenbuilder.Core
                     foreach (var b in basesElement.EnumerateObject())
                     {
                         var baseObj = b.Value;
-                        if (!baseObj.GetProperty("Visible").GetBoolean()) continue;
+                        if (!baseObj.TryGetProperty("Visible", out var visibleProp) || visibleProp.ValueKind != JsonValueKind.True)
+                            continue;
 
                         double start = baseObj.GetProperty("Start").GetDouble();
                         double end = baseObj.GetProperty("End").GetDouble();
@@ -49,7 +50,7 @@ namespace Kitchenbuilder.Core
                             if (sketch.Contains("fridge") && space.DistanceY < 182)
                                 return "❌ Space too close to fridge base. DistanceY must be ≥ 182 cm.";
 
-                            if (baseObj.TryGetProperty("Countertop", out var ct))
+                            if (baseObj.TryGetProperty("Countertop", out var ct) && ct.ValueKind == JsonValueKind.Object)
                             {
                                 double ctStart = ct.GetProperty("Start").GetDouble();
                                 double ctEnd = ct.GetProperty("End").GetDouble();
@@ -57,6 +58,7 @@ namespace Kitchenbuilder.Core
                                 if (space.DistanceX >= ctStart && space.DistanceX < ctEnd && space.DistanceY < 150)
                                     return "❌ Space too close to countertop. DistanceY must be ≥ 150 cm.";
                             }
+
                         }
                     }
                 }

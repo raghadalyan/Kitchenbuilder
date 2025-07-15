@@ -34,8 +34,15 @@ namespace Kitchenbuilder.Core
                 if (File.Exists(SavePath))
                 {
                     string json = File.ReadAllText(SavePath);
-                    upperData = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json)
-                                 ?? new();
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+                        upperData = new(); // Empty file – treat as new
+                    }
+                    else
+                    {
+                        upperData = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json)
+                                     ?? new();
+                    }
                 }
                 else
                 {

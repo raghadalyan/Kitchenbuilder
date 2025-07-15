@@ -1,4 +1,7 @@
-[20:47:36] ✅ Space saved to wall Wall2.
-[21:01:24] ✅ Space saved to wall Wall2.
-[21:10:34] ✅ Space saved to wall Wall2.
-[21:11:51] ✅ Space saved to wall Wall2.
+[20:54:40] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[20:54:55] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[20:57:40] ❌ Error in CheckDownPositionForSpace: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:17:02] ✅ Space saved to wall Wall2.
+[21:23:11] ✅ Space saved to wall Wall2.
+[21:27:22] ✅ Space saved to wall Wall2.
+[21:28:52] ✅ Space saved to wall Wall2.

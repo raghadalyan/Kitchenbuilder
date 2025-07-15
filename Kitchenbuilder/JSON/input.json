@@ -10,9 +10,9 @@
       "HasWindows": true,
       "Windows": [
         {
-          "Width": 100,
+          "Width": 200,
           "Height": 60,
-          "DistanceX": 50,
+          "DistanceX": 80,
           "DistanceY": 100
         }
       ],

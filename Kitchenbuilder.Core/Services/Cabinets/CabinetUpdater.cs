@@ -4,12 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Kitchenbuilder.Core.Models;
+using SolidWorks.Interop.sldworks;
 
 namespace Kitchenbuilder.Core
 {
     public static class CabinetUpdater
     {
-        public static bool UpdateCabinet(string sketchName, int optionNumber, int newWidth, int? newHeight, int drawerCount, bool hasDrawers, out string errorMessage)
+        public static bool UpdateCabinet(
+            string sketchName,
+            int optionNumber,
+            int newWidth,
+            int? newHeight,
+            int drawerCount,
+            bool hasDrawers,
+            IModelDoc2 model,                     // ✅ new parameter
+            out string errorMessage)
         {
             errorMessage = "";
 
@@ -52,7 +61,15 @@ namespace Kitchenbuilder.Core
                 var cabinet = station.Cabinets?.FirstOrDefault(c => c.SketchName == sketchName);
                 if (cabinet != null)
                 {
+                    // ✅ Width boundary check
+                    if (cabinet.DistanceX + newWidth > station.StationEnd)
+                    {
+                        errorMessage = $"❌ Cabinet width exceeds station boundary. Max allowed width is {station.StationEnd - cabinet.DistanceX} cm.";
+                        return false;
+                    }
+
                     cabinet.Width = newWidth;
+
                     if (newHeight.HasValue)
                         cabinet.Height = newHeight.Value;
 
@@ -91,7 +108,7 @@ namespace Kitchenbuilder.Core
                         {
                             if (d == 1)
                             {
-                                typeof(Drawers).GetProperty("Width1")?.SetValue(drawers, cabinet.Width);
+                                typeof(Drawers).GetProperty("Width1")?.SetValue(drawers, cabinet.Height - 4);
                                 typeof(Drawers).GetProperty("DistanceY1")?.SetValue(drawers, 2.0);
                             }
                             else
@@ -109,6 +126,9 @@ namespace Kitchenbuilder.Core
 
                     // ✅ Save
                     File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, new JsonSerializerOptions { WriteIndented = true }));
+                    if (model != null)
+                        CabinetEditorDim.ApplyDimensions(model, cabinet);
+
                     return true;
                 }
 
@@ -117,5 +137,52 @@ namespace Kitchenbuilder.Core
             errorMessage = $"❌ Cabinet with SketchName '{sketchName}' not found.";
             return false;
         }
+        public static bool DeleteCabinet(
+    IModelDoc2 model,
+    CabinetInfo cabinet,
+    int optionNumber,
+    out string errorMessage)
+        {
+            errorMessage = "";
+            try
+            {
+                // 1. Hide the body
+                string suffix = cabinet.SketchName.Replace("Sketch_Cabinet", ""); // ➡️ "2_4"
+                string bodyName = $"Extrude_Drawers{suffix}";
+
+                Hide_Bodies_In_Sld_IModel.HideMultipleBodies(model, new[] { bodyName });
+
+                // 2. Update the JSON
+                string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNumber}SLD_stations.json";
+                if (!File.Exists(jsonPath))
+                {
+                    errorMessage = $"❌ File not found: {jsonPath}";
+                    return false;
+                }
+
+                string json = File.ReadAllText(jsonPath);
+                var stations = JsonSerializer.Deserialize<List<StationInfo>>(json)!;
+
+                var station = stations.FirstOrDefault(s => s.Cabinets.Any(c => c.SketchName == cabinet.SketchName));
+                if (station == null)
+                {
+                    errorMessage = $"❌ Station not found for cabinet {cabinet.SketchName}";
+                    return false;
+                }
+
+                station.Cabinets.RemoveAll(c => c.SketchName == cabinet.SketchName);
+                File.WriteAllText(jsonPath, JsonSerializer.Serialize(stations, new JsonSerializerOptions { WriteIndented = true }));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"❌ Exception: {ex.Message}";
+                return false;
+            }
+        }
+
     }
+
+
 }

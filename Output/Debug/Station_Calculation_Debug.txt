@@ -1,0 +1,13 @@
+[20:40:56] ➕ Added full countertop station: Base1, Start=0, End=400, CT=true
+[20:40:56] ❌ Skipping hidden or null base: Base2
+[20:40:56] ❌ Skipping hidden or null base: Base3
+[20:40:56] ➕ Added full base station: Base1, Start=60, End=265, CT=false
+[20:40:56] ⛔ Skipping fridge base: fridge_base2
+[20:40:56] ❌ Skipping hidden or null base: Base2
+[20:40:56] ❌ Skipping hidden or null base: Base1
+[20:40:56] ❌ Skipping hidden or null base: Base2
+[20:40:56] ❌ Skipping hidden or null base: Base3
+[20:40:56] ❌ Skipping hidden or null base: Base1
+[20:40:56] ❌ Skipping hidden or null base: Base2
+[20:40:56] ❌ Skipping hidden or null base: Base3
+[20:40:56] 📊 Total stations for Option2SLD.json: 2

@@ -84,13 +84,7 @@
             "Size": 205
           }
         ],
-        "Countertop": {
-          "Name": "Extrude_CT_2_1",
-          "L": 0,
-          "R": 60,
-          "Start": 0,
-          "End": 205
-        }
+        "Countertop": null
       },
       "Base3": {
         "SketchName": "fridge_base2",

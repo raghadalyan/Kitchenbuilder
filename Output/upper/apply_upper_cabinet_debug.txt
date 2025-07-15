@@ -1,1 +1,14 @@
-[20:46:15] ✅ 1 cabinet(s) created and applied successfully.
+[20:58:29] ❌ Error in Apply: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+[21:03:14] ❌ Error in Apply: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+[21:05:02] ✅ 1 cabinet(s) created and applied successfully.
+[21:05:38] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:06:05] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:09:56] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:13:35] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:29:50] ❌ Copy 1 failed: ❌ Error in CheckDownPosition: The requested operation requires an element of type 'Object', but the target element has type 'Null'.
+[21:33:20] ✅ 1 cabinet(s) created and applied successfully.
+[21:36:01] ✅ 1 cabinet(s) created and applied successfully.
+[21:36:46] ✅ 1 cabinet(s) created and applied successfully.
+[21:40:29] ✅ 1 cabinet(s) created and applied successfully.
+[21:47:00] ✅ 1 cabinet(s) created and applied successfully.
+[21:51:32] ✅ 6 cabinet(s) created and applied successfully.

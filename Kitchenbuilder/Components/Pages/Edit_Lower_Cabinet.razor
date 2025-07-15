@@ -58,7 +58,8 @@
 
         editingCabinet.HasDrawers = editingHasDrawers;
 
-        Drawers newDrawers = new Drawers(editingCabinet.SketchName);
+        string suffix = editingCabinet.SketchName.Replace("Sketch_Cabinet", "");
+        Drawers newDrawers = new Drawers($"Drawers{suffix}");
         for (int i = 1; i <= editingDrawerCount; i++)
         {
             typeof(Drawers).GetProperty($"Width{i}")?.SetValue(newDrawers, editingCabinet.Width);
@@ -73,12 +74,16 @@
             newHeight: Station.HasCountertop ? null : editingCabinet.Height,
             drawerCount: editingDrawerCount,
             hasDrawers: editingHasDrawers,
+            model: SwSession.GetActiveModel()!, // ✅ pass model explicitly
             out string error
         );
 
+
         if (saved)
         {
-            Log($"✅ Saved changes for {editingCabinet.SketchName} to JSON");
+            IModelDoc2 model = SwSession.GetActiveModel();
+
+            Log($"✅ Saved changes for {editingCabinet.SketchName} to JSON and SolidWorks");
             editingCabinet = null;
             errorMessage = "";
         }
@@ -115,6 +120,23 @@
         if (editingCabinet != null)
             Log("✅ Modal is being rendered.");
     }
+    private void DeleteCabinet(CabinetInfo cabinet)
+    {
+        IModelDoc2 model = SwSession.GetActiveModel();
+        bool deleted = CabinetUpdater.DeleteCabinet(model, cabinet, OptionNumber, out string error);
+
+        if (deleted)
+        {
+            Station.Cabinets.Remove(cabinet); // Refresh UI
+            Log($"🗑️ Deleted cabinet {cabinet.SketchName}");
+        }
+        else
+        {
+            errorMessage = error;
+            Log(error);
+        }
+    }
+
 }
 
 <div class="cabinet-icons-box">
@@ -136,8 +158,8 @@
                     {
             <div class="corner-icons">
                 <img src="/Images/edit.png" class="corner-icon" alt="Edit" @onclick="() => StartEdit(cabinet)" />
-                <img src="/Images/delete.png" class="corner-icon" alt="Delete" />
-            </div>
+                            <img src="/Images/delete.png" class="corner-icon" alt="Delete" @onclick="() => DeleteCabinet(cabinet)" />
+                        </div>
                     }
 
                         Width: @cabinet.Width cm<br />
