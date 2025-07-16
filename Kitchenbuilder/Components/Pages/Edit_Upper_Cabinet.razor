@@ -1,6 +1,10 @@
 ﻿@using Kitchenbuilder.Core.Models
 @using System.Text.Json
 @using System.IO
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
 
 @code {
     [Parameter] public int OptionNum { get; set; }
@@ -23,6 +27,33 @@
         }
         catch { data = null; }
     }
+    void SelectUpperCabinet(CabinetInfo cab)
+    {
+        string suffix = cab.SketchName?.Replace("Sketch_Cabinet", "") ?? "";
+        string bodyName = $"Extrude_Drawers{suffix}";
+
+        var model = SwSession.GetActiveModel();
+        SelectBody.SelectByName(model, bodyName);
+    }
+
+    void SelectUpperSpace(Space sp)
+    {
+        string? type = sp.Type?.Trim();
+        string bodyName = type switch
+        {
+            "Microwave" => "Microwave1",
+            "Oven" => "Oven1",
+            "Range Hood" => "Range Hood1",
+            _ => null
+        };
+
+        if (bodyName != null)
+        {
+            var model = SwSession.GetActiveModel();
+            SelectBody.SelectByName(model, bodyName);
+        }
+    }
+
 }
 
 @if (data != null)
@@ -31,12 +62,19 @@
         <h4 style="color: #5a3e1b;">📦 Added Items</h4>
         <div class="upper-icon-grid">
 
-            @* ✅ Render Cabinet Icons *@
+          
             @foreach (var cab in data.Cabinets)
             {
                 <div class="upper-tooltip-wrapper">
-                    <img src="Images/cabinet.gif" class="upper-icon" />
+                    <img src="Images/cabinet.gif" class="upper-icon" @onclick="() => SelectUpperCabinet(cab)" />
+
+
+
                     <div class="upper-tooltip">
+                        <div class="upper-corner-icons">
+                            <img src="Images/edit.png" class="upper-corner-icon" />
+                            <img src="Images/Delete.png" class="upper-corner-icon" />
+                        </div>
                         <strong>Cabinet</strong><br />
                         Width: @cab.Width cm<br />
                         Height: @cab.Height cm<br />
@@ -45,9 +83,10 @@
                         DistanceY: @cab.DistanceY cm
                     </div>
                 </div>
+
             }
 
-            @* ✅ Render Space Icons *@
+       
             @foreach (var sp in data.Spaces)
             {
                 var cleanedType = sp.Type?.Trim() ?? "null";
@@ -63,8 +102,14 @@
                 var imagePath = $"Images/{icon}";
 
                 <div class="upper-tooltip-wrapper">
-                    <img src="@imagePath" class="upper-icon" />
+                    <img src="@imagePath" class="upper-icon" @onclick="() => SelectUpperSpace(sp)" />
+
                     <div class="upper-tooltip">
+                        <div class="upper-corner-icons">
+                            <img src="Images/edit.png" class="upper-corner-icon" />
+                            <img src="Images/Delete.png" class="upper-corner-icon" />
+                        </div>
+
                         <strong>@sp.Type</strong><br />
                         Width: @sp.Width cm<br />
                         Height: @sp.Height cm<br />
@@ -72,6 +117,7 @@
                         DistanceY: @sp.DistanceY cm
                     </div>
                 </div>
+
             }
 
         </div>

@@ -12,3 +12,17 @@
 [16:07:16] ➡️ Setting DistanceY4@Drawers1_4 = 0.30000000000000004 cm
 [16:07:22] ➡️ Setting Width5@Drawers1_4 = 0.001 cm
 [16:07:31] ➡️ Setting DistanceY5@Drawers1_4 = 0.5 cm
+[20:19:44] 🔧 Editing cabinet: Sketch_Cabinet1_4
+[20:19:44] ➡️ Setting Length@Sketch_Cabinet1_4 = 120 cm
+[20:19:44] ➡️ Setting Width@Sketch_Cabinet1_4 = 70 cm
+[20:19:49] 📦 Editing drawers: Drawers1_4
+[20:19:49] ➡️ Setting Width1@Drawers1_4 = 20.666666666666668 cm
+[20:19:54] ➡️ Setting DistanceY1@Drawers1_4 = 47.333333333333336 cm
+[20:19:59] ➡️ Setting Width2@Drawers1_4 = 20.666666666666668 cm
+[20:20:04] ➡️ Setting DistanceY2@Drawers1_4 = 24.666666666666668 cm
+[20:20:08] ➡️ Setting Width3@Drawers1_4 = 20.666666666666668 cm
+[20:20:13] ➡️ Setting DistanceY3@Drawers1_4 = 2 cm
+[20:20:18] ➡️ Setting Width4@Drawers1_4 = 0.001 cm
+[20:20:20] ➡️ Setting DistanceY4@Drawers1_4 = 0.1 cm
+[20:20:25] ➡️ Setting Width5@Drawers1_4 = 0.001 cm
+[20:20:27] ➡️ Setting DistanceY5@Drawers1_4 = 0.30000000000000004 cm

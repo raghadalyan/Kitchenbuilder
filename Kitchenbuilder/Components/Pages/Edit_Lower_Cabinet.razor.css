@@ -126,3 +126,6 @@
     visibility: visible;
     opacity: 1;
 }
+.upper-icon {
+    cursor: pointer;
+}

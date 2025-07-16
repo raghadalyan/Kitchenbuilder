@@ -794,3 +794,51 @@
 [17:01:40] ℹ️ Linear dimension. Converted 2 cm to 0.02 meters.
 [17:01:41] ✅ Dimension 'DistanceY1@Drawers1_6' set to 0.02. Rebuilt model.
 [17:01:42] 💾 Saved model. Warnings: 0, Errors: 0
+[20:19:44] 📏 Editing dimension 'Length@Sketch_Cabinet1_4' to 120
+[20:19:44] ℹ️ Linear dimension. Converted 120 cm to 1.2 meters.
+[20:19:45] ✅ Dimension 'Length@Sketch_Cabinet1_4' set to 1.2. Rebuilt model.
+[20:19:47] 💾 Saved model. Warnings: 0, Errors: 0
+[20:19:47] 📏 Editing dimension 'Width@Sketch_Cabinet1_4' to 70
+[20:19:47] ℹ️ Linear dimension. Converted 70 cm to 0.7 meters.
+[20:19:48] ✅ Dimension 'Width@Sketch_Cabinet1_4' set to 0.7. Rebuilt model.
+[20:19:49] 💾 Saved model. Warnings: 0, Errors: 0
+[20:19:49] 📏 Editing dimension 'Width1@Drawers1_4' to 20.666666666666668
+[20:19:49] ℹ️ Linear dimension. Converted 20.666666666666668 cm to 0.20666666666666667 meters.
+[20:19:53] ✅ Dimension 'Width1@Drawers1_4' set to 0.20666666666666667. Rebuilt model.
+[20:19:54] 💾 Saved model. Warnings: 0, Errors: 0
+[20:19:54] 📏 Editing dimension 'DistanceY1@Drawers1_4' to 47.333333333333336
+[20:19:54] ℹ️ Linear dimension. Converted 47.333333333333336 cm to 0.4733333333333334 meters.
+[20:19:57] ✅ Dimension 'DistanceY1@Drawers1_4' set to 0.4733333333333334. Rebuilt model.
+[20:19:59] 💾 Saved model. Warnings: 0, Errors: 0
+[20:19:59] 📏 Editing dimension 'Width2@Drawers1_4' to 20.666666666666668
+[20:19:59] ℹ️ Linear dimension. Converted 20.666666666666668 cm to 0.20666666666666667 meters.
+[20:20:02] ✅ Dimension 'Width2@Drawers1_4' set to 0.20666666666666667. Rebuilt model.
+[20:20:04] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:04] 📏 Editing dimension 'DistanceY2@Drawers1_4' to 24.666666666666668
+[20:20:04] ℹ️ Linear dimension. Converted 24.666666666666668 cm to 0.24666666666666667 meters.
+[20:20:07] ✅ Dimension 'DistanceY2@Drawers1_4' set to 0.24666666666666667. Rebuilt model.
+[20:20:08] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:08] 📏 Editing dimension 'Width3@Drawers1_4' to 20.666666666666668
+[20:20:08] ℹ️ Linear dimension. Converted 20.666666666666668 cm to 0.20666666666666667 meters.
+[20:20:12] ✅ Dimension 'Width3@Drawers1_4' set to 0.20666666666666667. Rebuilt model.
+[20:20:13] 💾 Saved model. Warnings: 0, Errors: 1
+[20:20:13] 📏 Editing dimension 'DistanceY3@Drawers1_4' to 2
+[20:20:13] ℹ️ Linear dimension. Converted 2 cm to 0.02 meters.
+[20:20:16] ✅ Dimension 'DistanceY3@Drawers1_4' set to 0.02. Rebuilt model.
+[20:20:18] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:18] 📏 Editing dimension 'Width4@Drawers1_4' to 0.001
+[20:20:18] ℹ️ Linear dimension. Converted 0.001 cm to 1E-05 meters.
+[20:20:19] ✅ Dimension 'Width4@Drawers1_4' set to 1E-05. Rebuilt model.
+[20:20:20] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:20] 📏 Editing dimension 'DistanceY4@Drawers1_4' to 0.1
+[20:20:20] ℹ️ Linear dimension. Converted 0.1 cm to 0.001 meters.
+[20:20:23] ✅ Dimension 'DistanceY4@Drawers1_4' set to 0.001. Rebuilt model.
+[20:20:25] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:25] 📏 Editing dimension 'Width5@Drawers1_4' to 0.001
+[20:20:25] ℹ️ Linear dimension. Converted 0.001 cm to 1E-05 meters.
+[20:20:25] ✅ Dimension 'Width5@Drawers1_4' set to 1E-05. Rebuilt model.
+[20:20:27] 💾 Saved model. Warnings: 0, Errors: 0
+[20:20:27] 📏 Editing dimension 'DistanceY5@Drawers1_4' to 0.30000000000000004
+[20:20:27] ℹ️ Linear dimension. Converted 0.30000000000000004 cm to 0.0030000000000000005 meters.
+[20:20:30] ✅ Dimension 'DistanceY5@Drawers1_4' set to 0.0030000000000000005. Rebuilt model.
+[20:20:32] 💾 Saved model. Warnings: 0, Errors: 0

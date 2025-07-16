@@ -26,3 +26,25 @@
 [19:16:36] ✅ Body selected: Extrude_Drawers1_5
 [19:19:05] 🔍 Trying to select body: Extrude_Drawers1_4
 [19:19:08] ✅ Body selected: Extrude_Drawers1_4
+[19:54:17] 🔍 Trying to select body: Extrude_Drawers1_2
+[19:54:19] ✅ Body selected: Extrude_Drawers1_2
+[19:54:28] 🔍 Trying to select body: Extrude_Drawers2_2
+[19:54:30] ❌ Body not found: Extrude_Drawers2_2
+[19:54:40] 🔍 Trying to select body: Extrude_Drawers2_5
+[19:54:41] ✅ Body selected: Extrude_Drawers2_5
+[19:54:43] 🔍 Trying to select body: Extrude_Drawers2_1
+[19:54:43] ✅ Body selected: Extrude_Drawers2_1
+[19:54:49] 🔍 Trying to select body: Extrude_Drawers1_6
+[19:54:49] ✅ Body selected: Extrude_Drawers1_6
+[19:54:51] 🔍 Trying to select body: Microwave1
+[19:54:55] ❌ Body not found: Microwave1
+[19:55:02] 🔍 Trying to select body: Microwave1
+[19:55:03] ❌ Body not found: Microwave1
+[19:59:47] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:59:50] ✅ Body selected: Extrude_Drawers1_5
+[20:00:00] 🔍 Trying to select body: Microwave1
+[20:00:01] ✅ Body selected: Microwave1
+[20:00:02] 🔍 Trying to select body: Extrude_Drawers1_6
+[20:00:02] ✅ Body selected: Extrude_Drawers1_6
+[20:19:29] 🔍 Trying to select body: Extrude_Drawers1_4
+[20:19:30] ✅ Body selected: Extrude_Drawers1_4
