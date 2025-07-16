@@ -205,5 +205,14 @@
       }
     },
     "Exposed": false
+  },
+  "HasIsland": true,
+  "Island": {
+    "Depth": 90,
+    "Width": 180,
+    "Material": "",
+    "DistanceX": 175,
+    "DistanceY": 200,
+    "Direction": 90
   }
 }

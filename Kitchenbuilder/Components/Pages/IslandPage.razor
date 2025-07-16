@@ -5,6 +5,7 @@
 @using System.IO
 @using Microsoft.AspNetCore.Components
 @using Kitchenbuilder.Core.Models
+@using System.Text.Json
 
 <div class="page-background">
     <div class="island-container">
@@ -137,9 +138,17 @@
 
                 EditSketchDim_IModel.SetDimension(model, "D1@Sketch_Move_Island", 0);
                 EditSketchDim_IModel.SetDimension(model, "D2@Sketch_Move_Island", 0);
+                double centerX = floorLength / 2;
+                double centerY = floorWidth / 2;
+
                 EditSketchDim_IModel.SetDimension(model, "DX@Sketch_Move_Island", floorLength / 2);
                 EditSketchDim_IModel.SetDimension(model, "DY@Sketch_Move_Island", floorWidth / 2);
                 Log($"📏 Position set to center: DX={floorLength / 2}, DY={floorWidth / 2}");
+
+                island.DistanceX = centerX;
+                island.DistanceY = centerY;
+                UpdateHasIslandInJson(true);
+
             }
             else
             {
@@ -149,6 +158,8 @@
                 EditSketchDim_IModel.SetDimension(model, "D1@Sketch_Move_Island", 2000);
                 EditSketchDim_IModel.SetDimension(model, "D2@Sketch_Move_Island", 2000);
                 Log("📏 Dimensions set to 2000.");
+                UpdateHasIslandInJson(false);
+
             }
         });
 
@@ -194,12 +205,14 @@
             return;
         }
 
-        island.Direction = (island.Direction == 90) ? 360 : 90;
+        island.Direction = (island.Direction == 90) ? 179.99 : 90;
 
         try
         {
             EditSketchDim_IModel.SetDimension(model, "angle@Sketch_Move_Island", island.Direction);
             Log($"🔄 Island rotation set to {island.Direction}°");
+            // ✅ Save updated direction to JSON
+            UpdateHasIslandInJson(true);
         }
         catch (Exception ex)
         {
@@ -265,6 +278,57 @@
     {
         string optionString = $"Option{Option}";
         NavManager.NavigateTo($"/sink-cooktop-options?option={optionString}");
+    }
+    private void UpdateHasIslandInJson(bool hasIsland)
+    {
+        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{Option}SLD.json";
+
+        try
+        {
+            string jsonText = File.ReadAllText(jsonPath);
+            var doc = JsonDocument.Parse(jsonText);
+            var root = doc.RootElement;
+
+            var dict = new Dictionary<string, object>();
+
+            foreach (var prop in root.EnumerateObject())
+            {
+                dict[prop.Name] = JsonSerializer.Deserialize<object>(prop.Value.GetRawText())!;
+            }
+
+            // Add or overwrite HasIsland
+            dict["HasIsland"] = hasIsland;
+
+            // Add or remove Island object
+            if (hasIsland)
+            {
+                var islandObj = new Dictionary<string, object>
+                    {
+                        ["Depth"] = island.Depth,
+                        ["Width"] = island.Width,
+                        ["Material"] = island.Material ?? "",
+                        ["DistanceX"] = island.DistanceX,
+                        ["DistanceY"] = island.DistanceY,
+                        ["Direction"] = island.Direction
+                    };
+                dict["Island"] = islandObj;
+            }
+            else
+            {
+                dict.Remove("Island");
+            }
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string updatedJson = JsonSerializer.Serialize(dict, options);
+
+            File.WriteAllText(jsonPath, updatedJson);
+
+            Log($"✅ Saved HasIsland and Island data to {jsonPath}");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Failed to update JSON with island data: {ex.Message}");
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
 @inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
+
 @using SolidWorks.Interop.sldworks
 @using SolidWorks.Interop.swconst
 
@@ -28,7 +29,7 @@
             SwSession.SetActiveModel(model);
 
             // 4. Navigate to Island page
-            NavManager.NavigateTo("/sink-cooktop-options?option=3");
+            NavManager.NavigateTo("/island-page?option=3");
         }
         catch (Exception ex)
         {
