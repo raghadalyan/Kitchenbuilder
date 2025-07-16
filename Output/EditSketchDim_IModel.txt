@@ -1032,3 +1032,27 @@
 [02:21:43] ℹ️ Angle detected. Converted 179.99° to 3.1414181206645937 radians.
 [02:21:46] ✅ Dimension 'angle@Sketch_Move_Island' set to 3.1414181206645937. Rebuilt model.
 [02:21:47] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:00] 📏 Editing dimension 'D1@Sketch_Move_Island' to 0
+[02:29:00] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[02:29:00] ✅ Dimension 'D1@Sketch_Move_Island' set to 0. Rebuilt model.
+[02:29:03] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:03] 📏 Editing dimension 'D2@Sketch_Move_Island' to 0
+[02:29:03] ℹ️ Linear dimension. Converted 0 cm to 0 meters.
+[02:29:04] ✅ Dimension 'D2@Sketch_Move_Island' set to 0. Rebuilt model.
+[02:29:06] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:06] 📏 Editing dimension 'DX@Sketch_Move_Island' to 175
+[02:29:06] ℹ️ Linear dimension. Converted 175 cm to 1.75 meters.
+[02:29:06] ✅ Dimension 'DX@Sketch_Move_Island' set to 1.75. Rebuilt model.
+[02:29:08] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:08] 📏 Editing dimension 'DY@Sketch_Move_Island' to 200
+[02:29:08] ℹ️ Linear dimension. Converted 200 cm to 2 meters.
+[02:29:08] ✅ Dimension 'DY@Sketch_Move_Island' set to 2. Rebuilt model.
+[02:29:10] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:24] 📏 Editing dimension 'angle@Sketch_Move_Island' to 179.99
+[02:29:24] ℹ️ Angle detected. Converted 179.99° to 3.1414181206645937 radians.
+[02:29:24] ✅ Dimension 'angle@Sketch_Move_Island' set to 3.1414181206645937. Rebuilt model.
+[02:29:26] 💾 Saved model. Warnings: 0, Errors: 0
+[02:29:28] 📏 Editing dimension 'angle@Sketch_Move_Island' to 90
+[02:29:28] ℹ️ Angle detected. Converted 90° to 1.5707963267948966 radians.
+[02:29:30] ✅ Dimension 'angle@Sketch_Move_Island' set to 1.5707963267948966. Rebuilt model.
+[02:29:32] 💾 Saved model. Warnings: 0, Errors: 0

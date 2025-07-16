@@ -616,3 +616,109 @@
 02:21:37 - 📏 Position set to center: DX=175, DY=200
 02:21:37 - ✅ Saved HasIsland and Island data to C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
 02:21:47 - 🔄 Island rotation set to 179.99°
+02:28:44 - ✅ Model loaded: temp_Option3
+02:28:59 - 🧱 Body found: Extrude_fridge_base1[1]
+02:28:59 - 🧱 Body found: Extrude_fridge_base1[2]
+02:28:59 - 🧱 Body found: <Fridge1>-<Extrude-Thin1>
+02:28:59 - 🧱 Body found: <Fridge1>-<Cut-Extrude2[1]>
+02:28:59 - 🧱 Body found: <Fridge1>-<Cut-Extrude3>
+02:28:59 - 🧱 Body found: <Fridge1>-<Cut-Extrude2[2]>
+02:28:59 - 🧱 Body found: Extrude_1_2
+02:28:59 - 🧱 Body found: Extrude_1_1
+02:28:59 - 🧱 Body found: Extrude_2_1
+02:28:59 - 🧱 Body found: Extrude_2_2
+02:28:59 - 🧱 Body found: Extrude_fridge_base2[1]
+02:28:59 - 🧱 Body found: Extrude_fridge_base2[2]
+02:28:59 - 🧱 Body found: <Fridge2>-<Cut-Extrude2[2]>
+02:28:59 - 🧱 Body found: <Fridge2>-<Extrude-Thin1>
+02:28:59 - 🧱 Body found: <Fridge2>-<Cut-Extrude2[1]>
+02:28:59 - 🧱 Body found: <Fridge2>-<Cut-Extrude3>
+02:28:59 - 🧱 Body found: Extrude_3_1
+02:28:59 - 🧱 Body found: Extrude_3_2
+02:28:59 - 🧱 Body found: Extrude_4_1
+02:28:59 - 🧱 Body found: Extrude_4_2
+02:28:59 - 🧱 Body found: Extrude_CT_4_2
+02:28:59 - 🧱 Body found: Extrude_CT_1_1
+02:28:59 - 🧱 Body found: Extrude_CT_4_1
+02:28:59 - 🧱 Body found: Extrude_CT_2_2
+02:28:59 - 🧱 Body found: Extrude_CT_3_2
+02:28:59 - 🧱 Body found: Boss-Extrude1
+02:28:59 - 🧱 Body found: Wall1
+02:28:59 - 🧱 Body found: WindowSlot12
+02:28:59 - 🧱 Body found: Extrude_Island1
+02:28:59 - 🧱 Body found: Faucet Inox
+02:28:59 - 🧱 Body found: Extrude_Drawers1_12
+02:28:59 - 🧱 Body found: Extrude_Drawers1_1
+02:28:59 - 🧱 Body found: Extrude_Drawers1_2
+02:28:59 - 🧱 Body found: Extrude_Drawers1_3
+02:28:59 - 🧱 Body found: Extrude_Drawers1_4
+02:28:59 - 🧱 Body found: Extrude_Drawers1_5
+02:28:59 - 🧱 Body found: Extrude_Drawers1_6
+02:28:59 - 🧱 Body found: Extrude_Drawers1_7
+02:28:59 - 🧱 Body found: Extrude_Drawers1_8
+02:28:59 - 🧱 Body found: Extrude_Drawers1_9
+02:28:59 - 🧱 Body found: Extrude_Drawers1_10
+02:28:59 - 🧱 Body found: Extrude_Drawers1_11
+02:28:59 - 🧱 Body found: Extrude_Drawers1_13
+02:28:59 - 🧱 Body found: Extrude_Drawers1_14
+02:28:59 - 🧱 Body found: Extrude_Drawers1_15
+02:28:59 - 🧱 Body found: Extrude_Drawers1_16
+02:28:59 - 🧱 Body found: Extrude_Drawers1_17
+02:28:59 - 🧱 Body found: Extrude_Drawers1_18
+02:28:59 - 🧱 Body found: Extrude_Drawers1_19
+02:28:59 - 🧱 Body found: Extrude_Drawers2_19
+02:28:59 - 🧱 Body found: Extrude_Drawers2_18
+02:28:59 - 🧱 Body found: Extrude_Drawers2_17
+02:28:59 - 🧱 Body found: Extrude_Drawers2_16
+02:28:59 - 🧱 Body found: Extrude_Drawers2_15
+02:28:59 - 🧱 Body found: Extrude_Drawers2_14
+02:28:59 - 🧱 Body found: Extrude_Drawers2_13
+02:28:59 - 🧱 Body found: Extrude_Drawers2_4
+02:28:59 - 🧱 Body found: Extrude_Drawers2_1
+02:28:59 - 🧱 Body found: Extrude_Drawers2_3
+02:28:59 - 🧱 Body found: Extrude_Drawers2_5
+02:28:59 - 🧱 Body found: Extrude_Drawers2_6
+02:28:59 - 🧱 Body found: Extrude_Drawers2_7
+02:28:59 - 🧱 Body found: Extrude_Drawers2_8
+02:28:59 - 🧱 Body found: Extrude_Drawers2_9
+02:28:59 - 🧱 Body found: Extrude_Drawers2_10
+02:28:59 - 🧱 Body found: Extrude_Drawers2_11
+02:28:59 - 🧱 Body found: Extrude_Drawers2_12
+02:28:59 - 🧱 Body found: Extrude_Drawers3_1
+02:28:59 - 🧱 Body found: Extrude_Drawers3_2
+02:28:59 - 🧱 Body found: Extrude_Drawers3_3
+02:28:59 - 🧱 Body found: Extrude_Drawers3_4
+02:28:59 - 🧱 Body found: Extrude_Drawers3_5
+02:28:59 - 🧱 Body found: Extrude_Drawers3_6
+02:28:59 - 🧱 Body found: Extrude_Drawers3_7
+02:28:59 - 🧱 Body found: Extrude_Drawers3_8
+02:28:59 - 🧱 Body found: Extrude_Drawers3_9
+02:28:59 - 🧱 Body found: Extrude_Drawers3_10
+02:28:59 - 🧱 Body found: Cut-Sink[1]
+02:28:59 - 🧱 Body found: Cut-Sink[2]
+02:28:59 - 🧱 Body found: Cut-Sink[3]
+02:28:59 - 🧱 Body found: Extrude_Drawers4_1
+02:28:59 - 🧱 Body found: Extrude_Drawers4_2
+02:28:59 - 🧱 Body found: Extrude_Drawers4_3
+02:28:59 - 🧱 Body found: Extrude_Drawers4_4
+02:28:59 - 🧱 Body found: Extrude_Drawers4_5
+02:28:59 - 🧱 Body found: Extrude_Drawers4_6
+02:28:59 - 🧱 Body found: Kitchen_Cooktop_Simple
+02:28:59 - 🧱 Body found: Extrude_Space1_1
+02:28:59 - 🧱 Body found: Extrude_Space1_2
+02:28:59 - 🧱 Body found: Microwave1
+02:28:59 - 🧱 Body found: Body-Move/Copy26[2]
+02:28:59 - 🧱 Body found: Body-Move/Copy26[3]
+02:28:59 - 🧱 Body found: Body-Move/Copy31[1]
+02:28:59 - 🧱 Body found: Oven1
+02:28:59 - 🧱 Body found: <Oven>-<Boss-Extrude14>
+02:28:59 - 🧱 Body found: <Napa ( Hood )>-<Boss-Extrude11>
+02:28:59 - 🧱 Body found: Boss-Extrude68
+02:28:59 - 📐 Floor dimensions: Width=400, Length=350
+02:29:00 - ✅ Showing island body: Extrude_Island1
+02:29:10 - 📏 Position set to center: DX=175, DY=200
+02:29:10 - ✅ Saved HasIsland and Island data to C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+02:29:26 - 🔄 Island rotation set to 179.99°
+02:29:26 - ✅ Saved HasIsland and Island data to C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+02:29:32 - 🔄 Island rotation set to 90°
+02:29:32 - ✅ Saved HasIsland and Island data to C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json

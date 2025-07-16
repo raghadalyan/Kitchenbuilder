@@ -44,3 +44,5 @@
 [2025-07-17 02:21:23] ℹ️ No bodies were shown, skipping save.
 [2025-07-17 02:22:00] ✅ Body already visible: Faucet Inox
 [2025-07-17 02:22:01] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-17 02:29:00] ✅ Body already visible: Extrude_Island1
+[2025-07-17 02:29:00] ℹ️ No bodies were shown, skipping save.
