@@ -168,17 +168,17 @@
   "Wall1": {
     "Cabinets": [
       {
-        "SketchName": "Sketch_Cabinet1_1",
-        "Height": 118,
+        "SketchName": "Sketch_Cabinet1_6",
+        "Height": 58,
         "Depth": 60,
         "Width": 85,
         "HasDrawers": false,
         "DistanceX": 0,
-        "DistanceY": 182,
-        "ExtrudeName": "Extrude_Cabinet1_1",
+        "DistanceY": 242,
+        "ExtrudeName": "Extrude_Cabinet1_6",
         "Drawers": {
-          "SketchName": "Drawers1_1",
-          "Width1": 114,
+          "SketchName": "Drawers1_6",
+          "Width1": 54,
           "DistanceY1": 2,
           "Width2": 0,
           "DistanceY2": 0,
@@ -191,6 +191,15 @@
         }
       }
     ],
-    "Spaces": []
+    "Spaces": [
+      {
+        "Type": "Microwave",
+        "Width": 85,
+        "Height": 60,
+        "DistanceX": 0,
+        "DistanceY": 182,
+        "WallNum": 1
+      }
+    ]
   }
 }

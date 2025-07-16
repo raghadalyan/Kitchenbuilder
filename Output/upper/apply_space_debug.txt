@@ -1,0 +1,4 @@
+[16:27:33] ❌ Space too close to fridge base. DistanceY must be ≥ 182 cm.
+[16:27:37] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_1)
+[16:27:53] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_1)
+[16:29:02] ✅ Space saved to wall Wall1.

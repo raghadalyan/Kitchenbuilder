@@ -46,3 +46,171 @@
 [01:43:59] ✅ Loaded 2 stations.
 [01:43:59] ✅ Active SolidWorks model found.
 [01:44:00] 🔁 Moved to station 0.
+[16:01:23] ➡️ Selected Option: 2
+[16:01:23] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:01:23] 📥 JSON file read successfully.
+[16:01:23] ✅ Loaded 2 stations.
+[16:01:23] ✅ Active SolidWorks model found.
+[16:01:24] 🔁 Moved to station 0.
+[16:21:48] ➡️ Selected Option: 2
+[16:21:48] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:21:48] 📥 JSON file read successfully.
+[16:21:48] ✅ Loaded 2 stations.
+[16:21:48] ✅ Active SolidWorks model found.
+[16:21:50] 🔁 Moved to station 0.
+[16:24:58] ➡️ Selected Option: 2
+[16:24:58] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:24:58] 📥 JSON file read successfully.
+[16:24:58] ✅ Loaded 2 stations.
+[16:24:58] ✅ Active SolidWorks model found.
+[16:24:59] 🔁 Moved to station 0.
+[16:25:29] ➡️ Selected Option: 2
+[16:25:29] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:25:29] 📥 JSON file read successfully.
+[16:25:29] ✅ Loaded 2 stations.
+[16:25:29] ✅ Active SolidWorks model found.
+[16:25:31] 🔁 Moved to station 0.
+[16:34:20] ➡️ Selected Option: 2
+[16:34:20] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:34:20] 📥 JSON file read successfully.
+[16:34:20] ✅ Loaded 2 stations.
+[16:34:20] ✅ Active SolidWorks model found.
+[16:34:21] 🔁 Moved to station 0.
+[16:39:36] ➡️ Selected Option: 2
+[16:39:36] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:39:36] 📥 JSON file read successfully.
+[16:39:36] ✅ Loaded 2 stations.
+[16:39:36] ✅ Active SolidWorks model found.
+[16:39:38] 🔁 Moved to station 0.
+[16:42:51] ➡️ Selected Option: 2
+[16:42:51] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:42:51] 📥 JSON file read successfully.
+[16:42:51] ✅ Loaded 2 stations.
+[16:42:51] ✅ Active SolidWorks model found.
+[16:42:52] 🔁 Moved to station 0.
+[16:49:20] ➡️ Selected Option: 2
+[16:49:20] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:49:20] 📥 JSON file read successfully.
+[16:49:20] ✅ Loaded 2 stations.
+[16:49:20] ✅ Active SolidWorks model found.
+[16:49:21] 🔁 Moved to station 0.
+[16:50:54] ➡️ Selected Option: 2
+[16:50:54] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:50:54] 📥 JSON file read successfully.
+[16:50:54] ✅ Loaded 2 stations.
+[16:50:54] ✅ Active SolidWorks model found.
+[16:50:55] 🔁 Moved to station 0.
+[16:54:20] ➡️ Selected Option: 2
+[16:54:20] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:54:20] 📥 JSON file read successfully.
+[16:54:20] ✅ Loaded 2 stations.
+[16:54:20] ✅ Active SolidWorks model found.
+[16:54:21] 🔁 Moved to station 0.
+[16:58:20] ➡️ Selected Option: 2
+[16:58:20] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:58:20] 📥 JSON file read successfully.
+[16:58:20] ✅ Loaded 2 stations.
+[16:58:20] ✅ Active SolidWorks model found.
+[16:58:21] 🔁 Moved to station 0.
+[16:59:42] ➡️ Selected Option: 2
+[16:59:42] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[16:59:43] 📥 JSON file read successfully.
+[16:59:43] ✅ Loaded 2 stations.
+[16:59:43] ✅ Active SolidWorks model found.
+[16:59:44] 🔁 Moved to station 0.
+[18:02:03] ➡️ Selected Option: 2
+[18:02:03] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[18:02:03] 📥 JSON file read successfully.
+[18:02:03] ✅ Loaded 2 stations.
+[18:02:03] ✅ Active SolidWorks model found.
+[18:02:05] 🔁 Moved to station 0.
+[18:55:04] ➡️ Selected Option: 2
+[18:55:04] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[18:55:04] 📥 JSON file read successfully.
+[18:55:04] ✅ Loaded 2 stations.
+[18:55:04] ✅ Active SolidWorks model found.
+[18:55:06] 🔁 Moved to station 0.
+[18:55:40] ➡️ Selected Option: 2
+[18:55:40] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[18:55:40] 📥 JSON file read successfully.
+[18:55:40] ✅ Loaded 2 stations.
+[18:55:40] ✅ Active SolidWorks model found.
+[18:55:41] 🔁 Moved to station 0.
+[19:00:23] ➡️ Selected Option: 2
+[19:00:23] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:00:23] 📥 JSON file read successfully.
+[19:00:23] ✅ Loaded 2 stations.
+[19:00:23] ✅ Active SolidWorks model found.
+[19:00:24] 🔁 Moved to station 0.
+[19:01:14] ➡️ Selected Option: 2
+[19:01:14] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:01:14] 📥 JSON file read successfully.
+[19:01:14] ✅ Loaded 2 stations.
+[19:01:14] ✅ Active SolidWorks model found.
+[19:01:15] 🔁 Moved to station 0.
+[19:03:59] ➡️ Selected Option: 2
+[19:03:59] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:03:59] 📥 JSON file read successfully.
+[19:03:59] ✅ Loaded 2 stations.
+[19:03:59] ✅ Active SolidWorks model found.
+[19:04:00] 🔁 Moved to station 0.
+[19:06:36] ➡️ Selected Option: 2
+[19:06:36] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:06:36] 📥 JSON file read successfully.
+[19:06:36] ✅ Loaded 2 stations.
+[19:06:36] ✅ Active SolidWorks model found.
+[19:06:37] 🔁 Moved to station 0.
+[19:07:28] ➡️ Selected Option: 2
+[19:07:28] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:07:28] 📥 JSON file read successfully.
+[19:07:28] ✅ Loaded 2 stations.
+[19:07:28] ✅ Active SolidWorks model found.
+[19:07:29] 🔁 Moved to station 0.
+[19:12:48] ➡️ Selected Option: 2
+[19:12:48] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:12:49] 📥 JSON file read successfully.
+[19:12:49] ✅ Loaded 2 stations.
+[19:12:49] ✅ Active SolidWorks model found.
+[19:12:50] 🔁 Moved to station 0.
+[19:13:50] ➡️ Selected Option: 2
+[19:13:50] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:13:50] 📥 JSON file read successfully.
+[19:13:50] ✅ Loaded 2 stations.
+[19:13:50] ✅ Active SolidWorks model found.
+[19:13:51] 🔁 Moved to station 0.
+[19:14:40] ➡️ Selected Option: 2
+[19:14:40] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:14:40] 📥 JSON file read successfully.
+[19:14:40] ✅ Loaded 2 stations.
+[19:14:40] ✅ Active SolidWorks model found.
+[19:14:42] 🔁 Moved to station 0.
+[19:16:24] ➡️ Selected Option: 2
+[19:16:24] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:16:24] 📥 JSON file read successfully.
+[19:16:24] ✅ Loaded 2 stations.
+[19:16:24] ✅ Active SolidWorks model found.
+[19:16:26] 🔁 Moved to station 0.
+[19:18:29] ➡️ Selected Option: 2
+[19:18:29] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:18:29] 📥 JSON file read successfully.
+[19:18:29] ✅ Loaded 2 stations.
+[19:18:29] ✅ Active SolidWorks model found.
+[19:18:30] 🔁 Moved to station 0.
+[19:19:02] ➡️ Selected Option: 2
+[19:19:02] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:19:02] 📥 JSON file read successfully.
+[19:19:02] ✅ Loaded 2 stations.
+[19:19:02] ✅ Active SolidWorks model found.
+[19:19:03] 🔁 Moved to station 0.
+[19:21:40] ➡️ Selected Option: 2
+[19:21:40] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:21:40] 📥 JSON file read successfully.
+[19:21:40] ✅ Loaded 2 stations.
+[19:21:40] ✅ Active SolidWorks model found.
+[19:21:41] 🔁 Moved to station 0.
+[19:25:07] ➡️ Selected Option: 2
+[19:25:07] 📄 JSON path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[19:25:07] 📥 JSON file read successfully.
+[19:25:07] ✅ Loaded 2 stations.
+[19:25:07] ✅ Active SolidWorks model found.
+[19:25:08] 🔁 Moved to station 0.

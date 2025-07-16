@@ -1,5 +1,6 @@
 ﻿@using Kitchenbuilder.Core.Models
 @using System.Text.Json
+@using System.IO
 
 @code {
     [Parameter] public int OptionNum { get; set; }
@@ -23,48 +24,57 @@
         catch { data = null; }
     }
 }
+
 @if (data != null)
 {
-    <div class="edit-box">
+    <div class="edit-upper-box">
         <h4 style="color: #5a3e1b;">📦 Added Items</h4>
-        <div class="icon-grid">
+        <div class="upper-icon-grid">
+
+            @* ✅ Render Cabinet Icons *@
             @foreach (var cab in data.Cabinets)
             {
-                <img src="Images/cabinet.gif" title="Cabinet @cab.Width x @cab.Height" class="icon" />
+                <div class="upper-tooltip-wrapper">
+                    <img src="Images/cabinet.gif" class="upper-icon" />
+                    <div class="upper-tooltip">
+                        <strong>Cabinet</strong><br />
+                        Width: @cab.Width cm<br />
+                        Height: @cab.Height cm<br />
+                        Depth: @cab.Depth cm<br />
+                        DistanceX: @cab.DistanceX cm<br />
+                        DistanceY: @cab.DistanceY cm
+                    </div>
+                </div>
             }
+
+            @* ✅ Render Space Icons *@
             @foreach (var sp in data.Spaces)
             {
-                var icon = sp.Type switch
+                var cleanedType = sp.Type?.Trim() ?? "null";
+                var icon = cleanedType switch
                 {
-                    "Microwave" => "Microwave.gif",
-                    "Oven" => "Oven.png",
+                    "Microwave" => "microwave.gif",
+                    "Oven" => "Oven.gif",
                     "Range Hood" => "Range Hood.gif",
                     "DishWasher" => "dishwasher.gif",
                     _ => "other.png"
                 };
-                <img src=$"Images/@icon" title="@sp.Type @sp.Width x @sp.Height" class="icon" />
+
+                var imagePath = $"Images/{icon}";
+
+                <div class="upper-tooltip-wrapper">
+                    <img src="@imagePath" class="upper-icon" />
+                    <div class="upper-tooltip">
+                        <strong>@sp.Type</strong><br />
+                        Width: @sp.Width cm<br />
+                        Height: @sp.Height cm<br />
+                        DistanceX: @sp.DistanceX cm<br />
+                        DistanceY: @sp.DistanceY cm
+                    </div>
+                </div>
             }
+
         </div>
     </div>
 }
 
-<style>
-    .edit-box {
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        background-color: #faf3e0;
-        border-radius: 8px;
-    }
-
-    .icon-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .icon {
-        width: 50px;
-        height: 50px;
-    }
-</style>

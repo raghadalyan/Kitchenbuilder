@@ -40,3 +40,164 @@
 [01:44:03] ➖ No visible base on wall: Wall3
 [01:44:03] ➖ No visible base on wall: Wall4
 [01:44:03] 📊 Total stations found: 2
+[16:20:18] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:20:18] 📏 Floor: Width=400, Length=350
+[16:20:18] ✅ Added station for: Wall1 with length 400
+[16:20:18] ✅ Added station for: Wall2 with length 350
+[16:20:18] ➖ No visible base on wall: Wall3
+[16:20:18] ➖ No visible base on wall: Wall4
+[16:20:18] 📊 Total stations found: 2
+[16:25:10] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:25:10] 📏 Floor: Width=400, Length=350
+[16:25:10] ✅ Added station for: Wall1 with length 400
+[16:25:10] ✅ Added station for: Wall2 with length 350
+[16:25:10] ➖ No visible base on wall: Wall3
+[16:25:10] ➖ No visible base on wall: Wall4
+[16:25:10] 📊 Total stations found: 2
+[16:26:02] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:26:02] 📏 Floor: Width=400, Length=350
+[16:26:02] ✅ Added station for: Wall1 with length 400
+[16:26:02] ✅ Added station for: Wall2 with length 350
+[16:26:02] ➖ No visible base on wall: Wall3
+[16:26:02] ➖ No visible base on wall: Wall4
+[16:26:02] 📊 Total stations found: 2
+[16:34:23] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:34:23] 📏 Floor: Width=400, Length=350
+[16:34:23] ✅ Added station for: Wall1 with length 400
+[16:34:23] ✅ Added station for: Wall2 with length 350
+[16:34:23] ➖ No visible base on wall: Wall3
+[16:34:23] ➖ No visible base on wall: Wall4
+[16:34:23] 📊 Total stations found: 2
+[16:39:39] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:39:39] 📏 Floor: Width=400, Length=350
+[16:39:39] ✅ Added station for: Wall1 with length 400
+[16:39:39] ✅ Added station for: Wall2 with length 350
+[16:39:39] ➖ No visible base on wall: Wall3
+[16:39:39] ➖ No visible base on wall: Wall4
+[16:39:39] 📊 Total stations found: 2
+[16:43:00] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:43:00] 📏 Floor: Width=400, Length=350
+[16:43:00] ✅ Added station for: Wall1 with length 400
+[16:43:00] ✅ Added station for: Wall2 with length 350
+[16:43:00] ➖ No visible base on wall: Wall3
+[16:43:00] ➖ No visible base on wall: Wall4
+[16:43:00] 📊 Total stations found: 2
+[16:49:28] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:49:28] 📏 Floor: Width=400, Length=350
+[16:49:28] ✅ Added station for: Wall1 with length 400
+[16:49:28] ✅ Added station for: Wall2 with length 350
+[16:49:28] ➖ No visible base on wall: Wall3
+[16:49:28] ➖ No visible base on wall: Wall4
+[16:49:28] 📊 Total stations found: 2
+[16:50:57] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:50:57] 📏 Floor: Width=400, Length=350
+[16:50:57] ✅ Added station for: Wall1 with length 400
+[16:50:57] ✅ Added station for: Wall2 with length 350
+[16:50:57] ➖ No visible base on wall: Wall3
+[16:50:57] ➖ No visible base on wall: Wall4
+[16:50:57] 📊 Total stations found: 2
+[16:54:22] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:54:22] 📏 Floor: Width=400, Length=350
+[16:54:22] ✅ Added station for: Wall1 with length 400
+[16:54:22] ✅ Added station for: Wall2 with length 350
+[16:54:22] ➖ No visible base on wall: Wall3
+[16:54:22] ➖ No visible base on wall: Wall4
+[16:54:22] 📊 Total stations found: 2
+[16:58:24] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:58:24] 📏 Floor: Width=400, Length=350
+[16:58:24] ✅ Added station for: Wall1 with length 400
+[16:58:24] ✅ Added station for: Wall2 with length 350
+[16:58:24] ➖ No visible base on wall: Wall3
+[16:58:24] ➖ No visible base on wall: Wall4
+[16:58:24] 📊 Total stations found: 2
+[16:59:46] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:59:46] 📏 Floor: Width=400, Length=350
+[16:59:46] ✅ Added station for: Wall1 with length 400
+[16:59:46] ✅ Added station for: Wall2 with length 350
+[16:59:46] ➖ No visible base on wall: Wall3
+[16:59:46] ➖ No visible base on wall: Wall4
+[16:59:46] 📊 Total stations found: 2
+[18:02:25] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[18:02:25] 📏 Floor: Width=400, Length=350
+[18:02:25] ✅ Added station for: Wall1 with length 400
+[18:02:25] ✅ Added station for: Wall2 with length 350
+[18:02:25] ➖ No visible base on wall: Wall3
+[18:02:25] ➖ No visible base on wall: Wall4
+[18:02:25] 📊 Total stations found: 2
+[18:55:10] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[18:55:10] 📏 Floor: Width=400, Length=350
+[18:55:10] ✅ Added station for: Wall1 with length 400
+[18:55:10] ✅ Added station for: Wall2 with length 350
+[18:55:10] ➖ No visible base on wall: Wall3
+[18:55:10] ➖ No visible base on wall: Wall4
+[18:55:10] 📊 Total stations found: 2
+[18:56:06] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[18:56:06] 📏 Floor: Width=400, Length=350
+[18:56:06] ✅ Added station for: Wall1 with length 400
+[18:56:06] ✅ Added station for: Wall2 with length 350
+[18:56:06] ➖ No visible base on wall: Wall3
+[18:56:06] ➖ No visible base on wall: Wall4
+[18:56:06] 📊 Total stations found: 2
+[19:00:26] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:00:26] 📏 Floor: Width=400, Length=350
+[19:00:26] ✅ Added station for: Wall1 with length 400
+[19:00:26] ✅ Added station for: Wall2 with length 350
+[19:00:26] ➖ No visible base on wall: Wall3
+[19:00:26] ➖ No visible base on wall: Wall4
+[19:00:26] 📊 Total stations found: 2
+[19:01:20] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:01:20] 📏 Floor: Width=400, Length=350
+[19:01:20] ✅ Added station for: Wall1 with length 400
+[19:01:20] ✅ Added station for: Wall2 with length 350
+[19:01:20] ➖ No visible base on wall: Wall3
+[19:01:20] ➖ No visible base on wall: Wall4
+[19:01:20] 📊 Total stations found: 2
+[19:04:02] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:04:02] 📏 Floor: Width=400, Length=350
+[19:04:02] ✅ Added station for: Wall1 with length 400
+[19:04:02] ✅ Added station for: Wall2 with length 350
+[19:04:02] ➖ No visible base on wall: Wall3
+[19:04:02] ➖ No visible base on wall: Wall4
+[19:04:02] 📊 Total stations found: 2
+[19:06:41] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:06:41] 📏 Floor: Width=400, Length=350
+[19:06:41] ✅ Added station for: Wall1 with length 400
+[19:06:41] ✅ Added station for: Wall2 with length 350
+[19:06:41] ➖ No visible base on wall: Wall3
+[19:06:41] ➖ No visible base on wall: Wall4
+[19:06:41] 📊 Total stations found: 2
+[19:07:33] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:07:33] 📏 Floor: Width=400, Length=350
+[19:07:33] ✅ Added station for: Wall1 with length 400
+[19:07:33] ✅ Added station for: Wall2 with length 350
+[19:07:33] ➖ No visible base on wall: Wall3
+[19:07:33] ➖ No visible base on wall: Wall4
+[19:07:33] 📊 Total stations found: 2
+[19:13:07] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:13:07] 📏 Floor: Width=400, Length=350
+[19:13:07] ✅ Added station for: Wall1 with length 400
+[19:13:07] ✅ Added station for: Wall2 with length 350
+[19:13:07] ➖ No visible base on wall: Wall3
+[19:13:07] ➖ No visible base on wall: Wall4
+[19:13:07] 📊 Total stations found: 2
+[19:13:53] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:13:53] 📏 Floor: Width=400, Length=350
+[19:13:53] ✅ Added station for: Wall1 with length 400
+[19:13:53] ✅ Added station for: Wall2 with length 350
+[19:13:53] ➖ No visible base on wall: Wall3
+[19:13:53] ➖ No visible base on wall: Wall4
+[19:13:53] 📊 Total stations found: 2
+[19:21:44] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:21:44] 📏 Floor: Width=400, Length=350
+[19:21:44] ✅ Added station for: Wall1 with length 400
+[19:21:44] ✅ Added station for: Wall2 with length 350
+[19:21:44] ➖ No visible base on wall: Wall3
+[19:21:44] ➖ No visible base on wall: Wall4
+[19:21:44] 📊 Total stations found: 2
+[19:25:13] 📥 Reading JSON: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[19:25:13] 📏 Floor: Width=400, Length=350
+[19:25:13] ✅ Added station for: Wall1 with length 400
+[19:25:13] ✅ Added station for: Wall2 with length 350
+[19:25:13] ➖ No visible base on wall: Wall3
+[19:25:13] ➖ No visible base on wall: Wall4
+[19:25:13] 📊 Total stations found: 2

@@ -1,0 +1,2 @@
+[16:28:43] 📐 Editing offset of plane 'Plane_Microwave' to 182 cm
+[16:28:47] ✅ Offset updated to 182 cm (=1.82 m)

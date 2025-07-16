@@ -1,0 +1,28 @@
+[19:12:57] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:13:00] ✅ Body selected: Extrude_Drawers1_5
+[19:14:44] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:47] ✅ Body selected: Extrude_Drawers1_5
+[19:14:47] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:48] ✅ Body selected: Extrude_Drawers1_5
+[19:14:48] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:48] ✅ Body selected: Extrude_Drawers1_5
+[19:14:48] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:49] ✅ Body selected: Extrude_Drawers1_5
+[19:14:49] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:49] ✅ Body selected: Extrude_Drawers1_5
+[19:14:49] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:50] ✅ Body selected: Extrude_Drawers1_5
+[19:14:50] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:14:51] ✅ Body selected: Extrude_Drawers1_5
+[19:16:28] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:16:32] ✅ Body selected: Extrude_Drawers1_5
+[19:16:32] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:16:34] ✅ Body selected: Extrude_Drawers1_5
+[19:16:34] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:16:35] ✅ Body selected: Extrude_Drawers1_5
+[19:16:35] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:16:35] ✅ Body selected: Extrude_Drawers1_5
+[19:16:35] 🔍 Trying to select body: Extrude_Drawers1_5
+[19:16:36] ✅ Body selected: Extrude_Drawers1_5
+[19:19:05] 🔍 Trying to select body: Extrude_Drawers1_4
+[19:19:08] ✅ Body selected: Extrude_Drawers1_4

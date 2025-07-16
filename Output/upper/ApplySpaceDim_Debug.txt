@@ -1,0 +1,6 @@
+[16:28:29] 📦 Applying space type: Microwave on wall 1 (FloorLength: 350, FloorWidth: 400)
+[16:28:29] ➡️ Resetting D1 and D2 to 0...
+[16:28:35] 🧱 Wall 1 detected:
+[16:28:35]   ↪ angle = 180°, DX = 30 cm, DY = 400 cm, Plane offset = 182 cm
+[16:28:47] 📏 Applying width and height...
+[16:29:02] ✅ Width set to 85 cm, Height set to 60 cm, Vertical margin = 40 cm

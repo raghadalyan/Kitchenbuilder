@@ -29,3 +29,13 @@
 [01:15:00] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
 [01:15:00] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
 [01:15:00] ✅ Position is legal.
+[17:01:14] 📦 Checking cabinet on Wall 1: (X=0, Y=242, W=85, H=58)
+[17:01:14] 🔍 Cabinet overlaps base: fridge_base1
+[17:01:14] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
+[17:01:14] ↔ Compare with station cabinet Sketch_Cabinet1_1 at (X=85, Y=15)
+[17:01:14] ↔ Compare with station cabinet Sketch_Cabinet1_2 at (X=100, Y=15)
+[17:01:14] ↔ Compare with station cabinet Sketch_Cabinet1_3 at (X=160, Y=15)
+[17:01:14] ↔ Compare with station cabinet Sketch_Cabinet1_4 at (X=220, Y=15)
+[17:01:14] ↔ Compare with station cabinet Sketch_Cabinet1_5 at (X=340, Y=15)
+[17:01:14] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
+[17:01:14] ✅ Position is legal.
