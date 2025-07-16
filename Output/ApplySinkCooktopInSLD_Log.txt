@@ -1,24 +1,12 @@
-[23:27:30] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[23:27:41] 🔧 Applying Sink placement on Wall2, Base1
-[23:27:52] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=258, DY=10
-[23:28:02] 🔥 Applying Cooktop placement on Wall2, Base1
-[23:28:13] ✅ Finished applying sink/cooktop.
-[23:28:17] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[23:28:22] 🔧 Applying Sink placement on Wall2, Base1
-[23:28:30] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=145, DY=10
-[23:28:41] ✅ Finished applying sink/cooktop.
-[23:28:41] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[23:28:45] 🔥 Applying Cooktop placement on Wall1, Base2
-[23:28:56] ✅ Finished applying sink/cooktop.
-[01:03:32] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[01:03:37] 🔧 Applying Sink placement on Wall2, Base1
-[01:03:45] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=31, DY=10
-[01:03:56] 🔥 Applying Cooktop placement on Wall2, Base1
-[01:04:07] ✅ Finished applying sink/cooktop.
-[01:04:11] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[01:04:16] 🔧 Applying Sink placement on Wall2, Base1
-[01:04:24] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=145, DY=10
-[01:04:34] ✅ Finished applying sink/cooktop.
-[01:04:34] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
-[01:04:38] 🔥 Applying Cooktop placement on Wall1, Base2
-[01:04:49] ✅ Finished applying sink/cooktop.
+[00:02:16] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
+[00:02:25] 🔧 Applying Sink placement on Wall2, Base1
+[00:02:35] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=258, DY=10
+[00:02:46] 🔥 Applying Cooktop placement on Wall2, Base1
+[00:02:57] ✅ Finished applying sink/cooktop.
+[00:03:03] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
+[00:03:07] 🔧 Applying Sink placement on Wall2, Base1
+[00:03:15] ✏️ Editing Sink Cut Sketch: Width=60, Length=40, DX=145, DY=10
+[00:03:25] ✅ Finished applying sink/cooktop.
+[00:03:25] 🛠 Resetting base position: X@On_CT = 0, Y@On_CT = 0
+[00:03:30] 🔥 Applying Cooktop placement on Wall3, Base1
+[00:03:41] ✅ Finished applying sink/cooktop.

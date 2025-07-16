@@ -13,6 +13,10 @@
     private WallCabinetWrapper? data;
     private string wallKey => $"Wall{WallNumber}";
     private string jsonPath => $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
+    CabinetInfo? editingCabinet = null;
+
+    double editWidth, editHeight, editDepth, editDX, editDY;
+    bool showEditBox = false;
 
     protected override void OnParametersSet()
     {
@@ -53,6 +57,109 @@
             SelectBody.SelectByName(model, bodyName);
         }
     }
+    void DeleteCabinet(CabinetInfo cab)
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null || data == null) return;
+
+        string errorMessage;
+
+        bool result = UpperCabinetUpdater.DeleteCabinet(model, cab, null, out errorMessage);
+        if (!result)
+        {
+            Console.WriteLine("Error deleting cabinet: " + errorMessage);
+            return;
+        }
+
+        // Remove from memory
+        data.Cabinets.Remove(cab);
+
+        // Write updated JSON
+        SaveData();
+    }
+
+    void DeleteSpace(Space sp)
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null || data == null) return;
+
+        string errorMessage;
+
+        bool result = UpperCabinetUpdater.DeleteCabinet(model, null, sp, out errorMessage);
+        if (!result)
+        {
+            Console.WriteLine("Error deleting space: " + errorMessage);
+            return;
+        }
+
+        // Remove from memory
+        data.Spaces.Remove(sp);
+
+        // Write updated JSON
+        SaveData();
+    }
+
+    void SaveData()
+    {
+        var json = File.ReadAllText(jsonPath);
+        var all = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json);
+        if (all == null) return;
+
+        all[wallKey] = data!;
+        File.WriteAllText(jsonPath, JsonSerializer.Serialize(all, new JsonSerializerOptions { WriteIndented = true }));
+    }
+    void BeginEditCabinet(CabinetInfo cab)
+    {
+        editingCabinet = cab;
+        editWidth = cab.Width;
+        editHeight = cab.Height;
+        editDepth = cab.Depth;
+        editDX = cab.DistanceX;
+        editDY = cab.DistanceY;
+        showEditBox = true;
+    }
+
+
+
+    void CancelEdit()
+    {
+        editingCabinet = null;
+        showEditBox = false;
+    }
+    void ApplyEdit()
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null) return;
+
+        string error = "";
+
+        if (editingCabinet != null)
+        {
+            bool ok = UpperCabinetUpdater.UpdateCabinet(
+                editingCabinet.SketchName!,
+                editWidth, editHeight, editDepth, editDX, editDY,
+                model, WallNumber,
+                out error
+            );
+
+            if (ok)
+            {
+                editingCabinet.Width = (int)editWidth;
+                editingCabinet.Height = (int)editHeight;
+                editingCabinet.Depth = (int)editDepth;
+                editingCabinet.DistanceX = (int)editDX;
+                editingCabinet.DistanceY = (int)editDY;
+            }
+            else
+            {
+                Console.WriteLine("❌ Error: " + error);
+            }
+        }
+
+        SaveData();      // ✅ must be inside the method
+        CancelEdit();    // ✅ must be inside the method
+    }
+}
 
 }
 
@@ -72,8 +179,8 @@
 
                     <div class="upper-tooltip">
                         <div class="upper-corner-icons">
-                            <img src="Images/edit.png" class="upper-corner-icon" />
-                            <img src="Images/Delete.png" class="upper-corner-icon" />
+<img src="Images/edit.png" class="upper-corner-icon" @onclick="() => BeginEditCabinet(cab)" />
+                            <img src="Images/Delete.png" class="upper-corner-icon" @onclick="() => DeleteCabinet(cab)" />
                         </div>
                         <strong>Cabinet</strong><br />
                         Width: @cab.Width cm<br />
@@ -106,8 +213,7 @@
 
                     <div class="upper-tooltip">
                         <div class="upper-corner-icons">
-                            <img src="Images/edit.png" class="upper-corner-icon" />
-                            <img src="Images/Delete.png" class="upper-corner-icon" />
+                            <img src="Images/Delete.png" class="upper-corner-icon" @onclick="() => DeleteSpace(sp)" />
                         </div>
 
                         <strong>@sp.Type</strong><br />
@@ -121,6 +227,29 @@
             }
 
         </div>
+
+
     </div>
+    @if (showEditBox)
+    {
+            <div class="modal-backdrop">
+                <div class="edit-popup">
+                <h3 class="edit-title">Edit Cabinet</h3>
+                    <label>Width: <input type="number" @bind="editWidth" /></label><br />
+                    <label>Height: <input type="number" @bind="editHeight" /></label><br />
+  
+                    <label>Depth: <input type="number" @bind="editDepth" /></label> <br />
+                
+                    <label>DistanceX: <input type="number" @bind="editDX" /></label><br />
+                    <label>DistanceY: <input type="number" @bind="editDY" /></label><br />
+
+                    <div class="modal-buttons">
+                        <button @onclick="ApplyEdit">Save</button>
+                        <button @onclick="CancelEdit">Cancel</button>
+                    </div>
+                </div>
+            </div>
+    }
+
 }
 

@@ -1,177 +1,187 @@
-01:11:10 - 🛠 Applying cabinet dims: Sketch_Cabinet2_1 => Width=50, Height=70, DistanceX=0
-01:11:25 - 📐 DistanceY=230 applied to Sketch_Cabinet2_1
-01:11:28 - ✅ Depth 60 applied to Extrude_Cabinet2_1
-01:11:32 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_1
-01:11:32 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:11:32 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:11:32 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:11:32 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:11:35 - 🛠 Applying cabinet dims: Sketch_Cabinet2_2 => Width=50, Height=70, DistanceX=50
-01:11:46 - 📐 DistanceY=230 applied to Sketch_Cabinet2_2
-01:11:49 - ✅ Depth 60 applied to Extrude_Cabinet2_2
-01:11:52 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_2
-01:11:52 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:11:52 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:11:52 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:11:52 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:11:54 - 🛠 Applying cabinet dims: Sketch_Cabinet2_3 => Width=50, Height=70, DistanceX=100
-01:12:06 - 📐 DistanceY=230 applied to Sketch_Cabinet2_3
-01:12:08 - ✅ Depth 60 applied to Extrude_Cabinet2_3
-01:12:12 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_3
-01:12:12 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:12:12 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:12:12 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:12:12 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:12:14 - 🛠 Applying cabinet dims: Sketch_Cabinet2_4 => Width=50, Height=70, DistanceX=150
-01:12:26 - 📐 DistanceY=230 applied to Sketch_Cabinet2_4
-01:12:29 - ✅ Depth 60 applied to Extrude_Cabinet2_4
-01:12:33 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_4
-01:12:33 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:12:33 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:12:33 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:12:33 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:12:35 - 🛠 Applying cabinet dims: Sketch_Cabinet2_5 => Width=50, Height=70, DistanceX=200
-01:12:46 - 📐 DistanceY=230 applied to Sketch_Cabinet2_5
-01:12:48 - ✅ Depth 60 applied to Extrude_Cabinet2_5
-01:12:52 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_5
-01:12:52 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:12:52 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:12:52 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:12:52 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:12:54 - 🛠 Applying cabinet dims: Sketch_Cabinet2_6 => Width=50, Height=70, DistanceX=250
-01:13:03 - 📐 DistanceY=230 applied to Sketch_Cabinet2_6
-01:13:06 - ✅ Depth 60 applied to Extrude_Cabinet2_6
-01:13:08 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_6
-01:13:08 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:13:08 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:13:08 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:13:08 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:13:09 - 🛠 Applying cabinet dims: Sketch_Cabinet2_7 => Width=50, Height=70, DistanceX=300
-01:13:21 - 📐 DistanceY=230 applied to Sketch_Cabinet2_7
-01:13:23 - ✅ Depth 60 applied to Extrude_Cabinet2_7
-01:13:27 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_7
-01:13:27 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:13:27 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:13:27 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:13:27 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:13:29 - ✅ All cabinet and drawer dimensions applied and model saved.
-01:15:02 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=85, Height=118, DistanceX=0
-01:15:18 - 📐 DistanceY=182 applied to Sketch_Cabinet1_1
-01:15:21 - ✅ Depth 60 applied to Extrude_Cabinet1_1
-01:15:26 - ✏️ Drawer 1: Width=114, DistanceY=2 @ Drawers1_1
-01:15:26 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-01:15:26 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-01:15:26 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-01:15:26 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-01:15:28 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:02:29 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=15, Height=70, DistanceX=85
-16:02:45 - 📐 DistanceY=15 applied to Sketch_Cabinet1_1
-16:02:45 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_1
-16:02:50 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_1
-16:02:50 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:02:50 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:02:50 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:02:50 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:02:52 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:03:45 - 🛠 Applying cabinet dims: Sketch_Cabinet1_2 => Width=60, Height=70, DistanceX=100
-16:03:58 - 📐 DistanceY=15 applied to Sketch_Cabinet1_2
-16:03:58 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_2
-16:04:02 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_2
-16:04:02 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:04:02 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:04:02 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:04:02 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:04:04 - 🛠 Applying cabinet dims: Sketch_Cabinet1_3 => Width=60, Height=70, DistanceX=160
-16:04:17 - 📐 DistanceY=15 applied to Sketch_Cabinet1_3
-16:04:17 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_3
-16:04:21 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_3
-16:04:21 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:04:21 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:04:21 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:04:21 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:04:22 - 🛠 Applying cabinet dims: Sketch_Cabinet1_4 => Width=60, Height=70, DistanceX=220
-16:04:35 - 📐 DistanceY=15 applied to Sketch_Cabinet1_4
-16:04:35 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_4
-16:04:38 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_4
-16:04:38 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:04:38 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:04:38 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:04:38 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:04:40 - 🛠 Applying cabinet dims: Sketch_Cabinet1_5 => Width=60, Height=70, DistanceX=280
-16:04:53 - 📐 DistanceY=15 applied to Sketch_Cabinet1_5
-16:04:53 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_5
-16:04:57 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_5
-16:04:57 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:04:57 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:04:57 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:04:57 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:04:58 - 🛠 Applying cabinet dims: Sketch_Cabinet1_6 => Width=60, Height=70, DistanceX=340
-16:05:10 - 📐 DistanceY=15 applied to Sketch_Cabinet1_6
-16:05:10 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_6
-16:05:14 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_6
-16:05:14 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:05:14 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:05:14 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:05:14 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:05:16 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:07:55 - 🛠 Applying cabinet dims: Sketch_Cabinet1_5 => Width=60, Height=70, DistanceX=340
-16:08:06 - 📐 DistanceY=15 applied to Sketch_Cabinet1_5
-16:08:06 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_5
-16:08:10 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers1_5
-16:08:10 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:08:10 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:08:10 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:08:10 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:08:12 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:09:30 - 🛠 Applying cabinet dims: Sketch_Cabinet2_1 => Width=60, Height=70, DistanceX=60
-16:09:42 - 📐 DistanceY=15 applied to Sketch_Cabinet2_1
-16:09:42 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_1
-16:09:46 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_1
-16:09:46 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:09:46 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:09:46 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:09:46 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:09:48 - 🛠 Applying cabinet dims: Sketch_Cabinet2_2 => Width=60, Height=70, DistanceX=120
-16:09:59 - 📐 DistanceY=15 applied to Sketch_Cabinet2_2
-16:09:59 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_2
-16:10:03 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_2
-16:10:03 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:10:03 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:10:03 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:10:03 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:10:05 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:11:09 - 🛠 Applying cabinet dims: Sketch_Cabinet2_3 => Width=60, Height=70, DistanceX=180
-16:11:22 - 📐 DistanceY=15 applied to Sketch_Cabinet2_3
-16:11:22 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_3
-16:11:26 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_3
-16:11:26 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:11:26 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:11:26 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:11:26 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:11:28 - 🛠 Applying cabinet dims: Sketch_Cabinet2_4 => Width=60, Height=70, DistanceX=240
-16:11:40 - 📐 DistanceY=15 applied to Sketch_Cabinet2_4
-16:11:40 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_4
-16:11:44 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_4
-16:11:44 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:11:44 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:11:44 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:11:44 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:11:46 - ✅ All cabinet and drawer dimensions applied and model saved.
-16:11:55 - 🛠 Applying cabinet dims: Sketch_Cabinet2_5 => Width=50, Height=70, DistanceX=300
-16:12:07 - 📐 DistanceY=15 applied to Sketch_Cabinet2_5
-16:12:07 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_5
-16:12:11 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_5
-16:12:11 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-16:12:11 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-16:12:11 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-16:12:11 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-16:12:13 - ✅ All cabinet and drawer dimensions applied and model saved.
-17:01:15 - 🛠 Applying cabinet dims: Sketch_Cabinet1_6 => Width=85, Height=58, DistanceX=0
-17:01:33 - 📐 DistanceY=242 applied to Sketch_Cabinet1_6
-17:01:36 - ✅ Depth 60 applied to Extrude_Cabinet1_6
-17:01:42 - ✏️ Drawer 1: Width=54, DistanceY=2 @ Drawers1_6
-17:01:42 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-17:01:42 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-17:01:42 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-17:01:42 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-17:01:44 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:04:37 - 🛠 Applying cabinet dims: Sketch_Cabinet1_1 => Width=60, Height=50, DistanceX=85
+00:04:51 - 📐 DistanceY=15 applied to Sketch_Cabinet1_1
+00:04:51 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_1
+00:04:57 - ✏️ Drawer 1: Width=46, DistanceY=2 @ Drawers1_1
+00:04:57 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:04:57 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:04:57 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:04:57 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:04:59 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:07:20 - 🛠 Applying cabinet dims: Sketch_Cabinet1_2 => Width=40, Height=5, DistanceX=145
+00:07:35 - 📐 DistanceY=15 applied to Sketch_Cabinet1_2
+00:07:35 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_2
+00:07:42 - ✏️ Drawer 1: Width=1, DistanceY=2 @ Drawers1_2
+00:07:42 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:07:42 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:07:42 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:07:42 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:07:44 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:08:12 - 🛠 Applying cabinet dims: Sketch_Cabinet1_3 => Width=43, Height=285, DistanceX=185
+00:08:28 - 📐 DistanceY=15 applied to Sketch_Cabinet1_3
+00:08:28 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_3
+00:08:35 - ✏️ Drawer 1: Width=281, DistanceY=2 @ Drawers1_3
+00:08:35 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:08:35 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:08:35 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:08:35 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:08:37 - 🛠 Applying cabinet dims: Sketch_Cabinet1_4 => Width=43, Height=285, DistanceX=228
+00:08:52 - 📐 DistanceY=15 applied to Sketch_Cabinet1_4
+00:08:52 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_4
+00:08:59 - ✏️ Drawer 1: Width=281, DistanceY=2 @ Drawers1_4
+00:08:59 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:08:59 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:08:59 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:08:59 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:09:01 - 🛠 Applying cabinet dims: Sketch_Cabinet1_5 => Width=43, Height=285, DistanceX=271
+00:09:17 - 📐 DistanceY=15 applied to Sketch_Cabinet1_5
+00:09:17 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_5
+00:09:24 - ✏️ Drawer 1: Width=281, DistanceY=2 @ Drawers1_5
+00:09:24 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:09:24 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:09:24 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:09:24 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:09:26 - 🛠 Applying cabinet dims: Sketch_Cabinet1_6 => Width=43, Height=285, DistanceX=314
+00:09:42 - 📐 DistanceY=15 applied to Sketch_Cabinet1_6
+00:09:42 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_6
+00:09:48 - ✏️ Drawer 1: Width=281, DistanceY=2 @ Drawers1_6
+00:09:48 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:09:48 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:09:48 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:09:48 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:09:51 - 🛠 Applying cabinet dims: Sketch_Cabinet1_7 => Width=43, Height=285, DistanceX=357
+00:10:06 - 📐 DistanceY=15 applied to Sketch_Cabinet1_7
+00:10:06 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet1_7
+00:10:12 - ✏️ Drawer 1: Width=281, DistanceY=2 @ Drawers1_7
+00:10:12 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:10:12 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:10:12 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:10:12 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:10:15 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:16:57 - 🛠 Applying cabinet dims: Sketch_Cabinet2_1 => Width=70, Height=70, DistanceX=60
+00:17:09 - 📐 DistanceY=15 applied to Sketch_Cabinet2_1
+00:17:09 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_1
+00:17:14 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_1
+00:17:14 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:17:14 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:17:14 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:17:14 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:17:16 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:18:21 - 🛠 Applying cabinet dims: Sketch_Cabinet2_2 => Width=90, Height=70, DistanceX=130
+00:18:34 - 📐 DistanceY=15 applied to Sketch_Cabinet2_2
+00:18:34 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_2
+00:18:42 - ✏️ Drawer 1: Width=32, DistanceY=36 @ Drawers2_2
+00:18:50 - ✏️ Drawer 2: Width=32, DistanceY=2 @ Drawers2_2
+00:18:50 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:18:50 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:18:50 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:18:52 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:19:52 - 🛠 Applying cabinet dims: Sketch_Cabinet2_3 => Width=65, Height=70, DistanceX=220
+00:20:06 - 📐 DistanceY=15 applied to Sketch_Cabinet2_3
+00:20:06 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_3
+00:20:11 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_3
+00:20:11 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:20:11 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:20:11 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:20:11 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:20:13 - 🛠 Applying cabinet dims: Sketch_Cabinet2_4 => Width=65, Height=70, DistanceX=285
+00:20:26 - 📐 DistanceY=15 applied to Sketch_Cabinet2_4
+00:20:26 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet2_4
+00:20:31 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers2_4
+00:20:31 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:20:31 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:20:31 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:20:31 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:20:34 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:20:59 - 🛠 Applying cabinet dims: Sketch_Cabinet3_1 => Width=60, Height=70, DistanceX=60
+00:21:10 - 📐 DistanceY=15 applied to Sketch_Cabinet3_1
+00:21:10 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet3_1
+00:21:14 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers3_1
+00:21:14 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:21:14 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:21:14 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:21:14 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:21:17 - 🛠 Applying cabinet dims: Sketch_Cabinet3_2 => Width=60, Height=70, DistanceX=120
+00:21:28 - 📐 DistanceY=15 applied to Sketch_Cabinet3_2
+00:21:28 - ⚠️ Missing ExtrudeName for cabinet Sketch_Cabinet3_2
+00:21:30 - ✏️ Drawer 1: Width=66, DistanceY=2 @ Drawers3_2
+00:21:30 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:21:30 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:21:30 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:21:30 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:21:32 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:23:16 - 🛠 Applying cabinet dims: Sketch_Cabinet1_8 => Width=85, Height=98, DistanceX=0
+00:23:34 - 📐 DistanceY=182 applied to Sketch_Cabinet1_8
+00:23:38 - ✅ Depth 60 applied to Extrude_Cabinet1_8
+00:23:44 - ✏️ Drawer 1: Width=94, DistanceY=2 @ Drawers1_8
+00:23:44 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:23:44 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:23:44 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:23:44 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:23:46 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:30:04 - 🛠 Applying cabinet dims: Sketch_Cabinet1_9 => Width=60, Height=75, DistanceX=85
+00:30:22 - 📐 DistanceY=205 applied to Sketch_Cabinet1_9
+00:30:26 - ✅ Depth 60 applied to Extrude_Cabinet1_9
+00:30:32 - ✏️ Drawer 1: Width=71, DistanceY=2 @ Drawers1_9
+00:30:32 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:30:32 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:30:32 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:30:32 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:30:34 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:32:21 - 🛠 Applying cabinet dims: Sketch_Cabinet1_10 => Width=40, Height=52, DistanceX=145
+00:32:39 - 📐 DistanceY=20 applied to Sketch_Cabinet1_10
+00:32:43 - ✅ Depth 60 applied to Extrude_Cabinet1_10
+00:32:50 - ✏️ Drawer 1: Width=48, DistanceY=2 @ Drawers1_10
+00:32:50 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:32:50 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:32:50 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:32:50 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:32:52 - 🛠 Applying cabinet dims: Sketch_Cabinet1_11 => Width=40, Height=52, DistanceX=145
+00:33:10 - 📐 DistanceY=72 applied to Sketch_Cabinet1_11
+00:33:14 - ✅ Depth 60 applied to Extrude_Cabinet1_11
+00:33:21 - ✏️ Drawer 1: Width=48, DistanceY=2 @ Drawers1_11
+00:33:21 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:33:21 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:33:21 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:33:21 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:33:23 - 🛠 Applying cabinet dims: Sketch_Cabinet1_12 => Width=40, Height=52, DistanceX=145
+00:33:42 - 📐 DistanceY=124 applied to Sketch_Cabinet1_12
+00:33:46 - ✅ Depth 60 applied to Extrude_Cabinet1_12
+00:33:53 - ✏️ Drawer 1: Width=48, DistanceY=2 @ Drawers1_12
+00:33:53 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:33:53 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:33:53 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:33:53 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:33:56 - 🛠 Applying cabinet dims: Sketch_Cabinet1_13 => Width=40, Height=52, DistanceX=145
+00:34:13 - 📐 DistanceY=176 applied to Sketch_Cabinet1_13
+00:34:17 - ✅ Depth 60 applied to Extrude_Cabinet1_13
+00:34:24 - ✏️ Drawer 1: Width=48, DistanceY=2 @ Drawers1_13
+00:34:24 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:34:24 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:34:24 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:34:24 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:34:27 - 🛠 Applying cabinet dims: Sketch_Cabinet1_14 => Width=40, Height=52, DistanceX=145
+00:34:45 - 📐 DistanceY=228 applied to Sketch_Cabinet1_14
+00:34:49 - ✅ Depth 60 applied to Extrude_Cabinet1_14
+00:34:57 - ✏️ Drawer 1: Width=48, DistanceY=2 @ Drawers1_14
+00:34:57 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:34:57 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:34:57 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:34:57 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:34:59 - ✅ All cabinet and drawer dimensions applied and model saved.
+00:46:30 - 🛠 Applying cabinet dims: Sketch_Cabinet2_5 => Width=145, Height=40, DistanceX=60
+00:46:49 - 📐 DistanceY=240 applied to Sketch_Cabinet2_5
+00:46:52 - ✅ Depth 60 applied to Extrude_Cabinet2_5
+00:46:59 - ✏️ Drawer 1: Width=36, DistanceY=2 @ Drawers2_5
+00:46:59 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:46:59 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:46:59 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:46:59 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:47:02 - 🛠 Applying cabinet dims: Sketch_Cabinet2_6 => Width=145, Height=40, DistanceX=205
+00:47:18 - 📐 DistanceY=240 applied to Sketch_Cabinet2_6
+00:47:21 - ✅ Depth 60 applied to Extrude_Cabinet2_6
+00:47:28 - ✏️ Drawer 1: Width=36, DistanceY=2 @ Drawers2_6
+00:47:28 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
+00:47:28 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
+00:47:28 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
+00:47:28 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
+00:47:30 - ✅ All cabinet and drawer dimensions applied and model saved.

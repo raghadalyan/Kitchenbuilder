@@ -1,29 +1,26 @@
-[2025-07-15 23:27:23] 👁️ Made body visible: Faucet Inox
-[2025-07-15 23:27:25] ✅ Body already visible: Kitchen_Cooktop_Simple
-[2025-07-15 23:27:26] 👁️ Made body visible: Cut-Sink
-[2025-07-15 23:27:30] 💾 Model saved after showing bodies.
-[2025-07-16 01:03:15] ✅ Body already visible: Faucet Inox
-[2025-07-16 01:03:17] ✅ Body already visible: Kitchen_Cooktop_Simple
-[2025-07-16 01:03:32] ❌ Body not found: Cut-Sink
-[2025-07-16 01:03:32] ℹ️ No bodies were shown, skipping save.
-[2025-07-16 01:11:10] 👁️ Made body visible: Extrude_Drawers2_1
-[2025-07-16 01:11:35] 👁️ Made body visible: Extrude_Drawers2_2
-[2025-07-16 01:11:54] 👁️ Made body visible: Extrude_Drawers2_3
-[2025-07-16 01:12:14] 👁️ Made body visible: Extrude_Drawers2_4
-[2025-07-16 01:12:35] 👁️ Made body visible: Extrude_Drawers2_5
-[2025-07-16 01:12:54] 👁️ Made body visible: Extrude_Drawers2_6
-[2025-07-16 01:13:09] 👁️ Made body visible: Extrude_Drawers2_7
-[2025-07-16 01:15:02] 👁️ Made body visible: Extrude_Drawers1_1
-[2025-07-16 16:02:29] ✅ Body already visible: Extrude_Drawers1_1
-[2025-07-16 16:03:45] 👁️ Made body visible: Extrude_Drawers1_2
-[2025-07-16 16:04:04] 👁️ Made body visible: Extrude_Drawers1_3
-[2025-07-16 16:04:22] 👁️ Made body visible: Extrude_Drawers1_4
-[2025-07-16 16:04:40] 👁️ Made body visible: Extrude_Drawers1_5
-[2025-07-16 16:04:58] 👁️ Made body visible: Extrude_Drawers1_6
-[2025-07-16 16:07:55] 👁️ Made body visible: Extrude_Drawers1_5
-[2025-07-16 16:09:30] ✅ Body already visible: Extrude_Drawers2_1
-[2025-07-16 16:09:48] ✅ Body already visible: Extrude_Drawers2_2
-[2025-07-16 16:11:09] ✅ Body already visible: Extrude_Drawers2_3
-[2025-07-16 16:11:28] ✅ Body already visible: Extrude_Drawers2_4
-[2025-07-16 16:11:55] ✅ Body already visible: Extrude_Drawers2_5
-[2025-07-16 17:01:15] 👁️ Made body visible: Extrude_Drawers1_6
+[2025-07-17 00:02:11] 👁️ Made body visible: Faucet Inox
+[2025-07-17 00:02:13] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-17 00:02:14] 👁️ Made body visible: Cut-Sink
+[2025-07-17 00:02:16] 💾 Model saved after showing bodies.
+[2025-07-17 00:04:37] 👁️ Made body visible: Extrude_Drawers1_1
+[2025-07-17 00:07:20] 👁️ Made body visible: Extrude_Drawers1_2
+[2025-07-17 00:08:12] 👁️ Made body visible: Extrude_Drawers1_3
+[2025-07-17 00:08:37] 👁️ Made body visible: Extrude_Drawers1_4
+[2025-07-17 00:09:01] 👁️ Made body visible: Extrude_Drawers1_5
+[2025-07-17 00:09:26] 👁️ Made body visible: Extrude_Drawers1_6
+[2025-07-17 00:09:51] 👁️ Made body visible: Extrude_Drawers1_7
+[2025-07-17 00:16:57] 👁️ Made body visible: Extrude_Drawers2_1
+[2025-07-17 00:18:21] ❌ Body not found: Extrude_Drawers2_2
+[2025-07-17 00:19:52] 👁️ Made body visible: Extrude_Drawers2_3
+[2025-07-17 00:20:13] 👁️ Made body visible: Extrude_Drawers2_4
+[2025-07-17 00:20:59] 👁️ Made body visible: Extrude_Drawers3_1
+[2025-07-17 00:21:17] 👁️ Made body visible: Extrude_Drawers3_2
+[2025-07-17 00:23:16] 👁️ Made body visible: Extrude_Drawers1_8
+[2025-07-17 00:30:04] 👁️ Made body visible: Extrude_Drawers1_9
+[2025-07-17 00:32:21] 👁️ Made body visible: Extrude_Drawers1_10
+[2025-07-17 00:32:52] 👁️ Made body visible: Extrude_Drawers1_11
+[2025-07-17 00:33:23] 👁️ Made body visible: Extrude_Drawers1_12
+[2025-07-17 00:33:56] 👁️ Made body visible: Extrude_Drawers1_13
+[2025-07-17 00:34:27] 👁️ Made body visible: Extrude_Drawers1_14
+[2025-07-17 00:46:30] 👁️ Made body visible: Extrude_Drawers2_5
+[2025-07-17 00:47:02] 👁️ Made body visible: Extrude_Drawers2_6

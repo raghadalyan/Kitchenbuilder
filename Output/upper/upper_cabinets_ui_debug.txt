@@ -1,160 +1,25 @@
-[01:10:07] 🔄 Page loaded with Option 2
-[01:10:07] 📊 Stations loaded: 2
-[01:10:07] 🧭 Navigating to station 1 / Wall: Wall1
-[01:10:31] 🧭 Navigating to station 2 / Wall: Wall2
-[01:10:42] ➕ Add Cabinet clicked.
-[01:11:07] 💾 Saving cabinet: width=50, height=70, depth=60, DX=0, DY=230
-[01:13:29] ✅ 7 cabinet(s) created and applied successfully.
-[01:14:03] 🧭 Navigating to station 1 / Wall: Wall1
-[01:15:00] 💾 Saving cabinet: width=85, height=118, depth=60, DX=0, DY=182
-[01:15:28] ✅ 1 cabinet(s) created and applied successfully.
-[01:33:30] 🔄 Page loaded with Option 2
-[01:33:30] 📊 Stations loaded: 2
-[01:33:30] 🧭 Navigating to station 1 / Wall: Wall1
-[01:37:21] 🔄 Page loaded with Option 2
-[01:37:21] 📊 Stations loaded: 2
-[01:37:21] 🧭 Navigating to station 1 / Wall: Wall1
-[01:37:24] 🧭 Navigating to station 2 / Wall: Wall2
-[01:37:26] 🧭 Navigating to station 1 / Wall: Wall1
-[01:41:56] 🔄 Page loaded with Option 2
-[01:41:56] 📊 Stations loaded: 2
-[01:41:57] 🧭 Navigating to station 1 / Wall: Wall1
-[01:42:44] 🔄 Page loaded with Option 2
-[01:42:44] 📊 Stations loaded: 2
-[01:42:44] 🧭 Navigating to station 1 / Wall: Wall1
-[01:44:03] 🔄 Page loaded with Option 2
-[01:44:03] 📊 Stations loaded: 2
-[01:44:03] 🧭 Navigating to station 1 / Wall: Wall1
-[01:44:16] 🧭 Navigating to station 2 / Wall: Wall2
-[01:44:18] ➕ Add Cabinet clicked.
-[16:20:18] 🔄 Page loaded with Option 2
-[16:20:18] 📊 Stations loaded: 2
-[16:20:18] 🧭 Navigating to station 1 / Wall: Wall1
-[16:25:10] 🔄 Page loaded with Option 2
-[16:25:10] 📊 Stations loaded: 2
-[16:25:10] 🧭 Navigating to station 1 / Wall: Wall1
-[16:26:02] 🔄 Page loaded with Option 2
-[16:26:02] 📊 Stations loaded: 2
-[16:26:02] 🧭 Navigating to station 1 / Wall: Wall1
-[16:27:08] ➕ Add Space clicked.
-[16:27:32] 💾 Saving space: Microwave, width=85, height=60, DX=0, DY=82
-[16:27:33] ❌ Space too close to fridge base. DistanceY must be ≥ 182 cm.
-[16:27:37] 💾 Saving space: Microwave, width=85, height=60, DX=0, DY=182
-[16:27:37] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_1)
-[16:27:53] 💾 Saving space: Microwave, width=85, height=60, DX=0, DY=182
-[16:27:53] ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_1)
-[16:28:28] 💾 Saving space: Microwave, width=85, height=60, DX=0, DY=182
-[16:29:02] ✅ Space saved to wall Wall1.
-[16:29:08] 🧭 Navigating to station 2 / Wall: Wall2
-[16:29:14] 🧭 Navigating to station 1 / Wall: Wall1
-[16:34:23] 🔄 Page loaded with Option 2
-[16:34:23] 📊 Stations loaded: 2
-[16:34:23] 🧭 Navigating to station 1 / Wall: Wall1
-[16:34:35] 🧭 Navigating to station 2 / Wall: Wall2
-[16:34:38] 🧭 Navigating to station 1 / Wall: Wall1
-[16:34:59] 🧭 Navigating to station 2 / Wall: Wall2
-[16:39:39] 🔄 Page loaded with Option 2
-[16:39:39] 📊 Stations loaded: 2
-[16:39:39] 🧭 Navigating to station 1 / Wall: Wall1
-[16:43:00] 🔄 Page loaded with Option 2
-[16:43:00] 📊 Stations loaded: 2
-[16:43:00] 🧭 Navigating to station 1 / Wall: Wall1
-[16:49:28] 🔄 Page loaded with Option 2
-[16:49:28] 📊 Stations loaded: 2
-[16:49:28] 🧭 Navigating to station 1 / Wall: Wall1
-[16:50:57] 🔄 Page loaded with Option 2
-[16:50:57] 📊 Stations loaded: 2
-[16:50:57] 🧭 Navigating to station 1 / Wall: Wall1
-[16:54:22] 🔄 Page loaded with Option 2
-[16:54:22] 📊 Stations loaded: 2
-[16:54:22] 🧭 Navigating to station 1 / Wall: Wall1
-[16:58:24] 🔄 Page loaded with Option 2
-[16:58:24] 📊 Stations loaded: 2
-[16:58:24] 🧭 Navigating to station 1 / Wall: Wall1
-[16:58:58] 🧭 Navigating to station 2 / Wall: Wall2
-[16:59:46] 🔄 Page loaded with Option 2
-[16:59:46] 📊 Stations loaded: 2
-[16:59:46] 🧭 Navigating to station 1 / Wall: Wall1
-[16:59:48] 🧭 Navigating to station 2 / Wall: Wall2
-[16:59:49] 🧭 Navigating to station 1 / Wall: Wall1
-[16:59:56] 🧭 Navigating to station 2 / Wall: Wall2
-[16:59:59] 🧭 Navigating to station 1 / Wall: Wall1
-[17:00:34] ➕ Add Cabinet clicked.
-[17:00:37] ➕ Add Cabinet clicked.
-[17:01:14] 💾 Saving cabinet: width=85, height=58, depth=60, DX=0, DY=242
-[17:01:44] ✅ 1 cabinet(s) created and applied successfully.
-[18:02:25] 🔄 Page loaded with Option 2
-[18:02:25] 📊 Stations loaded: 2
-[18:02:25] 🧭 Navigating to station 1 / Wall: Wall1
-[18:55:10] 🔄 Page loaded with Option 2
-[18:55:10] 📊 Stations loaded: 2
-[18:55:10] 🧭 Navigating to station 1 / Wall: Wall1
-[18:56:06] 🔄 Page loaded with Option 2
-[18:56:06] 📊 Stations loaded: 2
-[18:56:06] 🧭 Navigating to station 1 / Wall: Wall1
-[19:00:26] 🔄 Page loaded with Option 2
-[19:00:26] 📊 Stations loaded: 2
-[19:00:26] 🧭 Navigating to station 1 / Wall: Wall1
-[19:01:20] 🔄 Page loaded with Option 2
-[19:01:20] 📊 Stations loaded: 2
-[19:01:20] 🧭 Navigating to station 1 / Wall: Wall1
-[19:04:02] 🔄 Page loaded with Option 2
-[19:04:02] 📊 Stations loaded: 2
-[19:04:02] 🧭 Navigating to station 1 / Wall: Wall1
-[19:06:41] 🔄 Page loaded with Option 2
-[19:06:41] 📊 Stations loaded: 2
-[19:06:41] 🧭 Navigating to station 1 / Wall: Wall1
-[19:07:33] 🔄 Page loaded with Option 2
-[19:07:33] 📊 Stations loaded: 2
-[19:07:33] 🧭 Navigating to station 1 / Wall: Wall1
-[19:13:07] 🔄 Page loaded with Option 2
-[19:13:07] 📊 Stations loaded: 2
-[19:13:07] 🧭 Navigating to station 1 / Wall: Wall1
-[19:13:53] 🔄 Page loaded with Option 2
-[19:13:53] 📊 Stations loaded: 2
-[19:13:53] 🧭 Navigating to station 1 / Wall: Wall1
-[19:21:44] 🔄 Page loaded with Option 2
-[19:21:44] 📊 Stations loaded: 2
-[19:21:44] 🧭 Navigating to station 1 / Wall: Wall1
-[19:25:13] 🔄 Page loaded with Option 2
-[19:25:13] 📊 Stations loaded: 2
-[19:25:13] 🧭 Navigating to station 1 / Wall: Wall1
-[19:54:45] 🔄 Page loaded with Option 2
-[19:54:45] 📊 Stations loaded: 2
-[19:54:45] 🧭 Navigating to station 1 / Wall: Wall1
-[19:59:55] 🔄 Page loaded with Option 2
-[19:59:55] 📊 Stations loaded: 2
-[19:59:55] 🧭 Navigating to station 1 / Wall: Wall1
-[20:33:50] 🔄 Page loaded with Option 2
-[20:33:50] 📊 Stations loaded: 2
-[20:33:50] 🧭 Navigating to station 1 / Wall: Wall1
-[20:35:03] 🔄 Page loaded with Option 2
-[20:35:03] 📊 Stations loaded: 2
-[20:35:03] 🧭 Navigating to station 1 / Wall: Wall1
-[20:36:48] 🔄 Page loaded with Option 2
-[20:36:48] 📊 Stations loaded: 2
-[20:36:48] 🧭 Navigating to station 1 / Wall: Wall1
-[20:39:24] 🔄 Page loaded with Option 2
-[20:39:24] 📊 Stations loaded: 2
-[20:39:24] 🧭 Navigating to station 1 / Wall: Wall1
-[20:41:28] 🔄 Page loaded with Option 2
-[20:41:28] 📊 Stations loaded: 2
-[20:41:28] 🧭 Navigating to station 1 / Wall: Wall1
-[20:44:46] 🔄 Page loaded with Option 2
-[20:44:46] 📊 Stations loaded: 2
-[20:44:46] 🧭 Navigating to station 1 / Wall: Wall1
-[20:46:25] 🔄 Page loaded with Option 2
-[20:46:25] 📊 Stations loaded: 2
-[20:46:25] 🧭 Navigating to station 1 / Wall: Wall1
-[20:49:57] 🔄 Page loaded with Option 2
-[20:49:57] 📊 Stations loaded: 2
-[20:49:57] 🧭 Navigating to station 1 / Wall: Wall1
-[20:56:40] 🔄 Page loaded with Option 2
-[20:56:40] 📊 Stations loaded: 2
-[20:56:40] 🧭 Navigating to station 1 / Wall: Wall1
-[20:59:02] 🔄 Page loaded with Option 2
-[20:59:02] 📊 Stations loaded: 2
-[20:59:02] 🧭 Navigating to station 1 / Wall: Wall1
-[21:03:31] 🔄 Page loaded with Option 2
-[21:03:31] 📊 Stations loaded: 2
-[21:03:31] 🧭 Navigating to station 1 / Wall: Wall1
+[00:22:23] 🔄 Page loaded with Option 3
+[00:22:23] 📊 Stations loaded: 2
+[00:22:23] 🧭 Navigating to station 1 / Wall: Wall1
+[00:23:12] 💾 Saving cabinet: width=85, height=98, depth=60, DX=0, DY=182
+[00:23:46] ✅ 1 cabinet(s) created and applied successfully.
+[00:23:56] ➕ Add Space clicked.
+[00:25:08] 💾 Saving space: Oven, width=60, height=80, DX=85, DY=65
+[00:25:40] ✅ Space saved to wall Wall1.
+[00:28:13] ➕ Add Space clicked.
+[00:28:39] 💾 Saving space: Microwave, width=60, height=60, DX=85, DY=145
+[00:29:13] ✅ Space saved to wall Wall1.
+[00:29:37] ➕ Add Cabinet clicked.
+[00:30:02] 💾 Saving cabinet: width=60, height=75, depth=60, DX=85, DY=205
+[00:30:34] ✅ 1 cabinet(s) created and applied successfully.
+[00:31:29] ➕ Add Cabinet clicked.
+[00:32:19] 💾 Saving cabinet: width=40, height=52, depth=60, DX=145, DY=20
+[00:34:59] ✅ 5 cabinet(s) created and applied successfully.
+[00:45:41] 🧭 Navigating to station 2 / Wall: Wall2
+[00:46:28] 💾 Saving cabinet: width=145, height=40, depth=60, DX=60, DY=240
+[00:47:30] ✅ 2 cabinet(s) created and applied successfully.
+[00:47:45] 🧭 Navigating to station 1 / Wall: Wall1
+[00:47:50] 🧭 Navigating to station 2 / Wall: Wall2
+[00:48:15] ➕ Add Cabinet clicked.
+[00:48:56] 💾 Saving cabinet: width=60, height=150, depth=60, DX=290, DY=90
+[00:48:56] ❌ Copy 1 failed: ❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.
