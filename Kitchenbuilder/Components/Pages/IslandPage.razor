@@ -172,6 +172,7 @@
     }
     private void SaveIsland()
     {
+
         int minSize = 60;
 
         int adjustedDepth = Math.Max(island.Depth, minSize);
@@ -255,14 +256,17 @@
         {
             EditSketchDim_IModel.SetDimension(model, "DX@Sketch_Move_Island", island.DistanceX);
             EditSketchDim_IModel.SetDimension(model, "DY@Sketch_Move_Island", island.DistanceY);
-
             Log($"✅ Island position updated: DX={island.DistanceX}, DY={island.DistanceY}");
+
+            // ✅ Save island updates to JSON too!
+            UpdateHasIslandInJson(true);
         }
         catch (Exception ex)
         {
             Log($"❌ Failed to update island position: {ex.Message}");
         }
     }
+
 
     private void Log(string message)
     {

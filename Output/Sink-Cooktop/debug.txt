@@ -1,24 +1,14 @@
-[16:24:05] ▶️ Processing Option 2
-[16:24:05] Corner walls found: [1,2], Special14=False
-[16:24:05] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[16:24:05] ✔️ Wall2 Base1: Start=0, End=290, Width=290
-[16:24:05] ✅ JSON update complete.
-[16:24:05] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-290]
-[17:03:54] ▶️ Processing Option 2
-[17:03:54] Corner walls found: [1,2], Special14=False
-[17:03:54] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[17:03:54] ✔️ Wall2 Base1: Start=0, End=290, Width=290
-[17:03:54] ✅ JSON update complete.
-[17:03:54] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-290]
-[17:04:22] ▶️ Processing Option 2
-[17:04:22] Corner walls found: [1,2], Special14=False
-[17:04:22] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[17:04:22] ✔️ Wall2 Base1: Start=0, End=290, Width=290
-[17:04:22] ✅ JSON update complete.
-[17:04:22] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-290]
-[17:19:45] ▶️ Processing Option 2
-[17:19:45] Corner walls found: [1,2], Special14=False
-[17:19:45] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[17:19:45] ✔️ Wall2 Base1: Start=0, End=290, Width=290
-[17:19:45] ✅ JSON update complete.
-[17:19:45] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-290]
+[01:29:26] ▶️ Processing Option 3
+[01:29:26] Corner walls found: [1,2], Special14=False
+[01:29:26] ✔️ Wall1 Base2: Start=145, End=400, Width=255
+[01:29:26] ✔️ Wall2 Base1: Start=0, End=350, Width=350
+[01:29:26] ✔️ Wall3 Base1: Start=0, End=180, Width=180
+[01:29:26] ✅ JSON update complete.
+[01:29:26] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-350], Wall3.Base1 [0-180]
+[01:50:26] ▶️ Processing Option 3
+[01:50:26] Corner walls found: [1,2], Special14=False
+[01:50:26] ✔️ Wall1 Base2: Start=145, End=400, Width=255
+[01:50:26] ✔️ Wall2 Base1: Start=0, End=350, Width=350
+[01:50:26] ✔️ Wall3 Base1: Start=0, End=180, Width=180
+[01:50:26] ✅ JSON update complete.
+[01:50:26] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-350], Wall3.Base1 [0-180]

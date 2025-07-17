@@ -1,4 +1,8 @@
-[16:24:58] 🔍 Checking Wall 1 countertop range [145, 400]
-[16:24:58] ℹ️ Wall 1 has no windows.
-[16:24:58] 🔍 Checking Wall 2 countertop range [0, 290]
-[16:24:58] ℹ️ Wall 2 has no windows.
+[01:29:33] 🔍 Checking Wall 2 countertop range [0, 350]
+[01:29:33] ℹ️ Wall 2 has no windows.
+[01:31:02] 🔍 Checking Wall 3 countertop range [0, 180]
+[01:31:02] ❌ Wall 3 not found in Walls array.
+[01:50:50] 🔍 Checking Wall 2 countertop range [0, 350]
+[01:50:50] ℹ️ Wall 2 has no windows.
+[01:52:23] 🔍 Checking Wall 3 countertop range [0, 180]
+[01:52:23] ❌ Wall 3 not found in Walls array.

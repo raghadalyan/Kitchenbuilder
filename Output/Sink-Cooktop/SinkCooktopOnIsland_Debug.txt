@@ -1,0 +1,6 @@
+[01:30:17] 🔧 Creating Sink on island. Wall=2, Dir=90, DX=175, DY=200, Depth=90
+[01:30:17] ✅ Sink Result: X=185, Y=200, Angle=90
+[01:30:17] 🪚 Cut: Width=40, Length=60, DX=140, DY=170
+[01:51:40] 🔧 Creating Sink on island. Wall=2, Dir=90, DX=210, DY=210, Depth=90
+[01:51:40] ✅ Sink Result: X=220, Y=210, Angle=90
+[01:51:40] 🪚 Cut: Width=40, Length=60, DX=175, DY=180

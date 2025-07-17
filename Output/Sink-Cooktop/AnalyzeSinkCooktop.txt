@@ -1,5 +1,12 @@
-[16:24:12] ▶️ Starting analysis for Option 2
-[16:24:12] 🔍 Relevant countertops count: 2
-[16:24:12] 📏 Wall1.Base2 | Start=145, End=400, Width=255
-[16:24:12] 📏 Wall2.Base1 | Start=0, End=290, Width=290
-[16:24:12] 🔧 Two valid countertops found. Delegating to TwoCountertopSelector...
+[01:29:33] ▶️ Starting analysis for Option 3
+[01:29:33] 🔍 Relevant countertops count: 3
+[01:29:33] 📏 Wall1.Base2 | Start=145, End=400, Width=255
+[01:29:33] 📏 Wall2.Base1 | Start=0, End=350, Width=350
+[01:29:33] 📏 Wall3.Base1 | Start=0, End=180, Width=180
+[01:29:33] ⚠️ More than two countertops found. Delegating to MultiCountertopSelector...
+[01:50:50] ▶️ Starting analysis for Option 3
+[01:50:50] 🔍 Relevant countertops count: 3
+[01:50:50] 📏 Wall1.Base2 | Start=145, End=400, Width=255
+[01:50:50] 📏 Wall2.Base1 | Start=0, End=350, Width=350
+[01:50:50] 📏 Wall3.Base1 | Start=0, End=180, Width=180
+[01:50:50] ⚠️ More than two countertops found. Delegating to MultiCountertopSelector...

@@ -48,7 +48,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Faucet_On_CT = 5,
                         DistanceY_Faucet_On_CT = (int)(floorWidth - startOfCountertop - center),
-                        Angle_Sketch_Rotate_Faucet = 270
+                        Angle_Sketch_Rotate_Faucet = 269.99
                     },
                     2 => new Sink
                     {
@@ -57,7 +57,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Faucet_On_CT = (int)(startOfCountertop + center),
                         DistanceY_Faucet_On_CT = 5,
-                        Angle_Sketch_Rotate_Faucet = 180
+                        Angle_Sketch_Rotate_Faucet = 179.99
                     },
                     3 => new Sink
                     {
@@ -75,7 +75,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Faucet_On_CT = (int)(floorLength - startOfCountertop - center),
                         DistanceY_Faucet_On_CT = (int)(floorWidth - 5),
-                        Angle_Sketch_Rotate_Faucet = 360
+                        Angle_Sketch_Rotate_Faucet = 359.99
                     },
                     _ => null
                 };
@@ -106,7 +106,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = 30,
                         DistanceY_Cooktop_On_CT = (int)(floorWidth - startOfCountertop - center),
-                        Angle_Sketch_Rotate_Cooktop = 360
+                        Angle_Sketch_Rotate_Cooktop = 179.99
                     },
                     2 => new Cooktop
                     {
@@ -115,7 +115,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(startOfCountertop + center),
                         DistanceY_Cooktop_On_CT = 30,
-                        Angle_Sketch_Rotate_Cooktop = 270
+                        Angle_Sketch_Rotate_Cooktop = 90
                     },
                     3 => new Cooktop
                     {
@@ -124,7 +124,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(floorLength - 30),
                         DistanceY_Cooktop_On_CT = (int)(startOfCountertop + center),
-                        Angle_Sketch_Rotate_Cooktop = 360
+                        Angle_Sketch_Rotate_Cooktop = 179.99
                     },
                     4 => new Cooktop
                     {
@@ -133,7 +133,7 @@ namespace Kitchenbuilder.Core
                         DistanceFromLeft = (int)center,
                         DistanceX_Cooktop_On_CT = (int)(floorLength - startOfCountertop - center),
                         DistanceY_Cooktop_On_CT = (int)(floorWidth - 30),
-                        Angle_Sketch_Rotate_Cooktop = 270
+                        Angle_Sketch_Rotate_Cooktop = 90
                     },
                     _ => null
                 };

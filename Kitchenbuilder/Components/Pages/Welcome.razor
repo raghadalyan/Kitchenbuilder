@@ -5,16 +5,6 @@
 @using SolidWorks.Interop.swconst
 
 @code {
-    void Log(string msg)
-    {
-        string path = Path.Combine(
-            KitchenConfig.Get().BasePath,
-            "Kitchenbuilder", "Output", "open_debug_log.txt"
-        );
-
-        File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
-    }
-
     protected override async Task OnInitializedAsync()
     {
         try
@@ -27,7 +17,7 @@
 
             string path = Path.Combine(
                 KitchenConfig.Get().BasePath,
-                "Kitchenbuilder", "Output", "temp", "temp_Option2.SLDPRT"
+                "Kitchenbuilder", "Output", "temp", "temp_Option3.SLDPRT"
             );
 
             Log($"📂 Trying to open file: {path}");
@@ -53,12 +43,21 @@
             SwSession.SetActiveModel(model);
             Log($"✅ Successfully opened file: {model.GetTitle()}");
 
-            NavManager.NavigateTo("/sink-cooktop-options?option=2");
+            NavManager.NavigateTo("/island-page?option=3");
         }
         catch (Exception ex)
         {
             Log($"❌ Exception: {ex.Message}");
         }
+    }
+    void Log(string msg)
+    {
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "open_debug_log.txt"
+        );
+
+        File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
     }
 
 }

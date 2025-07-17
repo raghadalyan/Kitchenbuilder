@@ -61,12 +61,12 @@ namespace Kitchenbuilder.Core
                 case 1:
                     sink.DistanceX_Faucet_On_CT = 5;
                     sink.DistanceY_Faucet_On_CT = (int)(floorWidth - start - middle);
-                    sink.Angle_Sketch_Rotate_Faucet = 270;
+                    sink.Angle_Sketch_Rotate_Faucet = 269.99;
                     break;
                 case 2:
                     sink.DistanceX_Faucet_On_CT = (int)(start + middle);
                     sink.DistanceY_Faucet_On_CT = 5;
-                    sink.Angle_Sketch_Rotate_Faucet = 180;
+                    sink.Angle_Sketch_Rotate_Faucet = 179.99;
                     break;
                 case 3:
                     sink.DistanceX_Faucet_On_CT = (int)(floorLength - 5);
@@ -76,7 +76,7 @@ namespace Kitchenbuilder.Core
                 case 4:
                     sink.DistanceX_Faucet_On_CT = (int)(floorLength - start - middle);
                     sink.DistanceY_Faucet_On_CT = (int)(floorWidth - 5);
-                    sink.Angle_Sketch_Rotate_Faucet = 360;
+                    sink.Angle_Sketch_Rotate_Faucet = 359.99;
                     break;
             }
 
@@ -127,22 +127,22 @@ namespace Kitchenbuilder.Core
                 case 1:
                     cooktop.DistanceX_Cooktop_On_CT = 30;
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - start - middle);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 179.99;
                     break;
                 case 2:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(start + middle);
                     cooktop.DistanceY_Cooktop_On_CT = 30;
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 90;
                     break;
                 case 3:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - 30);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(start + middle);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 360;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 179.99;
                     break;
                 case 4:
                     cooktop.DistanceX_Cooktop_On_CT = (int)(floorLength - start - middle);
                     cooktop.DistanceY_Cooktop_On_CT = (int)(floorWidth - 30);
-                    cooktop.Angle_Sketch_Rotate_Cooktop = 270;
+                    cooktop.Angle_Sketch_Rotate_Cooktop = 90;
                     break;
             }
 

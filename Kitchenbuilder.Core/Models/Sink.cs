@@ -9,7 +9,7 @@
         // Dimensions related to faucet placement on countertop sketch
         public int DistanceX_Faucet_On_CT { get; set; }      // DistanceX_faucet@On_CT
         public int DistanceY_Faucet_On_CT { get; set; }      // DistanceY_faucet@On_CT
-        public int Angle_Sketch_Rotate_Faucet { get; set; }  // angle@Sketch_Rotate_Faucet
+        public double Angle_Sketch_Rotate_Faucet { get; set; }  // angle@Sketch_Rotate_Faucet
                                                              // New Sink Cut Dimensions
         public int Width_Sink_Cut { get; set; }
         public int Length_Sink_Cut { get; set; }
@@ -37,7 +37,7 @@
             {
                 Width_Sink_Cut = 40;
                 Length_Sink_Cut = 60;
-                DX_Sink_Cut = floorLength - 10;
+                DX_Sink_Cut = floorLength - 50;
                 DY_Sink_Cut = DistanceY_Faucet_On_CT - (Length_Sink_Cut / 2);
             }
             else if (wall == 4)
@@ -45,7 +45,7 @@
                 Width_Sink_Cut = 60;
                 Length_Sink_Cut = 40;
                 DX_Sink_Cut = DistanceX_Faucet_On_CT - (Width_Sink_Cut / 2);
-                DY_Sink_Cut = floorWidth - 10;
+                DY_Sink_Cut = floorWidth -50;
             }
         }
     }
