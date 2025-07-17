@@ -130,13 +130,13 @@
     {
         await Task.Run(() =>
         {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt";
+            string debugPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "debug_confwalls.txt");
 
             try
             {
                 File.AppendAllText(debugPath, $"🟢 Started /confwalls with Count={Count}, Width={FloorWidth}, Length={FloorLength}\n");
 
-                string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\input.json";
+                string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", "input.json");
                 if (!File.Exists(jsonPath))
                 {
                     File.AppendAllText(debugPath, $"❌ JSON input file not found at: {jsonPath}\n");
@@ -176,7 +176,7 @@
                 File.AppendAllText(debugPath, "✅ Finished building walls\n");
 
                 string filename = $"Wall{kitchen.Walls.Count}_WithFloor.SLDPRT";
-                string partPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen", filename);
+                string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "Kitchen", filename);
 
                 if (!File.Exists(partPath))
                 {
@@ -204,7 +204,7 @@
             }
             catch (Exception ex)
             {
-                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt", $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+                File.AppendAllText(debugPath, $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
             }
         });
 
@@ -228,7 +228,7 @@
     private void SaveMaterial(MaterialOption item)
     {
         var swApp = SwSession.GetApp();
-        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_confwalls.txt";
+        string debugPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "debug_confwalls.txt");
 
         if (string.IsNullOrWhiteSpace(item.Material))
         {

@@ -9,7 +9,7 @@ namespace Kitchenbuilder.Core
 {
     public static class CalculateStationsUpperCabinets
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\calculate_stations_debug.txt";
+        private static readonly string LogPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "upper", "calculate_stations_debug.txt");
 
         public static List<UpperCabinetStation> GetStations(string jsonFilePath)
         {

@@ -41,7 +41,10 @@ namespace Kitchenbuilder.Core
             }
 
             // Write to debug.txt
-            string debugFilePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\filtered_spaces.txt";
+            string debugFilePath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "filtered_spaces.txt"
+            );
             using (StreamWriter writer = new StreamWriter(debugFilePath))
             {
                 writer.WriteLine("Filtered Empty Spaces:");

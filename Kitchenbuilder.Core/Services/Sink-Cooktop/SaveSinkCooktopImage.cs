@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SaveSinkCooktopImage
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\SaveSinkCooktopImage_Debug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "SaveSinkCooktopImage_Debug.txt"
+        );
 
         public static void Save(IModelDoc2 model, int layoutIndex, string description, int optionNum)
         {

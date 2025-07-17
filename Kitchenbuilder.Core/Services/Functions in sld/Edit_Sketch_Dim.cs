@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class Edit_Sketch_Dim
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\EditSketchDim.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "EditSketchDim.txt"
+        );
 
         public static void SetDimension(ModelDoc2 model, string dimName, double size)
         {

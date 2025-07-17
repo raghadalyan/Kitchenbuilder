@@ -25,8 +25,16 @@ namespace Kitchenbuilder.Core
 {
     public static class LShapeSelectorOneWall
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\LShapeSelectorOneWall.txt";
-         static readonly string output  = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json";
+        private static readonly string DebugPath = Path.Combine(
+           KitchenConfig.Get().BasePath,
+           "Kitchenbuilder", "Output", "LShapeSelectorOneWall.txt"
+       );
+
+        private static readonly string output = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option2.json"
+        );
+
 
         private static void LogDebug(string message)
         {

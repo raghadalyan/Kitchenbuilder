@@ -180,33 +180,24 @@
     {
         await Task.Run(() =>
         {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_baseapproval.txt";
-
             try
             {
-                File.AppendAllText(debugPath, $"🟢 Started /base-approval with selected={selectedOption}\n");
-
                 if (string.IsNullOrWhiteSpace(selectedOption))
-                {
-                    File.AppendAllText(debugPath, "❌ selectedOption is missing\n");
                     return;
-                }
 
-                string partPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_{selectedOption}.SLDPRT";
-                File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
+                string partPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "temp",
+                    $"temp_{selectedOption}.SLDPRT");
 
                 if (!File.Exists(partPath))
-                {
-                    File.AppendAllText(debugPath, $"❌ Base file not found: {partPath}\n");
                     return;
-                }
 
                 if (SwSession.GetActiveModel() == null)
                 {
                     var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
                     swAppInstance.Visible = true;
                     SwSession.SetApp(swAppInstance);
-                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
 
                     LayoutLauncher.ArrangeWindows(swAppInstance);
                 }
@@ -222,16 +213,13 @@
                 ) as IModelDoc2;
 
                 if (model == null)
-                {
-                    File.AppendAllText(debugPath, $"❌ Failed to load base model into SolidWorks\n");
                     return;
-                }
 
-                File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
+                string jsonPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON",
+                    $"{selectedOption}SLD.json");
 
-
-
-                string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\{selectedOption}SLD.json";
                 if (File.Exists(jsonPath))
                 {
                     string jsonContent = File.ReadAllText(jsonPath);
@@ -259,18 +247,11 @@
                             }
                         }
                     }
-
-                    File.AppendAllText(debugPath, $"✅ Extracted {baseMaterialOptions.Count} visible base bodies from JSON\n");
-                }
-                else
-                {
-                    File.AppendAllText(debugPath, $"❌ JSON file not found: {jsonPath}\n");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                File.AppendAllText(@"C:\Users\chouse\Downloads\Kitchenbuilder\Outputdebug_baseapproval.txt",
-                    $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+                // Optional: silently ignore or handle exceptions
             }
         });
 
@@ -289,7 +270,6 @@
             item.Apply = true;
             item.Saved = true;
 
-            // ✅ لا ترسل البوديز التي تحتوي على "fridge"
             if (!item.SketchName.ToLower().Contains("fridge"))
             {
                 EditMaterial.ApplyMaterialToBody(swApp, item.SketchName, item.Material, item.Type);

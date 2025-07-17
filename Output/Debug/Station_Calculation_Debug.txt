@@ -1,13 +1,15 @@
-[00:04:11] ⛔ Skipping fridge base: fridge_base1
-[00:04:11] ➕ Added full base station: Base2, Start=85, End=400, CT=false
-[00:04:11] ❌ Skipping hidden or null base: Base1
-[00:04:11] ➕ Added full countertop station: Base1, Start=60, End=350, CT=true
-[00:04:11] ❌ Skipping hidden or null base: Base2
-[00:04:11] ❌ Skipping hidden or null base: Base3
-[00:04:11] ➕ Added full countertop station: Base1, Start=60, End=180, CT=true
-[00:04:11] ❌ Skipping hidden or null base: Base2
-[00:04:11] ❌ Skipping hidden or null base: Base3
-[00:04:11] ❌ Skipping hidden or null base: Base1
-[00:04:11] ❌ Skipping hidden or null base: Base2
-[00:04:11] ❌ Skipping hidden or null base: Base3
-[00:04:11] 📊 Total stations for Option3SLD.json: 3
+[16:25:47] ⛔ Skipping fridge base: fridge_base1
+[16:25:47] ➕ Left base part: Base2, Start=85, End=145, CT=false
+[16:25:47] ➕ Center countertop: Base2, Start=145, End=400, CT=true
+[16:25:47] ❌ Skipping hidden or null base: Base1
+[16:25:47] ➕ Center countertop: Base1, Start=60, End=290, CT=true
+[16:25:47] ➕ Right base part: Base1, Start=290, End=350, CT=false
+[16:25:47] ❌ Skipping hidden or null base: Base2
+[16:25:47] ❌ Skipping hidden or null base: Base3
+[16:25:47] ❌ Skipping hidden or null base: Base1
+[16:25:47] ❌ Skipping hidden or null base: Base2
+[16:25:47] ❌ Skipping hidden or null base: Base3
+[16:25:47] ❌ Skipping hidden or null base: Base1
+[16:25:47] ❌ Skipping hidden or null base: Base2
+[16:25:47] ❌ Skipping hidden or null base: Base3
+[16:25:47] 📊 Total stations for Option2SLD.json: 4

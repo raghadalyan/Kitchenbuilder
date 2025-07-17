@@ -12,14 +12,14 @@ namespace Kitchenbuilder.Core
     {
         private static void Log(string message)
         {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\Station_Calculation_Debug.txt";
+            string debugPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "Debug", "Station_Calculation_Debug.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(debugPath)!);
             File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
         }
 
         public static void ProcessAll()
         {
-            string folderPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+            string folderPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
             var files = Directory.GetFiles(folderPath, "Option*SLD.json");
             Log($"📁 Found {files.Length} files to process in {folderPath}");
 

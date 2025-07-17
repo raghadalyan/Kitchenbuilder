@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core.Services.BaseServices.SLD_IMPLEMENTAION
 {
     public static class CreateFloor_Base
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\CreateFloorBase.txt";
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "CreateFloorBase.txt"
+        );
 
         public static void Create(Kitchen kitchen, ModelDoc2 model, string jsonPath)
         {

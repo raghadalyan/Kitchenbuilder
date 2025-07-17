@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SelectBody
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\SelectBody_Debug.txt";
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Debug", "SelectBody_Debug.txt"
+        );
 
         public static void SelectByName(IModelDoc2 model, string bodyName)
         {

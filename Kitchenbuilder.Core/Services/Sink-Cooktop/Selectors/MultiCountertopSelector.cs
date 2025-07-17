@@ -10,7 +10,10 @@ namespace Kitchenbuilder.Core
 {
     public static class MultiCountertopSelector
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\MultiCountertopSelector.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "MultiCountertopSelector.txt"
+        );
 
         private static void Log(string message)
         {
@@ -32,8 +35,10 @@ namespace Kitchenbuilder.Core
             Log($"📊 Countertops are on {numWalls} wall(s).");
 
             string basePath = Path.Combine(
-               System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
-                "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON"
+            );
+
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
 
             JsonObject? root = File.Exists(jsonPath)

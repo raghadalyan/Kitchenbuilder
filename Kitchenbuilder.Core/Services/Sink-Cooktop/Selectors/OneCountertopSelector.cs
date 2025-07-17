@@ -8,7 +8,10 @@ namespace Kitchenbuilder.Core
 {
     public static class OneCountertopSelector
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\OneCountertopSelector.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "OneCountertopSelector.txt"
+        );
 
         private static void Log(string message)
         {
@@ -23,8 +26,10 @@ namespace Kitchenbuilder.Core
             Log($"🛠️ Suggesting layout for Wall{countertop.WallNumber} {countertop.BaseKey} (Start={countertop.Start}, End={countertop.End})");
 
             string basePath = Path.Combine(
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
-                "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+               KitchenConfig.Get().BasePath,
+               "Kitchenbuilder", "Kitchenbuilder", "JSON"
+           );
+
 
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
             string inputPath = Path.Combine(basePath, "input.json");

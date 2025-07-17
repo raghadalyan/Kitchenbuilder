@@ -28,7 +28,7 @@
 @code {
     private bool isLoading = true;
     private string Status = "";
-    private string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_base.txt";
+    private string debugPath => Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "debug_base.txt");
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -47,9 +47,8 @@
         {
             Log("🟢 Started /base page logic");
 
-            string folder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+            string folder = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
+
 
             string inputPath = Path.Combine(folder, "input.json");
             Log($"📁 Looking for input.json at: {inputPath}");

@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class TwoCountertopSelector
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\TwoCountertopSelector.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "TwoCountertopSelector.txt"
+        );
 
         private static void Log(string message)
         {
@@ -32,8 +35,11 @@ namespace Kitchenbuilder.Core
 
             Log($"🛠️ Two countertops found: Wall{ct1.WallNumber} {ct1.BaseKey} and Wall{ct2.WallNumber} {ct2.BaseKey}");
 
-            string basePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
-                "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+            string basePath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON"
+            );
+
 
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
             string inputPath = Path.Combine(basePath, "input.json");

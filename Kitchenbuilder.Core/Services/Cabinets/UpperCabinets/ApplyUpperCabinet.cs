@@ -10,9 +10,18 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplyUpperCabinet
     {
-        private static readonly string SavePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
-        private static readonly string StationPathBase = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option";
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\apply_upper_cabinet_debug.txt";
+        private static readonly string SavePath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "UpperCabinets.json");
+
+        private static readonly string StationPathBase = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option");
+
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper", "apply_upper_cabinet_debug.txt");
+
 
         public static string Apply(IModelDoc2 model, int optionNum, CabinetInfo baseCabinet, UpperCabinetStation station, int copiesCount, string sequenceDirection, int drawerCount)
         {

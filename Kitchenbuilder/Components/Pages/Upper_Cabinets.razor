@@ -201,7 +201,11 @@
         OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
         Log($"🔄 Page loaded with Option {OptionNum}");
 
-        string path = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON",
+            $"Option{OptionNum}SLD.json"
+        );
         stations = CalculateStationsUpperCabinets.GetStations(path);
 
         Log($"📊 Stations loaded: {stations.Count}");
@@ -249,7 +253,11 @@
             var model = SwSession.GetActiveModel();
             if (model == null)
             {
-                string filePath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option{OptionNum}.SLDPRT";
+                string filePath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "temp",
+                    $"temp_Option{OptionNum}.SLDPRT"
+                );
                 Log($"📂 Opening model file: {filePath}");
 
                 int errs = 0, warns = 0;
@@ -280,7 +288,10 @@
     }
     private void Log(string message)
     {
-        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper";
+        string folder = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper"
+        );
         string path = Path.Combine(folder, "upper_cabinets_ui_debug.txt");
 
         try

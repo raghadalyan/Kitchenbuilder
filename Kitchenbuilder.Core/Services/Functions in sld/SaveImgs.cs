@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SaveImgs
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\SaveImgs_Debug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "SaveImgs_Debug.txt"
+        );
 
         public static void Save(ModelDoc2 model, string folderPath)
         {

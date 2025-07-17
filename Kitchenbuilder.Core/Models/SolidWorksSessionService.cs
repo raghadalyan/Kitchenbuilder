@@ -8,7 +8,8 @@ namespace Kitchenbuilder.Core
     {
         private IModelDoc2? _activeModel;
         private ISldWorks? _swApp; // ✅ Store SW instance
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\sw_session_debug.txt";
+        private static string LogPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "sw_session_debug.txt");
 
         public void SetApp(ISldWorks swApp)
         {

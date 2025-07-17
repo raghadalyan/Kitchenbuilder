@@ -7,7 +7,8 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplySpaceDim
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\ApplySpaceDim_Debug.txt";
+        private static string DebugPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "upper", "ApplySpaceDim_Debug.txt");
 
         private static void Log(string msg)
         {

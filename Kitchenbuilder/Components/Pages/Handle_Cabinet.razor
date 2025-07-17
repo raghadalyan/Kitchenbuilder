@@ -180,7 +180,7 @@
         OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
         Log($"➡️ Selected Option: {OptionNum}");
 
-        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD_stations.json";
+        string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{OptionNum}SLD_stations.json");
         Log($"📄 JSON path: {jsonPath}");
 
         if (!File.Exists(jsonPath))
@@ -189,7 +189,7 @@
 
             try
             {
-                string originalJsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+                string originalJsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{OptionNum}SLD.json");
                 if (File.Exists(originalJsonPath))
                 {
                     var calculatedStations = CalculateStationsCabinets.Calculate(originalJsonPath);
@@ -312,7 +312,7 @@
             return;
         }
 
-        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD_stations.json";
+        string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{OptionNum}SLD_stations.json");
 
         bool canAdd = ApplyCabinet.CanAddCabinet(jsonPath, currentIndex, width, copies);
 
@@ -356,8 +356,8 @@
     }
     void Log(string message)
 {
-    string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\HandleCabinet_Debug.txt";
-    Directory.CreateDirectory(Path.GetDirectoryName(debugPath)!);
+        string debugPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "Debug", "HandleCabinet_Debug.txt");
+        Directory.CreateDirectory(Path.GetDirectoryName(debugPath)!);
     File.AppendAllText(debugPath, $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}");
 
 }

@@ -26,7 +26,10 @@ namespace Kitchenbuilder.Core
             try
             {
                 // 1. Update the JSON file first
-                string jsonPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
+                string jsonPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON", "UpperCabinets.json"
+                );
                 if (!File.Exists(jsonPath))
                 {
                     errorMessage = "❌ JSON file not found.";

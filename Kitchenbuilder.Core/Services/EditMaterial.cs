@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core.Materials
     {
         public static bool ApplyMaterialToBody(ISldWorks swApp, string bodyName, string materialName, string type)
         {
-            string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\materialdeb.txt";
+            string debugPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "materialdeb.txt"
+            );
 
             void Log(string message)
             {

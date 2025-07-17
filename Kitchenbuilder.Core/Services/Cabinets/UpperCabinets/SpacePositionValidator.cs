@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SpacePositionValidator
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\validator_space_debug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper", "validator_space_debug.txt"
+        );
 
         public static string CheckDownPosition(int optionNum, int wallNumber, Space space)
         {
@@ -17,7 +20,10 @@ namespace Kitchenbuilder.Core
             {
                 Log($"🧱 Checking SPACE on Wall {wallNumber}: (X={space.DistanceX}, Y={space.DistanceY}, W={space.Width}, H={space.Height})");
 
-                string basePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+                string basePath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON"
+                );
                 string optionPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
                 string stationPath = Path.Combine(basePath, $"Option{optionNum}SLD_stations.json");
                 string upperPath = Path.Combine(basePath, "UpperCabinets.json");

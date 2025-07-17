@@ -1,39 +1,64 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
 @inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
-
 @using SolidWorks.Interop.sldworks
 @using SolidWorks.Interop.swconst
 
 @code {
+    void Log(string msg)
+    {
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "open_debug_log.txt"
+        );
+
+        File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
+    }
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            // 1. Connect to SolidWorks
             var swType = Type.GetTypeFromProgID("SldWorks.Application");
             var swApp = (ISldWorks)Activator.CreateInstance(swType)!;
             swApp.Visible = true;
 
-            SwSession.SetApp(swApp); // Save instance
+            SwSession.SetApp(swApp);
 
-            // 2. Open the SLDPRT file
-            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option3.SLDPRT";
+            string path = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "temp", "temp_Option2.SLDPRT"
+            );
+
+            Log($"📂 Trying to open file: {path}");
+
+            if (!File.Exists(path))
+            {
+                Log($"❌ File does not exist.");
+                return;
+            }
+
             int errs = 0, warns = 0;
-            var model = (IModelDoc2)swApp.OpenDoc6(path,
+            var modelObj = swApp.OpenDoc6(path,
                 (int)swDocumentTypes_e.swDocPART,
-                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
-                "", ref errs, ref warns)!;
+                (int)swOpenDocOptions_e.swOpenDocOptions_LoadModel, // DEBUG version
+                "", ref errs, ref warns);
 
-            // 3. Save to session
+            if (modelObj is not IModelDoc2 model)
+            {
+                Log($"❌ OpenDoc6 failed. Errors: {errs}, Warnings: {warns}");
+                return;
+            }
+
             SwSession.SetActiveModel(model);
+            Log($"✅ Successfully opened file: {model.GetTitle()}");
 
-            // 4. Navigate to Island page
-            NavManager.NavigateTo("/island-page?option=3");
+            NavManager.NavigateTo("/sink-cooktop-options?option=2");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Error: {ex.Message}");
+            Log($"❌ Exception: {ex.Message}");
         }
     }
+
 }

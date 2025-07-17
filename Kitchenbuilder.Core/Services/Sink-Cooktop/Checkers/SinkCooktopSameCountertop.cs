@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SinkCooktopSameCountertop
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\SinkCooktopSameCountertop.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "SinkCooktopSameCountertop.txt"
+        );
 
         private static void Log(string message)
         {

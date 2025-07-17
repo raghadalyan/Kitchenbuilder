@@ -8,7 +8,10 @@ namespace Kitchenbuilder.Core
 {
     public static class LShapeSelector
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleTwoWalls.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "HandleTwoWalls.txt"
+        );
 
         private static void LogDebug(string message)
         {
@@ -19,7 +22,10 @@ namespace Kitchenbuilder.Core
             Kitchen kitchen,
             Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {
-            string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2.json";
+            string outputPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option2.json"
+            );
 
             // 1. Try classic L-shape: Wall 1 (index 0) and Wall 2 (index 1)
             if (simpleEmptySpaces.ContainsKey(0) && simpleEmptySpaces.ContainsKey(1))

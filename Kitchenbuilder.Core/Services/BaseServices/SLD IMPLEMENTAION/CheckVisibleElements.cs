@@ -8,7 +8,7 @@ namespace Kitchenbuilder.Core
 {
     public static class CheckVisibleElements
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\CheckVisibleElementsLog.txt";
+        private static readonly string LogPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "CheckVisibleElementsLog.txt");
 
         public static void ProcessVisibleBases(string jsonPath, ModelDoc2 model)
         {

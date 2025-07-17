@@ -76,7 +76,7 @@ namespace Kitchenbuilder.Core
 
         private static void Log(string message)
         {
-            string logPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\CabinetEditorDim.txt";
+            string logPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "CabinetEditorDim.txt");
             System.IO.File.AppendAllText(logPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
     }

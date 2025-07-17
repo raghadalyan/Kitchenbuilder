@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class HandleUsableWalls
     {
-        private static readonly string DebugPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\HandleUsableWalls.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "HandleUsableWalls.txt"
+        );
 
         public static void Process(string inputPath, string outputPath)
         {

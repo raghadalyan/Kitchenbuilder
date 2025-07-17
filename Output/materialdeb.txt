@@ -1,28 +1,14 @@
-23:54:45 - 🔧 Starting material assignment...
-23:54:45 - 📄 Active document found.
-23:54:45 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-23:54:45 - 🎯 Attempting to select body: Boss-Extrude1
-23:54:45 - ✅ Body selected successfully.
-23:54:46 - 🎨 Material 'Oak' of type '' applied.
-23:54:51 - 💾 Document rebuilt and saved successfully.
-23:58:10 - 🔧 Starting material assignment...
-23:58:10 - 📄 Active document found.
-23:58:10 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-23:58:10 - 🎯 Attempting to select body: Extrude_1_2
-23:58:10 - ✅ Body selected successfully.
-23:58:11 - 🎨 Material 'Oak' of type 'Woods' applied.
-23:58:15 - 💾 Document rebuilt and saved successfully.
-23:58:15 - 🔧 Starting material assignment...
-23:58:15 - 📄 Active document found.
-23:58:16 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-23:58:16 - 🎯 Attempting to select body: Extrude_2_1
-23:58:16 - ✅ Body selected successfully.
-23:58:16 - 🎨 Material 'Oak' of type 'Woods' applied.
-23:58:21 - 💾 Document rebuilt and saved successfully.
-23:58:21 - 🔧 Starting material assignment...
-23:58:21 - 📄 Active document found.
-23:58:21 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
-23:58:21 - 🎯 Attempting to select body: Extrude_3_1
-23:58:21 - ✅ Body selected successfully.
-23:58:22 - 🎨 Material 'Oak' of type 'Woods' applied.
-23:58:27 - 💾 Document rebuilt and saved successfully.
+16:20:45 - 🔧 Starting material assignment...
+16:20:45 - 📄 Active document found.
+16:20:45 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+16:20:45 - 🎯 Attempting to select body: Extrude_1_2
+16:20:45 - ✅ Body selected successfully.
+16:20:46 - 🎨 Material 'Oak' of type 'Woods' applied.
+16:20:51 - 💾 Document rebuilt and saved successfully.
+16:20:51 - 🔧 Starting material assignment...
+16:20:51 - 📄 Active document found.
+16:20:51 - 📁 Material database path: C:\PROGRA~1\SOLIDW~1\SOLIDW~1\lang\english\solidworks materials\solidworks materials.sldmat
+16:20:51 - 🎯 Attempting to select body: Extrude_2_1
+16:20:51 - ✅ Body selected successfully.
+16:20:52 - 🎨 Material 'Oak' of type 'Woods' applied.
+16:20:57 - 💾 Document rebuilt and saved successfully.

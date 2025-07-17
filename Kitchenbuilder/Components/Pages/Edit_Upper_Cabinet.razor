@@ -12,7 +12,10 @@
 
     private WallCabinetWrapper? data;
     private string wallKey => $"Wall{WallNumber}";
-    private string jsonPath => $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
+    private string jsonPath => Path.Combine(
+        KitchenConfig.Get().BasePath,
+        "Kitchenbuilder", "Kitchenbuilder", "JSON", "UpperCabinets.json"
+    );
     CabinetInfo? editingCabinet = null;
 
     double editWidth, editHeight, editDepth, editDX, editDY;

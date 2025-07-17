@@ -8,7 +8,8 @@ namespace Kitchenbuilder.Core
 {
     public static class AnalyzeSinkCooktop
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\AnalyzeSinkCooktop.txt";
+        private static string DebugPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "Sink-Cooktop", "AnalyzeSinkCooktop.txt");
 
         private static void Log(string message)
         {

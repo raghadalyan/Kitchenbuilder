@@ -9,7 +9,11 @@ namespace Kitchenbuilder.Core
 {
     public static class UShapeChecker
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Ushapechecker.txt";
+        private static readonly string DebugPath = Path.Combine(
+     KitchenConfig.Get().BasePath,
+     "Kitchenbuilder", "Output", "Ushapechecker.txt"
+ );
+
 
         private static void Log(string message)
         {

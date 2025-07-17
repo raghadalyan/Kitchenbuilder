@@ -27,7 +27,10 @@ namespace Kitchenbuilder.Core
 {
     public static class IdentifyRelevantCountertops
     {
-        private static readonly string DebugPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\Sink-Cooktop\\debug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "debug.txt"
+        );
 
         private static void Log(string message)
         {
@@ -39,7 +42,10 @@ namespace Kitchenbuilder.Core
 
 
         {
-            string jsonFolder = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON";
+            string jsonFolder = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON"
+            );
             string sldPath = Path.Combine(jsonFolder, $"Option{optionNum}SLD.json");
             string metaPath = Path.Combine(jsonFolder, $"Option{optionNum}.json");
 

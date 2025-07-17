@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class Identify_Hidden_Walls
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\IdentifyHiddenWalls.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "IdentifyHiddenWalls.txt"
+        );
 
         public static void Process(string inputPath, string outputPath, Dictionary<int, List<(double start, double end)>> _unused)
         {

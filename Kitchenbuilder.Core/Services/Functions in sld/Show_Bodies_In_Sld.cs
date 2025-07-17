@@ -8,7 +8,10 @@ namespace Kitchenbuilder.Core
 {
     public static class Show_Bodies_In_Sld
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ShowBodiesLog.txt";
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "ShowBodiesLog.txt"
+        );
 
         // List to collect shown body names
         private static readonly HashSet<string> ShownBodies = new();

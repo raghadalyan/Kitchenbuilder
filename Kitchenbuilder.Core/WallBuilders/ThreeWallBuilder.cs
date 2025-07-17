@@ -29,7 +29,10 @@ namespace Kitchenbuilder.Core.WallBuilders
 
             swApp.Visible = true;
 
-            string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall3.SLDPRT";
+            string path = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "KitchenParts", "Walls", "Wall3.SLDPRT"
+            );
             ModelDoc2 swModel = swApp.OpenDoc(path, (int)swDocumentTypes_e.swDocPART) as ModelDoc2;
             if (swModel == null)
             {
@@ -113,7 +116,10 @@ namespace Kitchenbuilder.Core.WallBuilders
 
             swModel.ForceRebuild3(true);
 
-            string folder =  @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
+            string folder = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "temp"
+            );
             Directory.CreateDirectory(folder);
             string outputPath = Path.Combine(folder, "3Walls_WithFloor.SLDPRT");
 

@@ -1,8 +1,9 @@
-[00:03:25] 🛠 Creating cooktop on Wall 3, Base 1, Option 3...
-[00:03:25] 📐 Floor: Width=400, Length=350
-[00:03:25] 📏 Cooktop Base: Start=60, End=180, Middle=60
-[00:03:25] ✅ Cooktop created at (X=320, Y=120), Angle=360
-[02:13:37] 🛠 Creating cooktop on Wall 3, Base 1, Option 3...
-[02:13:37] 📐 Floor: Width=400, Length=350
-[02:13:37] 📏 Cooktop Base: Start=60, End=180, Middle=60
-[02:13:37] ✅ Cooktop created at (X=320, Y=120), Angle=360
+[16:24:58] 🛠 Creating sink on Wall 2, Base 1, Option 2...
+[16:24:58] 📐 Floor: Width=400, Length=350
+[16:24:58] 📏 Sink Countertop: Start=0, End=290, Middle=145
+[16:24:58] ✅ Sink created at (X=145, Y=5), Angle=180
+[16:24:58] ✏️ Cut Dimensions: Width=60, Length=40, DX=115, DY=10
+[16:25:21] 🛠 Creating cooktop on Wall 1, Base 2, Option 2...
+[16:25:21] 📐 Floor: Width=400, Length=350
+[16:25:21] 📏 Cooktop Base: Start=85, End=400, Middle=157
+[16:25:21] ✅ Cooktop created at (X=30, Y=158), Angle=360

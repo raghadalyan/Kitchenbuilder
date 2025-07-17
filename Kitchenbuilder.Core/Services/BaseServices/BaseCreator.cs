@@ -50,8 +50,11 @@ namespace Kitchenbuilder.Core.Services.BaseServices
         {
             try
             {
-                string userDownloads = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads");
-                string debugPath = Path.Combine(userDownloads, "Kitchenbuilder", "Output", "debug.txt");
+                string debugPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "debug.txt");
+
+
 
                 using (StreamWriter writer = new StreamWriter(debugPath, true))
                 {

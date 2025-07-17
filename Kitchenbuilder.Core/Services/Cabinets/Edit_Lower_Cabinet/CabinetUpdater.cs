@@ -36,7 +36,7 @@ namespace Kitchenbuilder.Core
             }
 
             // ✅ File path
-            string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNumber}SLD_stations.json";
+            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{optionNumber}SLD_stations.json");
 
             if (!File.Exists(jsonPath))
             {
@@ -153,7 +153,7 @@ namespace Kitchenbuilder.Core
                 Hide_Bodies_In_Sld_IModel.HideMultipleBodies(model, new[] { bodyName });
 
                 // 2. Update the JSON
-                string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNumber}SLD_stations.json";
+                string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{optionNumber}SLD_stations.json");
                 if (!File.Exists(jsonPath))
                 {
                     errorMessage = $"❌ File not found: {jsonPath}";

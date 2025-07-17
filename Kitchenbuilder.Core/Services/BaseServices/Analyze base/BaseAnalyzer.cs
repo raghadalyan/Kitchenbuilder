@@ -60,7 +60,9 @@ namespace Kitchenbuilder.Core
             var mergedEmptySpaces = MergeEmptySpaces(emptySpaces, wallInternalEmptySpaces, kitchen);
 
             // Write to debug.txt
-            string debugFilePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug.txt";
+            string debugFilePath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "debug.txt");
             using (StreamWriter writer = new StreamWriter(debugFilePath))
             {
                 writer.WriteLine("Empty Spaces Analysis (based on doors at ends):");

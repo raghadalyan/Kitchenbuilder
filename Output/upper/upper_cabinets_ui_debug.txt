@@ -1,25 +1,42 @@
-[00:22:23] 🔄 Page loaded with Option 3
-[00:22:23] 📊 Stations loaded: 2
-[00:22:23] 🧭 Navigating to station 1 / Wall: Wall1
-[00:23:12] 💾 Saving cabinet: width=85, height=98, depth=60, DX=0, DY=182
-[00:23:46] ✅ 1 cabinet(s) created and applied successfully.
-[00:23:56] ➕ Add Space clicked.
-[00:25:08] 💾 Saving space: Oven, width=60, height=80, DX=85, DY=65
-[00:25:40] ✅ Space saved to wall Wall1.
-[00:28:13] ➕ Add Space clicked.
-[00:28:39] 💾 Saving space: Microwave, width=60, height=60, DX=85, DY=145
-[00:29:13] ✅ Space saved to wall Wall1.
-[00:29:37] ➕ Add Cabinet clicked.
-[00:30:02] 💾 Saving cabinet: width=60, height=75, depth=60, DX=85, DY=205
-[00:30:34] ✅ 1 cabinet(s) created and applied successfully.
-[00:31:29] ➕ Add Cabinet clicked.
-[00:32:19] 💾 Saving cabinet: width=40, height=52, depth=60, DX=145, DY=20
-[00:34:59] ✅ 5 cabinet(s) created and applied successfully.
-[00:45:41] 🧭 Navigating to station 2 / Wall: Wall2
-[00:46:28] 💾 Saving cabinet: width=145, height=40, depth=60, DX=60, DY=240
-[00:47:30] ✅ 2 cabinet(s) created and applied successfully.
-[00:47:45] 🧭 Navigating to station 1 / Wall: Wall1
-[00:47:50] 🧭 Navigating to station 2 / Wall: Wall2
-[00:48:15] ➕ Add Cabinet clicked.
-[00:48:56] 💾 Saving cabinet: width=60, height=150, depth=60, DX=290, DY=90
-[00:48:56] ❌ Copy 1 failed: ❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.
+[16:34:45] 🔄 Page loaded with Option 2
+[16:34:45] 📊 Stations loaded: 2
+[16:34:45] 🧭 Navigating to station 1 / Wall: Wall1
+[16:35:01] 🧭 Navigating to station 2 / Wall: Wall2
+[16:36:21] ➕ Add Cabinet clicked.
+[16:36:58] 💾 Saving cabinet: width=60, height=50, depth=60, DX=290, DY=15
+[16:38:58] ✅ 2 cabinet(s) created and applied successfully.
+[17:04:35] 🔄 Page loaded with Option 2
+[17:04:35] 📊 Stations loaded: 2
+[17:04:35] 🧭 Navigating to station 1 / Wall: Wall1
+[17:04:39] 🧭 Navigating to station 2 / Wall: Wall2
+[17:04:46] ➕ Add Space clicked.
+[17:04:47] ➕ Add Cabinet clicked.
+[17:05:13] 💾 Saving cabinet: width=60, height=60, depth=60, DX=290, DY=15
+[17:07:25] ✅ 5 cabinet(s) created and applied successfully.
+[17:08:24] 🧭 Navigating to station 1 / Wall: Wall1
+[17:08:26] 🧭 Navigating to station 2 / Wall: Wall2
+[17:09:16] ➕ Add Space clicked.
+[17:09:18] ➕ Add Cabinet clicked.
+[17:10:48] 💾 Saving cabinet: width=57, height=60, depth=60, DX=290, DY=15
+[17:12:48] ✅ 5 cabinet(s) created and applied successfully.
+[17:12:50] 🧭 Navigating to station 1 / Wall: Wall1
+[17:12:52] 🧭 Navigating to station 2 / Wall: Wall2
+[17:13:22] ➕ Add Cabinet clicked.
+[17:13:49] 💾 Saving cabinet: width=60, height=57, depth=60, DX=290, DY=15
+[17:15:32] ✅ 5 cabinet(s) created and applied successfully.
+[17:15:48] ➕ Add Cabinet clicked.
+[17:19:55] 🔄 Page loaded with Option 2
+[17:19:55] 📊 Stations loaded: 2
+[17:19:55] 🧭 Navigating to station 1 / Wall: Wall1
+[17:19:58] 🧭 Navigating to station 2 / Wall: Wall2
+[17:20:11] ➕ Add Cabinet clicked.
+[17:20:35] 💾 Saving cabinet: width=145, height=57, depth=60, DX=0, DY=243
+[17:21:00] ✅ 1 cabinet(s) created and applied successfully.
+[17:21:26] 🧭 Navigating to station 1 / Wall: Wall1
+[17:21:29] 🧭 Navigating to station 2 / Wall: Wall2
+[17:21:33] ➕ Add Cabinet clicked.
+[17:21:53] 💾 Saving cabinet: width=145, height=57, depth=60, DX=145, DY=243
+[17:22:15] ✅ 1 cabinet(s) created and applied successfully.
+[17:22:27] 🧭 Navigating to station 1 / Wall: Wall1
+[17:23:51] 🧭 Navigating to station 2 / Wall: Wall2
+[17:24:12] 🧭 Navigating to station 1 / Wall: Wall1

@@ -90,7 +90,11 @@
         StateHasChanged();
 
         string targetBody = "Extrude_Island1";
-        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{Option}SLD.json";
+        string jsonPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON",
+            $"Option{Option}SLD.json"
+        );
 
         await Task.Run(() =>
         {
@@ -262,7 +266,10 @@
 
     private void Log(string message)
     {
-        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\island";
+        string folder = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "island"
+        );
         string file = Path.Combine(folder, "island_debug.txt");
 
         try
@@ -281,7 +288,11 @@
     }
     private void UpdateHasIslandInJson(bool hasIsland)
     {
-        string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{Option}SLD.json";
+        string jsonPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON",
+            $"Option{Option}SLD.json"
+        );
 
         try
         {

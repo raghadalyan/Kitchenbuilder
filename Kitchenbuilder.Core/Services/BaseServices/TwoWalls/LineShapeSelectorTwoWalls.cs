@@ -10,7 +10,10 @@ namespace Kitchenbuilder.Core
     {
         const double fridgeWidth = 85;
         const double requiredWidthStraight = 325;
-        private const string outputPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON\\Option1.json";
+        private static readonly string outputPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option1.json"
+        );
 
         public static bool TryFindWallForLineShape(
             Kitchen kitchen,
@@ -65,7 +68,10 @@ namespace Kitchenbuilder.Core
 
         private static void LogDebug(string message)
         {
-            string path = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\LineShapeSelectorTwoWalls.txt";
+            string path = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "LineShapeSelectorTwoWalls.txt"
+            );
             File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
     }

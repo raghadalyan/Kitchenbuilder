@@ -9,10 +9,14 @@ namespace Kitchenbuilder.Core
     public static class SinkCooktopMiddle
     {
         private static readonly string JsonPath = Path.Combine(
-            System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile),
-            "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON"
+        );
 
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\SinkCooktopMiddle.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "SinkCooktopMiddle.txt"
+        );
 
         private static void Log(string message)
         {

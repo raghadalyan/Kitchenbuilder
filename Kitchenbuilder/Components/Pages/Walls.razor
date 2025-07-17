@@ -80,8 +80,10 @@
             private async Task SaveKitchenInputAsync()
             {
                 string debugPath = Path.Combine(
-               Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-               "Downloads", "Kitchenbuilder", "Output", "Walls.txt");
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "Walls.txt"
+                );
+
 
                 try
                 {
@@ -122,8 +124,9 @@
                 };
 
                     string folder = Path.Combine(
-       Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-       "Downloads", "Kitchenbuilder", "Kitchenbuilder", "JSON");
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON"
+                    );
 
                     Directory.CreateDirectory(folder);
 

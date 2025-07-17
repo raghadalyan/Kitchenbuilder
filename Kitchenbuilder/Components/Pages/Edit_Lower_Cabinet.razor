@@ -111,7 +111,10 @@
     }
     private void Log(string message)
     {
-        string path = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Debug\ModalDebug.txt";
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Debug", "ModalDebug.txt"
+        );
         string log = $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}";
         File.AppendAllText(path, log);
     }

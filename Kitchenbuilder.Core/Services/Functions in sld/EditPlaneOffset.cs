@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class EditPlaneOffset
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\EditPlaneOffsetDebug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "EditPlaneOffsetDebug.txt"
+        );
 
         private static void Log(string msg)
         {

@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class DeleteWall
     {
-        private static readonly string LogFilePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug.txt";
+        private static readonly string LogFilePath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug.txt"
+        );
 
         public static void DeleteWallByNumber(string filePath, int wallNumber)
         {

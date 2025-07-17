@@ -9,9 +9,21 @@ namespace Kitchenbuilder.Core
 {
     public static class JsonReader
     {
-        private static readonly string KitchenFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen\";
-        private static readonly string TempFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\";
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ImplementInSld.txt";
+        private static readonly string KitchenFolder = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Kitchen"
+        );
+
+        private static readonly string TempFolder = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "temp"
+        );
+
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "ImplementInSld.txt"
+        );
+
 
         private static string GetWallPartPath()
         {
