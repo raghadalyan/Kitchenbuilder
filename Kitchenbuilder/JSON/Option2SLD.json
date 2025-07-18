@@ -189,8 +189,28 @@
     "Depth": 90,
     "Width": 180,
     "Material": "",
-    "DistanceX": 175,
-    "DistanceY": 200,
+    "DistanceX": 210,
+    "DistanceY": 210,
     "Direction": 90
+  },
+  "Sink": {
+    "WallNumber": 1,
+    "BaseNumber": 2,
+    "DistanceFromLeft": 127,
+    "DistanceX_Faucet_On_CT": 5,
+    "DistanceY_Faucet_On_CT": 128,
+    "Angle_Sketch_Rotate_Faucet": 269.99,
+    "Width_Sink_Cut": 40,
+    "Length_Sink_Cut": 60,
+    "DX_Sink_Cut": 10,
+    "DY_Sink_Cut": 98
+  },
+  "Cooktop": {
+    "WallNumber": 2,
+    "BaseNumber": 0,
+    "DistanceFromLeft": 0,
+    "DistanceX_Cooktop_On_CT": 195,
+    "DistanceY_Cooktop_On_CT": 210,
+    "Angle_Sketch_Rotate_Cooktop": 179.99
   }
 }

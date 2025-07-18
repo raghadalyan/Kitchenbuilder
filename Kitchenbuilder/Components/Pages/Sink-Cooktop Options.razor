@@ -5,6 +5,7 @@
 @inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
 @using SolidWorks.Interop.sldworks
 @using SolidWorks.Interop.swconst
+@using System.Text.Json;
 
 <div class="sink-cooktop-page">
     <div class="card-container">
@@ -21,7 +22,7 @@
                 @foreach (var folder in ImageFolders)
                 {
                     <div class="image-box">
-                 
+
 
                         <img src="@folder.CurrentImagePath"
                              @onclick="() => NextImage(folder)"
@@ -198,8 +199,58 @@
 
             // ✅ Set the reopened model as the active one
             SwSession.SetActiveModel(model);
-            // 🗑️ Delete Layout folder after reusing a layout
             string layoutFolder = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", "Layout");
+
+            try
+            {
+                string sourceJson = Path.Combine(layoutFolder, $"Layout{SelectedIndex}.json");
+                string optionJsonPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{optionNum}SLD.json");
+
+                if (!File.Exists(sourceJson))
+                {
+                    Log($"⚠️ Layout JSON not found: {sourceJson}");
+                }
+                else
+                {
+                    Log($"📥 Reading layout JSON from: {sourceJson}");
+                    var layoutJson = File.ReadAllText(sourceJson);
+                    var layoutObj = JsonSerializer.Deserialize<JsonElement>(layoutJson);
+
+                    if (layoutObj.TryGetProperty("Sink", out var sink) && layoutObj.TryGetProperty("Cooktop", out var cooktop))
+                    {
+                        Dictionary<string, object> finalData;
+
+                        if (File.Exists(optionJsonPath))
+                        {
+                            var existingJson = File.ReadAllText(optionJsonPath);
+                            finalData = JsonSerializer.Deserialize<Dictionary<string, object>>(existingJson) ?? new();
+                        }
+                        else
+                        {
+                            finalData = new();
+                        }
+
+                        finalData["Sink"] = sink;
+                        finalData["Cooktop"] = cooktop;
+
+                        var updatedJson = JsonSerializer.Serialize(finalData, new JsonSerializerOptions { WriteIndented = true });
+                        File.WriteAllText(optionJsonPath, updatedJson);
+                        Log($"💾 Sink & Cooktop added to: {optionJsonPath}");
+                    }
+                    else
+                    {
+                        Log("❌ Missing Sink or Cooktop in layout JSON.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"❌ Error while extracting Sink & Cooktop JSON: {ex.Message}");
+            }
+
+            // 🗑️ Delete Layout folder after reusing a layout
             if (Directory.Exists(layoutFolder))
             {
                 TryDeleteFolderWithRetries(layoutFolder);
@@ -280,3 +331,5 @@
     }
 
 }
+
+

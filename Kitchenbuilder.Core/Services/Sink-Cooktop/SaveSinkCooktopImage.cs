@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using Kitchenbuilder.Models;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
@@ -12,8 +15,13 @@ namespace Kitchenbuilder.Core
             "Kitchenbuilder", "Output", "Sink-Cooktop", "SaveSinkCooktopImage_Debug.txt"
         );
 
-        public static void Save(IModelDoc2 model, int layoutIndex, string description, int optionNum)
+        public static void Save(IModelDoc2 model, int layoutIndex, string description, int optionNum, Sink sink, Cooktop cooktop)
         {
+            string layoutFolder = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "temp", "Layout"
+            );
+
             try
             {
                 if (model == null)
@@ -38,10 +46,6 @@ namespace Kitchenbuilder.Core
 
                 File.AppendAllText(DebugPath, $"✅ Saved views for layout Option{layoutIndex}, Description: {description}\n");
 
-                // ✅ Save SLDPRT copy to specific layout path
-                string layoutFolder = Path.Combine(
-                    @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout"
-                );
                 Directory.CreateDirectory(layoutFolder);
 
                 string sldPath = Path.Combine(layoutFolder, $"Layout{layoutIndex}.SLDPRT");
@@ -61,6 +65,31 @@ namespace Kitchenbuilder.Core
             {
                 File.AppendAllText(DebugPath, $"❌ Exception in Save: {ex.Message}\n");
             }
+
+            // ✅ Save JSON file for sink & cooktop
+            try
+            {
+                string jsonPath = Path.Combine(layoutFolder, $"Layout{layoutIndex}.json");
+
+                var layoutJson = new JsonObject
+                {
+                    ["Sink"] = JsonSerializer.SerializeToNode(sink),
+                    ["Cooktop"] = JsonSerializer.SerializeToNode(cooktop),
+                    ["Description"] = description
+                };
+
+                File.WriteAllText(jsonPath, layoutJson.ToJsonString(new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true
+                }));
+
+                File.AppendAllText(DebugPath, $"✅ Saved layout JSON → {jsonPath}\n");
+            }
+            catch (Exception jsonEx)
+            {
+                File.AppendAllText(DebugPath, $"❌ Error saving JSON: {jsonEx.Message}\n");
+            }
+
         }
 
         private static void SaveView(IModelDoc2 model, ModelDocExtension ext, string viewName, int viewType, string folderPath, string fileLabel)

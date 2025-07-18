@@ -5,7 +5,6 @@ using Kitchenbuilder.Core.Models;
 using Kitchenbuilder.Models;
 using SolidWorks.Interop.sldworks;
 
-
 namespace Kitchenbuilder.Core
 {
     public static class OneCountertopSelector
@@ -24,21 +23,18 @@ namespace Kitchenbuilder.Core
         public static void SuggestLayouts(Countertop countertop, int optionNum, IModelDoc2 model)
         {
             int layoutFolderIndex = 1;
+            Sink? sink;
+            Cooktop? cooktop;
 
-            Log($"🛠️ Suggesting layout for Wall{countertop.WallNumber} {countertop.BaseKey} (Start={countertop.Start}, End={countertop.End})");
+            Log($"\ud83d\udc77\ufe0f Suggesting layout for Wall{countertop.WallNumber} {countertop.BaseKey} (Start={countertop.Start}, End={countertop.End})");
 
-            string basePath = Path.Combine(
-               KitchenConfig.Get().BasePath,
-               "Kitchenbuilder", "Kitchenbuilder", "JSON"
-           );
-
-
+            string basePath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
             string inputPath = Path.Combine(basePath, "input.json");
 
             if (!File.Exists(jsonPath) || !File.Exists(inputPath))
             {
-                Log("❌ Required JSON files not found.");
+                Log("\u274c Required JSON files not found.");
                 return;
             }
 
@@ -46,80 +42,65 @@ namespace Kitchenbuilder.Core
             var inputJson = JsonNode.Parse(File.ReadAllText(inputPath))!.AsObject();
 
             bool hasIsland = json["HasIsland"]?.ToString()?.ToLower() == "true";
-            Log($"🔍 HasIsland = {hasIsland}");
-            Island? island = null;
+            Log($"\ud83d\udd0d HasIsland = {hasIsland}");
 
-            if (hasIsland)
+            Island? island = hasIsland ? new Island
             {
-                island = new Island
-                {
-                    Direction = json["Island"]?["Direction"]?.GetValue<double>() ?? 90,
-                    DistanceX = json["Island"]?["DistanceX"]?.GetValue<double>() ?? 0,
-                    DistanceY = json["Island"]?["DistanceY"]?.GetValue<double>() ?? 0,
-                    Depth = (int)(json["Island"]?["Depth"]?.GetValue<double>() ?? 90),
-                    Width = (int)(json["Island"]?["Width"]?.GetValue<double>() ?? 180),
-                    Material = json["Island"]?["Material"]?.ToString() ?? ""
-                };
-            }
+                Direction = json["Island"]?["Direction"]?.GetValue<double>() ?? 90,
+                DistanceX = json["Island"]?["DistanceX"]?.GetValue<double>() ?? 0,
+                DistanceY = json["Island"]?["DistanceY"]?.GetValue<double>() ?? 0,
+                Depth = (int)(json["Island"]?["Depth"]?.GetValue<double>() ?? 90),
+                Width = (int)(json["Island"]?["Width"]?.GetValue<double>() ?? 180),
+                Material = json["Island"]?["Material"]?.ToString() ?? ""
+            } : null;
 
             bool windowInRange = WindowRangeChecker.IsWindowInRange(countertop.Start, countertop.End, countertop.WallNumber);
             int windowCountInRange = WindowRangeChecker.CountWindowsInRange(countertop.Start, countertop.End, countertop.WallNumber);
 
-            Log($"🪟 Window in range = {windowInRange}");
-            Log($"🔢 Windows in range = {windowCountInRange}");
+            Log($"\ud83e\uddae Window in range = {windowInRange}");
+            Log($"\ud83d\udd22 Windows in range = {windowCountInRange}");
 
             if (!int.TryParse(countertop.BaseKey.Replace("Base", ""), out int baseNum))
             {
-                Log("❌ Could not parse base number from BaseKey.");
+                Log("\u274c Could not parse base number from BaseKey.");
                 return;
             }
 
             double floorWidth = json["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? 0;
             double floorLength = json["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? 0;
 
-            // ✅ Suggestion 1: Sink and cooktop on same countertop
-            Log("✅ Suggestion 1: Place both sink and cooktop on the same countertop.");
-            var (sink1, cooktop1) = SinkCooktopSameCountertop.Create(
-                countertop.WallNumber,
-                baseNum,
-                countertop.Start,
-                countertop.End,
-                floorWidth,
-                floorLength,
-                model
+            // Suggestion 1
+            Log("\u2705 Suggestion 1: Sink and cooktop on the same countertop.");
+            (sink, cooktop) = SinkCooktopSameCountertop.Create(
+                countertop.WallNumber, baseNum, countertop.Start, countertop.End, floorWidth, floorLength, model
             );
 
-            if (sink1 != null)
-                Log($"👉 Sink: X={sink1.DistanceX_Faucet_On_CT}, Y={sink1.DistanceY_Faucet_On_CT}, Angle={sink1.Angle_Sketch_Rotate_Faucet}");
-            if (cooktop1 != null)
-                Log($"👉 Cooktop: X={cooktop1.DistanceX_Cooktop_On_CT}, Y={cooktop1.DistanceY_Cooktop_On_CT}, Angle={cooktop1.Angle_Sketch_Rotate_Cooktop}");
+            if (sink != null && cooktop != null)
+            {
+                Log($"\ud83d\udc49 Sink: X={sink.DistanceX_Faucet_On_CT}, Y={sink.DistanceY_Faucet_On_CT}, Angle={sink.Angle_Sketch_Rotate_Faucet}");
+                Log($"\ud83d\udc49 Cooktop: X={cooktop.DistanceX_Cooktop_On_CT}, Y={cooktop.DistanceY_Cooktop_On_CT}, Angle={cooktop.Angle_Sketch_Rotate_Cooktop}");
+                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion1_SameCountertop", optionNum, sink, cooktop);
+            }
 
-            if (sink1 != null && cooktop1 != null)
-                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion1_SameCountertop", optionNum);
-
-            // ✅ Suggestion 2: One on countertop, one on island
-            if (!hasIsland)
-                return;
-
+            if (!hasIsland) return;
             bool suggestion2Valid = false;
 
             if (windowInRange)
             {
                 if (windowCountInRange > 1)
                 {
-                    Log("✅ Suggestion 2: Sink in middle (multiple windows), cooktop on island.");
-                    var sink2 = SinkCooktopMiddle.CreateSinkInMiddle(countertop.WallNumber, baseNum, optionNum, model);
-                    if (sink2 != null)
-                    {
-                        Log($"👉 Sink: X={sink2.DistanceX_Faucet_On_CT}, Y={sink2.DistanceY_Faucet_On_CT}, Angle={sink2.Angle_Sketch_Rotate_Faucet}");
-                        suggestion2Valid = true;
-                    }
+                    Log("\u2705 Suggestion 2: Sink in middle, cooktop on island.");
+                    sink = SinkCooktopMiddle.CreateSinkInMiddle(countertop.WallNumber, baseNum, optionNum, model);
+                    cooktop = SinkCooktopOnIsland.CreateCooktopOnIsland(countertop.WallNumber, island!, model);
                 }
                 else
                 {
-                    Log("✅ Suggestion 2: Sink under window, cooktop on island.");
+                    Log("\u2705 Suggestion 2: Sink under window, cooktop on island.");
                     int wallIndex = countertop.WallNumber - 1;
                     var windowArray = inputJson["Walls"]?[wallIndex]?["Windows"]?.AsArray();
+
+                    sink = null;
+                    cooktop = SinkCooktopOnIsland.CreateCooktopOnIsland(countertop.WallNumber, island!, model);
 
                     if (windowArray != null && windowArray.Count > 0)
                     {
@@ -131,28 +112,18 @@ namespace Kitchenbuilder.Core
 
                             if (center >= countertop.Start && center <= countertop.End)
                             {
-                                var sink2 = SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow(
-                                    "sink",
-                                    countertop.WallNumber,
-                                    baseNum,
+                                var sinkObj = SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", countertop.WallNumber, baseNum,
                                     distanceX,
                                     window?["DistanceY"]?.GetValue<double>() ?? 0,
                                     width,
                                     window?["Height"]?.GetValue<double>() ?? 0,
-                                    floorWidth,
-                                    floorLength,
-                                    countertop.Start,
-                                    countertop.End,
-                                    model
-                                );
+                                    floorWidth, floorLength, countertop.Start, countertop.End, model);
 
-                                if (sink2 is Sink sinkObj)
+                                if (sinkObj is Sink castedSink)
                                 {
-                                    Log($"👉 Sink under window: X={sinkObj.DistanceX_Faucet_On_CT}, Y={sinkObj.DistanceY_Faucet_On_CT}, Angle={sinkObj.Angle_Sketch_Rotate_Faucet}");
-                                    suggestion2Valid = true;
+                                    sink = castedSink;
+                                    break;
                                 }
-
-                                break;
                             }
                         }
                     }
@@ -160,53 +131,26 @@ namespace Kitchenbuilder.Core
             }
             else
             {
+                Log("\u2705 Suggestion 2: Random island split.");
                 bool sinkOnIsland = new Random().Next(2) == 0;
+
                 if (sinkOnIsland)
                 {
-                    Log("✅ Suggestion 2: Sink on island, cooktop on countertop.");
-                    if (island != null)
-                    {
-                        var sink2 = SinkCooktopOnIsland.CreateSinkOnIsland(countertop.WallNumber, island, model);
-
-                        Log($"👉 Sink on island: X={sink2.DistanceX_Faucet_On_CT}, Y={sink2.DistanceY_Faucet_On_CT}, Angle={sink2.Angle_Sketch_Rotate_Faucet}");
-                        suggestion2Valid = true;
-                    }
-
-                    var cooktop2 = SinkCooktopMiddle.CreateCooktopInMiddle(countertop.WallNumber, baseNum, optionNum, model);
-                    if (cooktop2 != null)
-                    {
-                        Log($"👉 Cooktop on countertop: X={cooktop2.DistanceX_Cooktop_On_CT}, Y={cooktop2.DistanceY_Cooktop_On_CT}, Angle={cooktop2.Angle_Sketch_Rotate_Cooktop}");
-                        suggestion2Valid = true;
-                    }
+                    sink = SinkCooktopOnIsland.CreateSinkOnIsland(countertop.WallNumber, island!, model);
+                    cooktop = SinkCooktopMiddle.CreateCooktopInMiddle(countertop.WallNumber, baseNum, optionNum, model);
                 }
                 else
                 {
-                    Log("✅ Suggestion 2: Cooktop on island, sink on countertop.");
-                    if (island != null)
-                    {
-                        var cooktop2 = SinkCooktopOnIsland.CreateCooktopOnIsland(countertop.WallNumber, island, model);
-
-                        Log($"👉 Cooktop on island: X={cooktop2.DistanceX_Cooktop_On_CT}, Y={cooktop2.DistanceY_Cooktop_On_CT}, Angle={cooktop2.Angle_Sketch_Rotate_Cooktop}");
-                        suggestion2Valid = true;
-                    }
-
-                    var sink2 = SinkCooktopMiddle.CreateSinkInMiddle(countertop.WallNumber, baseNum, optionNum, model);
-                    if (sink2 != null)
-                    {
-                        Log($"👉 Sink on countertop: X={sink2.DistanceX_Faucet_On_CT}, Y={sink2.DistanceY_Faucet_On_CT}, Angle={sink2.Angle_Sketch_Rotate_Faucet}");
-                        suggestion2Valid = true;
-                    }
+                    sink = SinkCooktopMiddle.CreateSinkInMiddle(countertop.WallNumber, baseNum, optionNum, model);
+                    cooktop = SinkCooktopOnIsland.CreateCooktopOnIsland(countertop.WallNumber, island!, model);
                 }
-
             }
 
-            if (suggestion2Valid)
+            if (sink != null && cooktop != null)
             {
-                int suggestionIndex = layoutFolderIndex++;
-                SaveSinkCooktopImage.Save(model, suggestionIndex, "Suggestion2_Island", optionNum);
- 
+                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion2_Island", optionNum, sink, cooktop);
+                suggestion2Valid = true;
             }
-
         }
     }
 }

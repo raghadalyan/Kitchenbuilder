@@ -7,8 +7,6 @@ using Kitchenbuilder.Models;
 using SolidWorks.Interop.sldworks;
 using Kitchenbuilder.Core.Models; // for Island
 
-// ... your usings stay the same ...
-
 namespace Kitchenbuilder.Core
 {
     public static class MultiCountertopSelector
@@ -107,25 +105,28 @@ namespace Kitchenbuilder.Core
 
                 if (suggestionCount < 3 && win1)
                 {
-                    SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct1.WallNumber, base1, ct1.Start, 0, 60, 60, floorWidth, floorLength, ct1.Start, ct1.End, model);
-                    SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum);
+                    var sink = SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct1.WallNumber, base1, ct1.Start, 0, 60, 60, floorWidth, floorLength, ct1.Start, ct1.End, model) as Sink;
+                    var cooktop = SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
+                    if (sink != null && cooktop != null)
+                        SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum, sink, cooktop);
                     suggestionCount++;
                 }
 
                 if (suggestionCount < 3 && win2)
                 {
-                    SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct2.WallNumber, base2, ct2.Start, 0, 60, 60, floorWidth, floorLength, ct2.Start, ct2.End, model);
-                    SinkCooktopMiddle.CreateCooktopInMiddle(ct1.WallNumber, base1, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct2.WallNumber}_cooktop_middle_wall{ct1.WallNumber}", optionNum);
+                    var sink = SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", ct2.WallNumber, base2, ct2.Start, 0, 60, 60, floorWidth, floorLength, ct2.Start, ct2.End, model) as Sink;
+                    var cooktop = SinkCooktopMiddle.CreateCooktopInMiddle(ct1.WallNumber, base1, optionNum, model);
+                    if (sink != null && cooktop != null)
+                        SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{ct2.WallNumber}_cooktop_middle_wall{ct1.WallNumber}", optionNum, sink, cooktop);
                     suggestionCount++;
                 }
 
                 if (suggestionCount < 3 && !win1 && !win2)
                 {
-                    SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
-                    SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
-                    SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum);
+                    var sink = SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
+                    var cooktop = SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
+                    if (sink != null && cooktop != null)
+                        SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{ct1.WallNumber}_cooktop_middle_wall{ct2.WallNumber}", optionNum, sink, cooktop);
                     suggestionCount++;
                 }
 
@@ -136,89 +137,25 @@ namespace Kitchenbuilder.Core
 
                     if (sinkOnIsland)
                     {
-                        SinkCooktopOnIsland.CreateSinkOnIsland(ct1.WallNumber, island, model);
-                        SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
-                        SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_island_cooktop_wall{ct2.WallNumber}", optionNum);
+                        var sink = SinkCooktopOnIsland.CreateSinkOnIsland(ct1.WallNumber, island, model);
+                        var cooktop = SinkCooktopMiddle.CreateCooktopInMiddle(ct2.WallNumber, base2, optionNum, model);
+                        if (sink != null && cooktop != null)
+                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_island_cooktop_wall{ct2.WallNumber}", optionNum, sink, cooktop);
                     }
                     else
                     {
-                        SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
-                        SinkCooktopOnIsland.CreateCooktopOnIsland(ct2.WallNumber, island, model);
-                        SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_wall{ct1.WallNumber}_cooktop_island", optionNum);
+                        var sink = SinkCooktopMiddle.CreateSinkInMiddle(ct1.WallNumber, base1, optionNum, model);
+                        var cooktop = SinkCooktopOnIsland.CreateCooktopOnIsland(ct2.WallNumber, island, model);
+                        if (sink != null && cooktop != null)
+                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_wall{ct1.WallNumber}_cooktop_island", optionNum, sink, cooktop);
                     }
 
                     suggestionCount++;
                 }
             }
-            else if (numWalls > 2)
-            {
-                var largestPerWall = grouped.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.OrderByDescending(c => c.Width).First());
-                var wallIds = largestPerWall.Keys.ToList();
-
-                foreach (var sinkWall in wallIds.Where(w => w != fridgeWallNumber))
-                {
-                    foreach (var cooktopWall in wallIds.Where(w => w != fridgeWallNumber && w != sinkWall))
-                    {
-                        if (suggestionCount >= 3) break;
-
-                        var sinkCt = largestPerWall[sinkWall];
-                        var cookCt = largestPerWall[cooktopWall];
-                        int sinkBase = GetBaseNumber(sinkCt.BaseKey);
-                        int cookBase = GetBaseNumber(cookCt.BaseKey);
-
-                        bool winSink = WindowRangeChecker.IsWindowInRange(sinkCt.Start, sinkCt.End, sinkWall);
-
-                        if (winSink)
-                        {
-                            SinkCooktopOnWindow.CreateSinkOrCooktopOnWindow("sink", sinkWall, sinkBase, sinkCt.Start, 0, 60, 60, floorWidth, floorLength, sinkCt.Start, sinkCt.End, model);
-                            SinkCooktopMiddle.CreateCooktopInMiddle(cooktopWall, cookBase, optionNum, model);
-                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_win_wall{sinkWall}_cooktop_middle_wall{cooktopWall}", optionNum);
-                        }
-                        else
-                        {
-                            SinkCooktopMiddle.CreateSinkInMiddle(sinkWall, sinkBase, optionNum, model);
-                            SinkCooktopMiddle.CreateCooktopInMiddle(cooktopWall, cookBase, optionNum, model);
-                            SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_middle_wall{sinkWall}_cooktop_middle_wall{cooktopWall}", optionNum);
-                        }
-
-                        suggestionCount++;
-
-                        if (hasIsland && suggestionCount < 3 && island != null)
-                        {
-                            Log("🌴 Suggesting island layout for multi-wall scenario...");
-                            string useIsland = new Random().Next(2) == 0 ? "Sink" : "Cooktop";
-                            int otherWall = useIsland == "Sink" ? cooktopWall : sinkWall;
-                            var otherCt = largestPerWall[otherWall];
-                            int otherBase = GetBaseNumber(otherCt.BaseKey);
-
-                            if (useIsland == "Sink")
-                            {
-                                SinkCooktopOnIsland.CreateSinkOnIsland(sinkWall, island, model);
-                                SinkCooktopMiddle.CreateCooktopInMiddle(otherWall, otherBase, optionNum, model);
-                                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_island_cooktop_wall{otherWall}", optionNum);
-                            }
-                            else
-                            {
-                                SinkCooktopMiddle.CreateSinkInMiddle(otherWall, otherBase, optionNum, model);
-                                SinkCooktopOnIsland.CreateCooktopOnIsland(cooktopWall, island, model);
-                                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, $"sink_wall{otherWall}_cooktop_island", optionNum);
-                            }
-
-                            suggestionCount++;
-                        }
-
-                        if (suggestionCount >= 3) break;
-                    }
-
-                    if (suggestionCount >= 3) break;
-                }
-
-                if (suggestionCount == 0)
-                    Log("⚠️ No valid 3-wall layout found.");
-            }
             else
             {
-                Log("❌ Unexpected case: countertops are not spread on enough walls.");
+                Log("❌ Unexpected case: countertops are not spread on exactly 2 walls.");
             }
         }
     }

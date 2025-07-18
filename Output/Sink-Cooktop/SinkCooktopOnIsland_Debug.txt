@@ -1,10 +1,4 @@
-[12:52:49] 🔧 Creating Sink on island. Wall=1, Dir=90, DX=210, DY=210, Depth=90
-[12:52:49] ✅ Sink Result: X=220, Y=210, Angle=90
-[12:52:49] 🪚 Cut: Width=40, Length=60, DX=175, DY=180
-[13:07:46] 🔧 Creating Cooktop on island. Wall=2, Dir=90, DX=175, DY=200, Depth=90
-[13:07:46] ✅ Cooktop Result: X=160, Y=200, Angle=179.99
-[13:22:44] 🔧 Creating Cooktop on island. Wall=2, Dir=90, DX=175, DY=200, Depth=90
-[13:22:44] ✅ Cooktop Result: X=160, Y=200, Angle=179.99
-[14:43:19] 🔧 Creating Sink on island. Wall=1, Dir=90, DX=175, DY=200, Depth=90
-[14:43:19] ✅ Sink Result: X=185, Y=200, Angle=90
-[14:43:19] 🪚 Cut: Width=40, Length=60, DX=140, DY=170
+[17:00:39] 🔧 Creating Cooktop on island. Wall=2, Dir=90, DX=210, DY=210, Depth=90
+[17:00:39] ✅ Cooktop Result: X=195, Y=210, Angle=179.99
+[17:19:46] 🔧 Creating Cooktop on island. Wall=2, Dir=90, DX=210, DY=210, Depth=90
+[17:19:46] ✅ Cooktop Result: X=195, Y=210, Angle=179.99

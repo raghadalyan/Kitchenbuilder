@@ -1,0 +1,15 @@
+[16:53:43] ************** CreateFloor_Base **************
+[16:53:43] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option1SLD.json
+[16:53:43] 📏 Editing Width: width@master_wall1 = 400 mm
+[16:53:43] 📏 Editing Length: length@Floor = 350 mm
+[16:53:53] ✅ Floor dimensions applied successfully.
+[16:54:22] ************** CreateFloor_Base **************
+[16:54:22] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[16:54:22] 📏 Editing Width: width@master_wall1 = 400 mm
+[16:54:22] 📏 Editing Length: length@Floor = 350 mm
+[16:54:31] ✅ Floor dimensions applied successfully.
+[16:55:09] ************** CreateFloor_Base **************
+[16:55:09] 📂 JSON Path: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3SLD.json
+[16:55:09] 📏 Editing Width: width@master_wall1 = 400 mm
+[16:55:09] 📏 Editing Length: length@Floor = 350 mm
+[16:55:18] ✅ Floor dimensions applied successfully.
