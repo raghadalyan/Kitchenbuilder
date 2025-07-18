@@ -7,6 +7,8 @@ using Kitchenbuilder.Models;
 using SolidWorks.Interop.sldworks;
 using Kitchenbuilder.Core.Models; // for Island
 
+// ... your usings stay the same ...
+
 namespace Kitchenbuilder.Core
 {
     public static class MultiCountertopSelector
@@ -35,11 +37,7 @@ namespace Kitchenbuilder.Core
             int numWalls = grouped.Count;
             Log($"📊 Countertops are on {numWalls} wall(s).");
 
-            string basePath = Path.Combine(
-                KitchenConfig.Get().BasePath,
-                "Kitchenbuilder", "Kitchenbuilder", "JSON"
-            );
-
+            string basePath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
             string jsonPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
 
             JsonObject? root = File.Exists(jsonPath)
@@ -55,6 +53,7 @@ namespace Kitchenbuilder.Core
             bool hasIsland = root["HasIsland"]?.ToString()?.ToLower() == "true";
             double floorWidth = root["Floor"]?["Width"]?["Size"]?.GetValue<double>() ?? 0;
             double floorLength = root["Floor"]?["Length"]?["Size"]?.GetValue<double>() ?? 0;
+
             Island? island = null;
             if (hasIsland)
             {
@@ -93,7 +92,7 @@ namespace Kitchenbuilder.Core
 
             int suggestionCount = 0;
             int layoutFolderIndex = 1;
-            
+
             if (numWalls == 2)
             {
                 var wallList = grouped.Keys.ToList();
@@ -150,7 +149,6 @@ namespace Kitchenbuilder.Core
 
                     suggestionCount++;
                 }
-
             }
             else if (numWalls > 2)
             {
@@ -184,6 +182,7 @@ namespace Kitchenbuilder.Core
                         }
 
                         suggestionCount++;
+
                         if (hasIsland && suggestionCount < 3 && island != null)
                         {
                             Log("🌴 Suggesting island layout for multi-wall scenario...");
@@ -207,7 +206,6 @@ namespace Kitchenbuilder.Core
 
                             suggestionCount++;
                         }
-
 
                         if (suggestionCount >= 3) break;
                     }

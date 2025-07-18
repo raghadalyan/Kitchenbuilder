@@ -166,7 +166,7 @@ namespace Kitchenbuilder.Core
                     Log("✅ Suggestion 2: Sink on island, cooktop on countertop.");
                     if (island != null)
                     {
-                        var sink2 = SinkCooktopOnIsland.CreateSinkOnIsland (countertop.WallNumber, island, model);
+                        var sink2 = SinkCooktopOnIsland.CreateSinkOnIsland(countertop.WallNumber, island, model);
 
                         Log($"👉 Sink on island: X={sink2.DistanceX_Faucet_On_CT}, Y={sink2.DistanceY_Faucet_On_CT}, Angle={sink2.Angle_Sketch_Rotate_Faucet}");
                         suggestion2Valid = true;
@@ -201,7 +201,12 @@ namespace Kitchenbuilder.Core
             }
 
             if (suggestion2Valid)
-                SaveSinkCooktopImage.Save(model, layoutFolderIndex++, "Suggestion2_Island", optionNum);
+            {
+                int suggestionIndex = layoutFolderIndex++;
+                SaveSinkCooktopImage.Save(model, suggestionIndex, "Suggestion2_Island", optionNum);
+ 
+            }
+
         }
     }
 }

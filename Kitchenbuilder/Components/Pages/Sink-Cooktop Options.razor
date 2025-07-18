@@ -2,6 +2,9 @@
 @using Kitchenbuilder.Core
 @using Microsoft.AspNetCore.Components
 @inject SolidWorksSessionService SwSession
+@inject Kitchenbuilder.Core.SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
 
 <div class="sink-cooktop-page">
     <div class="card-container">
@@ -18,9 +21,24 @@
                 @foreach (var folder in ImageFolders)
                 {
                     <div class="image-box">
-                        <img src="@folder.CurrentImagePath" @onclick="() => NextImage(folder)" class="preview-img" />
+                 
+
+                        <img src="@folder.CurrentImagePath"
+                             @onclick="() => NextImage(folder)"
+                             class="preview-img"
+                             style="cursor: pointer;" />
+
                         <p>@folder.Description</p>
+                        <label style="display: block; text-align: center;">
+                            <input type="radio"
+                                   name="layoutChoice"
+                                   value="@folder.Index"
+                                   checked="@(SelectedIndex == folder.Index)"
+                                   @onchange="() => SelectedIndex = folder.Index" />
+
+                        </label>
                     </div>
+
                 }
             </div>
         }
@@ -29,9 +47,10 @@
             <p>No layout suggestions found.</p>
         }
     </div>
-    <div style="margin-top: 20px; text-align: center;">
-        <button class="btn btn-success" @onclick="GoToHandleCabinet">Continue</button>
-    </div>
+    <button class="btn btn-success" @onclick="GoToHandleCabinet" disabled="@(!ImageFolders.Any() || SelectedIndex == -1)">
+        Continue
+    </button>
+
 </div>
 
 
@@ -45,6 +64,7 @@
     private bool IsLoading = true;
 
     private List<ImageFolder> ImageFolders = new();
+    private int SelectedIndex = -1;
 
     protected override void OnInitialized()
     {
@@ -68,7 +88,8 @@
 
             var relevantCountertops = IdentifyRelevantCountertops.Process(optionNum);
             AnalyzeSinkCooktop.Process(relevantCountertops, optionNum, model);
-
+            // Close the current model (temp_Option*.SLDPRT)
+            SwSession.GetApp().CloseDoc(model.GetTitle());
             LoadImageFolders(optionNum);
         }
         else
@@ -80,14 +101,15 @@
     }
     private void LoadImageFolders(int optionNum)
     {
-        string sinkCooktopPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output", "Sink_Cooktop");
+        int layoutIndex = 1;
+        var sinkCooktopPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output", "Sink_Cooktop");
         if (!Directory.Exists(sinkCooktopPath)) return;
 
         var optionDirs = Directory.GetDirectories(sinkCooktopPath, "Option*");
 
         foreach (var dir in optionDirs)
         {
-            string folderName = Path.GetFileName(dir); // Option1, Option2, etc.
+            string folderName = Path.GetFileName(dir);
             string webPath = $"/Output/Sink_Cooktop/{folderName}";
             var images = Directory.GetFiles(dir, "*.png");
 
@@ -95,6 +117,7 @@
             {
                 ImageFolders.Add(new ImageFolder
                     {
+                        Index = layoutIndex++,
                         Description = $"{folderName} Layout",
                         ImageWebPaths = images.Select(f => Path.Combine(webPath, Path.GetFileName(f)).Replace("\\", "/")).ToArray(),
                         CurrentIndex = 0
@@ -111,22 +134,149 @@
         folder.CurrentIndex = (folder.CurrentIndex + 1) % folder.ImageWebPaths.Length;
     }
 
-
     private class ImageFolder
     {
+        public int Index { get; set; }
         public string Description { get; set; } = string.Empty;
         public string[] ImageWebPaths { get; set; } = Array.Empty<string>();
         public int CurrentIndex { get; set; }
         public string CurrentImagePath => ImageWebPaths.ElementAtOrDefault(CurrentIndex) ?? string.Empty;
     }
+
     private void GoToHandleCabinet()
     {
-        if (!string.IsNullOrWhiteSpace(SelectedOption))
+        if (string.IsNullOrWhiteSpace(SelectedOption) || SelectedIndex == -1)
         {
-            Navigation.NavigateTo($"/handle-cabinet?option={SelectedOption}");
+            Log("⚠️ Invalid selection: No option or index chosen.");
+            return;
         }
+
+        int optionNum = int.Parse(SelectedOption);
+
+        string layoutFile = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "temp", "Layout", $"Layout{SelectedIndex}.sldprt");
+
+        string targetFile = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "temp", $"temp_Option{optionNum}.SLDPRT");
+
+        try
+        {
+            var swApp = SwSession.GetApp();
+            Log($"🔒 Closing SolidWorks file: temp_Option{optionNum}.SLDPRT");
+            swApp.CloseDoc($"temp_Option{optionNum}.SLDPRT");
+            Thread.Sleep(300);
+
+            if (File.Exists(layoutFile))
+            {
+                Log($"📁 Trying to copy: {layoutFile} → {targetFile}");
+                bool success = TryCopyWithRetries(layoutFile, targetFile);
+
+                if (!success)
+                {
+                    Log($"❌ Failed to copy layout file after retries: {layoutFile}");
+                    return;
+                }
+            }
+            else
+            {
+                Log($"❌ Layout file not found: {layoutFile}");
+                return;
+            }
+
+            int errs = 0, warns = 0;
+            Log($"📂 Reopening file in SolidWorks: {targetFile}");
+            var model = (IModelDoc2)swApp.OpenDoc6(
+                targetFile,
+                (int)swDocumentTypes_e.swDocPART,
+                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                "",
+                ref errs,
+                ref warns
+            );
+
+            // ✅ Set the reopened model as the active one
+            SwSession.SetActiveModel(model);
+            // 🗑️ Delete Layout folder after reusing a layout
+            string layoutFolder = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", "Layout");
+            if (Directory.Exists(layoutFolder))
+            {
+                TryDeleteFolderWithRetries(layoutFolder);
+                Log($"🗑️ Deleted layout folder: {layoutFolder}");
+            }
+
+            string sinkCooktopDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output", "Sink_Cooktop");
+
+            if (Directory.Exists(sinkCooktopDir))
+            {
+                Directory.Delete(sinkCooktopDir, true);
+                Log($"🗑️ Deleted folder: {sinkCooktopDir}");
+            }
+
+            Log("✅ Navigation to /handle-cabinet");
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error in GoToHandleCabinet: {ex.Message}");
+        }
+
+        Navigation.NavigateTo($"/handle-cabinet?option={SelectedOption}");
     }
 
+    private static readonly string LogPath = Path.Combine(
+        KitchenConfig.Get().BasePath,
+        "Kitchenbuilder", "Output", "Sink-Cooktop", "GoToHandleCabinet_Log.txt"
+    );
 
+    private void Log(string msg)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(LogPath)!);
+        File.AppendAllText(LogPath, $"[{DateTime.Now:HH:mm:ss}] {msg}{System.Environment.NewLine}");
+    }
+
+    private bool TryCopyWithRetries(string source, string destination, int maxRetries = 10, int delayMs = 200)
+    {
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                File.Copy(source, destination, overwrite: true);
+                return true;
+            }
+            catch (IOException)
+            {
+                Thread.Sleep(delayMs);
+            }
+        }
+
+        return false;
+    }
+
+    private bool TryDeleteFolderWithRetries(string folderPath, int maxRetries = 10, int delayMs = 300)
+    {
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                    return true;
+                }
+                return true; // already deleted
+            }
+            catch (IOException)
+            {
+                Thread.Sleep(delayMs);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Thread.Sleep(delayMs);
+            }
+        }
+
+        return false;
+    }
 
 }
