@@ -1,34 +1,8 @@
-[13:23:28] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[13:23:28] 📁 Copying layout file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[13:23:28] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[13:23:31] ❌ Error in GoToHandleCabinet: The process cannot access the file 'Layout1.SLDPRT' because it is being used by another process.
-[14:19:56] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[14:19:56] 📁 Copying layout file: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:19:56] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:19:58] ❌ Error in GoToHandleCabinet: The process cannot access the file '\\?\C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout' because it is being used by another process.
-[14:29:12] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[14:29:13] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:29:13] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:29:15] ❌ Error in GoToHandleCabinet: The process cannot access the file '\\?\C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout' because it is being used by another process.
-[14:32:54] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[14:32:55] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:32:55] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:33:01] ⚠️ Could not delete layout folder after retries: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout
-[14:33:01] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
-[14:33:01] ✅ Navigation to /handle-cabinet
-[14:44:19] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[14:44:19] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:44:19] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:44:21] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
-[14:44:21] ✅ Navigation to /handle-cabinet
-[14:57:40] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[14:57:40] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:57:40] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[14:57:43] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
-[14:57:43] ✅ Navigation to /handle-cabinet
-[15:01:19] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[15:01:20] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout1.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[15:01:20] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[15:01:26] 🗑️ Deleted layout folder: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout
-[15:01:26] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
-[15:01:26] ✅ Navigation to /handle-cabinet
+[17:20:16] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
+[17:20:16] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
+[17:20:16] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
+[17:20:19] 📥 Reading layout JSON from: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.json
+[17:20:19] 💾 Sink & Cooktop added to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[17:20:23] 🗑️ Deleted layout folder: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout
+[17:20:23] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
+[17:20:23] ✅ Navigation to /handle-cabinet

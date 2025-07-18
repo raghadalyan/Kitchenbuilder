@@ -1,20 +1,8 @@
-[12:52:07] 🔍 Checking Wall 1 countertop range [145, 400]
-[12:52:07] ℹ️ Wall 1 has no windows.
-[12:52:07] 🔍 Checking Wall 2 countertop range [0, 350]
-[12:52:07] 🪟 Window: [125, 225]
-[12:52:07] ✅ Window overlaps with countertop range.
-[13:06:37] 🔍 Checking Wall 1 countertop range [145, 400]
-[13:06:37] ℹ️ Wall 1 has no windows.
-[13:06:37] 🔍 Checking Wall 2 countertop range [0, 350]
-[13:06:37] 🪟 Window: [125, 225]
-[13:06:37] ✅ Window overlaps with countertop range.
-[13:21:35] 🔍 Checking Wall 1 countertop range [145, 400]
-[13:21:35] ℹ️ Wall 1 has no windows.
-[13:21:35] 🔍 Checking Wall 2 countertop range [0, 350]
-[13:21:35] 🪟 Window: [125, 225]
-[13:21:35] ✅ Window overlaps with countertop range.
-[14:42:33] 🔍 Checking Wall 1 countertop range [145, 400]
-[14:42:33] ℹ️ Wall 1 has no windows.
-[14:42:33] 🔍 Checking Wall 2 countertop range [0, 350]
-[14:42:33] 🪟 Window: [125, 225]
-[14:42:33] ✅ Window overlaps with countertop range.
+[16:59:21] 🔍 Checking Wall 1 countertop range [145, 400]
+[16:59:21] ℹ️ Wall 1 has no windows.
+[16:59:21] 🔍 Checking Wall 2 countertop range [0, 350]
+[16:59:21] ℹ️ Wall 2 has no windows.
+[17:18:34] 🔍 Checking Wall 1 countertop range [145, 400]
+[17:18:34] ℹ️ Wall 1 has no windows.
+[17:18:34] 🔍 Checking Wall 2 countertop range [0, 350]
+[17:18:34] ℹ️ Wall 2 has no windows.
