@@ -1,0 +1,598 @@
+﻿@page "/confwalls"
+@inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<link href="css/confwalls.css" rel="stylesheet" />
+
+
+<div class="confwalls-page">
+    <div class="form-container">
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <p>Please wait a moment while the wall file is being generated...</p>
+                <img src="/Images/Loading.gif" alt="Loading" />
+                <p>Loading wall preview...</p>
+            </div>
+        }
+        else
+        {
+            <div class="confirmation-message">
+                <h3 class="material-title">🪵 Material Selection</h3>
+
+                <p>✅ You can now review the wall preview in SolidWorks.</p>
+                <h3>Would you like to apply materials?</h3>
+            </div>
+
+            @foreach (var item in materialOptions)
+            {
+                <div class="material-item">
+                    <label>
+                        <input type="checkbox" @bind="item.Apply" />
+                        Apply material to @item.Label
+                    </label>
+
+                    @if (item.Apply)
+                    {
+                        <div class="material-selection-list">
+                            <div class="material-single-box">
+                                <label for="materialType" class="select-label">Type:</label>
+                                <select id="materialType" @bind="item.Type" class="styled-select">
+                                    <option value="">-- Select Type --</option>
+                                    <option>Woods</option>
+                                    <option>Color</option>
+                                    <option>Marble</option>
+                                    <option>Tiles</option>
+                                </select>
+
+                                @if (item.Type == "Woods")
+                                {
+                                    @if (!item.Saved)
+                                    {
+                                        <div class="wood-grid">
+                                            @foreach (var wood in woodMaterials)
+                                            {
+                                                <div class="wood-item">
+                                                    <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                                    <label>
+                                                        <input type="radio" name="wood_@item.BodyName" value="@wood.Name"
+                                                               @onchange="() => item.Material = wood.Name"
+                                                               checked="@((item.Material == wood.Name))" />
+                                                        @wood.Name
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="save-button-container" style="margin-top: 1rem;">
+                                            <button @onclick="() => SaveMaterial(item)">Save</button>
+                                        </div>
+                                    }
+
+                                    @if (item.Saved)
+                                    {
+                                        <div class="save-button-container" style="margin-top: 1rem;">
+                                            <button class="edit-button" @onclick="() => EditMaterialAgain(item)">Edit</button>
+                                        </div>
+                                    }
+                                }
+
+
+                                @if (item.Type == "Color")
+                                {
+                                    @if (!item.Saved)
+                                    {
+                                        <div class="color-picker-box">
+                                            <label>Choose Color:</label>
+                                            <input type="color" @bind="item.Material" class="color-input" />
+
+                                            <div class="color-sliders">
+                                                <div>
+                                                    <label>Reflectivity:</label>
+                                                    <input type="range" min="0" max="1" step="0.01" @bind="item.Transparency" />
+                                                    <span>@item.Transparency</span>
+                                                </div>
+                                                <div>
+                                                    <label>Specular:</label>
+                                                    <input type="range" min="0" max="1" step="0.01" @bind="item.Specular" />
+                                                    <span>@item.Specular</span>
+                                                </div>
+                                                <div>
+                                                    <label>Transparency:</label>
+                                                    <input type="range" min="0" max="1" step="0.01" @bind="item.Reflectivity" />
+                                                    <span>@item.Reflectivity</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="save-button-container" style="margin-top: 1rem;">
+                                                <button @onclick="() => TryColor(item)">Try Color</button>
+                                                <button @onclick="() => SaveColorMaterial(item)">Save</button>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (item.Saved)
+                                    {
+                                        <div class="save-button-container" style="margin-top: 1rem;">
+                                            <button class="edit-button" @onclick="() => EditMaterialAgain(item)">Edit</button>
+                                        </div>
+                                    }
+                                }
+
+
+
+                                @if (item.Type == "Marble" || item.Type == "Tiles")
+                                {
+                                    @if (!item.Saved)
+                                    {
+                                        <div class="wood-grid">
+                                            @foreach (var material in GetMaterialsForType(item.Type))
+                                            {
+                                                <div class="wood-item">
+                                                    <img src="@material.ImagePath" alt="@material.Name" class="wood-image" />
+                                                    <label>
+                                                        <input type="radio" name="materialSelection_@item.BodyName" value="@material.Name"
+                                                               @onchange="() => item.Material = material.Name"
+                                                               checked="@(item.Material == material.Name)" />
+                                                        @material.Name
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="save-button-container" style="margin-top: 1rem;">
+                                            <button @onclick="() => SaveMarble(item)">Save</button>
+                                        </div>
+                                    }
+
+                                    @if (item.Saved)
+                                    {
+                                        <div class="save-button-container" style="margin-top: 1rem;">
+                                            <button class="edit-button" @onclick="() => EditMaterialAgain(item)">Edit</button>
+                                        </div>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+
+
+        }
+
+        <div class="save-button-container">
+            <button class="continue-button" @onclick="ContinueToBaseOptions">Continue</button>
+        </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter][SupplyParameterFromQuery(Name = "count")] public int Count { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "width")] public int FloorWidth { get; set; }
+    [Parameter][SupplyParameterFromQuery(Name = "length")] public int FloorLength { get; set; }
+
+    private bool isLoading = true;
+    private List<int> wallHeights = new();
+
+    public string SketchName { get; set; } = "";
+
+
+
+
+    private List<MaterialItem> GetMaterialsForType(string type) => type switch
+    {
+        "Marble" => MaterialService.GetMarbleMaterials(),
+        "Tiles" => MaterialService.GetTileMaterials(),
+        _ => new List<MaterialItem>()
+    };
+
+
+    class MaterialOption
+    {
+        public string Label { get; set; } = "";
+        public string BodyName { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public string Type { get; set; } = "";
+        public string Material { get; set; } = "";
+        public bool Saved { get; set; } = false;
+        public string SketchName { get; set; } = "";
+        public double Transparency { get; set; } = 0.5;
+        public double Specular { get; set; } = 0.1;
+        public double Reflectivity { get; set; } = 0.1;
+    }
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+
+    private List<MaterialOption> materialOptions = new();
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
+
+    private void SetType(MaterialOption item, string type)
+    {
+        item.Type = type;
+        item.Saved = false;
+    }
+
+    private string GetTypeButtonClass(MaterialOption item, string type)
+    {
+        return item.Type == type ? "type-btn active" : "type-btn";
+    }
+
+    private void TryColor(MaterialOption item)
+    {
+        var swApp = SwSession.GetApp();
+        var model = swApp.IActiveDoc2;
+
+        if (string.IsNullOrWhiteSpace(item.Material)) return;
+
+        _ = ColorApplier.ApplyColorToBody(
+            model,
+            item.BodyName,
+            item.Material,
+            item.Specular,
+            item.Reflectivity,
+            item.Transparency
+        );
+    }
+
+    private void SaveColorMaterial(MaterialOption item)
+    {
+        var model = SwSession.GetApp().IActiveDoc2;
+
+        if (string.IsNullOrWhiteSpace(item.Material)) return;
+
+        // 🟢 أجبر تحديد الجسم الصحيح
+        if (!ForceSelectBody(item.BodyName)) return;
+
+        bool result = ColorApplier.ApplyColorToBody(
+            model,
+            item.BodyName,
+            item.Material,
+            item.Specular,
+            item.Reflectivity,
+            item.Transparency
+        );
+
+        item.Saved = result;
+    }
+
+
+    private void SaveMaterial(MaterialOption item)
+    {
+        var model = SwSession.GetApp().IActiveDoc2;
+
+        if (string.IsNullOrWhiteSpace(item.Material)) return;
+
+        // 🟢 أجبر تحديد الجسم الصحيح
+        if (!ForceSelectBody(item.BodyName)) return;
+
+        // 🎯 ديباج: تحقق مما هو محدد فعليًا قبل تطبيق المادة
+        var selMgr = model.ISelectionManager;
+        var selected = selMgr.GetSelectedObject6(1, -1) as IBody2;
+
+        if (selected != null)
+        {
+            File.AppendAllText(
+                Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "debug_confwalls.txt"
+                ),
+                            $"🎯 About to apply material: {item.Material} to selected body: {selected.Name}\n");
+        }
+        else
+        {
+            File.AppendAllText(
+                Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "debug_confwalls.txt"
+                ),
+                            $"❌ No body selected before applying material for: {item.Label}\n");
+        }
+
+        // 🟡 تطبيق المادة
+        bool result = EditMaterial.ApplyMaterialToBody(SwSession.GetApp(), item.BodyName, item.Material, "");
+        item.Saved = result;
+    }
+
+
+    private void EditMaterialAgain(MaterialOption item)
+    {
+        item.Saved = false;
+
+        File.AppendAllText(
+            Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "debug_confwalls.txt"
+            ),
+            $"🔄 EditMaterialAgain triggered for: {item.Label} (Body: {item.BodyName})\n"
+        );
+
+    }
+
+    private void SaveMarble(MaterialOption item)
+    {
+        var model = SwSession.GetApp().IActiveDoc2;
+
+        if (string.IsNullOrWhiteSpace(item.Material)) return;
+
+        if (!string.IsNullOrWhiteSpace(item.BodyName))
+        {
+            ForceSelectBody(item.BodyName);
+
+            // 🎯 ديباج: تحقق من الجسم المحدد قبل تطبيق المادة
+            var selMgr = model.ISelectionManager;
+            var selected = selMgr.GetSelectedObject6(1, -1) as IBody2;
+
+            if (selected != null)
+            {
+                File.AppendAllText(
+           Path.Combine(
+               KitchenConfig.Get().BasePath,
+               "Kitchenbuilder", "Output", "debug_confwalls.txt"
+           ),
+           $"🎯 About to apply marble: {item.Material} to selected body: {selected.Name}\n"
+       );
+
+            }
+            else
+            {
+                File.AppendAllText(
+            Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "debug_confwalls.txt"
+            ),
+            $"❌ No body selected before applying marble for: {item.Label}\n"
+        );
+
+            }
+        }
+
+        try
+        {
+            OurMaterial.ApplyCustomMaterial(SwSession.GetApp(), item.BodyName, item.Material);
+            item.Saved = true;
+        }
+        catch (Exception ex)
+        {
+            item.Saved = false;
+
+            File.AppendAllText(
+          Path.Combine(
+              KitchenConfig.Get().BasePath,
+              "Kitchenbuilder", "Output", "debug_confwalls.txt"
+          ),
+          $"❌ Exception while applying marble for {item.Label}: {ex.Message}\n"
+      );
+
+        }
+    }
+
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_confwalls.txt"
+        );
+
+            try
+            {
+                File.AppendAllText(debugPath, $"🟢 Started /confwalls with Count={Count}, Width={FloorWidth}, Length={FloorLength}\n");
+
+                string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", "input.json"
+            );
+                if (!File.Exists(jsonPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON input file not found at: {jsonPath}\n");
+                    return;
+                }
+
+                string jsonContent = File.ReadAllText(jsonPath);
+                var kitchen = JsonSerializer.Deserialize<Kitchen>(jsonContent);
+                if (kitchen == null)
+                {
+                    File.AppendAllText(debugPath, "❌ Failed to deserialize Kitchen model\n");
+                    return;
+                }
+
+                wallHeights = kitchen.Walls.Select(w => w.Height).ToList();
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                switch (kitchen.Walls.Count)
+                {
+                    case 1: OneWallBuilder.Run(kitchen); break;
+                    case 2: TwoWallBuilder.Run(kitchen); break;
+                    case 3: ThreeWallBuilder.Run(kitchen); break;
+                    case 4: FourWallBuilder.Run(kitchen); break;
+                    default:
+                        File.AppendAllText(debugPath, $"❌ Invalid wall count: {kitchen.Walls.Count}\n");
+                        return;
+                }
+
+                File.AppendAllText(debugPath, "✅ Finished building walls\n");
+
+                string filename = $"Wall{kitchen.Walls.Count}_WithFloor.SLDPRT";
+                string partPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "Kitchen", filename
+            );
+
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ File not found: {partPath}\n");
+                    return;
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+                File.AppendAllText(debugPath, "✅ Model opened successfully\n");
+
+                materialOptions.Add(new MaterialOption { Label = "Floor", BodyName = "Boss-Extrude1" });
+
+                for (int i = 0; i < kitchen.Walls.Count; i++)
+                {
+                    var wall = kitchen.Walls[i];
+                    string label = $"Wall {i + 1}";
+                    string bodyName = "";
+
+                    int windowCount = wall.Windows?.Count ?? 0;
+                    int doorCount = wall.Doors?.Count ?? 0;
+
+                    if (windowCount == 0 && doorCount == 0)
+                    {
+                        // لا يوجد نوافذ ولا أبواب → نستخدم اسم الحيطة المباشر مثل Wall1, Wall2, ...
+                        bodyName = $"Wall{i + 1}";
+                    }
+                    else if (doorCount == 0)
+                    {
+                        // يوجد شبابيك فقط
+                        bodyName = windowCount switch
+                        {
+                            1 => i == 0 ? "WindowSlot1" : "WindowSlot12",
+                            2 => i == 0 ? "WindowSlot2" : "WindowSlot22",
+                            3 => i == 0 ? "WindowSlot3" : "WindowSlot32",
+                            _ => $"Wall{i + 1}"
+                        };
+                    }
+                    else if (doorCount == 1)
+                    {
+                        bodyName = i == 0 ? "Door1" : "Door12";
+                    }
+                    else if (doorCount == 2)
+                    {
+                        bodyName = i == 0 ? "Door2" : "Door22";
+                    }
+
+                    materialOptions.Add(new MaterialOption
+                        {
+                            Label = label,
+                            BodyName = bodyName
+                        });
+                }
+
+
+                File.AppendAllText(debugPath, $"🟢 Material options initialized for {materialOptions.Count} items\n");
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(debugPath, $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+            }
+        });
+
+        isLoading = false;
+    }
+
+
+
+    private bool ForceSelectBody(string bodyName)
+    {
+        var model = SwSession.GetApp().IActiveDoc2;
+        if (model is not IPartDoc partDoc)
+            return false;
+        File.AppendAllText(
+            Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "debug_confwalls.txt"
+            ),
+            $"👉 ForceSelectBody called with: {bodyName}\n"
+        );
+
+
+        model.ClearSelection2(true); 
+
+        var bodies = (object[])partDoc.GetBodies2((int)swBodyType_e.swSolidBody, false);
+        foreach (IBody2 body in bodies)
+        {
+            if (body.Name == bodyName)
+            {
+                bool selected = body.Select2(true, null);
+                File.AppendAllText(
+                 Path.Combine(
+                     KitchenConfig.Get().BasePath,
+                     "Kitchenbuilder", "Output", "debug_confwalls.txt"
+                 ),
+                 selected ? $"✅ Selected body: {bodyName}\n" : $"❌ Failed to select body: {bodyName}\n"
+             );
+
+                return selected;
+            }
+        }
+
+        File.AppendAllText(
+         Path.Combine(
+             KitchenConfig.Get().BasePath,
+             "Kitchenbuilder", "Output", "debug_confwalls.txt"
+         ),
+         $"❌ Body not found: {bodyName}\n"
+     );
+
+
+        return false;
+    }
+
+
+    private void ContinueToBaseOptions()
+    {
+        var swApp = SwSession.GetApp();
+        if (swApp != null)
+        {
+            swApp.FrameState = (int)swWindowState_e.swWindowMaximized;
+            swApp.SendMsgToUser2("Returning to base configuration...",
+                (int)swMessageBoxIcon_e.swMbInformation,
+                (int)swMessageBoxBtn_e.swMbOk);
+        }
+
+        NavManager.NavigateTo("/base");
+    }
+}

@@ -1,8 +1,4 @@
-[16:59:21] 🔍 Checking Wall 1 countertop range [145, 400]
-[16:59:21] ℹ️ Wall 1 has no windows.
-[16:59:21] 🔍 Checking Wall 2 countertop range [0, 350]
-[16:59:21] ℹ️ Wall 2 has no windows.
-[17:18:34] 🔍 Checking Wall 1 countertop range [145, 400]
-[17:18:34] ℹ️ Wall 1 has no windows.
-[17:18:34] 🔍 Checking Wall 2 countertop range [0, 350]
-[17:18:34] ℹ️ Wall 2 has no windows.
+[23:58:14] 🔍 Checking Wall 1 countertop range [145, 400]
+[23:58:14] ℹ️ Wall 1 has no windows.
+[23:58:14] 🔍 Checking Wall 2 countertop range [0, 290]
+[23:58:14] ℹ️ Wall 2 has no windows.

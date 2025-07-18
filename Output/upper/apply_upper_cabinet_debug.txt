@@ -1,0 +1,7 @@
+[00:22:56] ❌ Copy 1 failed: ❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.
+[00:26:38] ✅ 6 cabinet(s) created and applied successfully.
+[00:28:50] ✅ 2 cabinet(s) created and applied successfully.
+[00:31:25] ✅ 2 cabinet(s) created and applied successfully.
+[00:34:21] ❌ Copy 1 failed: ❌ Overlaps with cabinet in UpperCabinets.json (Sketch: Sketch_Cabinet1_8)
+[00:35:34] ✅ 1 cabinet(s) created and applied successfully.
+[00:36:52] ✅ 1 cabinet(s) created and applied successfully.

@@ -1,0 +1,199 @@
+﻿.page-background {
+    background-image: url('../Images/wood.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.fridge-container {
+    background-color: rgba(255, 255, 255, 0.93);
+    border-radius: 20px;
+    width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: 'Georgia', serif;
+}
+
+    .fridge-container h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #5b2c06;
+    }
+
+label {
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin-top: 20px;
+    color: #5b2c06;
+}
+
+input[type="color"],
+input[type="range"] {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.wood-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 16px;
+    justify-items: center;
+    padding: 1rem 0;
+}
+
+.wood-item {
+    background-color: #f9f5f0;
+    border: 2px solid #b58b5b;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+    .wood-item:hover {
+        transform: scale(1.05);
+    }
+
+.wood-image {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.color-sliders {
+    margin-top: 1rem;
+    text-align: left;
+}
+
+    .color-sliders label {
+        display: block;
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+.save-button-container,
+.edit-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1.5rem;
+}
+
+button.save-button,
+button.try-button,
+button.edit-button,
+button.continue-button {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: #8d5f2c;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #6d4720;
+}
+
+.checkbox-container {
+    margin-top: 20px;
+    font-size: 17px;
+    color: #5b2c06;
+    text-align: left;
+}
+
+.loading-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.marble-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.marble-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+    .marble-item:hover {
+        transform: scale(1.05);
+    }
+
+.marble-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+.marble-label {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #333;
+    text-align: center;
+}
+
+input[type="radio"] {
+    margin-right: 0.3rem;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* لجعلها بالمنتصف أفقياً */
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+}
+
+.styled-checkbox {
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.styled-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #fefefe;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 0.5rem;
+    width: 200px;
+    transition: all 0.2s ease-in-out;
+}
+
+    .styled-select:focus {
+        outline: none;
+        border-color: #4b3c2f;
+        box-shadow: 0 0 0 2px rgba(75, 60, 47, 0.2);
+    }

@@ -1,0 +1,9 @@
+
+
+🟢 Entered SaveMaterialSelection at 7/18/2025 11:39:56 PM
+🔢 Total items to process: 2
+➡️ Processing body: Extrude_CT_1_2, Type=Woods, Material=Oak
+❌ Failed to apply wood material to Extrude_CT_1_2
+➡️ Processing body: Extrude_CT_2_1, Type=Woods, Material=Oak
+🪵 Applied wood material to Extrude_CT_2_1
+✅ SaveMaterialSelection completed at 7/18/2025 11:40:08 PM
