@@ -1,4 +1,0 @@
-[20:45:54] 📦 Checking cabinet on Wall 2: (X=205, Y=15, W=60, H=50)
-[20:45:54] 🔍 Cabinet overlaps base: 2_1
-[20:45:54] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
-[20:45:54] ✅ Position is legal.

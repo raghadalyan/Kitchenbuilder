@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class SpacePositionValidator
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\validator_space_debug.txt";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper", "validator_space_debug.txt"
+        );
 
         public static string CheckDownPosition(int optionNum, int wallNumber, Space space)
         {
@@ -17,7 +20,10 @@ namespace Kitchenbuilder.Core
             {
                 Log($"🧱 Checking SPACE on Wall {wallNumber}: (X={space.DistanceX}, Y={space.DistanceY}, W={space.Width}, H={space.Height})");
 
-                string basePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+                string basePath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON"
+                );
                 string optionPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
                 string stationPath = Path.Combine(basePath, $"Option{optionNum}SLD_stations.json");
                 string upperPath = Path.Combine(basePath, "UpperCabinets.json");
@@ -36,7 +42,8 @@ namespace Kitchenbuilder.Core
                     foreach (var b in basesElement.EnumerateObject())
                     {
                         var baseObj = b.Value;
-                        if (!baseObj.GetProperty("Visible").GetBoolean()) continue;
+                        if (!baseObj.TryGetProperty("Visible", out var visibleProp) || visibleProp.ValueKind != JsonValueKind.True)
+                            continue;
 
                         double start = baseObj.GetProperty("Start").GetDouble();
                         double end = baseObj.GetProperty("End").GetDouble();
@@ -49,7 +56,7 @@ namespace Kitchenbuilder.Core
                             if (sketch.Contains("fridge") && space.DistanceY < 182)
                                 return "❌ Space too close to fridge base. DistanceY must be ≥ 182 cm.";
 
-                            if (baseObj.TryGetProperty("Countertop", out var ct))
+                            if (baseObj.TryGetProperty("Countertop", out var ct) && ct.ValueKind == JsonValueKind.Object)
                             {
                                 double ctStart = ct.GetProperty("Start").GetDouble();
                                 double ctEnd = ct.GetProperty("End").GetDouble();
@@ -57,6 +64,7 @@ namespace Kitchenbuilder.Core
                                 if (space.DistanceX >= ctStart && space.DistanceX < ctEnd && space.DistanceY < 150)
                                     return "❌ Space too close to countertop. DistanceY must be ≥ 150 cm.";
                             }
+
                         }
                     }
                 }

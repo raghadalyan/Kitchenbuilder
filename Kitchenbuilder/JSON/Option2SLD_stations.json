@@ -1,32 +1,32 @@
 [
   {
-    "BaseName": "Base1",
-    "ExtrudeName": "Extrude_1_1",
-    "StationStart": 0,
+    "BaseName": "Base2",
+    "ExtrudeName": "Extrude_1_2",
+    "StationStart": 85,
+    "StationEnd": 145,
+    "WallNumber": 1,
+    "Cabinets": [],
+    "HasCountertop": false,
+    "SketchName": "1_2"
+  },
+  {
+    "BaseName": "Base2",
+    "ExtrudeName": "Extrude_1_2",
+    "StationStart": 145,
     "StationEnd": 400,
     "WallNumber": 1,
     "Cabinets": [],
     "HasCountertop": true,
-    "SketchName": "1_1"
+    "SketchName": "1_2"
   },
   {
     "BaseName": "Base1",
     "ExtrudeName": "Extrude_2_1",
     "StationStart": 60,
-    "StationEnd": 205,
+    "StationEnd": 350,
     "WallNumber": 2,
     "Cabinets": [],
     "HasCountertop": true,
-    "SketchName": "2_1"
-  },
-  {
-    "BaseName": "Base1",
-    "ExtrudeName": "Extrude_2_1",
-    "StationStart": 205,
-    "StationEnd": 265,
-    "WallNumber": 2,
-    "Cabinets": [],
-    "HasCountertop": false,
     "SketchName": "2_1"
   }
 ]

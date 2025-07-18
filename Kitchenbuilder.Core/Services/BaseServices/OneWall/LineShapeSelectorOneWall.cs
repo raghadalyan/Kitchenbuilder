@@ -8,8 +8,10 @@ namespace Kitchenbuilder.Core
 {
     public static class LineShapeSelectorOneWall
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\LineShapeSelectorOneWall.txt";
-
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "LineShapeSelectorOneWall.txt"
+        );
         private static void LogDebug(string message)
         {
             File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
@@ -22,8 +24,10 @@ namespace Kitchenbuilder.Core
             const double fridgeWidth = 85;
             int wallIndex = 0;
             double floorLength = kitchen.Floor.Length;
-            string outputPath = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Kitchenbuilder\\JSON\\Option1.json";
-
+            string outputPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option1.json"
+            );
             if (!simpleEmptySpaces.ContainsKey(wallIndex))
             {
                 LogDebug("❌ Wall 0 does not contain any empty space.");

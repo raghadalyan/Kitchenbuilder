@@ -10,7 +10,8 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplyCabinet
     {
-        private static string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Apply cab.txt";
+        private static string debugPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "Apply cab.txt");
 
         private static void WriteDebug(string message)
         {

@@ -9,7 +9,8 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplySmartDims
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ApplySmartDims.txt";
+        private static string LogPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "ApplySmartDims.txt");
 
         public static void ApplyDimensions(string jsonPath, ModelDoc2 model)
         {

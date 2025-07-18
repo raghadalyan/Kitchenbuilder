@@ -1,0 +1,258 @@
+﻿@using Kitchenbuilder.Core.Models
+@using System.Text.Json
+@using System.IO
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+
+@code {
+    [Parameter] public int OptionNum { get; set; }
+    [Parameter] public int WallNumber { get; set; }
+
+    private WallCabinetWrapper? data;
+    private string wallKey => $"Wall{WallNumber}";
+    private string jsonPath => Path.Combine(
+        KitchenConfig.Get().BasePath,
+        "Kitchenbuilder", "Kitchenbuilder", "JSON", "UpperCabinets.json"
+    );
+    CabinetInfo? editingCabinet = null;
+
+    double editWidth, editHeight, editDepth, editDX, editDY;
+    bool showEditBox = false;
+
+    protected override void OnParametersSet()
+    {
+        if (!File.Exists(jsonPath)) return;
+
+        try
+        {
+            var json = File.ReadAllText(jsonPath);
+            var all = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json);
+            if (all != null && all.TryGetValue(wallKey, out var wrapper))
+                data = wrapper;
+        }
+        catch { data = null; }
+    }
+    void SelectUpperCabinet(CabinetInfo cab)
+    {
+        string suffix = cab.SketchName?.Replace("Sketch_Cabinet", "") ?? "";
+        string bodyName = $"Extrude_Drawers{suffix}";
+
+        var model = SwSession.GetActiveModel();
+        SelectBody.SelectByName(model, bodyName);
+    }
+
+    void SelectUpperSpace(Space sp)
+    {
+        string? type = sp.Type?.Trim();
+        string bodyName = type switch
+        {
+            "Microwave" => "Microwave1",
+            "Oven" => "Oven1",
+            "Range Hood" => "Range Hood1",
+            _ => null
+        };
+
+        if (bodyName != null)
+        {
+            var model = SwSession.GetActiveModel();
+            SelectBody.SelectByName(model, bodyName);
+        }
+    }
+    void DeleteCabinet(CabinetInfo cab)
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null || data == null) return;
+
+        string errorMessage;
+
+        bool result = UpperCabinetUpdater.DeleteCabinet(model, cab, null, out errorMessage);
+        if (!result)
+        {
+            Console.WriteLine("Error deleting cabinet: " + errorMessage);
+            return;
+        }
+
+        // Remove from memory
+        data.Cabinets.Remove(cab);
+
+        // Write updated JSON
+        SaveData();
+    }
+
+    void DeleteSpace(Space sp)
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null || data == null) return;
+
+        string errorMessage;
+
+        bool result = UpperCabinetUpdater.DeleteCabinet(model, null, sp, out errorMessage);
+        if (!result)
+        {
+            Console.WriteLine("Error deleting space: " + errorMessage);
+            return;
+        }
+
+        // Remove from memory
+        data.Spaces.Remove(sp);
+
+        // Write updated JSON
+        SaveData();
+    }
+
+    void SaveData()
+    {
+        var json = File.ReadAllText(jsonPath);
+        var all = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json);
+        if (all == null) return;
+
+        all[wallKey] = data!;
+        File.WriteAllText(jsonPath, JsonSerializer.Serialize(all, new JsonSerializerOptions { WriteIndented = true }));
+    }
+    void BeginEditCabinet(CabinetInfo cab)
+    {
+        editingCabinet = cab;
+        editWidth = cab.Width;
+        editHeight = cab.Height;
+        editDepth = cab.Depth;
+        editDX = cab.DistanceX;
+        editDY = cab.DistanceY;
+        showEditBox = true;
+    }
+
+
+
+    void CancelEdit()
+    {
+        editingCabinet = null;
+        showEditBox = false;
+    }
+    void ApplyEdit()
+    {
+        var model = SwSession.GetActiveModel();
+        if (model == null) return;
+
+        string error = "";
+
+        if (editingCabinet != null)
+        {
+            bool ok = UpperCabinetUpdater.UpdateCabinet(
+                editingCabinet.SketchName!,
+                editWidth, editHeight, editDepth, editDX, editDY,
+                model, WallNumber,
+                out error
+            );
+
+            if (ok)
+            {
+                editingCabinet.Width = (int)editWidth;
+                editingCabinet.Height = (int)editHeight;
+                editingCabinet.Depth = (int)editDepth;
+                editingCabinet.DistanceX = (int)editDX;
+                editingCabinet.DistanceY = (int)editDY;
+            }
+            else
+            {
+                Console.WriteLine("❌ Error: " + error);
+            }
+        }
+
+        SaveData();      // ✅ must be inside the method
+        CancelEdit();    // ✅ must be inside the method
+    }
+}
+
+}
+
+@if (data != null)
+{
+    <div class="edit-upper-box">
+        <h4 style="color: #5a3e1b;">📦 Added Items</h4>
+        <div class="upper-icon-grid">
+
+          
+            @foreach (var cab in data.Cabinets)
+            {
+                <div class="upper-tooltip-wrapper">
+                    <img src="Images/cabinet.gif" class="upper-icon" @onclick="() => SelectUpperCabinet(cab)" />
+
+
+
+                    <div class="upper-tooltip">
+                        <div class="upper-corner-icons">
+<img src="Images/edit.png" class="upper-corner-icon" @onclick="() => BeginEditCabinet(cab)" />
+                            <img src="Images/Delete.png" class="upper-corner-icon" @onclick="() => DeleteCabinet(cab)" />
+                        </div>
+                        <strong>Cabinet</strong><br />
+                        Width: @cab.Width cm<br />
+                        Height: @cab.Height cm<br />
+                        Depth: @cab.Depth cm<br />
+                        DistanceX: @cab.DistanceX cm<br />
+                        DistanceY: @cab.DistanceY cm
+                    </div>
+                </div>
+
+            }
+
+       
+            @foreach (var sp in data.Spaces)
+            {
+                var cleanedType = sp.Type?.Trim() ?? "null";
+                var icon = cleanedType switch
+                {
+                    "Microwave" => "microwave.gif",
+                    "Oven" => "Oven.gif",
+                    "Range Hood" => "Range Hood.gif",
+                    "DishWasher" => "dishwasher.gif",
+                    _ => "other.png"
+                };
+
+                var imagePath = $"Images/{icon}";
+
+                <div class="upper-tooltip-wrapper">
+                    <img src="@imagePath" class="upper-icon" @onclick="() => SelectUpperSpace(sp)" />
+
+                    <div class="upper-tooltip">
+                        <div class="upper-corner-icons">
+                            <img src="Images/Delete.png" class="upper-corner-icon" @onclick="() => DeleteSpace(sp)" />
+                        </div>
+
+                        <strong>@sp.Type</strong><br />
+                        Width: @sp.Width cm<br />
+                        Height: @sp.Height cm<br />
+                        DistanceX: @sp.DistanceX cm<br />
+                        DistanceY: @sp.DistanceY cm
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+
+    </div>
+    @if (showEditBox)
+    {
+            <div class="modal-backdrop">
+                <div class="edit-popup">
+                <h3 class="edit-title">Edit Cabinet</h3>
+                    <label>Width: <input type="number" @bind="editWidth" /></label><br />
+                    <label>Height: <input type="number" @bind="editHeight" /></label><br />
+  
+                    <label>Depth: <input type="number" @bind="editDepth" /></label> <br />
+                
+                    <label>DistanceX: <input type="number" @bind="editDX" /></label><br />
+                    <label>DistanceY: <input type="number" @bind="editDY" /></label><br />
+
+                    <div class="modal-buttons">
+                        <button @onclick="ApplyEdit">Save</button>
+                        <button @onclick="CancelEdit">Cancel</button>
+                    </div>
+                </div>
+            </div>
+    }
+
+}
+

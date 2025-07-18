@@ -1,3 +1,42 @@
-[2025-07-14 20:42:03] 👁️ Made body visible: Extrude_Island1
-[2025-07-14 20:42:04] 💾 Model saved after showing bodies.
-[2025-07-14 20:45:56] 👁️ Made body visible: Extrude_Drawers2_1
+[2025-07-18 12:45:41] 👁️ Made body visible: Extrude_Island1
+[2025-07-18 12:45:44] 💾 Model saved after showing bodies.
+[2025-07-18 12:49:46] ✅ Body already visible: Extrude_Island1
+[2025-07-18 12:49:46] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 12:51:18] 👁️ Made body visible: Faucet Inox
+[2025-07-18 12:51:20] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 12:51:21] 👁️ Made body visible: Cut-Sink
+[2025-07-18 12:51:23] 💾 Model saved after showing bodies.
+[2025-07-18 13:05:15] ✅ Body already visible: Extrude_Island1
+[2025-07-18 13:05:15] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:05:45] ✅ Body already visible: Faucet Inox
+[2025-07-18 13:05:47] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 13:06:09] ❌ Body not found: Cut-Sink
+[2025-07-18 13:06:09] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:20:41] ✅ Body already visible: Extrude_Island1
+[2025-07-18 13:20:41] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:20:53] ✅ Body already visible: Faucet Inox
+[2025-07-18 13:20:53] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 13:21:08] ❌ Body not found: Cut-Sink
+[2025-07-18 13:21:08] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:34:26] ✅ Body already visible: Extrude_Island1
+[2025-07-18 13:34:26] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:34:49] 👁️ Made body visible: Faucet Inox
+[2025-07-18 13:34:50] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 13:34:51] 👁️ Made body visible: Cut-Sink
+[2025-07-18 13:34:53] 💾 Model saved after showing bodies.
+[2025-07-18 13:42:58] ✅ Body already visible: Extrude_Island1
+[2025-07-18 13:42:58] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 13:43:21] 👁️ Made body visible: Faucet Inox
+[2025-07-18 13:43:23] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 13:43:24] 👁️ Made body visible: Cut-Sink
+[2025-07-18 13:43:26] 💾 Model saved after showing bodies.
+[2025-07-18 14:08:44] ✅ Body already visible: Extrude_Island1
+[2025-07-18 14:08:44] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 14:41:25] ✅ Body already visible: Faucet Inox
+[2025-07-18 14:41:27] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 14:41:46] ❌ Body not found: Cut-Sink
+[2025-07-18 14:41:46] ℹ️ No bodies were shown, skipping save.
+[2025-07-18 14:56:05] ✅ Body already visible: Faucet Inox
+[2025-07-18 14:56:05] ✅ Body already visible: Kitchen_Cooktop_Simple
+[2025-07-18 14:56:23] ❌ Body not found: Cut-Sink
+[2025-07-18 14:56:23] ℹ️ No bodies were shown, skipping save.

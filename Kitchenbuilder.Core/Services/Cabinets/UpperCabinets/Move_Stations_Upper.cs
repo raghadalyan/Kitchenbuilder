@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class Move_Stations_Upper
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\move_station_debug.txt";
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper", "move_station_debug.txt"
+        );
 
         public static void MoveTo(ISldWorks app, IModelDoc2 model, string wallName)
         {

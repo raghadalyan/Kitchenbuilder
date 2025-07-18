@@ -171,3 +171,32 @@
         border-radius: 6px;
         border: 1px solid #ccc;
     }
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+    .form-row .half {
+        width: 48%;
+    }
+
+    .form-row .half-full {
+        width: 100%;
+    }
+
+    .form-row label {
+        font-weight: bold;
+        color: #5a3e1b;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .form-row input,
+    .form-row select {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }

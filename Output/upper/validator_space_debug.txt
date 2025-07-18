@@ -1,6 +1,0 @@
-[20:47:17] 🧱 Checking SPACE on Wall 2: (X=205, Y=65, W=60, H=60)
-[20:47:17] 🔍 SPACE overlaps base: 2_1
-[20:47:17] 📄 Checking station overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD_stations.json
-[20:47:17] 📄 Checking upper cabinet overlaps from: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json
-[20:47:17] ↔ Compare with upper cabinet Sketch_Cabinet2_1 at (X=205, Y=15)
-[20:47:17] ✅ Position is legal.

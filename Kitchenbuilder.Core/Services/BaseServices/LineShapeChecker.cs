@@ -95,7 +95,10 @@ namespace Kitchenbuilder.Core
             foreach (var kvp in dynamicWallData)
                 option[kvp.Key] = kvp.Value;
 
-            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+            string folder = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON"
+            );
             Directory.CreateDirectory(folder);
             string path = Path.Combine(folder, "Option1.json");
 
@@ -109,7 +112,10 @@ namespace Kitchenbuilder.Core
 
         private static void LogDebug(string message)
         {
-            string path = @"C:\\Users\\chouse\\Downloads\\Kitchenbuilder\\Output\\LineShapeChecker.txt";
+            string path = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "LineShapeChecker.txt"
+            );
             File.AppendAllText(path, $"[{DateTime.Now:HH:mm:ss}] {message}\n");
         }
     }

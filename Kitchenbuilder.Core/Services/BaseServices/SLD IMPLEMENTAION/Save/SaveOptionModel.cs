@@ -7,7 +7,12 @@ namespace Kitchenbuilder.Core
     public static class SaveOptionModel
     {
         private static readonly string BaseOutputPath = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output");
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\SaveOptionModel_Debug.txt";
+
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "SaveOptionModel_Debug.txt"
+        );
+
 
         public static void Save(ModelDoc2 model, string jsonPath)
         {

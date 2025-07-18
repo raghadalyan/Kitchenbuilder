@@ -15,7 +15,10 @@ namespace Kitchenbuilder.Core
             //Check LineShape Option 
             bool success = LineShapeSelectorTwoWalls.TryFindWallForLineShape(kitchen, simpleEmptySpaces);
 
-            string outputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HandleTwoWalls.txt";
+            string outputPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "HandleTwoWalls.txt"
+            );
             string message = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - LineShapeSelector result: {(success ? "✅ Success" : "❌ Failed")}";
             
             //Check L shape Option 

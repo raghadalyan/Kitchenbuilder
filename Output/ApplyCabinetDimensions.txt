@@ -1,9 +1,0 @@
-20:45:56 - 🛠 Applying cabinet dims: Sketch_Cabinet2_1 => Width=60, Height=50, DistanceX=205
-20:46:06 - 📐 DistanceY=15 applied to Sketch_Cabinet2_1
-20:46:09 - ✅ Depth 60 applied to Extrude_Cabinet2_1
-20:46:13 - ✏️ Drawer 1: Width=46, DistanceY=2 @ Drawers2_1
-20:46:13 - ⏭️ Skipped Drawer 2: Width=0, DistanceY=0
-20:46:13 - ⏭️ Skipped Drawer 3: Width=0, DistanceY=0
-20:46:13 - ⏭️ Skipped Drawer 4: Width=0, DistanceY=0
-20:46:13 - ⏭️ Skipped Drawer 5: Width=0, DistanceY=0
-20:46:15 - ✅ All cabinet and drawer dimensions applied and model saved.

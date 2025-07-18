@@ -123,7 +123,11 @@ namespace Kitchenbuilder.Core
                 if (string.IsNullOrWhiteSpace(baseName) || string.IsNullOrWhiteSpace(currentSketch))
                     return;
 
-                string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+                string jsonPath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Kitchenbuilder", "JSON",
+                    $"{baseName}SLD.json"
+                );
                 if (!File.Exists(jsonPath))
                 {
                     Log("❌ JSON file not found when trying to update distances.");

@@ -7,7 +7,10 @@ namespace Kitchenbuilder.Core
 {
     public static class Hide_Bodies_In_Sld
     {
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\HideBodiesLog.txt";
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "HideBodiesLog.txt"
+        );
 
         public static void HideBodyByName(ModelDoc2 model, string bodyName)
         {

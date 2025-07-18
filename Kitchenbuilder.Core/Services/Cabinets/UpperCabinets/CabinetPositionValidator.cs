@@ -21,7 +21,7 @@ namespace Kitchenbuilder.Core
 
     public static class CabinetPositionValidator
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\validator_debug.txt";
+        private static readonly string DebugPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "upper", "validator_debug.txt");
 
         public static string CheckDownPosition(int optionNum, int wallNumber, CabinetInfo cabinet)
         {
@@ -29,7 +29,7 @@ namespace Kitchenbuilder.Core
             {
                 Log($"📦 Checking cabinet on Wall {wallNumber}: (X={cabinet.DistanceX}, Y={cabinet.DistanceY}, W={cabinet.Width}, H={cabinet.Height})");
 
-                string basePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+                string basePath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
                 string optionPath = Path.Combine(basePath, $"Option{optionNum}SLD.json");
                 string stationPath = Path.Combine(basePath, $"Option{optionNum}SLD_stations.json");
                 string upperPath = Path.Combine(basePath, "UpperCabinets.json");
@@ -49,7 +49,8 @@ namespace Kitchenbuilder.Core
                     foreach (var b in basesElement.EnumerateObject())
                     {
                         var baseObj = b.Value;
-                        if (!baseObj.GetProperty("Visible").GetBoolean()) continue;
+                        if (!baseObj.TryGetProperty("Visible", out var visibleProp) || visibleProp.ValueKind != JsonValueKind.True)
+                            continue;
 
                         double start = baseObj.GetProperty("Start").GetDouble();
                         double end = baseObj.GetProperty("End").GetDouble();
@@ -61,11 +62,11 @@ namespace Kitchenbuilder.Core
 
                             if (sketch.Contains("fridge") && cabinet.DistanceY < 182)
                                 return "❌ Cabinet too close to fridge base. DistanceY must be ≥ 182 cm.";
-
-                            if (baseObj.TryGetProperty("Countertop", out var ct))
+                            if (baseObj.TryGetProperty("Countertop", out var ct) && ct.ValueKind == JsonValueKind.Object)
                             {
                                 double ctStart = ct.GetProperty("Start").GetDouble();
                                 double ctEnd = ct.GetProperty("End").GetDouble();
+
 
                                 if (cabinet.DistanceX >= ctStart && cabinet.DistanceX < ctEnd && cabinet.DistanceY < 150)
                                     return "❌ Cabinet too close to countertop. DistanceY must be ≥ 150 cm.";

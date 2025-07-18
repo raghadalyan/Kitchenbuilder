@@ -1,6 +1,0 @@
-[20:47:17] 📦 Applying space type: Oven on wall 2 (FloorLength: 350, FloorWidth: 400)
-[20:47:17] ➡️ Resetting D1 and D2 to 0...
-[20:47:17] 🧱 Wall 2 detected:
-[20:47:17]   ↪ angle = 90°, DX = 205 cm, DY = 30 cm, Plane offset = 65 cm
-[20:47:23] 📏 Applying width and height...
-[20:47:36] ✅ Width set to 60 cm, Height set to 60 cm

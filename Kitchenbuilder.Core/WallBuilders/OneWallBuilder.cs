@@ -26,7 +26,10 @@ namespace Kitchenbuilder.Core.WallBuilders
 
             swApp.Visible = true;
 
-            string templatePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\KitchenParts\Walls\Wall1.SLDPRT";
+            string templatePath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "KitchenParts", "Walls", "Wall1.SLDPRT"
+            );
             ModelDoc2 swModel = swApp.OpenDoc(templatePath, (int)swDocumentTypes_e.swDocPART) as ModelDoc2;
             if (swModel == null)
             {
@@ -110,12 +113,14 @@ namespace Kitchenbuilder.Core.WallBuilders
 
             swModel.ForceRebuild3(true);
 
-            // ⬇️ إعداد المجلد واسم الملف
-            string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Kitchen";
+            string folder = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "Kitchen"
+            );
             Directory.CreateDirectory(folder);
             string outputPath = Path.Combine(folder, "Wall1_WithFloor.SLDPRT");
 
-            // ⬇️ الحفظ
+         
             swModel.SaveAs3(outputPath,
                 (int)swSaveAsVersion_e.swSaveAsCurrentVersion,
                 (int)swSaveAsOptions_e.swSaveAsOptions_Copy);
@@ -126,7 +131,6 @@ namespace Kitchenbuilder.Core.WallBuilders
             Console.WriteLine("📁 Document closed successfully.");
         }
 
-        // ✅ دالة البحث عن ميزة بالاسم
         private static Feature FindFeatureByName(ModelDoc2 model, string featureName)
         {
             Feature feature = model.FirstFeature() as Feature;

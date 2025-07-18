@@ -1,0 +1,231 @@
+﻿@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+
+@code {
+    [Parameter]
+    public StationInfo Station { get; set; } = new();
+    [Parameter]
+    public int OptionNumber { get; set; }
+    private CabinetInfo? editingCabinet;
+    private int editingDrawerCount;
+    private bool editingHasDrawers;
+    private string errorMessage = "";
+    private int tempWidth;
+    private int? tempHeight;
+
+    private void SelectCabinet(CabinetInfo cabinet)
+    {
+        string suffix = cabinet.SketchName.Replace("Sketch_Cabinet", "");  // ➡️ gives "2_4"
+        string bodyName = $"Extrude_Drawers{suffix}";                      // ➡️ becomes "Extrude_Drawers2_4"
+
+        IModelDoc2 model = SwSession.GetActiveModel();
+        SelectBody.SelectByName(model, bodyName);
+    }
+
+    private void StartEdit(CabinetInfo cabinet)
+    {
+        Log($"Edit allowed. HasCountertop={Station.HasCountertop}");
+
+        editingCabinet = cabinet;
+        tempWidth = cabinet.Width;
+        tempHeight = cabinet.Height;
+        editingDrawerCount = CountDrawers(cabinet.Drawers ?? new Drawers(cabinet.SketchName));
+        editingHasDrawers = cabinet.HasDrawers;
+
+        Log($"Edit started for cabinet with Width={cabinet.Width}, Drawers={editingDrawerCount}");
+    }
+
+    private CabinetInfo? GetLastCabinet()
+    {
+        return Station.Cabinets?.OrderByDescending(c => c.DistanceX).FirstOrDefault();
+    }
+    private void SaveCabinetEdit()
+    {
+        if (editingCabinet == null)
+            return;
+
+        if (tempWidth < 5)
+        {
+            errorMessage = "❌ Width must be at least 5 cm.";
+            return;
+        }
+
+        editingCabinet.Width = tempWidth;
+        if (!Station.HasCountertop && tempHeight.HasValue)
+            editingCabinet.Height = tempHeight.Value;
+
+        editingCabinet.HasDrawers = editingHasDrawers;
+
+        string suffix = editingCabinet.SketchName.Replace("Sketch_Cabinet", "");
+        Drawers newDrawers = new Drawers($"Drawers{suffix}");
+        for (int i = 1; i <= editingDrawerCount; i++)
+        {
+            typeof(Drawers).GetProperty($"Width{i}")?.SetValue(newDrawers, editingCabinet.Width);
+        }
+
+        editingCabinet.Drawers = editingDrawerCount > 0 ? newDrawers : null;
+
+        bool saved = CabinetUpdater.UpdateCabinet(
+            sketchName: editingCabinet.SketchName,
+            optionNumber: OptionNumber,
+            newWidth: editingCabinet.Width,
+            newHeight: Station.HasCountertop ? null : editingCabinet.Height,
+            drawerCount: editingDrawerCount,
+            hasDrawers: editingHasDrawers,
+            model: SwSession.GetActiveModel()!, // ✅ pass model explicitly
+            out string error
+        );
+
+
+        if (saved)
+        {
+            IModelDoc2 model = SwSession.GetActiveModel();
+
+            Log($"✅ Saved changes for {editingCabinet.SketchName} to JSON and SolidWorks");
+            editingCabinet = null;
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = error;
+            Log(error);
+        }
+    }
+
+    private void CancelEdit()
+    {
+        editingCabinet = null;
+    }
+
+    private int CountDrawers(Drawers drawers)
+    {
+        int count = 0;
+        if (drawers.Width1 > 0) count++;
+        if (drawers.Width2 > 0) count++;
+        if (drawers.Width3 > 0) count++;
+        if (drawers.Width4 > 0) count++;
+        if (drawers.Width5 > 0) count++;
+        return count;
+    }
+    private void Log(string message)
+    {
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Debug", "ModalDebug.txt"
+        );
+        string log = $"[{DateTime.Now:HH:mm:ss}] {message}{System.Environment.NewLine}";
+        File.AppendAllText(path, log);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (editingCabinet != null)
+            Log("✅ Modal is being rendered.");
+    }
+    private void DeleteCabinet(CabinetInfo cabinet)
+    {
+        IModelDoc2 model = SwSession.GetActiveModel();
+        bool deleted = CabinetUpdater.DeleteCabinet(model, cabinet, OptionNumber, out string error);
+
+        if (deleted)
+        {
+            Station.Cabinets.Remove(cabinet); // Refresh UI
+            Log($"🗑️ Deleted cabinet {cabinet.SketchName}");
+        }
+        else
+        {
+            errorMessage = error;
+            Log(error);
+        }
+    }
+
+}
+
+<div class="cabinet-icons-box">
+    <p><strong>Cabinets for Wall @Station.WallNumber:</strong></p>
+    <div class="cabinet-icons">
+        @foreach (var cabinet in Station.Cabinets)
+        {
+            var hasDrawers = cabinet.HasDrawers && cabinet.Drawers is not null;
+            var drawerCount = hasDrawers ? CountDrawers(cabinet.Drawers!) : 0;
+
+            <div class="lower-tooltip-wrapper">
+                <img src="/Images/cabinet.gif"
+                     class="cabinet-icon"
+                     alt="Cabinet"
+                     @onclick="() => SelectCabinet(cabinet)" />
+
+                <div class="lower-tooltip">
+
+                    @if (cabinet == GetLastCabinet())
+                    {
+                            <div class="corner-icons">
+                                <img src="/Images/edit.png" class="corner-icon" alt="Edit" @onclick="() => StartEdit(cabinet)" />
+                                            <img src="/Images/delete.png" class="corner-icon" alt="Delete" @onclick="() => DeleteCabinet(cabinet)" />
+                                        </div>
+                    }
+
+                                Width: @cabinet.Width cm<br />
+                                Height: @cabinet.Height cm<br />
+                                Depth: @cabinet.Depth cm<br />
+                                Has Drawers: @(hasDrawers ? "Yes" : "No")<br />
+                    @if (hasDrawers)
+                    {
+                                                <span>Drawer Count: @drawerCount</span>
+                    }
+                            </div>
+
+
+                        </div>
+        }
+        @if (editingCabinet != null)
+        {
+                <div class="modal-overlay">
+                    <div class="modal-box">
+                        <h3>Edit Cabinet</h3>
+
+                        <label>Width:
+            <input type="number" @bind="tempWidth" min="5" />
+                            </label><br />
+
+                    @if (!Station.HasCountertop)
+                    {
+                            <label>Height:
+                                <input type="number" @bind="tempHeight" min="10" />
+                            </label>
+                            <br />
+                    }
+
+
+                        <label>
+                            <input type="checkbox" @bind="editingHasDrawers" />
+                            Has Drawers
+                        </label><br />
+
+                    @if (editingHasDrawers)
+                    {
+                                        <label>Drawer Count:
+                                            <input type="number" @bind="editingDrawerCount" min="2" max="5" />
+                                        </label>
+
+                                        <br />
+                    }
+
+                        <div style="margin-top: 10px;">
+                            <button @onclick="SaveCabinetEdit">Save</button>
+                            <button @onclick="CancelEdit" style="margin-left: 10px;">Cancel</button>
+                        </div>
+                    @if (!string.IsNullOrWhiteSpace(errorMessage))
+                    {
+                            <div style="color: red; margin-bottom: 10px;">
+                            @errorMessage
+                            </div>
+                    }
+                    </div>
+                </div>
+        }
+
+
+    </div>
+</div>

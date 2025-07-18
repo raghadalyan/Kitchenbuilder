@@ -98,7 +98,10 @@
 
     void Log(string message)
     {
-        string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\countertop_debug.txt";
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "countertop_debug.txt"
+        );
         string timestamped = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}{System.Environment.NewLine}";
         File.AppendAllText(debugPath, timestamped);
     }
@@ -117,8 +120,9 @@
                 return;
             }
 
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
-            string partPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp", $"temp_{baseName}.SLDPRT");
+            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{baseName}SLD.json");
+            string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", $"temp_{baseName}.SLDPRT");
+
 
             Log($"📦 baseName = {baseName}");
             Log($"📄 JSON path = {jsonPath}");
@@ -337,7 +341,11 @@
         // 🔁 RE-SHOW ALL REMAINING COUNTERTOP BODIES
         try
         {
-            string jsonPath = Path.Combine(@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON", $"{baseName}SLD.json");
+            string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON",
+                $"{baseName}SLD.json"
+            );
             string jsonText = File.ReadAllText(jsonPath);
             var jsonDoc = JsonDocument.Parse(jsonText);
 

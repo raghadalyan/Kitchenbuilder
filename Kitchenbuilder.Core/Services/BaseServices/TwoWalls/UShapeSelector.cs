@@ -8,8 +8,16 @@ namespace Kitchenbuilder.Core
 {
     public static class UShapeSelector
     {
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Ushapeselector.txt";
-        private static readonly string OutputPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option3.json";
+        private static readonly string DebugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Ushapeselector.txt"
+        );
+
+        private static readonly string OutputPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "Option3.json"
+        );
+
 
         private static void Log(string msg) => File.AppendAllText(DebugPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
 

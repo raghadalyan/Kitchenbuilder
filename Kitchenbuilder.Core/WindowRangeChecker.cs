@@ -7,14 +7,14 @@ namespace Kitchenbuilder.Core
     public static class WindowRangeChecker
     {
         private static readonly string InputJsonPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "Downloads",
-            "Kitchenbuilder",
-            "Kitchenbuilder",
-            "JSON",
-            "input.json"
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON", "input.json"
         );
-        private static readonly string OutputLogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\Sink-Cooktop\WindowRangeChecker.txt";
+
+        private static readonly string OutputLogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "Sink-Cooktop", "WindowRangeChecker.txt"
+        );
 
         private static void Log(string message)
         {
@@ -90,13 +90,10 @@ namespace Kitchenbuilder.Core
             int count = 0;
 
             string inputPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                "Downloads",
-                "Kitchenbuilder",
-                "Kitchenbuilder",
-                "JSON",
-                "input.json"
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", "input.json"
             );
+
 
             if (!File.Exists(inputPath))
                 return 0;

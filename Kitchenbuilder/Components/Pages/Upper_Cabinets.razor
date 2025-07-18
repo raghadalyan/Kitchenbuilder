@@ -19,113 +19,152 @@
 
         @if (showAddCabinetBox)
         {
-            <div class="add-cabinet-box">
-                <label>
-                    <input type="checkbox" @bind="hasSequence" />
-                    Is part of a sequence?
-                </label>
+                <div class="add-cabinet-box">
+                    <div class="form-row">
+                        <div class="half">
+                            <label>
+                                <input type="checkbox" @bind="hasDrawers" /> Has Drawers
+                            </label>
+                        </div>
+                        <div class="half">
+                            <label>
+                                <input type="checkbox" @bind="hasSequence" /> Is part of a sequence?
+                            </label>
+                        </div>
+                    </div>
 
                 @if (hasSequence)
                 {
-                    <div class="sequence-options">
-                        <label>Number of Cabinets (min 2):</label>
-                        <input type="number" min="2" @bind="sequenceCount" />
-
-                        <label>Sequence Direction:</label>
-                        <select @bind="sequenceDirection">
-                            <option value="Horizontal">Horizontal</option>
-                            <option value="Vertical">Vertical</option>
-                        </select>
-                    </div>
+                            <div class="form-row">
+                                <div class="half">
+                                    <label>Number of Cabinets (min 2):</label>
+                                    <input type="number" min="2" @bind="sequenceCount" />
+                                </div>
+                                <div class="half">
+                                    <label>Sequence Direction:</label>
+                                    <select @bind="sequenceDirection">
+                                        <option value="Horizontal">Horizontal</option>
+                                        <option value="Vertical">Vertical</option>
+                                    </select>
+                                </div>
+                            </div>
                 }
 
-                <div class="dimension-fields">
-                    <label>Width (cm):</label>
-                    <input type="number" min="5" @bind="width" />
+                @if (hasDrawers)
+                {
+                            <div class="form-row">
+                                <div class="half-full">
+                                    <label>Number of Drawers:</label>
+                                    <input type="number" min="1" @bind="drawerCount" />
+                                </div>
+                            </div>
+                }
 
-                    <label>Height (cm):</label>
-                    <input type="number" min="5" @bind="height" />
+                    <hr class="divider-line" />
 
-                    <label>Depth (cm):</label>
-                    <input type="number" min="5" @bind="depth" />
+                    <div class="form-row">
+                        <div class="half">
+                            <label>Width (cm):</label>
+                            <input type="number" min="5" @bind="width" />
+                        </div>
+                        <div class="half">
+                            <label>Height (cm):</label>
+                            <input type="number" min="5" @bind="height" />
+                        </div>
+                    </div>
 
-                    <label>Distance X (relative to floor):</label>
-                    <input type="number" @bind="distanceX" />
+                    <div class="form-row">
+                        <div class="half">
+                            <label>Depth (cm):</label>
+                            <input type="number" min="5" @bind="depth" />
+                        </div>
+                        <div class="half">
+                            <label>Distance X (relative to floor):</label>
+                            <input type="number" @bind="distanceX" />
+                        </div>
+                    </div>
 
-                    <label>Distance Y (relative to floor, min 15):</label>
-                    <input type="number" min="15" @bind="distanceY" />
+                    <div class="form-row">
+                        <div class="half-full">
+                            <label>Distance Y (relative to floor, min 15):</label>
+                            <input type="number" min="15" @bind="distanceY" />
+                        </div>
+                    </div>
+
                     <button @onclick="SaveCabinet">💾 Save Cabinet</button>
-                    <label>
-                        <input type="checkbox" @bind="hasDrawers" /> Has Drawers
-                    </label>
 
-                    @if (hasDrawers)
-                    {
-                        <label>
-                            Number of Drawers:
-                            <input type="number" min="1" @bind="drawerCount" />
-                        </label>
-                    }
-
-
-                </div>
                 @if (!string.IsNullOrEmpty(resultMessage))
                 {
-                    <div class="status-message @(resultMessage.StartsWith("✅") ? "success" : "error")">
+                            <div class="status-message @(resultMessage.StartsWith("✅") ? "success" : "error")">
                         @resultMessage
-                    </div>
+                            </div>
                 }
-            </div>
+                </div>
         }
+
         @if (showAddSpaceBox)
         {
-                <h4 style="color: #5a3e1b;">Add Space</h4>
+                <div class="add-space-box">
+                    <h4 style="color: #5a3e1b;">Add Space</h4>
+                    <div class="form-row">
+                        <div class="half-full">
+                            <label>Space Type:</label>
+                            <select @bind="space.Type">
+                                <option>Microwave</option>
+                                <option>Oven</option>
+                                <option>DishWasher</option>
+                                <option>Range Hood</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="add-space-box">
-                <label>Space Type:</label>
-                <select @bind="space.Type">
-                    <option>Microwave</option>
-                    <option>Oven</option>
-                    <option>DishWasher</option>
-                    <option>Range Hood</option>
-                    <option>Other</option>
-                </select>
+                    <div class="form-row">
+                        <div class="half">
+                            <label>Width (cm):</label>
+                            <input type="number" min="5" @bind="space.Width" />
+                        </div>
+                        <div class="half">
+                            <label>Height (cm):</label>
+                            <input type="number" min="5" @bind="space.Height" />
+                        </div>
+                    </div>
 
-                <label>Width (cm):</label>
-                <input type="number" min="5" @bind="space.Width" />
+                    <div class="form-row">
+                        <div class="half">
+                            <label>Distance X (relative to floor):</label>
+                            <input type="number" @bind="space.DistanceX" />
+                        </div>
+                        <div class="half">
+                            <label>Distance Y (relative to floor):</label>
+                            <input type="number" min="15" @bind="space.DistanceY" />
+                        </div>
+                    </div>
 
-                <label>Height (cm):</label>
-                <input type="number" min="5" @bind="space.Height" />
-
-
-                <label>Distance X (relative to floor):</label>
-                <input type="number" @bind="space.DistanceX" />
-
-                <label>Distance Y (relative to floor):</label>
-                <input type="number" min="15" @bind="space.DistanceY" />
-
-                <button @onclick="SaveSpace">💾 Save Space</button>
+                    <button @onclick="SaveSpace">💾 Save Space</button>
 
                 @if (!string.IsNullOrEmpty(spaceResultMessage))
                 {
-                    <div class="status-message @(spaceResultMessage.StartsWith("✅") ? "success" : "error")">
+                            <div class="status-message @(spaceResultMessage.StartsWith("✅") ? "success" : "error")">
                         @spaceResultMessage
-                    </div>
+                            </div>
                 }
-            </div>
+                </div>
         }
+
+     <Edit_Upper_Cabinet OptionNum="@OptionNum" WallNumber="@stations[currentIndex].WallNumber" />
 
 
         @if (stations.Count == 0)
         {
-            <p>Loading stations...</p>
+                <p>Loading stations...</p>
         }
         else
         {
-            <div class="nav-buttons">
-                <button @onclick="GoBack" disabled="@((currentIndex == 0))">⬅ Back</button>
-                <button @onclick="GoNext" disabled="@((currentIndex == stations.Count - 1))">Next ➡</button>
-            </div>
+                <div class="nav-buttons">
+                    <button @onclick="GoBack" disabled="@((currentIndex == 0))">⬅ Back</button>
+                    <button @onclick="GoNext" disabled="@((currentIndex == stations.Count - 1))">Next ➡</button>
+                </div>
         }
     </div>
 </div>
@@ -162,7 +201,11 @@
         OptionNum = int.TryParse(SelectedOption, out var result) ? result : 1;
         Log($"🔄 Page loaded with Option {OptionNum}");
 
-        string path = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{OptionNum}SLD.json";
+        string path = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Kitchenbuilder", "JSON",
+            $"Option{OptionNum}SLD.json"
+        );
         stations = CalculateStationsUpperCabinets.GetStations(path);
 
         Log($"📊 Stations loaded: {stations.Count}");
@@ -210,7 +253,11 @@
             var model = SwSession.GetActiveModel();
             if (model == null)
             {
-                string filePath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option{OptionNum}.SLDPRT";
+                string filePath = Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "temp",
+                    $"temp_Option{OptionNum}.SLDPRT"
+                );
                 Log($"📂 Opening model file: {filePath}");
 
                 int errs = 0, warns = 0;
@@ -241,7 +288,10 @@
     }
     private void Log(string message)
     {
-        string folder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper";
+        string folder = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "upper"
+        );
         string path = Path.Combine(folder, "upper_cabinets_ui_debug.txt");
 
         try

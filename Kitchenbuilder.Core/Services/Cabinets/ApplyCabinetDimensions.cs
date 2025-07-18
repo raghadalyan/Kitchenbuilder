@@ -9,7 +9,8 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplyCabinetDimensions
     {
-        private static string debugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ApplyCabinetDimensions.txt";
+        private static string debugPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "ApplyCabinetDimensions.txt");
 
         private static void Log(string message)
         {

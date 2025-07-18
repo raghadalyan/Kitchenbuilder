@@ -9,7 +9,10 @@ namespace Kitchenbuilder.Core
 {
     public static class LShapeChecker
     {
-        private static readonly string DebugLogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\LShapeSelectorOneWall.txt";
+        private static readonly string DebugLogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "LShapeSelectorOneWall.txt"
+        );
 
         private static void Log(string message)
         {

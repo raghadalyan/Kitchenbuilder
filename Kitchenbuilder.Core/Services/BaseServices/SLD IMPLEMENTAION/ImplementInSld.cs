@@ -6,8 +6,15 @@ namespace Kitchenbuilder.Core
 {
     public static class ImplementInSld
     {
-        private static readonly string JsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\";
-        private static readonly string LogPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\ImplementInSld.txt";
+        private static readonly string JsonFolder = Path.Combine(
+          KitchenConfig.Get().BasePath,
+          "Kitchenbuilder", "Kitchenbuilder", "JSON"
+      );
+
+        private static readonly string LogPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "ImplementInSld.txt"
+        );
 
         public static void ApplyBaseDimensions(Kitchen kitchen, Dictionary<int, List<(double start, double end)>> simpleEmptySpaces)
         {

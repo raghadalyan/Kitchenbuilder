@@ -9,8 +9,12 @@ namespace Kitchenbuilder.Core
 {
     public static class ApplySpace
     {
-        private static readonly string SavePath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\UpperCabinets.json";
-        private static readonly string DebugPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\upper\apply_space_debug.txt";
+        private static string SavePath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", "UpperCabinets.json");
+
+        private static string DebugPath =>
+            Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "upper", "apply_space_debug.txt");
+
 
         public static string Apply(IModelDoc2 model, int optionNum, Space newSpace, UpperCabinetStation station)
         {
@@ -34,8 +38,15 @@ namespace Kitchenbuilder.Core
                 if (File.Exists(SavePath))
                 {
                     string json = File.ReadAllText(SavePath);
-                    upperData = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json)
-                                 ?? new();
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+                        upperData = new(); // Empty file – treat as new
+                    }
+                    else
+                    {
+                        upperData = JsonSerializer.Deserialize<Dictionary<string, WallCabinetWrapper>>(json)
+                                     ?? new();
+                    }
                 }
                 else
                 {
@@ -62,7 +73,9 @@ namespace Kitchenbuilder.Core
         }
         private static double GetFloorWidth(int optionNum)
         {
-            string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNum}SLD.json";
+            string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{optionNum}SLD.json");
 
             if (!File.Exists(jsonPath))
                 return 0;
@@ -81,7 +94,10 @@ namespace Kitchenbuilder.Core
 
         private static double GetFloorLength(int optionNum)
         {
-            string jsonPath = $@"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option{optionNum}SLD.json";
+            string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON",
+                $"Option{optionNum}SLD.json");
 
             if (!File.Exists(jsonPath))
                 return 0;

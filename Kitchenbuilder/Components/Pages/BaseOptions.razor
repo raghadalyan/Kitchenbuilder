@@ -71,8 +71,10 @@
     {
         try
         {
-            var logPath = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\debug_log.txt";
-            var baseDir = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output";
+            var logPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "debug_log.txt");
+
+            string baseDir = Path.Combine(AppContext.BaseDirectory, "wwwroot", "Output");
+
             optionNames = Directory.GetDirectories(baseDir)
                        .Select(Path.GetFileName)
                        .Where(name => name?.ToLower().StartsWith("option") ?? false)
@@ -139,7 +141,7 @@
             try
             {
                 // 🔸 Delete other temp SLDPRT files
-                string tempFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp";
+                string tempFolder = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp");
                 string keepFile = $"temp_{selectedOption}.SLDPRT";
 
                 if (Directory.Exists(tempFolder))
@@ -155,7 +157,7 @@
                 }
 
                 // 🔸 Delete unrelated JSON files
-                string jsonFolder = @"C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON";
+                string jsonFolder = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON");
                 string keepJson1 = $"{selectedOption}.json";
                 string keepJson2 = $"{selectedOption}SLD.json";
 
