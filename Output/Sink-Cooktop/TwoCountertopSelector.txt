@@ -1,20 +1,10 @@
-[16:58:28] 🔍 Starting TwoCountertopSelector.SuggestLayouts...
-[16:58:28] 🛠️ Found 2 countertops: Wall1 Base2, Wall2 Base1
-[16:58:28] 📏 Trying sink & cooktop on wider CT: Wall2
-[16:59:11] ✅ Same countertop layout succeeded.
-[16:59:21] 📂 Created layout 1: sink_cooktop_same_wall2
-[16:59:21] 🔄 Using fallback: middle-middle layout.
-[17:00:21] 📂 Created layout 2: sink_middle_wall1_cooktop_middle_wall2
-[17:00:21] 🌴 Island detected. Trying split layout.
-[17:01:02] 📂 Created layout 3: sink_wall1_cooktop_island
-[17:01:02] ✅ SuggestLayouts finished.
-[17:17:29] 🔍 Starting TwoCountertopSelector.SuggestLayouts...
-[17:17:29] 🛠️ Found 2 countertops: Wall1 Base2, Wall2 Base1
-[17:17:29] 📏 Trying sink & cooktop on wider CT: Wall2
-[17:18:18] ✅ Same countertop layout succeeded.
-[17:18:34] 📂 Created layout 1: sink_cooktop_same_wall2
-[17:18:34] 🔄 Using fallback: middle-middle layout.
-[17:19:17] 📂 Created layout 2: sink_middle_wall2_cooktop_middle_wall1
-[17:19:17] 🌴 Island detected. Trying split layout.
-[17:20:06] 📂 Created layout 3: sink_wall1_cooktop_island
-[17:20:06] ✅ SuggestLayouts finished.
+[23:56:53] 🔍 Starting TwoCountertopSelector.SuggestLayouts...
+[23:56:53] 🛠️ Found 2 countertops: Wall1 Base2, Wall2 Base1
+[23:56:53] 📏 Trying sink & cooktop on wider CT: Wall2
+[23:58:02] ✅ Same countertop layout succeeded.
+[23:58:14] 📂 Created layout 1: sink_cooktop_same_wall2
+[23:58:14] 🔄 Using fallback: middle-middle layout.
+[23:59:31] 📂 Created layout 2: sink_middle_wall2_cooktop_middle_wall1
+[23:59:31] 🌴 Island detected. Trying split layout.
+[00:01:14] 📂 Created layout 3: sink_wall1_cooktop_island
+[00:01:14] ✅ SuggestLayouts finished.

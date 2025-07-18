@@ -1,0 +1,605 @@
+﻿@page "/base-approval"
+@inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<link href="css/base.css" rel="stylesheet" />
+
+<div class="approval-page">
+    <div class="form-container">
+        <h3 class="material-title">🪵 Material Selection</h3>
+
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <p>Please wait a moment while the base file is being prepared...</p>
+                <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
+                <p>Loading base preview...</p>
+            </div>
+        }
+        else
+        {
+            <p>✅ You can now review the selected base in SolidWorks.</p>
+            <div>
+                <input type="checkbox" @bind="askForMaterial" id="askForMaterial" />
+                <label for="askForMaterial">Do you want to assign materials to base sketches?</label>
+            </div>
+
+
+            @if (askForMaterial && baseMaterialOptions.Count > 0)
+            {
+                <div class="material-selection-list">
+                    <div class="material-single-box">
+                        <label for="materialType" class="select-label">Type:</label>
+                        <select id="materialType" @bind="baseMaterial.Type" class="styled-select">
+                            <option value="">-- Select Type --</option>
+                            <option>Woods</option>
+                            <option>Color</option>
+                            <option>Marble</option>
+                            <option>Tiles</option>
+                        </select>
+
+                        @if (baseMaterial.Type == "Woods" && !IsSaved)
+                        {
+                            <div class="wood-grid">
+                                @foreach (var wood in woodMaterials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="baseWoodSelection" value="@wood.Name"
+                                                   @onchange="() => baseMaterial.Material = wood.Name"
+                                                   checked="@(baseMaterial.Material == wood.Name)" />
+                                            @wood.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        @if (baseMaterial.Type == "Color" && (!IsSaved || isInEditMode))
+                        {
+                            <div class="material-single-box">
+                                <h4>🎨 bases Color Selection</h4>
+
+                                <label>Select Color:</label>
+                                <input type="color" @bind="baseMaterial.Material" class="color-input" />
+                                <p>Selected: @baseMaterial.Material</p>
+
+                                <div class="color-sliders">
+                                    <label>Reflectivity: @baseMaterial.Transparency</label>
+                                    <input type="range" min="0" max="1" step="0.01" @bind="baseMaterial.Transparency" />
+
+                                    <label>Specular: @baseMaterial.Specular</label>
+                                    <input type="range" min="0" max="1" step="0.01" @bind="baseMaterial.Specular" />
+
+                                    <label>Transparency: @baseMaterial.Reflectivity</label>
+                                    <input type="range" min="0" max="1" step="0.01" @bind="baseMaterial.Reflectivity" />
+                                </div>
+
+                                <div class="save-button-container" style="margin-top: 1rem;">
+                                    <button class="save-button" @onclick="TryBaseColor">Try Color</button>
+                                    <button class="edit-button" @onclick="SaveBaseColor">Save</button>
+                                </div>
+                            </div>
+                        }
+
+                        @if (baseMaterial.Type == "Color" || baseMaterial.Type == "Woods")
+                        {
+                            <div style="margin-top: 1rem;">
+                                <button class="save-button" @onclick="SaveMaterialSelection" disabled="@IsSaved">Save</button>
+                                <button class="edit-button" @onclick="EditMaterialSelection" disabled="@(IsSaved == false)">Edit</button>
+                            </div>
+                        }
+
+                        @if ((baseMaterial.Type == "Marble" || baseMaterial.Type == "Tiles") && (!IsSaved || isInEditMode))
+                        {
+                            <div class="wood-grid">
+                                @foreach (var material in Materials)
+                                {
+                                    <div class="material-card @(baseMaterial.Material == material.Name ? "selected" : "")">
+                                        <img src="@material.ImagePath" alt="@material.Name" class="material-image" />
+                                        <label class="material-label">
+                                            <input type="radio" name="baseMaterialSelection" value="@material.Name"
+                                                   @onchange="() => baseMaterial.Material = material.Name"
+                                                   checked="@(baseMaterial.Material == material.Name)" />
+                                            @material.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+
+
+                        @if (baseMaterial.Type == "Marble" || baseMaterial.Type == "Tiles")
+                        {
+                            <div style="margin-top: 1rem;">
+                                <button class="save-button" @onclick="SaveBaseMarble" disabled="@IsFridgeSaved">Save</button>
+                                <button class="edit-button" @onclick="EditMaterialSelection" disabled="@(IsSaved == false)">Edit</button>
+
+                            </div>
+                        }
+
+
+
+                    </div>
+
+                </div>
+            }
+
+            <button class="continue-button" @onclick="ContinueToCountertop">
+                ✅ Continue
+            </button>
+        }
+    </div>
+</div>
+
+<style>
+
+    .material-title {
+        font-size: 1.8rem;
+        color: #4E342E; /* بني غامق */
+        text-align: center;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        border-bottom: 2px solid #A1887F; /* خط سفلي أنيق */
+        display: inline-block;
+        You can now review the selected base in SolidWorks. padding-bottom: 0.3rem;
+    }
+
+
+    .continue-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 1.1rem;
+        background-color: #8B4513; /* بني أنيق */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .continue-button:hover {
+            background-color: #A0522D; /* لون أفتح عند التمرير */
+            transform: scale(1.05);
+        }
+
+
+    .wood-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .wood-item {
+        width: 100px;
+        text-align: center;
+    }
+
+    .wood-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .material-single-box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        max-width: 500px;
+        margin-top: 1rem;
+    }
+
+    .save-button, .edit-button {
+        padding: 0.5rem 1rem;
+        margin-right: 0.5rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .edit-button {
+        background-color: #2196F3;
+    }
+</style>
+
+@code {
+    [Parameter][SupplyParameterFromQuery(Name = "selected")] public string? selectedOption { get; set; }
+
+    private bool isInEditMode = false;
+
+    private bool isLoading = true;
+    private bool askForMaterial = false;
+
+    private List<MaterialItem> Materials => baseMaterial.Type switch
+    {
+        "Marble" => MaterialService.GetMarbleMaterials(),
+        "Tiles" => MaterialService.GetTileMaterials(),
+        _ => new List<MaterialItem>()
+    };
+
+
+
+    private List<string> fridgeBodies = new(); // فقط بودي الثلاجة
+    private bool addToFridge = false;
+    // private bool IsFridgeSaved => fridgeMaterialSaved;
+    private bool IsFridgeSaved = false;
+
+
+    class BaseMaterialOption
+    {
+        public string SketchName { get; set; } = "";
+        public string Material { get; set; } = "";
+        public string Type { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public bool Saved { get; set; } = false;
+    }
+
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    class MaterialChoice
+    {
+        public string Type { get; set; } = "";
+        public string Material { get; set; } = "";
+        public double Transparency { get; set; } = 0.5;
+        public double Reflectivity { get; set; } = 0.2;
+        public double Specular { get; set; } = 0.1;
+    }
+
+    public string SketchName { get; set; } = "";
+
+
+
+    private bool IsSaved => baseMaterialOptions.All(b => b.Saved);
+
+    private List<BaseMaterialOption> baseMaterialOptions = new();
+    private MaterialChoice baseMaterial = new MaterialChoice();
+    private MaterialChoice fridgeMaterial = new();
+
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
+
+    private void TryBaseColor()
+    {
+        var swApp = SwSession.GetApp();
+        var model = swApp.IActiveDoc2 as IModelDoc2;
+
+        if (model == null)
+        {
+            Console.WriteLine("❌ Active SolidWorks model is null before applying color.");
+            return;
+        }
+
+
+        foreach (var item in baseMaterialOptions)
+        {
+            if (!item.SketchName.ToLower().Contains("fridge"))
+            {
+                ColorApplier.ApplyColorToBody(
+                    model,
+                    item.SketchName,
+                    baseMaterial.Material,
+                    baseMaterial.Specular,
+                    baseMaterial.Reflectivity,
+                    baseMaterial.Transparency
+                );
+            }
+        }
+    }
+
+    private void SaveBaseColor()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_base_savecolor.txt"
+        );
+
+        var swApp = SwSession.GetApp();
+        var model = swApp.IActiveDoc2 as IModelDoc2;
+
+        if (model == null)
+        {
+            File.AppendAllText(debugPath, "❌ model is null in SaveBaseColor\n");
+            return;
+        }
+
+        File.AppendAllText(debugPath, $"🎯 Saving base material: {baseMaterial.Material}, Type: {baseMaterial.Type}, Specular: {baseMaterial.Specular}, Reflectivity: {baseMaterial.Reflectivity}, Transparency: {baseMaterial.Transparency}\n");
+
+        foreach (var item in baseMaterialOptions)
+        {
+            if (!item.SketchName.ToLower().Contains("fridge"))
+            {
+                bool success = ColorApplier.ApplyColorToBody(
+                    model,
+                    item.SketchName,
+                    baseMaterial.Material,
+                    baseMaterial.Specular,
+                    baseMaterial.Reflectivity,
+                    baseMaterial.Transparency
+                );
+
+                File.AppendAllText(debugPath, success
+                    ? $"✅ Applied color to {item.SketchName}\n"
+                    : $"❌ Failed to apply color to {item.SketchName}\n");
+
+                item.Material = baseMaterial.Material;
+                item.Type = "Color";
+                item.Apply = true;
+                item.Saved = true;
+            }
+            else
+            {
+                File.AppendAllText(debugPath, $"🧊 Skipped fridge body: {item.SketchName}\n");
+            }
+        }
+
+        File.AppendAllText(debugPath, "✅ SaveBaseColor completed.\n");
+    }
+
+
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_baseapproval.txt"
+        );
+
+            try
+            {
+                File.AppendAllText(debugPath, $"🟢 Started /base-approval with selected={selectedOption}\n");
+
+                if (string.IsNullOrWhiteSpace(selectedOption))
+                {
+                    File.AppendAllText(debugPath, "❌ selectedOption is missing\n");
+                    return;
+                }
+
+                string partPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "temp", $"temp_{selectedOption}.SLDPRT"
+            );
+
+                File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
+
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ Base file not found: {partPath}\n");
+                    return;
+                }
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+                if (model == null)
+                {
+                    File.AppendAllText(debugPath, $"❌ Failed to load base model into SolidWorks\n");
+                    return;
+                }
+
+                File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
+
+
+
+                string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{selectedOption}SLD.json"
+            );
+                if (File.Exists(jsonPath))
+                {
+                    string jsonContent = File.ReadAllText(jsonPath);
+                    using JsonDocument doc = JsonDocument.Parse(jsonContent);
+
+                    foreach (JsonProperty wall in doc.RootElement.EnumerateObject())
+                    {
+                        if (wall.Value.TryGetProperty("Bases", out JsonElement bases))
+                        {
+                            foreach (JsonProperty baseItem in bases.EnumerateObject())
+                            {
+                                var baseInfo = baseItem.Value;
+
+                                if (baseInfo.TryGetProperty("Visible", out JsonElement visibleElement) &&
+                                    visibleElement.GetBoolean() &&
+                                    baseInfo.TryGetProperty("ExtrudeName", out JsonElement extrudeElement))
+                                {
+                                    string extrudeName = extrudeElement.GetString();
+
+                                    if (extrudeName.StartsWith("Extrude_fridge_base"))
+                                    {
+                                        // 🧊 ثلاجة → أضف للأسماء الخاصة بالثلاجة فقط
+                                        fridgeBodies.Add(extrudeName);
+                                        File.AppendAllText(debugPath, $"🧊 Found fridge body: {extrudeName}\n");
+                                    }
+                                    else
+                                    {
+                                        // 🟫 بيسيـز → أضف للقائمة المعتادة
+                                        baseMaterialOptions.Add(new BaseMaterialOption
+                                            {
+                                                SketchName = extrudeName,
+                                                Material = ""
+                                            });
+                                        File.AppendAllText(debugPath, $"🟫 Added base body: {extrudeName}\n");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    File.AppendAllText(debugPath, $"✅ Extracted {baseMaterialOptions.Count} visible base bodies from JSON\n");
+                }
+                else
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON file not found: {jsonPath}\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(
+                Path.Combine(
+                    KitchenConfig.Get().BasePath,
+                    "Kitchenbuilder", "Output", "debug_baseapproval.txt"
+                ),
+                                $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n");
+            }
+        });
+
+        isLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void SaveMaterialSelection()
+    {
+        var swApp = SwSession.GetApp();
+
+        foreach (var item in baseMaterialOptions)
+        {
+            item.Material = baseMaterial.Material;
+            item.Type = baseMaterial.Type;
+
+            item.Apply = true;
+            item.Saved = true;
+
+            if (!item.SketchName.ToLower().Contains("fridge"))
+            {
+                EditMaterial.ApplyMaterialToBody(swApp, item.SketchName, item.Material, item.Type);
+            }
+        }
+    }
+
+
+    private void EditMaterialSelection()
+    {
+        foreach (var item in baseMaterialOptions)
+        {
+            item.Apply = false;
+            item.Saved = false;
+            item.Material = "";
+            item.Type = "";
+        }
+
+        StateHasChanged();
+    }
+
+    //-------------------marble
+    private void SaveBaseMarble()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "base_marble.txt"
+        );
+
+        var swApp = SwSession.GetApp();
+
+        if (baseMaterialOptions == null || baseMaterialOptions.Count == 0)
+        {
+            string msg = "⚠️ No baseMaterialOptions found.";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        var selectedMaterial = baseMaterial.Material;
+        var selectedType = baseMaterial.Type;
+
+        if (string.IsNullOrWhiteSpace(selectedMaterial) || string.IsNullOrWhiteSpace(selectedType))
+        {
+            string msg = $"❌ Material or Type is missing: Material='{selectedMaterial}', Type='{selectedType}'";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        foreach (var item in baseMaterialOptions)
+        {
+            item.Material = selectedMaterial;
+            item.Type = selectedType;
+            item.Apply = true;
+            item.Saved = true;
+
+            if (!item.SketchName.ToLower().Contains("fridge"))
+            {
+                File.AppendAllText(debugPath, $"🎯 Applying base material to body: {item.SketchName}, material: {selectedMaterial}, type: {selectedType}\n");
+
+
+                OurMaterial.ApplyCustomMaterial(swApp, item.SketchName, selectedMaterial);
+
+            }
+            else
+            {
+                File.AppendAllText(debugPath, $"⏭️ Skipped fridge-related body: {item.SketchName}\n");
+            }
+        }
+
+        Console.WriteLine("✅ Completed applying base material.");
+        File.AppendAllText(debugPath, $"✅ Finished SaveBaseMarble for {baseMaterialOptions.Count} items.\n");
+    }
+
+
+
+
+    //----------------
+
+
+    private void ContinueToCountertop()
+    {
+        if (!string.IsNullOrWhiteSpace(selectedOption))
+        {
+            NavManager.NavigateTo($"/frid-material?selected={selectedOption}");
+        }
+    }
+
+}

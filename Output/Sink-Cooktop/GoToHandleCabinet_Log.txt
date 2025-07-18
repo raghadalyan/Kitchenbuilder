@@ -1,8 +1,8 @@
-[17:20:16] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
-[17:20:16] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[17:20:16] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
-[17:20:19] 📥 Reading layout JSON from: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.json
-[17:20:19] 💾 Sink & Cooktop added to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
-[17:20:23] 🗑️ Deleted layout folder: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout
-[17:20:23] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
-[17:20:23] ✅ Navigation to /handle-cabinet
+[00:01:22] 🔒 Closing SolidWorks file: temp_Option2.SLDPRT
+[00:01:22] 📁 Trying to copy: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.sldprt → C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
+[00:01:22] 📂 Reopening file in SolidWorks: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\temp_Option2.SLDPRT
+[00:01:28] 📥 Reading layout JSON from: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout\Layout3.json
+[00:01:28] 💾 Sink & Cooktop added to: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\JSON\Option2SLD.json
+[00:01:28] 🗑️ Deleted layout folder: C:\Users\chouse\Downloads\Kitchenbuilder\Output\temp\Layout
+[00:01:28] 🗑️ Deleted folder: C:\Users\chouse\Downloads\Kitchenbuilder\Kitchenbuilder\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppX\wwwroot\Output\Sink_Cooktop
+[00:01:28] ✅ Navigation to /handle-cabinet

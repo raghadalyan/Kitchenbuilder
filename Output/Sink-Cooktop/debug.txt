@@ -1,12 +1,6 @@
-[16:58:23] ▶️ Processing Option 2
-[16:58:23] Corner walls found: [1,2], Special14=False
-[16:58:23] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[16:58:23] ✔️ Wall2 Base1: Start=0, End=350, Width=350
-[16:58:23] ✅ JSON update complete.
-[16:58:23] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-350]
-[17:17:08] ▶️ Processing Option 2
-[17:17:08] Corner walls found: [1,2], Special14=False
-[17:17:08] ✔️ Wall1 Base2: Start=145, End=400, Width=255
-[17:17:08] ✔️ Wall2 Base1: Start=0, End=350, Width=350
-[17:17:08] ✅ JSON update complete.
-[17:17:08] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-350]
+[23:56:39] ▶️ Processing Option 2
+[23:56:39] Corner walls found: [1,2], Special14=False
+[23:56:39] ✔️ Wall1 Base2: Start=145, End=400, Width=255
+[23:56:39] ✔️ Wall2 Base1: Start=0, End=290, Width=290
+[23:56:39] ✅ JSON update complete.
+[23:56:39] 👉 Relevant countertops: Wall1.Base2 [145-400], Wall2.Base1 [0-290]

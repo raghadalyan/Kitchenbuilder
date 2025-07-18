@@ -1,0 +1,640 @@
+﻿@page "/countertop-material"
+@inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<link href="css/base.css" rel="stylesheet" />
+
+<div class="approval-page">
+    <div class="form-container">
+
+        <h3 class="material-title">🪵 Material Selection</h3>
+
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <p>Please wait a moment while the countertop file is being prepared...</p>
+                <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
+                <p>Loading countertop preview...</p>
+
+            </div>
+        }
+        else
+        {
+            <p>✅ You can now review the selected countertop in SolidWorks.</p>
+            <div>
+                <input type="checkbox" @bind="askForMaterial" id="askForMaterial" />
+                <label for="askForMaterial">Do you want to assign materials to countertop sketches?</label>
+            </div>
+
+
+            @if (askForMaterial)
+            {
+                <div class="material-selection-list">
+                    <div class="material-single-box">
+                        <label for="materialType" class="select-label">Type:</label>
+                        <select id="materialType" @bind="countertopMaterial.Type" class="styled-select">
+                            <option value="">-- Select Type --</option>
+                            <option>Woods</option>
+                            <option>Color</option>
+                            <option>Marble</option>
+                            <option>Tiles</option>
+                        </select>
+
+                        @if (countertopMaterial.Type == "Woods" && (!IsSaved || isInEditMode))
+                        {
+                            <div class="wood-grid">
+                                @foreach (var wood in woodMaterials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="baseWoodSelection" value="@wood.Name"
+                                                   @onchange="() => countertopMaterial.Material = wood.Name"
+                                                   checked="@(countertopMaterial.Material == wood.Name)" />
+                                            @wood.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+
+
+
+                        @if (countertopMaterial.Type == "Color")
+                        {
+                            @if (!IsSaved || isInEditMode)
+                            {
+                                <div class="material-single-box">
+                                    <h4>🎨 bases Color Selection</h4>
+
+                                    <label>Select Color:</label>
+                                    <input type="color" @bind="countertopMaterial.Material" class="color-input" />
+                                    <p>Selected: @countertopMaterial.Material</p>
+
+                                    <div class="color-sliders">
+                                        <label>Transparency: @countertopMaterial.Transparency</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="countertopMaterial.Transparency" />
+
+                                        <label>Specular: @countertopMaterial.Specular</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="countertopMaterial.Specular" />
+
+                                        <label>Reflectivity: @countertopMaterial.Reflectivity</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="countertopMaterial.Reflectivity" />
+                                    </div>
+
+                                    <div class="save-button-container" style="margin-top: 1rem;">
+                                        <button class="save-button" @onclick="TryCountertopColor">Try Color</button>
+                                        <button class="edit-button" @onclick="SaveCountertopColor">Save</button>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (IsSaved && !isInEditMode)
+                            {
+                                <p><strong>Selected Material:</strong> @countertopMaterial.Material</p>
+                                <button class="edit-button" @onclick="EditMaterialSelection">Edit</button>
+                            }
+                        }
+                        @if ((countertopMaterial.Type == "Marble" || countertopMaterial.Type == "Tiles") && (!IsSaved || isInEditMode))
+                        {
+                            <div class="wood-grid">
+                                @foreach (var material in Materials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@material.ImagePath" alt="@material.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="baseMaterialSelection" value="@material.Name"
+                                                   @onchange="() => countertopMaterial.Material = material.Name"
+                                                   checked="@(countertopMaterial.Material == material.Name)" />
+                                            @material.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+                        }
+                    </div>
+                    @if (countertopMaterial.Type == "Woods")
+                    {
+                        <div style="margin-top: 1rem;">
+                            <button class="save-button" @onclick="SaveMaterialSelection">Save</button>
+
+                            <button class="edit-button" @onclick="EditMaterialSelection" disabled="@(IsSaved == false)">Edit</button>
+                        </div>
+                    }
+
+                    
+
+
+                    @if (countertopMaterial.Type == "Marble" || countertopMaterial.Type == "Tiles")
+                    {
+                        <div style="margin-top: 1rem;">
+                            <button class="save-button" @onclick="SaveCountertopMarble">Save</button>
+                            <button class="edit-button" @onclick="EditMaterialSelection" disabled="@(IsSaved == false)">Edit</button>
+
+                        </div>
+                    }
+
+                </div>
+            }
+
+            <button class="continue-button" @onclick="ContinueToIsland">
+                ✅ Continue
+            </button>
+        }
+    </div>
+</div>
+
+<style>
+    .wood-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .wood-item {
+        width: 100px;
+        text-align: center;
+    }
+
+    .wood-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .material-single-box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        max-width: 500px;
+        margin-top: 1rem;
+    }
+
+    .save-button, .edit-button {
+        padding: 0.5rem 1rem;
+        margin-right: 0.5rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .edit-button {
+        background-color: #2196F3;
+    }
+</style>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "selected")]
+    public string? selectedOption { get; set; }
+    private bool isInEditMode = false;
+
+    private bool isLoading = true;
+    private bool askForMaterial = false;
+
+
+
+
+    class BaseMaterialOption
+    {
+        public string SketchName { get; set; } = "";
+        public string Material { get; set; } = "";
+        public string Type { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public bool Saved { get; set; } = false;
+    }
+
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    class MaterialChoice
+    {
+        public string Type { get; set; } = "";
+        public string Material { get; set; } = "";
+        public double Transparency { get; set; } = 0.5;
+        public double Reflectivity { get; set; } = 0.2;
+        public double Specular { get; set; } = 0.1;
+    }
+
+    private List<BaseMaterialOption> countertopMaterialOptions = new();
+    private MaterialChoice countertopMaterial = new();
+
+    private bool IsSaved => countertopMaterialOptions.All(b => b.Saved);
+
+
+    private List<MaterialItem> Materials => countertopMaterial.Type switch
+    {
+        "Marble" => MaterialService.GetMarbleMaterials(),
+        "Tiles" => MaterialService.GetTileMaterials(),
+        _ => new List<MaterialItem>()
+    };
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
+
+    private void TryCountertopColor()
+    {
+        var swApp = SwSession.GetApp();
+        var model = swApp.IActiveDoc2 as IModelDoc2;
+
+        if (model == null)
+        {
+            Console.WriteLine("❌ Active SolidWorks model is null before applying color.");
+            return;
+        }
+
+        foreach (var item in countertopMaterialOptions)
+        {
+            ColorApplier.ApplyColorToBody(
+                model,
+                item.SketchName,
+                countertopMaterial.Material,
+                countertopMaterial.Specular,
+                countertopMaterial.Reflectivity,
+                countertopMaterial.Transparency
+            );
+        }
+    }
+
+
+    private void SaveCountertopColor()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_countertop_savecolor.txt"
+        );
+
+        var swApp = SwSession.GetApp();
+        var model = swApp.IActiveDoc2 as IModelDoc2;
+
+        if (model == null)
+        {
+            File.AppendAllText(debugPath, "❌ model is null in SaveCountertopColor\n");
+            return;
+        }
+
+        File.AppendAllText(debugPath, $"🎯 Saving countertop color: {countertopMaterial.Material}, Type: {countertopMaterial.Type}, Specular: {countertopMaterial.Specular},Transparency : {countertopMaterial.Reflectivity}, Reflectivity: {countertopMaterial.Transparency}\n");
+
+        foreach (var item in countertopMaterialOptions)
+        {
+            bool success = ColorApplier.ApplyColorToBody(
+                model,
+                item.SketchName,
+                countertopMaterial.Material,
+                countertopMaterial.Specular,
+                countertopMaterial.Reflectivity,
+                countertopMaterial.Transparency
+            );
+
+            File.AppendAllText(debugPath, success
+                ? $"✅ Applied color to {item.SketchName}\n"
+                : $"❌ Failed to apply color to {item.SketchName}\n");
+
+            item.Material = countertopMaterial.Material;
+            item.Type = "Color";
+            item.Apply = true;
+            item.Saved = true;
+        }
+
+        File.AppendAllText(debugPath, "✅ SaveCountertopColor completed.\n");
+    }
+
+
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_countertop_approval.txt"
+        );
+
+
+            try
+            {
+                File.AppendAllText(debugPath, $"🟢 Started /base-approval with selected={selectedOption}\n");
+
+                if (string.IsNullOrWhiteSpace(selectedOption))
+                {
+                    File.AppendAllText(debugPath, "❌ selectedOption is missing\n");
+                    return;
+                }
+
+                string partPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "temp", $"temp_{selectedOption}.SLDPRT"
+            );
+
+                File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
+
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ Base file not found: {partPath}\n");
+                    return;
+                }
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+                if (model == null)
+                {
+                    File.AppendAllText(debugPath, $"❌ Failed to load base model into SolidWorks\n");
+                    return;
+                }
+
+                File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
+
+
+
+                string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{selectedOption}SLD.json"
+            );
+                if (File.Exists(jsonPath))
+                {
+                    string jsonContent = File.ReadAllText(jsonPath);
+                    using JsonDocument doc = JsonDocument.Parse(jsonContent);
+
+                    foreach (JsonProperty wall in doc.RootElement.EnumerateObject())
+                    {
+                        if (wall.Value.TryGetProperty("Bases", out JsonElement bases))
+                        {
+                            foreach (JsonProperty baseItem in bases.EnumerateObject())
+                            {
+                                var baseInfo = baseItem.Value;
+
+                                if (baseInfo.TryGetProperty("ExtrudeName", out JsonElement extrudeElement))
+                                {
+                                    string extrudeName = extrudeElement.GetString();
+
+                                    // إذا وُجدت خاصية Countertop داخل الـ base
+                                    if (baseInfo.TryGetProperty("Countertop", out JsonElement countertopElement))
+                                    {
+                                        if (countertopElement.TryGetProperty("Name", out JsonElement ctNameElement))
+                                        {
+                                            string ctName = ctNameElement.GetString();
+
+                                            if (!string.IsNullOrWhiteSpace(ctName))
+                                            {
+                                                countertopMaterialOptions.Add(new BaseMaterialOption
+                                                {
+                                                    SketchName = ctName,
+                                                    Material = ""
+                                                });
+
+                                                File.AppendAllText(debugPath, $"🍽️ Added countertop body from Countertop: {ctName}\n");
+                                            }
+                                        }
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+
+                    File.AppendAllText(debugPath, $"✅ Extracted {countertopMaterialOptions.Count} countertop bodies from JSON\n");
+                }
+                else
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON file not found: {jsonPath}\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(
+           Path.Combine(
+               KitchenConfig.Get().BasePath,
+               "Kitchenbuilder", "Output", "debug_materialcountertop.txt"
+           ),
+           $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n"
+       );
+
+            }
+
+        });
+
+        isLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+
+    private void SaveMaterialSelection()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_countertop_material_selection.txt"
+        );
+
+        try
+        {
+            File.AppendAllText(debugPath, $"\n\n🟢 Entered SaveMaterialSelection at {DateTime.Now}\n");
+
+            var swApp = SwSession.GetApp();
+
+            if (countertopMaterialOptions.Count == 0)
+            {
+                File.AppendAllText(debugPath, "⚠️ No countertop bodies found in countertopMaterialOptions.\n");
+            }
+            else
+            {
+                File.AppendAllText(debugPath, $"🔢 Total items to process: {countertopMaterialOptions.Count}\n");
+            }
+
+            foreach (var item in countertopMaterialOptions)
+            {
+                File.AppendAllText(debugPath, $"➡️ Processing body: {item.SketchName}, Type={countertopMaterial.Type}, Material={countertopMaterial.Material}\n");
+
+                item.Material = countertopMaterial.Material;
+                item.Type = countertopMaterial.Type;
+                item.Apply = true;
+                item.Saved = true;
+
+                if (item.Type == "Woods")
+                {
+                    bool success = EditMaterial.ApplyMaterialToBody(swApp, item.SketchName, item.Material, item.Type);
+                    File.AppendAllText(debugPath, success
+                        ? $"🪵 Applied wood material to {item.SketchName}\n"
+                        : $"❌ Failed to apply wood material to {item.SketchName}\n");
+                }
+                else if (item.Type == "Color")
+                {
+                    bool success = ColorApplier.ApplyColorToBody(
+                        swApp.IActiveDoc2,
+                        item.SketchName,
+                        item.Material,
+                        countertopMaterial.Specular,
+                        countertopMaterial.Reflectivity,
+                        countertopMaterial.Transparency
+                    );
+
+                    File.AppendAllText(debugPath, success
+                        ? $"🎨 Applied color to {item.SketchName}\n"
+                        : $"❌ Failed to apply color to {item.SketchName}\n");
+                }
+                else
+                {
+                    File.AppendAllText(debugPath, $"⚠️ Unknown material type: {item.Type}\n");
+                }
+            }
+
+            File.AppendAllText(debugPath, $"✅ SaveMaterialSelection completed at {DateTime.Now}\n");
+        }
+        catch (Exception ex)
+        {
+            File.AppendAllText(debugPath, $"❌ EXCEPTION: {ex.Message}\n{ex.StackTrace}\n");
+        }
+
+        isInEditMode = false; // ⬅️ بعد الحفظ، نخرج من وضع التعديل
+
+        StateHasChanged();
+    }
+
+
+
+
+
+    private void EditMaterialSelection()
+    {
+        foreach (var item in countertopMaterialOptions)
+        {
+            item.Apply = false;
+            item.Saved = false;
+            item.Material = "";
+            item.Type = "";
+        }
+
+        isInEditMode = true;
+        StateHasChanged();
+    }
+
+
+
+    private void SaveCountertopMarble()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "countertop_marble.txt"
+        );
+
+        var swApp = SwSession.GetApp();
+
+        if (countertopMaterialOptions == null || countertopMaterialOptions.Count == 0)
+        {
+            string msg = "⚠️ No countertopMaterialOptions found.";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        var selectedMaterial = countertopMaterial.Material;
+        var selectedType = countertopMaterial.Type;
+
+        if (string.IsNullOrWhiteSpace(selectedMaterial) || string.IsNullOrWhiteSpace(selectedType))
+        {
+            string msg = $"❌ Material or Type is missing: Material='{selectedMaterial}', Type='{selectedType}'";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        foreach (var item in countertopMaterialOptions)
+        {
+            item.Material = selectedMaterial;
+            item.Type = selectedType;
+            item.Apply = true;
+            item.Saved = true;
+            isInEditMode = false;
+
+            File.AppendAllText(debugPath, $"🟫 Applying countertop material to body: {item.SketchName}, material: {selectedMaterial}, type: {selectedType}\n");
+
+            OurMaterial.ApplyCustomMaterial(swApp, item.SketchName, selectedMaterial);
+        }
+
+        Console.WriteLine("✅ Completed applying countertop marble/tiles.");
+        File.AppendAllText(debugPath, $"✅ Finished SaveCountertopMarble for {countertopMaterialOptions.Count} items.\n");
+    }
+
+
+
+    private void ContinueToIsland()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug_countertop_continue.txt"
+        );
+
+        try
+        {
+            File.AppendAllText(debugPath, $"\n🟢 ContinueToIsland called at {DateTime.Now}\n");
+
+            if (!string.IsNullOrWhiteSpace(selectedOption))
+            {
+                File.AppendAllText(debugPath, $"➡️ Navigating to /island-page?option={selectedOption}\n");
+                NavManager.NavigateTo($"/island-page?option={selectedOption.Replace("Option", "")}");
+            }
+            else
+            {
+                File.AppendAllText(debugPath, "❌ selectedOption is null or empty. Navigation aborted.\n");
+            }
+        }
+        catch (Exception ex)
+        {
+            File.AppendAllText(debugPath, $"❌ Exception in ContinueToIsland: {ex.Message}\n{ex.StackTrace}\n");
+        }
+    }
+
+
+
+}

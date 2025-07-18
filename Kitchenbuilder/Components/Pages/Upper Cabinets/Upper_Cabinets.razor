@@ -422,6 +422,11 @@
                 space.Type = "Other";
 
             var model = SwSession.GetActiveModel();
+
+            // ✅ Show relevant bodies before applying
+            ShowRelevantBodies(space.Type, model);
+
+            // ✨ Now apply the space
             spaceResultMessage = ApplySpace.Apply(
                 model,
                 OptionNum,
@@ -444,7 +449,40 @@
             showAddSpaceBox = true;
         }
     }
+    private void ShowRelevantBodies(string type, IModelDoc2 model)
+    {
+        try
+        {
+            switch (type.Trim().ToLower())
+            {
+                case "microwave":
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Space_Microwave1");
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Microwave1");
+                    break;
 
+                case "oven":
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Space_Oven1");
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Oven1");
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Oven2");
+                    break;
+
+                case "range hood":
+                case "rangehood":
+                    Show_Bodies_In_Sld_IModel.ShowBody(model, "Range_Hood1");
+                    break;
+
+                default:
+                    Log($"ℹ️ No bodies to show for type: {type}");
+                    break;
+            }
+
+            Show_Bodies_In_Sld_IModel.SaveAfterShowing(model);
+        }
+        catch (Exception ex)
+        {
+            Log($"❌ Error in ShowRelevantBodies: {ex.Message}");
+        }
+    }
 
 
 }

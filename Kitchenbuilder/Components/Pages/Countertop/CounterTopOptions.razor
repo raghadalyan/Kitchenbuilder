@@ -120,8 +120,8 @@
                 return;
             }
 
-            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{baseName}SLD.json");
-            string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", $"temp_{baseName}.SLDPRT");
+            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{baseName}SLD.json");
+            string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", $"temp_Option{baseName}.SLDPRT");
 
 
             Log($"📦 baseName = {baseName}");
@@ -382,6 +382,8 @@
     void ContinueToSinkCooktop()
     {
         var model = SwSession.GetActiveModel();
+        Log("🔵 ContinueToSinkCooktop triggered.");
+
         if (model == null)
         {
             Log("❌ No active model found when clicking Continue.");
@@ -390,15 +392,13 @@
 
         try
         {
-            // ✅ Exit sketch if one is open
             var sketchMgr = model.SketchManager;
             if (sketchMgr?.ActiveSketch != null)
             {
                 Log("🔚 Exiting active sketch...");
-                sketchMgr.InsertSketch(true); // true = exit sketch
+                sketchMgr.InsertSketch(true);
             }
 
-            // ✅ Save the file
             int saveErrors = 0, saveWarnings = 0;
             bool saved = model.Extension.SaveAs(
                 model.GetPathName(),
@@ -417,24 +417,26 @@
             Log($"❌ Error during sketch exit or save: {ex.Message}");
         }
 
-        if (!string.IsNullOrWhiteSpace(baseName) && baseName.StartsWith("Option"))
+        if (!string.IsNullOrWhiteSpace(baseName))
         {
-            string optionNumber = new string(baseName
-                .Replace("SLD", "")
-                .Where(char.IsDigit)
-                .ToArray());
+            Log($"🔍 baseName received: {baseName}");
 
-            if (!string.IsNullOrWhiteSpace(optionNumber))
-            {
-                NavManager.NavigateTo($"/island-page?option={optionNumber}");
-            }
-            else
-            {
-                Log("❌ Could not extract option number from baseName.");
-            }
+            // Remove both Option and SLD from baseName safely
+            string optionNumber = baseName.Replace("Option", "").Replace("SLD", "").Trim();
+
+            Log($"🧪 Extracted optionNumber = {optionNumber}");
+
+            string route = $"/countertop-material?selected=Option{optionNumber}";
+            Log($"🌍 Attempting navigation to: {route}");
+
+            NavManager.NavigateTo(route);
         }
-
+        else
+        {
+            Log("❌ baseName is null or empty during navigation.");
+        }
     }
+
 
 
 }

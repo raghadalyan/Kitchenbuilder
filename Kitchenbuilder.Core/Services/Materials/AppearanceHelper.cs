@@ -28,7 +28,7 @@ public static class AppearanceHelper
             return;
         }
 
-        double[] appearance = new double[9] { 1.0, 1.0, 1.0, 1.0, 0, 0, 0.1,0.0, 0.5}; //white 
+        double[] appearance = new double[9] { 1.0, 1.0, 1.0, 1.0, 0, 0, 0.1, 0.0, 0.5 }; //white 
 
         body.MaterialPropertyValues2 = appearance;
         Console.WriteLine($"✅ Appearance set on body: {bodyName}");

@@ -1,0 +1,726 @@
+﻿@page "/frid-material"
+@inject NavigationManager NavManager
+@inject SolidWorksSessionService SwSession
+@using SolidWorks.Interop.sldworks
+@using SolidWorks.Interop.swconst
+@using Kitchenbuilder.Core
+@using Kitchenbuilder.Core.Models
+@using Kitchenbuilder.Core.WallBuilders
+@using Kitchenbuilder.Core.Materials
+@using System.Text.Json
+@using System.IO
+@using Microsoft.AspNetCore.Components
+
+<link href="css/base.css" rel="stylesheet" />
+
+<div class="page-background">
+    <div class="fridge-container">
+        <h2>🧊 Fridge Material Selection</h2>
+
+        @if (isLoading)
+        {
+            <div class="loading-container">
+                <p>Please wait a moment while the base file is being prepared...</p>
+                <img src="/Images/loading.gif" alt="Loading..." class="loading-image" />
+                <p>Loading base preview...</p>
+            </div>
+        }
+        else
+        {
+            <p>✅ You can now review the selected base in SolidWorks.</p>
+
+           <div class="checkbox-row">
+    <input type="checkbox" @bind="addToFridge" id="addToFridge" class="styled-checkbox" />
+    <label for="addToFridge" class="checkbox-label">Do you want to add something to the fridge?</label>
+</div>
+
+
+
+            @if (addToFridge)
+            {
+                <div class="material-selection-list">
+                    <div class="material-single-box">
+                        <label>Type:</label>
+                        <select @bind="fridgeMaterial.Type" class="styled-select">
+                            <option value="">-- Select Type --</option>
+                            <option>Woods</option>
+                            <option>Color</option>
+                            <option>Marble</option>
+                            <option>Tiles</option>
+
+                            </select>
+
+                        @if (fridgeMaterial.Type == "Woods" && (!IsFridgeSaved || isInEditMode))
+                        {
+                            <div class="wood-grid">
+                                @foreach (var wood in woodMaterials)
+                                {
+                                    <div class="wood-item">
+                                        <img src="@wood.ImagePath" alt="@wood.Name" class="wood-image" />
+                                        <label>
+                                            <input type="radio" name="fridgeWoodSelection" value="@wood.Name"
+                                                   @onchange="() => fridgeMaterial.Material = wood.Name"
+                                                   checked="@(fridgeMaterial.Material == wood.Name)" />
+                                            @wood.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        
+
+
+@if ((fridgeMaterial.Type == "Marble" || fridgeMaterial.Type == "Tiles") && (!IsFridgeSaved || isInEditMode))
+{
+    <div class="marble-grid">
+        @foreach (var material in Materials)
+        {
+            <div class="marble-item">
+                <img src="@material.ImagePath" alt="@material.Name" class="marble-image" />
+                <label class="marble-label">
+                    <input type="radio" name="fridgeMaterialSelection" value="@material.Name"
+                           @onchange="() => fridgeMaterial.Material = material.Name"
+                           checked="@(fridgeMaterial.Material == material.Name)" />
+                    @material.Name
+                </label>
+            </div>
+        }
+    </div>
+}
+
+@if (fridgeMaterial.Type == "Marble" || fridgeMaterial.Type == "Tiles")
+{
+    <div style="margin-top: 1rem;">
+        <button class="save-button" @onclick="SaveFridgeMarble" disabled="@IsFridgeSaved">Save</button>
+        <button class="edit-button" @onclick="EditFridgeMarble" disabled="@(IsFridgeSaved == false)">Edit</button>
+    </div>
+}
+
+
+
+
+
+                        @if (fridgeMaterial.Type == "Color" && (!IsFridgeSaved || isInEditMode))
+                        {
+                            <div class="color-picker-box">
+                                <label>Select Color:</label>
+                                <input type="color" @bind="fridgeMaterial.Material" class="color-input" />
+                                <p>Selected: @fridgeMaterial.Material</p>
+
+                                <div class="color-sliders">
+                                    <div>
+                                        <label>Reflectivity:</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="fridgeMaterial.Transparency" />
+                                        <span>@fridgeMaterial.Transparency</span>
+                                    </div>
+                                    <div>
+                                        <label>Specular:</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="fridgeMaterial.Specular" />
+                                        <span>@fridgeMaterial.Specular</span>
+                                    </div>
+                                    <div>
+                                        <label>Transparency:</label>
+                                        <input type="range" min="0" max="1" step="0.01" @bind="fridgeMaterial.Reflectivity" />
+                                        <span>@fridgeMaterial.Reflectivity</span>
+                                    </div>
+                                </div>
+
+                                <div class="save-button-container">
+                                    <button @onclick="TryFridgeColor">Try Color</button>
+                                    <button @onclick="SaveFridgeColor">Save</button>
+                                </div>
+                            </div>
+                        }
+
+                       
+
+                        
+                        
+
+
+                        @if (fridgeMaterial.Type == "Woods")
+                        {
+                            <div style="margin-top: 1rem;">
+                                <button class="save-button" @onclick="SaveFridgeMaterial" disabled="@IsFridgeSaved">Save</button>
+                                <button class="edit-button" @onclick="EditFridgeMaterial" disabled="@(IsFridgeSaved == false)">Edit</button>
+                            </div>
+                        }
+                        else if (fridgeMaterial.Type == "Color" && IsFridgeSaved)
+                        {
+                            <div style="margin-top: 1rem;">
+                                <button class="edit-button" @onclick="EditFridgeMaterial">Edit</button>
+                            </div>
+                        }
+                    </div> <!-- close material-single-box -->
+                </div> <!-- close material-selection-list -->
+            }
+        }
+
+        <div class="continue-button-container" style="margin-top: 2rem; text-align: center;">
+    <button class="continue-button" @onclick="ContinueToCountertop">Continue</button>
+</div>
+    </div> <!-- close form-container -->
+    
+</div> <!-- close Fridge-page -->
+
+
+
+@code {
+    [Parameter][SupplyParameterFromQuery(Name = "selected")] public string? selectedOption { get; set; }
+
+    private bool isLoading = true;
+    private bool askForMaterial = false;
+    private bool isInEditMode = false;
+
+    private List<string> fridgeBodies = new(); // فقط بودي الثلاجةMaterialChoice
+    private bool addToFridge = false;
+    // private bool IsFridgeSaved => fridgeMaterialSaved;
+    private bool IsFridgeSaved = false;
+
+
+
+     private List<MaterialItem> Materials => fridgeMaterial.Type switch
+    {
+        "Marble" => MaterialService.GetMarbleMaterials(),
+        "Tiles" => MaterialService.GetTileMaterials(),
+        _ => new List<MaterialItem>()
+    };
+
+    class BaseMaterialOption
+    {
+        public string SketchName { get; set; } = "";
+        public string Material { get; set; } = "";
+        public bool Apply { get; set; } = false;
+        public string Type { get; set; } = "";
+        public bool Saved { get; set; } = false;
+    }
+
+    class WoodMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+   class MarbleMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    class TilesMaterial
+    {
+        public string Name { get; set; } = "";
+        public string ImagePath { get; set; } = "";
+    }
+
+    class MaterialChoice
+{
+    public string Type { get; set; } = "";
+    public string Material { get; set; } = "";
+    public double Transparency { get; set; } = 0.5;
+    public double Reflectivity { get; set; } = 0.2;
+    public double Specular { get; set; } = 0.1;
+}
+
+
+    private bool IsSaved => baseMaterialOptions.All(b => b.Saved);
+
+    private List<BaseMaterialOption> baseMaterialOptions = new();
+private MaterialChoice baseMaterial = new();
+private MaterialChoice fridgeMaterial = new();
+
+    private List<WoodMaterial> woodMaterials = new()
+    {
+        new WoodMaterial { Name = "Balsa", ImagePath = "/Images/Materials/Woods/Balsa.png" },
+        new WoodMaterial { Name = "Beech", ImagePath = "/Images/Materials/Woods/Beech.png" },
+        new WoodMaterial { Name = "Cedar", ImagePath = "/Images/Materials/Woods/Cedar.png" },
+        new WoodMaterial { Name = "Mahogany", ImagePath = "/Images/Materials/Woods/Mahogany.png" },
+        new WoodMaterial { Name = "Maple", ImagePath = "/Images/Materials/Woods/Maple.png" },
+        new WoodMaterial { Name = "Oak", ImagePath = "/Images/Materials/Woods/Oak.png" },
+        new WoodMaterial { Name = "Pine", ImagePath = "/Images/Materials/Woods/Pine.png" },
+        new WoodMaterial { Name = "Teak", ImagePath = "/Images/Materials/Woods/Teak.png" }
+    };
+
+
+           protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() =>
+        {
+            string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "debug-fridge.txt"
+        );
+
+            try
+            {
+                File.AppendAllText(debugPath, $"🟢 Started /fridge with selected={selectedOption}\n");
+
+                if (string.IsNullOrWhiteSpace(selectedOption))
+                {
+                    File.AppendAllText(debugPath, "❌ selectedOption is missing\n");
+                    return;
+                }
+         
+    string partPath = Path.Combine(
+    KitchenConfig.Get().BasePath,
+    "Kitchenbuilder", "Output", "temp", $"temp_Option{selectedOption}.SLDPRT"
+    );
+                File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
+
+                if (!File.Exists(partPath))
+                {
+                    File.AppendAllText(debugPath, $"❌ Base file not found: {partPath}\n");
+                    return;
+                }
+
+                if (SwSession.GetActiveModel() == null)
+                {
+                    var swAppInstance = (ISldWorks)Activator.CreateInstance(Type.GetTypeFromProgID("SldWorks.Application"));
+                    swAppInstance.Visible = true;
+                    SwSession.SetApp(swAppInstance);
+                    File.AppendAllText(debugPath, "🟢 SolidWorks launched and stored in session\n");
+
+                    LayoutLauncher.ArrangeWindows(swAppInstance);
+                }
+
+                var swApp = SwSession.GetApp();
+                int errors = 0, warnings = 0;
+
+                var model = swApp.OpenDoc6(
+                    partPath,
+                    (int)swDocumentTypes_e.swDocPART,
+                    (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                    "", ref errors, ref warnings
+                ) as IModelDoc2;
+
+                if (model == null)
+                {
+                    File.AppendAllText(debugPath, $"❌ Failed to load base model into SolidWorks\n");
+                    return;
+                }
+
+                File.AppendAllText(debugPath, $"✅ Base model loaded successfully\n");
+
+                string jsonPath = Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{selectedOption}SLD.json"
+            );
+                if (File.Exists(jsonPath))
+                {
+                    string jsonContent = File.ReadAllText(jsonPath);
+                    using JsonDocument doc = JsonDocument.Parse(jsonContent);
+
+                    foreach (JsonProperty wall in doc.RootElement.EnumerateObject())
+                    {
+                        if (wall.Value.TryGetProperty("Bases", out JsonElement bases))
+                        {
+                            foreach (JsonProperty baseItem in bases.EnumerateObject())
+                            {
+                                var baseInfo = baseItem.Value;
+
+                                if (baseInfo.TryGetProperty("Visible", out JsonElement visibleElement) &&
+                                    visibleElement.GetBoolean() &&
+                                    baseInfo.TryGetProperty("ExtrudeName", out JsonElement extrudeElement))
+                                {
+                                    string extrudeName = extrudeElement.GetString();
+
+                                    if (extrudeName.StartsWith("Extrude_fridge_base"))
+                                    {
+                                        fridgeBodies.Add(extrudeName);
+                                        File.AppendAllText(debugPath, $"🧊 Found fridge body: {extrudeName}\n");
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+
+                    File.AppendAllText(debugPath, $"✅ Extracted {baseMaterialOptions.Count} visible base bodies from JSON\n");
+                }
+                else
+                {
+                    File.AppendAllText(debugPath, $"❌ JSON file not found: {jsonPath}\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(
+            Path.Combine(
+                KitchenConfig.Get().BasePath,
+                "Kitchenbuilder", "Output", "debug-fridge.txt"
+            ),
+            $"❌ Exception: {ex.Message}\n{ex.StackTrace}\n"
+        );
+
+            }
+        });
+
+        isLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+    private void SaveFridgeMaterial()
+    {
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "fridge.txt"
+        );
+
+        if (fridgeBodies == null || fridgeBodies.Count == 0)
+        {
+            string msg = "⚠️ No fridge body found from JSON.";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        // استخرج رقم الثلاجة (مثلاً من "Extrude_fridge_base1" → "1")
+        string mainFridgeBody = fridgeBodies.First();
+        string fridgeNumber = new string(mainFridgeBody.Where(char.IsDigit).ToArray());
+
+        if (string.IsNullOrWhiteSpace(fridgeNumber))
+        {
+            string msg = $"❌ Could not extract fridge number from: {mainFridgeBody}";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        var swApp = SwSession.GetApp();
+        var model = (ModelDoc2)swApp.ActiveDoc;
+        var part = (PartDoc)model;
+        var bodies = (object[])part.GetBodies2((int)swBodyType_e.swSolidBody, true);
+
+        if (bodies == null || bodies.Length == 0)
+        {
+            string msg = "❌ No bodies found in the model.";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        // اجمع كل البوديز التي تحتوي رقم الثلاجة (FridgeX أو Extrude_fridge_baseX)
+        var matchingFridgeBodies = bodies
+        .Cast<Body2>()
+        .Where(b =>
+        b.Name.Contains($"Fridge{fridgeNumber}") ||
+        b.Name.Contains($"Extrude_fridge_base{fridgeNumber}")
+        )
+        .Select(b => b.Name)
+        .Distinct()
+        .ToList();
+
+        if (matchingFridgeBodies.Count == 0)
+        {
+            string msg = $"❌ No matching fridge bodies found for fridge number {fridgeNumber}.";
+            Console.WriteLine(msg);
+            File.AppendAllText(debugPath, msg + "\n");
+            return;
+        }
+
+        // 📤 إرسالهم جميعًا إلى EditMaterial
+        string materialName = fridgeMaterial.Material;
+        string type = fridgeMaterial.Type;
+
+        isInEditMode = false;
+
+
+        foreach (string bodyName in matchingFridgeBodies)
+        {
+            File.AppendAllText(debugPath, $"🎯 Sending fridge body to EditMaterial: {bodyName}, material: {materialName}, type: {type}\n");
+            EditMaterial.ApplyMaterialToBody(swApp, bodyName, materialName, type);
+        }
+
+        IsFridgeSaved = true;
+        Console.WriteLine($"✅ Sent {matchingFridgeBodies.Count} fridge bodies to EditMaterial.");
+        File.AppendAllText(debugPath, $"✅ Completed applying fridge material to {matchingFridgeBodies.Count} bodies.\n");
+    }
+
+private void EditFridgeMaterial()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "editfridge.txt"
+        );
+
+    IsFridgeSaved = false;
+
+    fridgeMaterial.Material = "";
+    isInEditMode = true;
+
+    string msg = "✏️ Fridge material reset. User can choose again.";
+    Console.WriteLine(msg);
+    File.AppendAllText(debugPath, msg + "\n");
+}
+
+
+//----------------marble 
+private void SaveFridgeMarble()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "fridge_marble.txt"
+        );
+
+    if (fridgeBodies == null || fridgeBodies.Count == 0)
+    {
+        string msg = "⚠️ No fridge body found from JSON.";
+        Console.WriteLine(msg);
+        File.AppendAllText(debugPath, msg + "\n");
+        return;
+    }
+
+    string mainFridgeBody = fridgeBodies.First();
+    string fridgeNumber = new string(mainFridgeBody.Where(char.IsDigit).ToArray());
+
+    if (string.IsNullOrWhiteSpace(fridgeNumber))
+    {
+        string msg = $"❌ Could not extract fridge number from: {mainFridgeBody}";
+        Console.WriteLine(msg);
+        File.AppendAllText(debugPath, msg + "\n");
+        return;
+    }
+
+    var swApp = SwSession.GetApp();
+    var model = (ModelDoc2)swApp.ActiveDoc;
+    var part = (PartDoc)model;
+    var bodies = (object[])part.GetBodies2((int)swBodyType_e.swSolidBody, true);
+
+    if (bodies == null || bodies.Length == 0)
+    {
+        string msg = "❌ No bodies found in the model.";
+        Console.WriteLine(msg);
+        File.AppendAllText(debugPath, msg + "\n");
+        return;
+    }
+
+    var matchingFridgeBodies = bodies
+        .Cast<Body2>()
+        .Where(b =>
+            b.Name.Contains($"Fridge{fridgeNumber}") ||
+            b.Name.Contains($"Extrude_fridge_base{fridgeNumber}")
+        )
+        .Select(b => b.Name)
+        .Distinct()
+        .ToList();
+
+    if (matchingFridgeBodies.Count == 0)
+    {
+        string msg = $"❌ No matching fridge bodies found for fridge number {fridgeNumber}.";
+        Console.WriteLine(msg);
+        File.AppendAllText(debugPath, msg + "\n");
+        return;
+    }
+
+    string materialName = fridgeMaterial.Material;
+    isInEditMode = false;
+
+    foreach (string bodyName in matchingFridgeBodies)
+    {
+        File.AppendAllText(debugPath, $"🎯 Sending fridge body to OurMaterial: {bodyName}, material: {materialName}\n");
+        OurMaterial.ApplyCustomMaterial(swApp, bodyName, materialName);
+    }
+
+    IsFridgeSaved = true;
+    Console.WriteLine($"✅ Sent {matchingFridgeBodies.Count} fridge bodies to OurMaterial.");
+    File.AppendAllText(debugPath, $"✅ Completed applying fridge material to {matchingFridgeBodies.Count} bodies.\n");
+}
+
+
+private void EditFridgeMarble()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "editfridge_marble.txt"
+        );
+
+    IsFridgeSaved = false;
+    fridgeMaterial.Material = "";
+    isInEditMode = true;
+
+    string msg = "✏️ Fridge marble material reset. User can choose again.";
+    Console.WriteLine(msg);
+    File.AppendAllText(debugPath, msg + "\n");
+}
+
+
+
+
+
+
+private void EditFridgeMarbleTiles()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "editfridge_marble_tiles.txt"
+        );
+
+    IsFridgeSaved = false;
+    fridgeMaterial.Material = "";
+    isInEditMode = true;
+
+    string msg = $"✏️ Fridge material reset for type: {fridgeMaterial.Type}.";
+    Console.WriteLine(msg);
+    File.AppendAllText(debugPath, msg + "\n");
+}
+
+
+
+//--------------------------------
+
+private void SaveFridgeColor()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "fridge_color.txt"
+        );
+
+    if (fridgeBodies == null || fridgeBodies.Count == 0)
+    {
+        File.AppendAllText(debugPath, "⚠️ No fridge body found from JSON.\n");
+        return;
+    }
+
+    string mainFridgeBody = fridgeBodies.First();
+    string fridgeNumber = new string(mainFridgeBody.Where(char.IsDigit).ToArray());
+
+    if (string.IsNullOrWhiteSpace(fridgeNumber))
+    {
+        File.AppendAllText(debugPath, $"❌ Could not extract fridge number from: {mainFridgeBody}\n");
+        return;
+    }
+
+    var swApp = SwSession.GetApp();
+    var model = (ModelDoc2)swApp.ActiveDoc;
+    var part = (PartDoc)model;
+    var bodies = (object[])part.GetBodies2((int)swBodyType_e.swSolidBody, true);
+
+    if (bodies == null || bodies.Length == 0)
+    {
+        File.AppendAllText(debugPath, "❌ No bodies found in the model.\n");
+        return;
+    }
+
+    var matchingFridgeBodies = bodies
+        .Cast<Body2>()
+        .Where(b =>
+            b.Name.Contains($"Fridge{fridgeNumber}") ||
+            b.Name.Contains($"Extrude_fridge_base{fridgeNumber}")
+        )
+        .Select(b => b.Name)
+        .Distinct()
+        .ToList();
+
+    if (matchingFridgeBodies.Count == 0)
+    {
+        File.AppendAllText(debugPath, $"❌ No matching fridge bodies found for fridge number {fridgeNumber}.\n");
+        return;
+    }
+
+    string hex = fridgeMaterial.Material;
+
+    foreach (string body in matchingFridgeBodies)
+    {
+        File.AppendAllText(debugPath, $"🎨 Applying color to {body} with hex={hex}\n");
+
+        ColorApplier.ApplyColorToBody(
+            model,
+            body,
+            fridgeMaterial.Material,
+            fridgeMaterial.Specular,
+            fridgeMaterial.Reflectivity,
+            fridgeMaterial.Transparency
+        );
+    }
+
+    IsFridgeSaved = true;
+    isInEditMode = false;
+
+    File.AppendAllText(debugPath, $"✅ Completed coloring {matchingFridgeBodies.Count} fridge bodies.\n");
+}
+
+
+
+private void TryFridgeColor()
+{
+        string debugPath = Path.Combine(
+            KitchenConfig.Get().BasePath,
+            "Kitchenbuilder", "Output", "fridge_trycolor.txt"
+        );
+
+    if (fridgeBodies == null || fridgeBodies.Count == 0)
+    {
+        File.AppendAllText(debugPath, "⚠️ No fridge body found for TryColor.\n");
+        return;
+    }
+
+    string mainFridgeBody = fridgeBodies.First();
+    string fridgeNumber = new string(mainFridgeBody.Where(char.IsDigit).ToArray());
+
+    if (string.IsNullOrWhiteSpace(fridgeNumber))
+    {
+        File.AppendAllText(debugPath, $"❌ Could not extract fridge number from: {mainFridgeBody}\n");
+        return;
+    }
+
+    var swApp = SwSession.GetApp();
+    var model = swApp.IActiveDoc2;
+    var part = (PartDoc)model;
+    var bodies = (object[])part.GetBodies2((int)swBodyType_e.swSolidBody, true);
+
+    if (bodies == null || bodies.Length == 0)
+    {
+        File.AppendAllText(debugPath, "❌ No bodies found in model.\n");
+        return;
+    }
+
+    var matchingFridgeBodies = bodies
+        .Cast<Body2>()
+        .Where(b =>
+            b.Name.Contains($"Fridge{fridgeNumber}") ||
+            b.Name.Contains($"Extrude_fridge_base{fridgeNumber}")
+        )
+        .Select(b => b.Name)
+        .Distinct()
+        .ToList();
+
+    if (matchingFridgeBodies.Count == 0)
+    {
+        File.AppendAllText(debugPath, $"❌ No matching fridge bodies for TryColor.\n");
+        return;
+    }
+
+    foreach (var body in matchingFridgeBodies)
+    {
+        File.AppendAllText(debugPath, $"🔎 Trying color on: {body}\n");
+
+        ColorApplier.ApplyColorToBody(
+            model,
+            body,
+            fridgeMaterial.Material,
+            fridgeMaterial.Specular,
+            fridgeMaterial.Reflectivity,
+            fridgeMaterial.Transparency
+        );
+    }
+
+    File.AppendAllText(debugPath, $"✅ TryColor applied to {matchingFridgeBodies.Count} bodies.\n");
+}
+
+
+
+
+    
+
+    private void ContinueToCountertop()
+    {
+        if (!string.IsNullOrWhiteSpace(selectedOption))
+        {
+            NavManager.NavigateTo($"/countertop-options?base={selectedOption}");
+        }
+    }
+
+
+    }
+        
