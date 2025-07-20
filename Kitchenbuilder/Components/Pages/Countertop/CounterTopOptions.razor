@@ -120,8 +120,8 @@
                 return;
             }
 
-            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{baseName}SLD.json");
-            string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", $"temp_Option{baseName}.SLDPRT");
+            string jsonPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{baseName}SLD.json");
+            string partPath = Path.Combine(KitchenConfig.Get().BasePath, "Kitchenbuilder", "Output", "temp", $"temp_{baseName}.SLDPRT");
 
 
             Log($"📦 baseName = {baseName}");

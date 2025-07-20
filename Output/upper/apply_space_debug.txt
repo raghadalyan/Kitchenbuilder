@@ -1,3 +1,0 @@
-[00:12:41] ❌ Space too close to fridge base. DistanceY must be ≥ 182 cm.
-[00:14:33] ✅ Space saved to wall Wall1.
-[00:16:24] ✅ Space saved to wall Wall1.

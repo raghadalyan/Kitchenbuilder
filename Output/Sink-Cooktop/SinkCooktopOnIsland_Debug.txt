@@ -1,2 +1,0 @@
-[00:00:32] 🔧 Creating Cooktop on island. Wall=2, Dir=90, DX=175, DY=210, Depth=90
-[00:00:32] ✅ Cooktop Result: X=160, Y=210, Angle=179.99

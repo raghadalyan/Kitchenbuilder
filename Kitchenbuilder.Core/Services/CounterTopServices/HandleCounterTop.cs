@@ -126,7 +126,7 @@ namespace Kitchenbuilder.Core
                 string jsonPath = Path.Combine(
                     KitchenConfig.Get().BasePath,
                     "Kitchenbuilder", "Kitchenbuilder", "JSON",
-                    $"Option{baseName}SLD.json"
+                    $"{baseName}SLD.json"
                 );
                 if (!File.Exists(jsonPath))
                 {

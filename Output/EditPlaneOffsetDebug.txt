@@ -1,4 +1,0 @@
-[00:13:59] 📐 Editing offset of plane 'Plane_Oven' to 65 cm
-[00:14:10] ✅ Offset updated to 65 cm (=0.65 m)
-[00:15:51] 📐 Editing offset of plane 'Plane_Microwave' to 145 cm
-[00:16:00] ✅ Offset updated to 145 cm (=1.45 m)

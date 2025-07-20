@@ -1,6 +1,0 @@
-
-🟢 ContinueToIsland called at 7/18/2025 11:49:19 PM
-➡️ Navigating to /island-page?option=Option2
-
-🟢 ContinueToIsland called at 7/18/2025 11:54:33 PM
-➡️ Navigating to /island-page?option=Option2

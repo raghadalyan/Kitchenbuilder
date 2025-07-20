@@ -173,7 +173,7 @@
     private bool askForMaterial = false;
     private bool isInEditMode = false;
 
-    private List<string> fridgeBodies = new(); // فقط بودي الثلاجةMaterialChoice
+    private List<string> fridgeBodies = new(); 
     private bool addToFridge = false;
     // private bool IsFridgeSaved => fridgeMaterialSaved;
     private bool IsFridgeSaved = false;
@@ -264,7 +264,7 @@ private MaterialChoice fridgeMaterial = new();
          
     string partPath = Path.Combine(
     KitchenConfig.Get().BasePath,
-    "Kitchenbuilder", "Output", "temp", $"temp_Option{selectedOption}.SLDPRT"
+    "Kitchenbuilder", "Output", "temp", $"temp_{selectedOption}.SLDPRT"
     );
                 File.AppendAllText(debugPath, $"📁 Target base file: {partPath}\n");
 
@@ -304,7 +304,7 @@ private MaterialChoice fridgeMaterial = new();
 
                 string jsonPath = Path.Combine(
                 KitchenConfig.Get().BasePath,
-                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"Option{selectedOption}SLD.json"
+                "Kitchenbuilder", "Kitchenbuilder", "JSON", $"{selectedOption}SLD.json"
             );
                 if (File.Exists(jsonPath))
                 {

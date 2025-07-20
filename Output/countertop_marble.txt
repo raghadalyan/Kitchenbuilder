@@ -1,3 +1,0 @@
-🟫 Applying countertop material to body: Extrude_CT_1_2, material: Marble025, type: Marble
-🟫 Applying countertop material to body: Extrude_CT_2_1, material: Marble025, type: Marble
-✅ Finished SaveCountertopMarble for 2 items.
